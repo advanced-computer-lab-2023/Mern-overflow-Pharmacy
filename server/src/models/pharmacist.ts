@@ -10,6 +10,7 @@ interface IPharmacist {
     horlyRate: number;
     affiliation: string;
     education: string;
+    status: string;
 }
 
 const pharmacistShema = new Schema<IPharmacist>({
@@ -21,6 +22,7 @@ const pharmacistShema = new Schema<IPharmacist>({
     horlyRate: { type: Number, required: true },
     affiliation: { type: String, required: true , trim: true },
     education: { type: String, required: true , trim: true },
+    status: { type: String, required: true , lowercase: true, enum: ['pending', 'accepted', 'rejected'] },
 })
 
 const pharmacist = model<IPharmacist>('pharmacist', pharmacistShema);

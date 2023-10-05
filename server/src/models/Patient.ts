@@ -8,7 +8,7 @@ interface FamilyMember {
     mobileNumber: string;
 }
 
-interface IUser {
+interface IPatient {
     username:string;
     name: string;
     email: string;
@@ -22,7 +22,7 @@ interface IUser {
 }
 
 // 2. Create a Schema corresponding to the document interface.
-const userSchema = new Schema<IUser>({
+const PatientSchema = new Schema<IPatient>({
     username: { type: String, required: true , unique: true },
     name: { type: String, required: true , trim: true },
     email: { type: String, required: true, match : [/\S+@\S+\.\S+/, "invalid email"], },
@@ -39,7 +39,7 @@ const userSchema = new Schema<IUser>({
 });
 
 // 3. Create a Model.
-const User = model<IUser>('User', userSchema);
+const Patient = model<IPatient>('Patient', PatientSchema);
 
 
 // let p;
@@ -60,7 +60,7 @@ export async function addTestUser(username:string, name:string, email:string, pa
     // 4. Connect to MongoDB
     await connect(mongoUrl);
 
-    const user = new User({
+    const patient = new Patient({
         username: username,
         name: name,
         email: email,
@@ -73,8 +73,8 @@ export async function addTestUser(username:string, name:string, email:string, pa
             mobileNumber:'01000000001'
         }
     });
-    await user.save();
-    console.log('Document inserted:', user);
+    await patient.save();
+    console.log('Document inserted:', patient);
 }
 
-export default mongoose.model<IUser>("User", userSchema);
+export default mongoose.model<IPatient>("Patient", PatientSchema);
