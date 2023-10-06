@@ -11,6 +11,8 @@ import { useForm } from "react-hook-form"
 import Avatar from '@mui/material/Avatar';
 import logo from '../../assets/gifs/logo.gif';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import { Link } from 'react-router-dom';
+
 
 const defaultTheme = createTheme();
 
@@ -68,7 +70,7 @@ export default function SignIn() {
                             <LockOpenIcon sx={{ width: 30, height: 30 }} />
                         </Avatar>
                         <Typography variant="h5" sx={{ fontWeight: "bold", my: 2 }}> Sign in </Typography>
-                        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx= {{width: '100%'}}>
+                        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ width: '100%' }}>
                             <Grid container md={12} spacing={2} sx={{ mt: 3 }}>
                                 <Grid item xs={12}>
                                     <TextField
@@ -97,16 +99,20 @@ export default function SignIn() {
                                     />
                                 </Grid>
                             </Grid>
-                            <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold'}}>
+                            <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}>
                                 Sign In
                             </Button>
                         </Box>
 
                         <Typography sx={{ align: "center", width: "100%", mt: 5, mb: 2, fontWeight: 'bold', color: '#555' }} variant="h6"> OR </Typography>
-                        <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold'}}>
+                        <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}
+                            component={Link}
+                            to="/register/patient">
                             Patient Registration
                         </Button>
-                        <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold'}}>
+                        <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}
+                            component={Link}
+                            to="/register/pharmacist">
                             Pharmacist Registration
                         </Button>
                     </Box>

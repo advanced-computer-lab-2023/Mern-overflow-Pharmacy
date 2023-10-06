@@ -14,6 +14,8 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
+import { Link } from 'react-router-dom';
+
 
 
 const defaultTheme = createTheme();
@@ -188,10 +190,14 @@ export default function PharmacistRegister() {
               </Button>
             </form>
             <Typography sx={{ align: "center", width: "100%", mt: 5, mb: 2, fontWeight: 'bold', color: '#555' }} variant="h6"> OR </Typography>
-            <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}>
+            <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}
+              component={Link}
+              to="/signin">
               Sign In
             </Button>
-            <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}>
+            <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}
+              component={Link}
+              to="/register/patient">
               Patient Registration
             </Button>
           </Box>
