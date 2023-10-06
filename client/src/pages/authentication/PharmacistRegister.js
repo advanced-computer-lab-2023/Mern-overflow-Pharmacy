@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useForm } from "react-hook-form"
 import Avatar from '@mui/material/Avatar';
-import logo from '../assets/gifs/logo.gif';
+import logo from '../../assets/gifs/logo.gif';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -149,9 +149,9 @@ export default function PharmacistRegister() {
                       startAdornment={<InputAdornment position="start">EGP</InputAdornment>}
                       label="Hourly Rate"
                       {...register("Rate", { required: true, maxLength: 80 })}
-                    error={!!errors["Rate"]}
-                    helperText={errors["Rate"]?.message}
-                    onBlur={handleChange}
+                      error={!!errors["Rate"]}
+                      helperText={errors["Rate"]?.message}
+                      onBlur={handleChange}
                     />
                   </FormControl>
                 </Grid>
@@ -183,15 +183,15 @@ export default function PharmacistRegister() {
                 </Grid>
 
               </Grid>
-              <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold', width: "50%" }}>
+              <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}>
                 Submit
               </Button>
             </form>
             <Typography sx={{ align: "center", width: "100%", mt: 5, mb: 2, fontWeight: 'bold', color: '#555' }} variant="h6"> OR </Typography>
-            <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold', width: "50%" }}>
+            <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}>
               Sign In
             </Button>
-            <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold', width: "50%" }}>
+            <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}>
               Patient Registration
             </Button>
           </Box>

@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useForm } from "react-hook-form"
 import Avatar from '@mui/material/Avatar';
-import logo from '../assets/gifs/logo.gif';
+import logo from '../../assets/gifs/logo.gif';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 const defaultTheme = createTheme();
@@ -68,7 +68,7 @@ export default function SignIn() {
                             <LockOpenIcon sx={{ width: 30, height: 30 }} />
                         </Avatar>
                         <Typography variant="h5" sx={{ fontWeight: "bold", my: 2 }}> Sign in </Typography>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx= {{width: '100%'}}>
                             <Grid container md={12} spacing={2} sx={{ mt: 3 }}>
                                 <Grid item xs={12}>
                                     <TextField
@@ -97,21 +97,16 @@ export default function SignIn() {
                                     />
                                 </Grid>
                             </Grid>
-                            <Button
-                                fullWidth
-                                type="submit"
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}
-                            >
+                            <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold'}}>
                                 Sign In
                             </Button>
-                        </form>
+                        </Box>
 
                         <Typography sx={{ align: "center", width: "100%", mt: 5, mb: 2, fontWeight: 'bold', color: '#555' }} variant="h6"> OR </Typography>
-                        <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold', width: "50%" }}>
+                        <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold'}}>
                             Patient Registration
                         </Button>
-                        <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold', width: "50%" }}>
+                        <Button fullWidth type="submit" variant="outlined" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold'}}>
                             Pharmacist Registration
                         </Button>
                     </Box>
