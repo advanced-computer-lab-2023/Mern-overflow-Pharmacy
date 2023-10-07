@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Typography, Toolbar, Box, AppBar, IconButton, Button, Drawer, List, ListItem, ListItemButton, ListItemIcon, InboxIcon, MailIcon, ListItemText, Divider } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-
-
+import { Link } from 'react-router-dom';
 
 export default function ButtonAppBar(props) {
 
@@ -66,7 +65,10 @@ export default function ButtonAppBar(props) {
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'left' }}>
 							{props.title}
 						</Typography>
-						<Button color="inherit"> {props.actionButton} </Button>
+						<Button color="inherit"
+							component={Link}
+							to="/signin"
+						> Log out </Button>
 					</Toolbar>
 				</AppBar>
 			</Box>
