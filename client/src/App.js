@@ -10,7 +10,8 @@ import AdminManagePatients from './pages/admin/AdminManagePatients'
 import AdminManagePharmacistRequests from './pages/admin/AdminManagePharmacistRequests';
 import AdminManageMedicines from './pages/admin/AdminManageMedicines';
 import PharmacistManageMedicines from './pages/pharmacist/PharmacistManageMedicines';
-import PatientManageMedicines from './pages/patient/PatientManageMedicines';  
+import PharmacistEditMedicine from './pages/pharmacist/PharmacistEditMedicine'
+import PatientManageMedicines from './pages/patient/PatientManageMedicines';
 
 import {
   createBrowserRouter,
@@ -54,6 +55,10 @@ function App() {
     {
       path: "/pharmacist/medicines",
       element: <PharmacistManageMedicines />,
+    },
+    {
+      path: "/pharmacist/medicines/1",
+      element: <PharmacistEditMedicine />,
     },
     {
       path: "/patient/medicines",
