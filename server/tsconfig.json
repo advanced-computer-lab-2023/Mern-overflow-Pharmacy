@@ -2,12 +2,10 @@
   "compilerOptions": {
     "moduleResolution": "NodeNext",     
     "target": "ES2020",
-    "module": "ESNext",
+    "module": "NodeNext",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
-    "esModuleInterop": true,
-    "allowImportingTsExtensions":true
   },
   "include": [
     "src/**/*.ts",

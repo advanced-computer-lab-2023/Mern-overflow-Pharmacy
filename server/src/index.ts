@@ -1,12 +1,77 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose, { ConnectOptions } from 'mongoose';
+import axios from "axios";
+import bodyParser from "body-parser";
+import adminstratorController from "./controllers/AdminstratorController.js";
+import medicineController from "./controllers/medicineController.js";
+import patientController from "./controllers/PatientController.js";
+import pharmacistController from "./controllers/pharmacistController.js";
+import config from "./config/config.js";
 
-dotenv.config();
+mongoose.set("strictQuery", false);
 
-// const app = express();
-// const PORT = 8000;
+
+//dotenv.config();
+const MongoURI: string = config.mongo.URL;
+  const app = express();
+  const port: number = config.server.port ;
+  app.use(bodyParser.json());
+
 const mongoUrl:string = process.env.MONGO_URI!;
+
+
+app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+  res.send("hello");
+  console.log("hello, world!");
+});
+
+
+app.get("/medicines", medicineController.listMedicines);
+app.get("/medicines/:id", medicineController.readMedicine);
+app.get("/medicines", medicineController.searchMedicine);
+app.get("/medicines", medicineController.filterMedicines);
+app.get("/patients", patientController.listPatients);
+app.get("/patients/:id", patientController.readPatient);
+app.get("/pharmacists", pharmacistController.listPharmacists);
+app.get("/pharmacists/:id", pharmacistController.readPharmacist); 
+app.get("/pharmacists", pharmacistController.listPharmacistRequests);
+
+//POST
+app.post("/adminstators", adminstratorController.createAdminstrator);
+app.post("/medicines", medicineController.createMedicine);
+app.post("/patients", patientController.createPatient);
+app.post("/pharmacists", pharmacistController.createPharmacist);
+
+
+
+
+//PUT
+app.put("/medicines/:id", medicineController.updateMedicine)
+app.put("/pharmacists/:id", pharmacistController.updatePharmacist);
+
+
+//DELETE
+app.delete("/patients/:id", patientController.deletePatient);
+app.delete("/pharmacists/:id", pharmacistController.deletePharmacist);
+
+
+
+
+mongoose
+  .connect(MongoURI)
+  .then(() => {
+    console.log("MongoDB is now connected!");
+    // Starting server
+    app.listen(port, () => {
+      console.log(`Listening to requests on http://localhost:${port}`);
+    });
+  })
+  .catch((err) => console.log(err));
+
+export default app;
 
 // app.use(express.json());
 
@@ -21,30 +86,30 @@ const mongoUrl:string = process.env.MONGO_URI!;
 
 // testDatabaseConnection();
 
-main().catch(err => console.log(err));
+// main().catch(err => console.log(err));
 
-async function main() {
-  await mongoose.connect(mongoUrl);
+// async function main() {
+//   await mongoose.connect(mongoUrl);
 
-  const schema = new mongoose.Schema({
-	name: String,
-	age: Number,
-  });
+//   const schema = new mongoose.Schema({
+// 	name: String,
+// 	age: Number,
+//   });
 
-  const User = mongoose.model('User', schema);
+//   const User = mongoose.model('User', schema);
 
-  // Create a new user document
-  const newUser = new User({ name: 'John', age: 30 });
+//   // Create a new user document
+//   const newUser = new User({ name: 'John', age: 30 });
 
-  // Save the user document to the database
-  await newUser.save();
+//   // Save the user document to the database
+//   await newUser.save();
 
-  console.log('Document inserted:', newUser);
+//   console.log('Document inserted:', newUser);
 
-  // Query the database for a user document
-  const queryResult = await User.findOne({ name: 'John' });
+//   // Query the database for a user document
+//   const queryResult = await User.findOne({ name: 'John' });
 
-  console.log('Document found:', queryResult);
+//   console.log('Document found:', queryResult);
 
-}
+// }
 
