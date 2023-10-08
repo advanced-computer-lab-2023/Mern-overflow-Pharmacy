@@ -27,7 +27,6 @@ const createPatient = async (req: Request, res: Response) => {
             })
         }
         else if (document.length !== 0)
-
             res.status(400).send("username taken , please choose another one ");
     })
 
@@ -37,12 +36,11 @@ const createPatient = async (req: Request, res: Response) => {
 const listPatients = async(req:Request, res:Response)=>{
     //view all patients to select a patient to view his basic information
     //should we do it?
-
-    patient.find().then(results => { res.status(200).send(results); }).catch(err => {res.status(404).send(err)
+    patient.find().then(results => {
+         res.status(200).send(results); 
+        }).catch(err => {
+            res.status(404).send(err)
     });
-
-
-
 }
 
 const readPatient = async(req:Request, res:Response)=>{

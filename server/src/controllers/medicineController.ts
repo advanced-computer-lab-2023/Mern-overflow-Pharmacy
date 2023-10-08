@@ -43,18 +43,19 @@ const searchMedicineByName = async (req: Request, res: Response) => {
 
     if(medList.length===0)
       res.status(404).send("no medicines");
+    else{
 
-   
-
-    for(const medicine of medList){
-      if(medicine.name.includes(medname))
-        medResults.push(medicine);
+      for(const medicine of medList){
+        if(medicine.name.includes(medname))
+          medResults.push(medicine);
+      }
+  
+      if(medResults.length === 0)
+        res.status(404).send("no medicines found with this name ");
+  
+      res.status(200).json(medResults);
     }
 
-    if(medResults.length === 0)
-      res.status(404).send("no medicines found with this name ");
-
-    res.status(200).json(medResults);
   }catch(err){
     res.status(400).json(err);
   }
@@ -66,9 +67,11 @@ const filterMedicines = async(req:Request, res:Response)=>{
   //filter medicines based on medicinal use
 
   const medUse = req.body.medicinalUse;
-  medicine.find({ "medicinalUse": medUse }).then(results => { res.status(200).send(results) }).catch(err => { res.status(400).send(err) });
-  
-  
+  medicine.find({ "medicinalUse": medUse }).then((results) => {
+     res.status(200).send(results) 
+    }).catch(err => {
+       res.status(400).send(err) 
+      });
 }
 
 const createMedicine = async(req:Request, res:Response)=>{
@@ -80,9 +83,9 @@ const createMedicine = async(req:Request, res:Response)=>{
       const NewMedecine = await medicine.create(req.body);
       res.status(200).send(NewMedecine);
     }
-      } catch (error) {
-        res.status(400).send(error);
-      }
+  }catch (error) {
+    res.status(400).send(error);
+  }
 }
 
 const updateMedicine = async(req:Request, res:Response)=>{

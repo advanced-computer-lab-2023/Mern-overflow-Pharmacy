@@ -11,7 +11,7 @@ const createPharmacist = async(req:Request, res:Response)=>{
         res.status(200).json(newPharm);
       })
       .catch((err) => {
-        console.log("error");
+      // console.log("error");
         res.status(400).json(err);
       });
 }
@@ -35,15 +35,13 @@ const listPharmacistRequests = async(req:Request, res:Response)=>{
 
 const updatePharmacist = async(req:Request, res:Response)=>{
     //accepting a pharmacist's request
-    const id = req.params.id;
-
-    const query = { _id: id };
+  const id = req.params.id;
+  const query = { _id: id };
 
   const status = req.body.status;
   const update: { [key: string]: any } = {};
   if (status!==undefined) update["status"] = status;
   
-
     pharmacist
     .findOneAndUpdate(query, update, { new: true })
     .then((updatedPharm) => {
