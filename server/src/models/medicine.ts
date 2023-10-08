@@ -25,7 +25,6 @@ const medicineSchema = new Schema<Imedicine>({
         data: { type: Buffer, required: true, },
         contentType: { type: String, required: true, },
         filename: { type: String,required: true,},
-        required: false,
     },
 })
 

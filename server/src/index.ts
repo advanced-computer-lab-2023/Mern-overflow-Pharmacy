@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 
 
 app.get("/medicines", medicineController.listMedicines);
-app.get("/medicines/:id", medicineController.readMedicine);
+app.get("/medicines", medicineController.readMedicine);
 app.get("/medicines/search", medicineController.searchMedicine);
 app.get("/medicines/filter", medicineController.filterMedicines);
 app.get("/patients", patientController.listPatients);

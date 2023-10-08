@@ -3,10 +3,27 @@ import medicine from "../models/medicine.js";
 
 const listMedicines = async(req:Request, res:Response)=>{
     //view a list of all available medicines (including picture of medicine, price, description)
+    medicine.find()
+    .select('image price details')
+    .then(
+      (results) => {
+        var medResults: any[]=[]; 
+        for(const med of results){
+             if(med.availableQuantity !== 0)
+                  medResults.push(med);
+        }
+        res.status(200).send(medResults); })
+    .catch(err => {res.status(404).send(err)
+    });
 }
 
 const readMedicine = async(req:Request, res:Response)=>{
     //view the available quantity, and sales of each medicine
+    const med = medicine.find()
+    .select('availableQuantity sales')
+    .then(med => { res.status(200).send(med); })
+    .catch(err => {res.status(404).send(err)
+    });
 }
 
 const searchMedicine = async(req:Request, res:Response)=>{

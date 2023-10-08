@@ -31,18 +31,6 @@ const createPatient = async (req: Request, res: Response) => {
 
 };
 
-          
-    
-    
-    
-        
-
-          
-            
- 
-
-
-
 
 const listPatients = async(req:Request, res:Response)=>{
     //view all patients to select a patient to view his basic information
@@ -57,6 +45,12 @@ const listPatients = async(req:Request, res:Response)=>{
 
 const readPatient = async(req:Request, res:Response)=>{
     //view a patients's basic information (all information except presecriptions of the patient)
+    const id = req.params.id; //id of the patient that we want to read
+    const pat = patient.find({ _id: id })
+    .select('username name email passwordHash dateOfBirth gender mobileNumber emergencyContact package')
+    .then(pat => { res.status(200).send(pat); })
+    .catch(err => {res.status(404).send(err)
+    });
 }
 
 const deletePatient = async(req:Request, res:Response)=>{
