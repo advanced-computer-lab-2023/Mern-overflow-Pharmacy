@@ -7,7 +7,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useForm } from "react-hook-form"
+import { Controller , useForm } from "react-hook-form"
 import Avatar from '@mui/material/Avatar';
 import logo from '../../assets/gifs/logo.gif';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 const defaultTheme = createTheme();
 
 export default function PatientRegister() {
-  const { register, handleSubmit, setError, formState: { errors } } = useForm();
+  const { register, handleSubmit, setError, formState: { errors } ,control} = useForm();
 
   const onSubmit = data => {
     console.log("Data to server" + JSON.stringify(data));
@@ -88,11 +88,33 @@ export default function PatientRegister() {
                 <Grid item xs={12} >
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']}>
-                      <DatePicker
-                        disableFuture
-                        label="Date of Birth"
-                        sx={{ width: '100%' }}
-                      />
+                    <Controller
+  control={control}
+  name="dob"
+  render={({ field }) => (
+    <DatePicker
+      openTo="year"
+      views={['year', 'month', 'day']}
+      mask="____-__-__"
+      format="DD-MM-YYYY"
+      label="Date of Birth"
+      inputFormat="DD-MM-YYYY"
+      value={field.value || null}
+      onChange={(date) => field.onChange(date)}
+    >
+      {({ inputProps, inputRef }) => (
+        <TextField
+          {...inputProps}
+          fullWidth
+          error={!!errors["dob"]}
+          helperText={errors["dob"]?.message}
+          inputRef={inputRef}
+        />
+      )}
+    </DatePicker>
+  )}
+/>
+
                     </DemoContainer>
                   </LocalizationProvider>
                 </Grid>
