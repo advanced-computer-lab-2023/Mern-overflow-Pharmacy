@@ -12,10 +12,10 @@ import config from "./config/config.js";
 mongoose.set("strictQuery", false);
 
 
-//dotenv.config();
-const MongoURI: string = config.mongo.URL;
+// dotenv.config();
+const MongoURI: string ="mongodb+srv://dbuser:987654321@acl.n4q8ykx.mongodb.net/?retryWrites=true&w=majority" ;
   const app = express();
-  const port: number = config.server.port ;
+  const port: number = config.server.port || 8000;
   app.use(bodyParser.json());
 
 const mongoUrl:string = process.env.MONGO_URI!;
@@ -31,13 +31,13 @@ app.get("/", (req, res) => {
 
 app.get("/medicines", medicineController.listMedicines);
 app.get("/medicines/:id", medicineController.readMedicine);
-app.get("/medicines", medicineController.searchMedicine);
-app.get("/medicines", medicineController.filterMedicines);
+app.get("/medicines/search", medicineController.searchMedicine);
+app.get("/medicines/filter", medicineController.filterMedicines);
 app.get("/patients", patientController.listPatients);
 app.get("/patients/:id", patientController.readPatient);
 app.get("/pharmacists", pharmacistController.listPharmacists);
 app.get("/pharmacists/:id", pharmacistController.readPharmacist); 
-app.get("/pharmacists", pharmacistController.listPharmacistRequests);
+app.get("/pharmacists/requests", pharmacistController.listPharmacistRequests);
 
 //POST
 app.post("/adminstators", adminstratorController.createAdminstrator);
