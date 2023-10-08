@@ -11,6 +11,7 @@ interface Imedicine {
     details: string;
     price: number;
     availableQuantity: number;
+    sales : number ;
     image?: MedicineImage;
 }
 
@@ -19,6 +20,7 @@ const medicineSchema = new Schema<Imedicine>({
     details: { type: String, required: true },
     price: { type: Number, required: true },
     availableQuantity: { type: Number, required: true },
+    sales: { type: Number, required: true },
     image: {
         data: { type: Buffer, required: true, },
         contentType: { type: String, required: true, },

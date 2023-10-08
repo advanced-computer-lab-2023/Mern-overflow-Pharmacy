@@ -19,11 +19,36 @@ const filterMedicines = async(req:Request, res:Response)=>{
 
 const createMedicine = async(req:Request, res:Response)=>{
     //add a medicine with its details (active ingredients) , price and available quantity 
+    try {
+        const NewMedecine = await medicine.create(req.body);
+        res.status(200).send(NewMedecine);
+      } catch (error) {
+        res.status(400).send(error);
+      }
 }
 
 const updateMedicine = async(req:Request, res:Response)=>{
     //edit medicine details and price
     //Medicine quantities should update automatically
+    const id = req.params.id;
+    const query = { _id: id };
+    const details = req.body.details;
+    const price = req.body.price;
+     const update: { [key: string]: any } = {};
+    if (details !== undefined) update["details"] = details;
+    if (price !== undefined) update["price"] = price;
+
+
+  medicine
+    .findOneAndUpdate(query, update, { new: true })
+    .then((updatedMed) => {
+      if (updatedMed) {
+        res.status(200).send(updatedMed);
+      }
+    })
+    .catch((error) => {
+      res.status(400).send(error);
+    });
 }
 
 

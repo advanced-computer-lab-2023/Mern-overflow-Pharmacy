@@ -61,6 +61,15 @@ const readPatient = async(req:Request, res:Response)=>{
 
 const deletePatient = async(req:Request, res:Response)=>{
     //remove a patient from the system
+    const id = req.params.id;
+    const pat = patient
+      .findByIdAndDelete({ _id: id })
+      .then((pat) => {
+        res.status(200).json(pat);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
 }
 
 
