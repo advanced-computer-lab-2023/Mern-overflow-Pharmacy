@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
   console.log("hello, world!");
 });
 
-
+app.get("/medicines/viewAll", medicineController.listAllMedicines);
 app.get("/medicines/view", medicineController.listMedicines);
 app.get("/medicines", medicineController.readMedicine);
 app.get("/medicines/search", medicineController.searchMedicineByName);

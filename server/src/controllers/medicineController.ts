@@ -1,6 +1,13 @@
 import { Request, Response } from "express";
 import medicine from "../models/medicine.js";
 
+
+const listAllMedicines = async (req: Request, res: Response) => {
+  medicine.find({}).then(results=>{res.status(200).send(results)}).catch(err=>res.status(400).send(err));
+ }
+
+
+
 const listMedicines = async(req:Request, res:Response)=>{
     //view a list of all available medicines (including picture of medicine, price, description)
     medicine.find()
@@ -10,7 +17,7 @@ const listMedicines = async(req:Request, res:Response)=>{
         var medResults: any[]=[]; 
         for(const med of results){
              if(med.availableQuantity !== 0)
-                  medResults.push(med);
+                  medResults.push({"image": med.image, "price": med.price,"details":med.details});
         }
         res.status(200).send(medResults); })
     .catch(err => {res.status(404).send(err)
@@ -26,47 +33,15 @@ const readMedicine = async(req:Request, res:Response)=>{
     });
 }
 
-// const searchMedicineByName = async (req: Request, res: Response) => {
+
+// To -DO : handle lowercase and uppercase scenario 
+
     
   
-//   const medname = req.body.name;
-  
-  
-//   try {
-//     var medList: any[] = [];
-//     var medResults: any[] = [];
-//     const meds = medicine.find({}).then((meds)=>{
-//         for (const med of meds){
-//           medList.push(med.name);
-//         }
-//       })
-
-//     if(medList.length===0)
-//       res.status(404).send("no medicines");
-//     else{
-
-//       for(const medicine of medList){
-//         if(medicine.name.includes(medname))
-//           medResults.push(medicine);
-//       }
-      
-//       if(medResults.length === 0)
-//         res.status(404).send("no medicines found with this name ");
-//       else{
-//         res.status(200).json(medResults);
-//       }
-  
-//     }
-
-//   }catch(err){
-//     res.status(400).json(err);
-//   }
-
-// };
 
 
 
-const searchMedicineByName = async (req: Request, res: Response) => {
+  const searchMedicineByName = async (req: Request, res: Response) => {
   const medname = req.body.name;
 
   try {
@@ -89,6 +64,53 @@ const searchMedicineByName = async (req: Request, res: Response) => {
     res.status(400).json(err);
   }
 };
+
+  
+  // medicine.find({'name': req.body.name }).then((results) => {
+
+  //   if (results.length === 0)
+  //     res.status(404).send("no medicines found  with this name ");
+  //   else
+  //     res.status(200).send(results);
+      
+  // }).catch();
+  
+  
+  // try {
+  //   var medList: any[] = [];
+  //   var medResults: any[] = [];
+  //   const meds = await medicine.find({}).then((meds) => {
+  //     console.log(meds);
+  //     console.log(meds.length);
+      
+  //       for (const med of meds){
+  //         medList.push(med.name);
+  //       }
+      
+  //   })
+  //   console.log(medList);
+  //   console.log(medList.length);
+  //   if (medList.length === 0)
+  //     res.status(404).send("no medicines");
+
+  //   else {
+   
+  //     for (const medc of medList) {
+  //       if (medc.name===medname)
+  //         medResults.push(medc);
+  //     }
+
+  //     if (medResults.length === 0)
+  //       res.status(404).send("no medicines found with this name ");
+  //     else
+  //       res.status(200).send(medResults);
+  //   }
+    
+  // }catch(err){
+  //   res.status(400).send(err);
+  // }
+
+
 
 
 const filterMedicines = async(req:Request, res:Response)=>{
@@ -147,5 +169,6 @@ export default {
     searchMedicineByName,
     filterMedicines,
     createMedicine,
-    updateMedicine
+  updateMedicine,
+    listAllMedicines
   };
