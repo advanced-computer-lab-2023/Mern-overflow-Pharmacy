@@ -14,14 +14,16 @@ const createPatient = async (req: Request, res: Response) => {
                 if (emailRes.length !== 0)
                     res.status(404).send("You are already registered , please sign in ");
             
-                const newPatient = patient
-                    .create(req.body)
-                    .then((newPatient) => {
-                        res.status(200).json(newPatient);
-                    })
-                    .catch((err) => {
-                        res.status(400).json(err);
-                    });
+                else {
+                    const newPatient = patient
+                        .create(req.body)
+                        .then((newPatient) => {
+                            res.status(200).json(newPatient);
+                        })
+                        .catch((err) => {
+                            res.status(400).json(err);
+                        });
+                }
             })
         }
         else if (document.length !== 0)

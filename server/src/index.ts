@@ -29,9 +29,9 @@ app.get("/", (req, res) => {
 });
 
 
-app.get("/medicines", medicineController.listMedicines);
+app.get("/medicines/view", medicineController.listMedicines);
 app.get("/medicines", medicineController.readMedicine);
-app.get("/medicines/search", medicineController.searchMedicine);
+app.get("/medicines/search", medicineController.searchMedicineByName);
 app.get("/medicines/filter", medicineController.filterMedicines);
 app.get("/patients", patientController.listPatients);
 app.get("/patients/:id", patientController.readPatient);

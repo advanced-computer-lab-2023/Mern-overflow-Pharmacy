@@ -34,7 +34,8 @@ const deleteAdmin = async (req: Request, res: Response) => {
 
 
 export default{
-    createAdminstrator
+  createAdminstrator,
+  deleteAdmin
 }
 
 
