@@ -26,40 +26,68 @@ const readMedicine = async(req:Request, res:Response)=>{
     });
 }
 
-const searchMedicineByName = async (req: Request, res: Response) => {
+// const searchMedicineByName = async (req: Request, res: Response) => {
     
   
+//   const medname = req.body.name;
+  
+  
+//   try {
+//     var medList: any[] = [];
+//     var medResults: any[] = [];
+//     const meds = medicine.find({}).then((meds)=>{
+//         for (const med of meds){
+//           medList.push(med.name);
+//         }
+//       })
+
+//     if(medList.length===0)
+//       res.status(404).send("no medicines");
+//     else{
+
+//       for(const medicine of medList){
+//         if(medicine.name.includes(medname))
+//           medResults.push(medicine);
+//       }
+      
+//       if(medResults.length === 0)
+//         res.status(404).send("no medicines found with this name ");
+//       else{
+//         res.status(200).json(medResults);
+//       }
+  
+//     }
+
+//   }catch(err){
+//     res.status(400).json(err);
+//   }
+
+// };
+
+
+
+const searchMedicineByName = async (req: Request, res: Response) => {
   const medname = req.body.name;
-  
-  
+
   try {
-    var medList: any[] = [];
-    var medResults: any[] = [];
-    const meds = medicine.find({}).then((meds)=>{
-        for (const med of meds){
-          medList.push(med.name);
-        }
-      })
+    // Fetch medicines from the database and await the result
+    const meds = await medicine.find({});
 
-    if(medList.length===0)
-      res.status(404).send("no medicines");
-    else{
+    if (meds.length === 0) {
+      res.status(404).send("No medicines");
+    } else {
+      const medList = meds.map((med) => med.name);
+      const medResults = medList.filter((med) => med.includes(medname));
 
-      for(const medicine of medList){
-        if(medicine.name.includes(medname))
-          medResults.push(medicine);
+      if (medResults.length === 0) {
+        res.status(404).send("No medicines found with this name");
+      } else {
+        res.status(200).json(medResults);
       }
-  
-      if(medResults.length === 0)
-        res.status(404).send("no medicines found with this name ");
-  
-      res.status(200).json(medResults);
     }
-
-  }catch(err){
+  } catch (err) {
     res.status(400).json(err);
   }
-
 };
 
 
