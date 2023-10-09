@@ -32,6 +32,17 @@ const medicineSchema = new Schema<Imedicine>({
     },
 })
 
+
+medicineSchema.pre('save', function (next) {
+    if (this.isModified('name')) {
+        this.name = this.name.toLowerCase();
+    }
+    if (this.isModified('medicinalUse')) {
+        this.medicinalUse = this.medicinalUse.toLowerCase();
+    }
+    next();
+});
+
 const Medicine = model<Imedicine>('Medicine', medicineSchema);
 
 

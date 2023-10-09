@@ -17,6 +17,14 @@ const packageSchema = new Schema<IPackage>({
     discountForFamily: {type: Number, required: true, min:0, max:100},
 })
 
+
+packageSchema.pre('save', function (next) {
+    if (this.isModified('name')) {
+        this.name = this.name.toLowerCase();
+    }
+    next();
+});
+
 const Package = model<IPackage>('Package', packageSchema);
 
 
