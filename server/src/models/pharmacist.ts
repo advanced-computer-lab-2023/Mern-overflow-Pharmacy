@@ -7,7 +7,7 @@ interface IPharmacist {
     email: string;
     passwordHash: string;
     dateOfBirth: Date;
-    horlyRate: number;
+    hourlyRate: number;
     affiliation: string;
     education: string;
     status: string;
@@ -19,7 +19,7 @@ const pharmacistShema = new Schema<IPharmacist>({
     email: { type: String, required: true, match : [/\S+@\S+\.\S+/, "invalid email"], },
     passwordHash:{ type: String, required: true },
     dateOfBirth: { type: Date, required: true },
-    horlyRate: { type: Number, required: true },
+    hourlyRate: { type: Number, required: true },
     affiliation: { type: String, required: true , trim: true },
     education: { type: String, required: true , trim: true },
     status: { type: String, required: true , lowercase: true, enum: ['pending', 'accepted', 'rejected'] },
