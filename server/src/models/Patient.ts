@@ -19,7 +19,7 @@ interface IPatient {
     dateOfBirth: Date;
     gender: string;
     mobileNumber: string;
-    emergencyContact: emergencyContact[];
+    emergencyContact: emergencyContact;
     prescriptions?: typeof mongoose.Types.ObjectId[];
     package?: typeof mongoose.Types.ObjectId;
 }
@@ -33,13 +33,13 @@ const PatientSchema = new Schema<IPatient>({
     dateOfBirth: { type: Date, required: true },
     gender: { type: String, required: true, lowercase: true, enum: ['male', 'female'] },
     mobileNumber: { type: String, required: true, unique: true, min: 8, max: 16, match: [/^(\+\d{8,15}|\d{8,15})$/, "invalid charachters"] },
-    emergencyContact: [
+    emergencyContact: 
         {
             name: { type: String, required: true, trim: true },
             mobileNumber: { type: String, required: true, min: 8, max: 16, match: [/^(\+\d{8,15}|\d{8,15})$/, "invalid charachters"] },
             relation: { type: String, required: true, trim: true },
         }
-    ],
+    ,
 
     prescriptions: [{ type: mongoose.Types.ObjectId, ref: "Prescription", required: false }],
     package: { type: mongoose.Types.ObjectId, ref: "Package", required: false },

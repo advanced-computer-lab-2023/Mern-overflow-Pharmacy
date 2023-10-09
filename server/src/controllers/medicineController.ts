@@ -28,8 +28,13 @@ const listMedicines = async(req:Request, res:Response)=>{
 const readMedicine = async(req:Request, res:Response)=>{
     //view the available quantity, and sales of each medicine
     const med = medicine.find()
-    .select('availableQuantity sales')
-    .then(med => { res.status(200).send(med); })
+    .select('name availableQuantity sales')
+    .then(med => { 
+      var medResults: any[]=[]; 
+        for(const mede of med){
+                  medResults.push({"name": mede.name, "availableQuantity": mede.availableQuantity,"sales":mede.sales});
+        }
+      res.status(200).send(medResults); })
     .catch(err => {res.status(404).send(err)
     });
 }
