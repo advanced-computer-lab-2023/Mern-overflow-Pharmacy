@@ -46,9 +46,18 @@ const PatientSchema = new Schema<IPatient>({
 
 });
 
+PatientSchema.pre('save', function (next) {
+    if (this.isModified('name')) {
+        this.name = this.name.toLowerCase();
+    }
+    if (this.isModified('email')) {
+        this.email = this.email.toLowerCase();
+    }
+    next();
+});
+
 // 3. Create a Model.
 const Patient = model<IPatient>('Patient', PatientSchema);
-
 
 // let p;
 // export async function f():Promise<any> {

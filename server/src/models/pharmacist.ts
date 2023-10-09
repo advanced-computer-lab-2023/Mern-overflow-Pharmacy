@@ -25,6 +25,18 @@ const pharmacistShema = new Schema<IPharmacist>({
     status: { type: String, required: true , lowercase: true, enum: ['pending', 'accepted', 'rejected'] },
 })
 
+
+pharmacistShema.pre('save', function (next) {
+    if (this.isModified('name')) {
+        this.name = this.name.toLowerCase();
+    }
+    if (this.isModified('email')) {
+        this.email = this.email.toLowerCase();
+    }
+    next();
+});
+
+
 const pharmacist = model<IPharmacist>('pharmacist', pharmacistShema);
 
 
