@@ -40,15 +40,9 @@ const readMedicine = async(req:Request, res:Response)=>{
 }
 
 
-// To -DO : handle lowercase and uppercase scenario 
-
-    
-  
-
-
 
   const searchMedicineByName = async (req: Request, res: Response) => {
-  const medname = req.body.name;
+  const medname = req.body.name.toLowerCase();
 
   try {
     // Fetch medicines from the database and await the result
@@ -57,7 +51,7 @@ const readMedicine = async(req:Request, res:Response)=>{
     if (meds.length === 0) {
       res.status(404).send("No medicines");
     } else {
-      const medList = meds.map((med) => med.name);
+      const medList = meds.map((med) => med.name.toLowerCase());
       const medResults = medList.filter((med) => med.includes(medname));
       //console.log(medResults.length);
 

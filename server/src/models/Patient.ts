@@ -1,7 +1,7 @@
 import mongoose, { Schema, model, connect } from 'mongoose';
-import dotenv from 'dotenv';
-dotenv.config();
-const mongoUrl: string = process.env.MONGO_URI!;
+// import dotenv from 'dotenv';
+//dotenv.config();
+const mongoUrl: string = "mongodb+srv://dbuser:987654321@acl.n4q8ykx.mongodb.net/?retryWrites=true&w=majority";
 
 interface emergencyContact {
     name: string;

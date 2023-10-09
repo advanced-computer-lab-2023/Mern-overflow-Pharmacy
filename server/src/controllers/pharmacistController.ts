@@ -18,38 +18,31 @@ const createPharmacist = async(req:Request, res:Response)=>{
 
 const listPharmacistRequests = async(req:Request, res:Response)=>{
     //view all of the information uploaded by a pharmacist (with pending requests) to apply to join the platform
-    const pharm = pharmacist
-      .find({})
+        pharmacist
+      .find({"status" : "pending"})
       .then((pharm) => {
-        var newPharms = [];
-        for (var i = 0; i < pharm.length; i++) {
-          if (pharm[i].status === "pending") newPharms.push(pharm[i]);
-        }
-  
-        res.status(200).json(newPharms);
+        res.status(200).send(pharm);
       })
       .catch((err) => {
-        res.status(400).json(err);
+        res.status(400).send(err);
       });
 }
 
-const updatePharmacist = async(req:Request, res:Response)=>{
+const acceptPharmacist = async(req:Request, res:Response)=>{
     //accepting a pharmacist's request
   const id = req.params.id;
   const query = { _id: id };
-
-  const status = req.body.status;
-  const update: { [key: string]: any } = {};
-  if (status!==undefined) update["status"] = status;
-  
-    pharmacist
+  const pharm = await pharmacist.findById({_id: id}).then((pharm) => {
+    const update: { [key: string]: any } = {};
+  if (pharm!.status === "pending") update["status"] = "accepted";
+  pharmacist
     .findOneAndUpdate(query, update, { new: true })
     .then((updatedPharm) => {
       if (updatedPharm) {
         res.status(200).send(updatedPharm);
       }
     })
-    .catch((error) => {
+  }).catch((error) => {
       res.status(400).send(error);
     });
 
@@ -84,6 +77,16 @@ const readPharmacist = async(req:Request, res:Response)=>{
     });
 }
 
+const listAllPharmacists = async(req:Request, res:Response)=>{
+    //view a pharmacist's information
+    pharmacist
+    .find({})
+    .then((pharm) => res.status(200).json(pharm))
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+}
+
 
 
 
@@ -105,8 +108,9 @@ const deletePharmacist = async(req:Request, res:Response)=>{
 export default {
     createPharmacist,
     listPharmacists,
-    updatePharmacist,
+    acceptPharmacist,
     deletePharmacist,
     listPharmacistRequests,
-    readPharmacist
+    readPharmacist,
+    listAllPharmacists
   };

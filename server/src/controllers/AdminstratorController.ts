@@ -6,10 +6,11 @@ import patient from "../models/Patient.js";
 
 const createAdminstrator = async(req:Request, res:Response)=>{
         //add another adminstrator with a set username and password
+        // missing authentication part
         req.body.username = "admin";
         req.body.passwordHash = "admin";
         const newAdminstrator = adminstrator
-        .create()
+        .create(req.body)
         .then((newAdminstrator) => {
         res.status(200).json(newAdminstrator);
         })
@@ -30,12 +31,21 @@ const deleteAdmin = async (req: Request, res: Response) => {
       });
   };
 
+  const ListAllAdmins = async (req: Request, res: Response) => {
+    adminstrator.find({}).then((results) => {
+        res.status(200).send(results);
+    }).catch((err)=>{
+        res.status(400).send(err);
+    })
+  };
+
   
 
 
 export default{
   createAdminstrator,
-  deleteAdmin
+  deleteAdmin,
+  ListAllAdmins
 }
 
 

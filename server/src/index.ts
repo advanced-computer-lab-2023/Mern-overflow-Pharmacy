@@ -1,7 +1,7 @@
 import express from 'express';
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 import mongoose, { ConnectOptions } from 'mongoose';
-import axios from "axios";
+//import axios from "axios";
 import bodyParser from "body-parser";
 import adminstratorController from "./controllers/AdminstratorController.js";
 import medicineController from "./controllers/medicineController.js";
@@ -36,9 +36,10 @@ app.get("/medicines/filter", medicineController.filterMedicines);
 app.get("/patients", patientController.listPatients);
 app.get("/patients/:id", patientController.readPatient);
 app.get("/pharmacists", pharmacistController.listPharmacists);
+app.get("/pharmacists/listAll", pharmacistController.listPharmacistRequests);
+app.get("/pharmacists/viewAll",pharmacistController.listAllPharmacists);
 app.get("/pharmacists/:id", pharmacistController.readPharmacist); 
-app.get("/pharmacists/requests", pharmacistController.listPharmacistRequests);
-
+app.get("/adminstators",adminstratorController.ListAllAdmins);
 //POST
 app.post("/adminstators", adminstratorController.createAdminstrator);
 app.post("/medicines", medicineController.createMedicine);
@@ -50,12 +51,13 @@ app.post("/pharmacists", pharmacistController.createPharmacist);
 
 //PUT
 app.put("/medicines/:id", medicineController.updateMedicine)
-app.put("/pharmacists/:id", pharmacistController.updatePharmacist);
+app.put("/pharmacists/:id", pharmacistController.acceptPharmacist);
 
 
 //DELETE
 app.delete("/patients/:id", patientController.deletePatient);
 app.delete("/pharmacists/:id", pharmacistController.deletePharmacist);
+app.delete("/adminstrators/:id", adminstratorController.deleteAdmin);
 
 
 
