@@ -21,16 +21,20 @@ import {
 function App() {
   const router = createBrowserRouter([
     {
+      path: "/signin",
+      element: <SignIn />,
+    },
+    {
+      path: "/",
+      element: <SignIn />,
+    },
+    {
       path: "/register/patient",
       element: <PatientRegister />,
     },
     {
       path: "/register/pharmacist",
       element: <PharmacistRegister />
-    },
-    {
-      path: "/signin",
-      element: <SignIn />,
     },
     {
       path: "/admin/admins",
