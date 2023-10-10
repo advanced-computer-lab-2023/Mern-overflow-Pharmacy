@@ -61,7 +61,7 @@ function App() {
       element: <PharmacistManageMedicines />,
     },
     {
-      path: "/pharmacist/medicines/1",
+      path: "/pharmacist/medicines/:id",
       element: <PharmacistEditMedicine />,
     },
     {
