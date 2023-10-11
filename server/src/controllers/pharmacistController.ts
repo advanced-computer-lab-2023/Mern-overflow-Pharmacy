@@ -2,87 +2,89 @@ import { Request, Response } from "express";
 import pharmacist from "../models/pharmacist.js";
 
 
-const createPharmacist = async(req:Request, res:Response)=>{
-    //submit a request to register as a pharmacist 
-    const entry = pharmacist.find({ 'username': req.body.username }).then((document) => {
-      if (document.length === 0) {
+const createPharmacist = async (req: Request, res: Response) => {
+  //submit a request to register as a pharmacist 
+  req.body.status = "pending";
+  const entry = pharmacist.find({ 'username': req.body.username }).then((document) => {
+    if (document.length === 0) {
 
-        pharmacist.find({ 'email': req.body.email }).then((emailRes) => {
+      pharmacist.find({ 'email': req.body.email }).then((emailRes) => {
 
-              if (emailRes.length !== 0)
-                  res.status(404).send("You are already registered , please sign in ");
-          
-              else {
-                  const newPharmacist = pharmacist
-                      .create(req.body)
-                      .then((newPharmacist) => {
-                          res.status(200).json(newPharmacist);
-                      })
-                      .catch((err) => {
-                          res.status(400).json(err);
-                      });
-              }
-          })
-      }
-      else if (document.length !== 0)
-          res.status(400).send("username taken , please choose another one ");
+        if (emailRes.length !== 0)
+          res.status(404).send("You are already registered , please sign in ");
+
+        else {
+          const newPharmacist = pharmacist
+            .create(req.body)
+            .then((newPharmacist) => {
+              res.status(200).json(newPharmacist);
+            })
+            .catch((err) => {
+              res.status(400).json(err);
+              console.log(err);
+            });
+        }
+      })
+    }
+    else if (document.length !== 0)
+      res.status(400).send("username taken , please choose another one ");
   })
 }
 
-const listPharmacistRequests = async(req:Request, res:Response)=>{
-    //view all of the information uploaded by a pharmacist (with pending requests) to apply to join the platform
-        pharmacist
-      .find({"status" : "pending"})
-      .then((pharm) => {
-        res.status(200).send(pharm);
-      })
-      .catch((err) => {
-        res.status(400).send(err);
-      });
+const listPharmacistRequests = async (req: Request, res: Response) => {
+  //view all of the information uploaded by a pharmacist (with pending requests) to apply to join the platform
+  pharmacist
+    .find({ "status": "pending" })
+    .then((pharm) => {
+      res.status(200).send(pharm);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
 }
 
-const acceptPharmacist = async(req:Request, res:Response)=>{
-    //accepting a pharmacist's request
+const acceptPharmacist = async (req: Request, res: Response) => {
+  //accepting a pharmacist's request
   const id = req.params.id;
   const query = { _id: id };
-  const pharm = await pharmacist.findById({_id: id}).then((pharm) => {
+  const pharm = await pharmacist.findById({ _id: id }).then((pharm) => {
     const update: { [key: string]: any } = {};
-  if (pharm!.status === "pending") update["status"] = "accepted";
-  pharmacist
-    .findOneAndUpdate(query, update, { new: true })
-    .then((updatedPharm) => {
-      if (updatedPharm) {
-        res.status(200).send(updatedPharm);
-      }
-    })
+    if (pharm!.status === "pending") update["status"] = "accepted";
+    pharmacist
+      .findOneAndUpdate(query, update, { new: true })
+      .then((updatedPharm) => {
+        if (updatedPharm) {
+          res.status(200).send(updatedPharm);
+        }
+      })
   }).catch((error) => {
-      res.status(400).send(error);
+    res.status(400).send(error);
+  });
+
+}
+
+const listPharmacists = async (req: Request, res: Response) => {
+  //view all of the information uploaded by a pharmacist (with approved requests) to select one of them to view his info
+  const pharm = pharmacist
+    .find({})
+    .then((pharm) => {
+      var newPharms = [];
+      for (var i = 0; i < pharm.length; i++) {
+        if (pharm[i].status === "accepted") newPharms.push(pharm[i]);
+      }
+
+      res.status(200).json(newPharms);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
     });
 
 }
 
-const listPharmacists = async(req:Request, res:Response)=>{
-    //view all of the information uploaded by a pharmacist (with approved requests) to select one of them to view his info
-    const pharm = pharmacist
-      .find({})
-      .then((pharm) => {
-        var newPharms = [];
-        for (var i = 0; i < pharm.length; i++) {
-          if (pharm[i].status === "accepted") newPharms.push(pharm[i]);
-        }
-  
-        res.status(200).json(newPharms);
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-      });
-    
-}
-
-const readPharmacist = async(req:Request, res:Response)=>{
-    //view a pharmacist's information
-    const id = req.params.id;
-    const pharm = pharmacist
+const readPharmacist = async (req: Request, res: Response) => {
+  //view a pharmacist's information
+  const id = req.params.id;
+  const pharm = pharmacist
     .findById(id)
     .then((pharm) => res.status(200).json(pharm))
     .catch((err) => {
@@ -90,9 +92,9 @@ const readPharmacist = async(req:Request, res:Response)=>{
     });
 }
 
-const listAllPharmacists = async(req:Request, res:Response)=>{
-    //view a pharmacist's information
-    pharmacist
+const listAllPharmacists = async (req: Request, res: Response) => {
+  //view a pharmacist's information
+  pharmacist
     .find({})
     .then((pharm) => res.status(200).json(pharm))
     .catch((err) => {
@@ -100,27 +102,28 @@ const listAllPharmacists = async(req:Request, res:Response)=>{
     });
 }
 
-const deletePharmacist = async(req:Request, res:Response)=>{
-    //remove a pharmacist from the system
-        const id = req.params.id;
-        const pharm = pharmacist
-          .findByIdAndDelete({ _id: id })
-          .then((pharm) => {
-            res.status(200).json(pharm);
-          })
-          .catch((err) => {
-            res.status(400).json(err);
-          });
+const deletePharmacist = async (req: Request, res: Response) => {
+  //remove a pharmacist from the system
+  console.log('entered delete pharmacist');
+  const id = req.params.id;
+  const pharm = pharmacist
+    .findByIdAndDelete({ _id: id })
+    .then((pharm) => {
+      res.status(200).json(pharm);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
 };
 
 
 
 export default {
-    createPharmacist,
-    listPharmacists,
-    acceptPharmacist,
-    deletePharmacist,
-    listPharmacistRequests,
-    readPharmacist,
-    listAllPharmacists
+  createPharmacist,
+  listPharmacists,
+  acceptPharmacist,
+  deletePharmacist,
+  listPharmacistRequests,
+  readPharmacist,
+  listAllPharmacists
 };

@@ -29,7 +29,7 @@ export default function PharmacistRegister() {
     dataToServer["passwordHash"] = sha256(data["password"]);
     delete dataToServer.password
     console.log('sending data')
-    console.log(dataToServer);
+    console.log(JSON.stringify(dataToServer));
 
     axios.post('http://localhost:8000/pharmacists', dataToServer)
       .then((response) => {

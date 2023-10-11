@@ -20,6 +20,6 @@ router.post("/", pharmacistController.createPharmacist);
 router.put("/:id", pharmacistController.acceptPharmacist);
 
 //DELETE
-router.delete("/:id", patientController.deletePatient);
+router.delete("/:id", pharmacistController.deletePharmacist);
 
 export default router;
