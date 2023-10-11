@@ -14,6 +14,9 @@ const AddMedicine = () => {
     const onSubmit = data => {
         const dataToServer = { ...data };
         dataToServer["sales"] = 0;
+        dataToServer["details"] = {description: data["description"], activeIngredients: data["activeIngredients"].split(',').map(item => item.trim())}
+        delete dataToServer.description
+        delete dataToServer.activeIngredients
         axios.post('http://localhost:8000/medicines', dataToServer)
             .then((response) => {
                 console.log('POST request successful', response);
@@ -44,9 +47,21 @@ const AddMedicine = () => {
                             <TextField
                                 id="name"
                                 label="Name"
-                                {...register("name", { required: true, maxLength: 80 })}
+                                {...register("name", { required: true })}
                                 error={!!errors["name"]}
                                 helperText={errors["name"]?.message}
+                                fullWidth
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={8}>
+                            <TextField
+                                id="description"
+                                label="Description"
+                                {...register("description", { required: true })}
+                                error={!!errors["description"]}
+                                helperText={errors["description"]?.message}
+                                type="text"
                                 fullWidth
                                 required
                             />
@@ -55,7 +70,7 @@ const AddMedicine = () => {
                             <TextField
                                 id="medicinalUse"
                                 label="Medicinal Use"
-                                {...register("medicinalUse", { required: true, maxLength: 80 })}
+                                {...register("medicinalUse", { required: true})}
                                 error={!!errors["medicinalUse"]}
                                 helperText={errors["medicinalUse"]?.message}
                                 type="text"
@@ -63,13 +78,13 @@ const AddMedicine = () => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={8}>
                             <TextField
-                                id="details"
-                                label="Active Ingredients"
-                                {...register("details", { required: true, maxLength: 80 })}
-                                error={!!errors["details"]}
-                                helperText={errors["details"]?.message}
+                                id="activeIngredients"
+                                label="Active Ingredients (Separate by comma)"
+                                {...register("activeIngredients", { required: true})}
+                                error={!!errors["activeIngredients"]}
+                                helperText={errors["activeIngredients"]?.message}
                                 type="text"
                                 fullWidth
                                 required
@@ -85,7 +100,7 @@ const AddMedicine = () => {
                                     id="price"
                                     startAdornment={<InputAdornment position="start">EGP</InputAdornment>}
                                     label="Price"
-                                    {...register("price", { required: true, maxLength: 80 })}
+                                    {...register("price", { required: true})}
                                     error={!!errors["price"]}
                                     helperText={errors["price"]?.message}
                                     onBlur={handleChange}
@@ -96,7 +111,7 @@ const AddMedicine = () => {
                             <TextField
                                 id="availableQuantity"
                                 label="Available Quantity"
-                                {...register("availableQuantity", { required: true, maxLength: 80 })}
+                                {...register("availableQuantity", { required: true})}
                                 error={!!errors["availableQuantity"]}
                                 helperText={errors["availableQuantity"]?.message}
                                 type="number"
