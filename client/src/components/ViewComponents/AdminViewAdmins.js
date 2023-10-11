@@ -61,9 +61,8 @@ export default function AdminViewAdmins(props) {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell key={column.key}>{column.label}</TableCell>
-                                ))}
+                                <TableCell key="username">Username</TableCell>
+                                <TableCell key="action" sx={{ textAlign: 'right' }}>Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
