@@ -6,10 +6,15 @@ interface MedicineImage {
     filename: string;
 }
 
+interface Details{
+    description: string;
+    activeIngrediants: string[];
+}
+
 interface Imedicine {
     name: string;
     medicinalUse: string;
-    details: string;
+    details: Details;
     price: number;
     availableQuantity: number;
     sales : number ;
@@ -20,7 +25,10 @@ interface Imedicine {
 const medicineSchema = new Schema<Imedicine>({
     name: { type: String, required: true, unique: true },
     medicinalUse: { type: String, required: true},
-    details: { type: String, required: true },
+    details: {
+        description: { type: String, required: true },
+        activeIngrediants: [{ type: String, required: true }],
+    },
     price: { type: Number, required: true },
     availableQuantity: { type: Number, required: true },
     sales: { type: Number, required: true },
