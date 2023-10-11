@@ -1,5 +1,5 @@
 import PharmacistDashboard from "./PharmacistDashboard";
-
+import PharmacistViewMedicines from "../../components/ViewComponents/PharmacistViewMedicines";
 import AddMedicine from "../../components/formComponents/AddMedicine";
 
 const PharmacistManageMedicines = () => {
@@ -7,6 +7,7 @@ const PharmacistManageMedicines = () => {
         <>
             <PharmacistDashboard title="Manage Available Medicines" />
             <AddMedicine />
+            <PharmacistViewMedicines />
         </>
     );
 }

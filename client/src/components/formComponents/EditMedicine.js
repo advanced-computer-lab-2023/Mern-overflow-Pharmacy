@@ -5,6 +5,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useForm } from "react-hook-form"
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const EditMedicine = () => {
@@ -130,6 +131,11 @@ const EditMedicine = () => {
                     />
                     <Button type="submit" variant="contained" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}>
                         Update Medicine
+                    </Button>
+                    <Button type="button" variant="outlined" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}
+                    component={Link}
+                    to="/pharmacist/medicines">
+                        Cancel
                     </Button>
                 </Box>
             </Paper>
