@@ -11,7 +11,7 @@ router.get("/viewAll", medicineController.listAllMedicines);
 router.get("/view", medicineController.listMedicines);
 router.get("/", medicineController.readMedicine);
 router.get("/search", medicineController.searchMedicineByName);
-router.get("/filter", medicineController.filterMedicines);
+router.post("/filter", medicineController.filterMedicines);
 
 //POST
 router.post("/", medicineController.createMedicine);

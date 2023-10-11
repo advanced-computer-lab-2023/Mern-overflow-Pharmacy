@@ -26,15 +26,24 @@ export default function AdminViewMedicines() {
     const [selectedRowId, setSelectedRowId] = useState(null);
     const [data, setData] = useState([]);
     const [Query, setQuery] = useState("");
+    const [uniqueMedicinalUses, setUniqueMedicinalUses] = useState(["All"]);
 
     const fetchTableData = () => {
         axios
-            .get(`http://localhost:8000/medicines/viewAll`, {
-            })
+            .get(`http://localhost:8000/medicines/viewAll`, {})
             .then((res) => {
                 setData(res.data);
-            });
+                let temp = ["All"];
+                res.data.map((key) => {
+                    if (temp.indexOf(key.medicinalUse) === -1) {
+                        temp.push(key.medicinalUse);
+                    }
+                    return null;
+                });
+                setUniqueMedicinalUses(temp);
+            })
     };
+
 
     useEffect(() => {
         fetchTableData();
@@ -42,31 +51,33 @@ export default function AdminViewMedicines() {
 
     const handleFilter = (e) => {
         e.preventDefault();
-        let filter = e.target.value;
+        let medUse = e.target.value;
 
-        if (filter === "all") {
+        if (medUse === "" || medUse === "All") {
             fetchTableData();
         } else {
+            axios
+          .post(`http://localhost:8000/medicines/filter`, {
+            medicinalUse: medUse,
+          })
+          .then((res) => {
+            setData(res.data);
+          });
+
             // axios
-            //     .get(`http://localhost:8000/doctors/${id}/res`, {
-            //         params: { id: id },
+            //     .get(`http://localhost:8000/medicines/filter`, {
+            //         data: {
+            //             medicinalUse: medUse,
+            //         }
             //     })
             //     .then((res) => {
             //         setData(res.data);
+            //         console.log(medUse);
             //     });
         }
     };
 
     const handleDetails = (id) => {
-        // axios.delete(`http://localhost:8000/patients/${id}`)
-        //     .then((response) => {
-        //         console.log('DELETE request successful', response);
-        //         fetchTableData();
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error making DELETE request', error);
-        //     });
-
         setTooltipOpen(prevState => ({
             ...prevState,
             [id]: !prevState[id]
@@ -93,8 +104,6 @@ export default function AdminViewMedicines() {
                         <Container sx={{ width: "48%" }}>
                             <Input
                                 size="lg"
-                                bordered
-                                clearable
                                 placeholder="Search..."
                                 onChange={(e) => setQuery(e.target.value)}
                                 fullWidth
@@ -102,17 +111,19 @@ export default function AdminViewMedicines() {
                         </Container>
                         <Container sx={{ width: "48%" }}>
                             <FormControl fullWidth>
-                                <InputLabel id="filter-by-status">Status</InputLabel>
+                                <InputLabel id="filter-by-medicinalUse">Medicinal Use</InputLabel>
                                 <Select
-                                    labelId="filter-by-status"
-                                    id="filter-by-status-select"
-                                    label="status"
+                                    onChange={(e) => handleFilter(e)}
+                                    sx={{ textAlign: 'left' }}
+                                    labelId="filter-by-medicinalUse"
+                                    id="filter-by-medicinalUse-select"
+                                    label="medicinalUse"
                                     uncontrolled="true"
-                                    onChange={handleFilter}
                                     fullWidth
                                 >
-                                    <MenuItem value="all">All</MenuItem>
-                                    <MenuItem value="upcoming">Upcoming</MenuItem>
+                                    {uniqueMedicinalUses.map((value) => (
+                                        <MenuItem key={value} value={value}>{value}</MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </Container>
