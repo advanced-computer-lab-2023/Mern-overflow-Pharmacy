@@ -10,8 +10,8 @@ router.use(bodyParser.json());
 //GET
 router.get("/", pharmacistController.listPharmacists);
 router.get("/listAll", pharmacistController.listPharmacistRequests);
-router.get("/viewAll",pharmacistController.listAllPharmacists);
-router.get("/:id", pharmacistController.readPharmacist); 
+router.get("/viewAll", pharmacistController.listAllPharmacists);
+router.get("/:id", pharmacistController.readPharmacist);
 
 //POST
 router.post("/", pharmacistController.createPharmacist);
