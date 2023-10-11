@@ -1,11 +1,12 @@
 import mongoose, {Schema, model} from "mongoose";
+import User from "./User.js";
 
 
 interface IPharmacist {
-    username:string;
+    // username:string;
     name: string;
     email: string;
-    passwordHash: string;
+    // passwordHash: string;
     dateOfBirth: Date;
     hourlyRate: number;
     affiliation: string;
@@ -14,10 +15,10 @@ interface IPharmacist {
 }
 
 const pharmacistShema = new Schema<IPharmacist>({
-    username: { type: String, required: true , unique: true },
+    // username: { type: String, required: true , unique: true },
     name: { type: String, required: true , trim: true },
     email: { type: String, required: true, match : [/\S+@\S+\.\S+/, "invalid email"], },
-    passwordHash:{ type: String, required: true },
+    // passwordHash:{ type: String, required: true },
     dateOfBirth: { type: Date, required: true },
     hourlyRate: { type: Number, required: true },
     affiliation: { type: String, required: true , trim: true },
@@ -37,7 +38,8 @@ pharmacistShema.pre('save', function (next) {
 });
 
 
-const pharmacist = model<IPharmacist>('pharmacist', pharmacistShema);
+// const pharmacist = model<IPharmacist>('pharmacist', pharmacistShema);
+const pharmacist = User.discriminator<IPharmacist>('Patient', pharmacistShema);
 
 
 export default mongoose.model<IPharmacist>('pharmacist', pharmacistShema);
