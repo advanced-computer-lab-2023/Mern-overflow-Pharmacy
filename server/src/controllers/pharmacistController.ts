@@ -4,16 +4,29 @@ import pharmacist from "../models/pharmacist.js";
 
 const createPharmacist = async(req:Request, res:Response)=>{
     //submit a request to register as a pharmacist 
-    req.body.status = "pending";
-    const newPharm = pharmacist
-      .create(req.body)
-      .then((newPharm) => {
-        res.status(200).json(newPharm);
-      })
-      .catch((err) => {
-      // console.log("error");
-        res.status(400).json(err);
-      });
+    const entry = pharmacist.find({ 'username': req.body.username }).then((document) => {
+      if (document.length === 0) {
+
+        pharmacist.find({ 'email': req.body.email }).then((emailRes) => {
+
+              if (emailRes.length !== 0)
+                  res.status(404).send("You are already registered , please sign in ");
+          
+              else {
+                  const newPharmacist = pharmacist
+                      .create(req.body)
+                      .then((newPharmacist) => {
+                          res.status(200).json(newPharmacist);
+                      })
+                      .catch((err) => {
+                          res.status(400).json(err);
+                      });
+              }
+          })
+      }
+      else if (document.length !== 0)
+          res.status(400).send("username taken , please choose another one ");
+  })
 }
 
 const listPharmacistRequests = async(req:Request, res:Response)=>{
@@ -87,9 +100,6 @@ const listAllPharmacists = async(req:Request, res:Response)=>{
     });
 }
 
-
-
-
 const deletePharmacist = async(req:Request, res:Response)=>{
     //remove a pharmacist from the system
         const id = req.params.id;
@@ -101,7 +111,7 @@ const deletePharmacist = async(req:Request, res:Response)=>{
           .catch((err) => {
             res.status(400).json(err);
           });
-      };
+};
 
 
 
@@ -113,4 +123,4 @@ export default {
     listPharmacistRequests,
     readPharmacist,
     listAllPharmacists
-  };
+};
