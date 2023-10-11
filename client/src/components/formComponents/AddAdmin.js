@@ -3,16 +3,18 @@ import axios from 'axios';
 import sha256 from 'js-sha256';
 import { useForm } from "react-hook-form"
 
-const AddAdmin = () => {
+const AddAdmin = (props) => {
   const { register, handleSubmit, setError, formState: { errors } } = useForm();
 
   const onSubmit = data => {
     const dataToServer = { ...data };
     dataToServer["passwordHash"] = sha256(data["password"]);
+    delete dataToServer.password
     console.log(dataToServer);
     axios.post('http://localhost:8000/adminstators', dataToServer)
       .then((response) => {
         console.log('POST request successful', response);
+        props.setDataIsUpdated(false);
       })
       .catch((error) => {
         console.error('Error making POST request', error);
