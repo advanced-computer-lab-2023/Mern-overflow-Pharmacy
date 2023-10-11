@@ -39,10 +39,10 @@ pharmacistShema.pre('save', function (next) {
 
 
 // const pharmacist = model<IPharmacist>('pharmacist', pharmacistShema);
-const pharmacist = User.discriminator<IPharmacist>('Patient', pharmacistShema);
+const pharmacist = User.discriminator<IPharmacist>('pharmacist', pharmacistShema);
 
 
-export default mongoose.model<IPharmacist>('pharmacist', pharmacistShema);
+export default pharmacist
 
 
 
