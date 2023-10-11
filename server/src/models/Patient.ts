@@ -2,7 +2,6 @@ import mongoose, { Schema, model, connect, Types } from 'mongoose';
 import User from "./User.js";
 // import dotenv from 'dotenv';
 //dotenv.config();
-const mongoUrl: string = "mongodb+srv://dbuser:987654321@acl.n4q8ykx.mongodb.net/?retryWrites=true&w=majority";
 
 interface emergencyContact {
     name: string;
@@ -75,4 +74,4 @@ const Patient = User.discriminator<IPatient>('Patient', PatientSchema);
 
 // run().catch(err => console.log(err));
 
-export default mongoose.model<IPatient>("Patient", PatientSchema);
+export default Patient
