@@ -9,7 +9,7 @@ import sha256 from 'js-sha256';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form"
 
-const AddMedicine = () => {
+const AddMedicine = (props) => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
 
     const onSubmit = data => {
@@ -21,6 +21,7 @@ const AddMedicine = () => {
         axios.post('http://localhost:8000/medicines', dataToServer)
             .then((response) => {
                 console.log('POST request successful', response);
+                props.setDataIsUpdated(false);
             })
             .catch((error) => {
                 console.error('Error making POST request', error);

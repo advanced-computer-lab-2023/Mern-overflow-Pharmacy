@@ -73,7 +73,7 @@ export default function AdminViewPatients(props) {
 
   useEffect(() => {
       fetchTableData();
-  }, [props.dataIsUpdated]);
+  }, []);
 
   return (
       <Container maxWidth="xl">

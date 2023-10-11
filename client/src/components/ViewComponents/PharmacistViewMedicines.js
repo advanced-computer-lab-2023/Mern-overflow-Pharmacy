@@ -21,7 +21,7 @@ import TableRow from "@mui/material/TableRow";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import axios from "axios";
 
-export default function PharmacistViewMedicines() {
+export default function PharmacistViewMedicines(props) {
     const [tooltipOpen, setTooltipOpen] = useState(false);
     const [selectedRowId, setSelectedRowId] = useState(null);
     const [data, setData] = useState([]);
@@ -33,6 +33,7 @@ export default function PharmacistViewMedicines() {
             .get(`http://localhost:8000/medicines/viewAll`, {})
             .then((res) => {
                 setData(res.data);
+                props.setDataIsUpdated(true);
                 let temp = ["All"];
                 res.data.map((key) => {
                     if (temp.indexOf(key.medicinalUse) === -1) {
@@ -47,7 +48,7 @@ export default function PharmacistViewMedicines() {
 
     useEffect(() => {
         fetchTableData();
-    }, []);
+    }, [props.dataIsUpdated]);
 
     const handleFilter = (e) => {
         e.preventDefault();
