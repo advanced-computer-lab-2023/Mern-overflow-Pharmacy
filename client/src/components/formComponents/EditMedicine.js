@@ -12,7 +12,8 @@ const EditMedicine = () => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
     const [name, setName] = useState("");
     const [medicinalUse, setMedicinalUse] = useState("");
-    const [details, setDetails] = useState("");
+    const [description, setDescription] = useState("");
+    const [activeIngredients, setActiveIngredients] = useState("");
     const [price, setPrice] = useState("");
     const [availableQuantity, setAvailableQuantity] = useState("");
     const [sales, setSales] = useState("");
@@ -23,12 +24,13 @@ const EditMedicine = () => {
                 console.log('started fetching');
                 const response = await axios.get(`http://localhost:8000/medicines/viewAll`);
                 const medicine = response.data.find(item => item._id === id);
-                // setName(medicine.name);
-                // setMedicinalUse(medicine.medicinalUse);
-                setDetails(medicine.details);
+                setName(medicine.name);
+                setMedicinalUse(medicine.medicinalUse);
+                setDescription(medicine.details.description);
+                setActiveIngredients(medicine.details.activeIngredients);
                 setPrice(medicine.price);
-                // setAvailableQuantity(medicine.availableQuantity);
-                // setSales(medicine.sales);
+                setAvailableQuantity(medicine.availableQuantity);
+                setSales(medicine.sales);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -37,6 +39,7 @@ const EditMedicine = () => {
     }, []);
 
     const onSubmit = data => {
+        const details = {activeIngredients: activeIngredients.split(',').map(item => item.trim()), description: description}
         const dataToServer = { name, medicinalUse, details, price, availableQuantity, sales };
         axios.put(`http://localhost:8000/medicines/${id}`, dataToServer)
             .then((response) => {
@@ -73,10 +76,19 @@ const EditMedicine = () => {
                     />
                     <TextField
                         sx={{ mb: 3 }}
-                        value={details}
-                        onChange={(e) => { setDetails(e.target.value) }}
+                        value={description}
+                        onChange={(e) => { setDescription(e.target.value) }}
                         type="text"
-                        label="Active Ingredients"
+                        label="Description"
+                        required
+                        fullWidth
+                    />
+                    <TextField
+                        sx={{ mb: 3 }}
+                        value={activeIngredients}
+                        onChange={(e) => { setActiveIngredients(e.target.value) }}
+                        type="text"
+                        label="Active Ingredients (Separate by commas)"
                         required
                         fullWidth
                     />
