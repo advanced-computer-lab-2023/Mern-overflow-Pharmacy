@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, connect } from 'mongoose';
+import mongoose, { Schema, model, connect, Types } from 'mongoose';
 // import dotenv from 'dotenv';
 //dotenv.config();
 const mongoUrl: string = "mongodb+srv://dbuser:987654321@acl.n4q8ykx.mongodb.net/?retryWrites=true&w=majority";
@@ -20,8 +20,8 @@ interface IPatient {
     gender: string;
     mobileNumber: string;
     emergencyContact: emergencyContact;
-    prescriptions?: typeof mongoose.Types.ObjectId[];
-    package?: typeof mongoose.Types.ObjectId;
+    prescriptions?:  Types.ObjectId[];
+    package?: Types.ObjectId;
 }
 
 // 2. Create a Schema corresponding to the document interface.
