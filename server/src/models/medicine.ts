@@ -8,7 +8,7 @@ interface MedicineImage {
 
 interface Details{
     description: string;
-    activeIngrediants: string[];
+    activeIngredients: string[];
 }
 
 interface Imedicine {
@@ -27,7 +27,7 @@ const medicineSchema = new Schema<Imedicine>({
     medicinalUse: { type: String, required: true},
     details: {
         description: { type: String, required: true },
-        activeIngrediants: [{ type: String, required: true }],
+        activeIngredients: [{ type: String, required: true }],
     },
     price: { type: Number, required: true },
     availableQuantity: { type: Number, required: true },
