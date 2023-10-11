@@ -37,7 +37,7 @@ const PatientSchema = new Schema<IPatient>({
         {
             name: { type: String, required: true, trim: true },
             mobileNumber: { type: String, required: true, min: 8, max: 16, match: [/^(\+\d{8,15}|\d{8,15})$/, "invalid charachters"] },
-            relation: { type: String, required: true, trim: true },
+            relation: { type: String, required: true, trim: true, enum: ['wife', 'husband','child'] },
         }
     ,
 
@@ -88,6 +88,7 @@ export async function addTestPatient(username: string, name: string, email: stri
         emergencyContact: {
             name: 'person',
             mobileNumber: '01000000001'
+
         }
     });
     await patient.save();

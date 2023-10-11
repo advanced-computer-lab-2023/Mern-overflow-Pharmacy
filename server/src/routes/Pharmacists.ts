@@ -2,8 +2,10 @@ import express from "express";
 import bodyParser from "body-parser";
 import pharmacistController from "../controllers/pharmacistController.js";
 import patientController from "../controllers/PatientController.js";
-import router from "./Administrator.js";
 
+const router = express.Router();
+
+router.use(bodyParser.json());
 
 //GET
 router.get("/", pharmacistController.listPharmacists);
