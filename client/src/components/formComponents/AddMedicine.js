@@ -1,16 +1,12 @@
-import { Box, Grid, Typography, FormControl, Button, Container, Paper, TextField } from "@mui/material";
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import { Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField } from "@mui/material";
 import axios from 'axios';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import sha256 from 'js-sha256';
-import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form"
+import { useState } from "react";
 
 const AddMedicine = (props) => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     const onSubmit = data => {
         const dataToServer = { ...data };
@@ -26,10 +22,11 @@ const AddMedicine = (props) => {
             .catch((error) => {
                 console.error(error);
                 if (error.response.data.code === 11000) {
-                    alert('This medicine name already exists. Please change the name.');
+                    setAlertMessage('This medicine name already exists. Please change the name.');
                 } else {
-                    alert((error.response.data.message || 'Unknown error'));
+                    setAlertMessage(error.response.data.message || 'Unknown error');
                 }
+                setAlertOpen(true);
             });
     }
 
@@ -43,10 +40,22 @@ const AddMedicine = (props) => {
         }
     }
 
+    const handleAlertClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setAlertOpen(false);
+    };
+
     return (
         < Container maxWidth="lg" >
             <Paper elevation={3} sx={{ p: '20px', my: '40px' }}>
                 <Typography variant="h6" sx={{ mb: 4 }}> Add a Medicine to the System </Typography>
+                <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
+                    <Alert elevation={6} variant="filled" onClose={handleAlertClose} severity="error">
+                        {alertMessage}
+                    </Alert>
+                </Snackbar>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={4}>

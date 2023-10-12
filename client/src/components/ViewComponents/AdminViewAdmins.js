@@ -1,4 +1,4 @@
-import { Input, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import { Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -25,6 +25,8 @@ const columns = [
 
 export default function AdminViewAdmins(props) {
     const [data, setData] = useState([]);
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/adminstators`).then((res) => {
@@ -38,6 +40,8 @@ export default function AdminViewAdmins(props) {
             .then((response) => {
                 console.log('DELETE request successful', response);
                 fetchTableData();
+                setSuccessMessage('Admin deleted succesfully');
+                setSuccessOpen(true);
             })
             .catch((error) => {
                 console.error('Error making DELETE request', error);
@@ -49,8 +53,20 @@ export default function AdminViewAdmins(props) {
         fetchTableData();
     }, [props.dataIsUpdated]);
 
+    const handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessOpen(false);
+    };
+
     return (
         <Container maxWidth="xl">
+            <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+                    {successMessage}
+                </Alert>
+            </Snackbar>
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 <Container>
                     <Table>
