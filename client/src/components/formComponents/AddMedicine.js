@@ -25,6 +25,7 @@ const AddMedicine = (props) => {
             })
             .catch((error) => {
                 console.error('Error making POST request', error);
+                alert('Error making POST request: ' + error.message);
             });
 
     }

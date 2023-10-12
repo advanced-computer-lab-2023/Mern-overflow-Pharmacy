@@ -33,7 +33,6 @@ export default function AdminViewRequests(props) {
             .get(`http://localhost:8000/pharmacists/listAll`, {})
             .then((res) => {
                 setData(res.data);
-                props.setDataIsUpdated(true);
                 let temp = ["All"];
                 res.data.map((key) => {
                     if (temp.indexOf(key.medicinalUse) === -1) {
@@ -86,14 +85,15 @@ export default function AdminViewRequests(props) {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell key="name">Name</TableCell>
-                                <TableCell key="email">Email</TableCell>
-                                <TableCell key="username">Username</TableCell>
-                                <TableCell key="dateOfBirth">Date of Birth</TableCell>
-                                <TableCell key="hourlyRate">Hourly Rate</TableCell>
-                                <TableCell key="affiliation">Affiliation</TableCell>
-                                <TableCell key="education">Education</TableCell>
-                                <TableCell key="status">Status</TableCell>
+                                {[
+                                    "Name", "Email", "Username",
+                                    "Date of Birth", "Hourly Rate",
+                                    "Affiliation", "Education", "Status"
+                                ].map(header => (
+                                    <TableCell key={header} style={{ fontWeight: "bold" }}>
+                                        {header}
+                                    </TableCell>
+                                ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -114,6 +114,7 @@ export default function AdminViewRequests(props) {
                             )}
                         </TableBody>
                     </Table>
+
 
                 </Container >
             </Paper>

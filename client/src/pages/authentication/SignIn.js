@@ -13,7 +13,6 @@ import logo from '../../assets/gifs/logo.gif';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Link } from 'react-router-dom';
 
-
 const defaultTheme = createTheme();
 
 export default function SignIn() {
@@ -99,7 +98,9 @@ export default function SignIn() {
                                     />
                                 </Grid>
                             </Grid>
-                            <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}>
+                            <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}
+                                component={Link}
+                                to="/admin/admins">
                                 Sign In
                             </Button>
                         </Box>

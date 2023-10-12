@@ -41,6 +41,7 @@ export default function AdminViewAdmins(props) {
             })
             .catch((error) => {
                 console.error('Error making DELETE request', error);
+                alert('Error making DELETE request: ' + error.message);
             });
     }
 
@@ -52,17 +53,11 @@ export default function AdminViewAdmins(props) {
         <Container maxWidth="xl">
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 <Container>
-                    <Container>
-                        <Table>
-                            {/* ... rest of the code ... */}
-                        </Table>
-                    </Container>
-
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell key="username">Username</TableCell>
-                                <TableCell key="action" sx={{ textAlign: 'right' }}>Action</TableCell>
+                                <TableCell key="username" sx={{ fontWeight: "bold" }}>Username</TableCell>
+                                <TableCell key="action" sx={{ textAlign: 'right', fontWeight: "bold" }}>Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

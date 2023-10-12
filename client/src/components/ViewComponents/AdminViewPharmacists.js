@@ -15,35 +15,35 @@ import axios from "axios";
 const columns = [
     {
         key: "name",
-        label: "NAME",
+        label: "Name",
     },
     {
         key: "email",
-        label: "EMAIL",
+        label: "Email",
     },
     {
         key: "username",
-        label: "USERNAME",
+        label: "Username",
     },
     {
         key: "dateOfBirth",
-        label: "DATE OF BIRTH",
+        label: "Date of Birth",
     },
     {
         key: "hourlyRate",
-        label: "HOURLY RATE",
+        label: "Hourly Rate",
     },
     {
         key: "affiliation",
-        label: "AFFILIATION",
+        label: "Affiliation",
     },
     {
         key: "education",
-        label: "EDUCATION",
+        label: "Education",
     },
     {
         key: "action",
-        label: "ACTION",
+        label: "Action",
     },
 ];
 
@@ -64,6 +64,7 @@ export default function AdminViewPharmacists(props) {
             })
             .catch((error) => {
                 console.error('Error making DELETE request', error);
+                alert('Error making DELETE request: ' + error.message);
             });
     }
 
@@ -85,7 +86,7 @@ export default function AdminViewPharmacists(props) {
                         <TableHead>
                             <TableRow>
                                 {columns.map((column) => (
-                                    <TableCell key={column.key}>{column.label}</TableCell>
+                                    <TableCell key={column.key} sx={{ fontWeight: "bold" }}>{column.label}</TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
@@ -96,7 +97,7 @@ export default function AdminViewPharmacists(props) {
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.username}</TableCell>
                                 <TableCell>{row.dateOfBirth}</TableCell>
-                                <TableCell>{row.hourlyRate}</TableCell>
+                                <TableCell>EGP {row.hourlyRate}</TableCell>
                                 <TableCell>{row.affiliation}</TableCell>
                                 <TableCell>{row.education}</TableCell>
                                 <TableCell>

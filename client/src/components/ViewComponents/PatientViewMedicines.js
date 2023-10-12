@@ -131,10 +131,10 @@ export default function PatientViewMedicines() {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell key="name">Name</TableCell>
-                                <TableCell key="medicinalUse">Medicinal Use</TableCell>
-                                <TableCell key="price">Price</TableCell>
-                                <TableCell key="details" sx={{ textAlign: 'right' }}>Details</TableCell>
+                                <TableCell key="name" sx={{ fontWeight: "bold" }}>Name</TableCell>
+                                <TableCell key="medicinalUse" sx={{ fontWeight: "bold" }}>Medicinal Use</TableCell>
+                                <TableCell key="price" sx={{ fontWeight: "bold" }}>Price</TableCell>
+                                <TableCell key="details" sx={{ textAlign: 'right', fontWeight: "bold" }}>Details</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -144,7 +144,7 @@ export default function PatientViewMedicines() {
                                         <TableRow key={row.username}>
                                             <TableCell>{row.name}</TableCell>
                                             <TableCell>{row.medicinalUse}</TableCell>
-                                            <TableCell>{row.price}</TableCell>
+                                            <TableCell>EGP {row.price}</TableCell>
                                             <TableCell sx={{ textAlign: 'right' }}>
                                                 <IconButton onClick={() => handleDetails(row._id)}>
                                                     <InfoOutlinedIcon />

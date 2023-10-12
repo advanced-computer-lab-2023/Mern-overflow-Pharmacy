@@ -48,6 +48,7 @@ const EditMedicine = () => {
             })
             .catch((error) => {
                 console.error('Error making PUT request', error);
+                alert('Error making PUT request: ' + error.message);
             });
     }
 

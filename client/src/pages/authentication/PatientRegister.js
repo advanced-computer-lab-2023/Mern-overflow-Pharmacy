@@ -17,10 +17,12 @@ import sha256 from 'js-sha256';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export default function PatientRegister() {
+  const navigate = useNavigate();
   const { register, handleSubmit, setError, formState: { errors }, control } = useForm();
 
   const onSubmit = data => {
@@ -37,9 +39,11 @@ export default function PatientRegister() {
     axios.post('http://localhost:8000/patients', dataToServer)
       .then((response) => {
         console.log('POST request successful', response);
+        navigate('/patient/medicines');
       })
       .catch((error) => {
         console.error('Error making POST request', error);
+        alert('Error making POST request: ' + error.message);
       });
   }
   console.log(errors);

@@ -104,6 +104,7 @@ const createMedicine = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(400).send(error);
+    console.log(error)
   }
 }
 
