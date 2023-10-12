@@ -61,7 +61,7 @@ const AddMedicine = (props) => {
     };
 
     return (
-        < Container maxWidth="lg" >
+        <Container maxWidth="lg" >
             <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
                 <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
                     {errorMessage}

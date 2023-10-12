@@ -12,7 +12,7 @@ const createPatient = async (req: Request, res: Response) => {
             patient.find({ 'email': req.body.email }).then((emailRes) => {
 
                 if (emailRes.length !== 0)
-                    res.status(404).send("You are already registered , please sign in ");
+                    res.status(404).send("You are already registered, please sign in.");
 
                 else {
                     const newPatient = patient
@@ -28,7 +28,7 @@ const createPatient = async (req: Request, res: Response) => {
             })
         }
         else if (document.length !== 0)
-            res.status(400).send("username taken , please choose another one ");
+            res.status(400).send("Username taken, please choose another one.");
     })
 
 };

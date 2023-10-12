@@ -2,7 +2,7 @@ import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { TextField, Grid, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { TextField, Grid, Snackbar, Alert, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -17,17 +17,19 @@ import sha256 from 'js-sha256';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const defaultTheme = createTheme();
 
 export default function PatientRegister() {
-  const navigate = useNavigate();
   const { register, handleSubmit, setError, formState: { errors }, control } = useForm();
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const onSubmit = data => {
     const dataToServer = { ...data };
-    console.log(JSON.stringify(data));
     dataToServer["passwordHash"] = sha256(data["password"]);
     dataToServer["emergencyContact"] = { name: data["EmergencyName"], mobileNumber: data["EmergencyPhone"], relation: data["relation"] };
     delete dataToServer.EmergencyName
@@ -35,19 +37,23 @@ export default function PatientRegister() {
     delete dataToServer.relation
     delete dataToServer.Password
     delete dataToServer.password
-    console.log(JSON.stringify(dataToServer));
     axios.post('http://localhost:8000/patients', dataToServer)
       .then((response) => {
         console.log('POST request successful', response);
-        navigate('/patient/medicines');
+        setSuccessMessage('You have succesfully registered.');
+        setSuccessOpen(true);
+        setErrorOpen(false);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         if (error.response.data.code === 11000) {
-          alert('This username is already taken. Please choose another one.');
+          setErrorMessage('This username already exists. Please use another one.');
         } else {
-          alert((error.response.data.message || 'Unknown error'));
+          setErrorMessage(error.response.data.message || 'Unknown error');
         }
+        setErrorMessage(error.response.data);
+        setErrorOpen(true);
+        setSuccessOpen(false);
       });
   }
   console.log(errors);
@@ -62,8 +68,32 @@ export default function PatientRegister() {
     }
   }
 
+  const handleErrorClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorOpen(false);
+  };
+
+  const handleSuccessClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSuccessOpen(false);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
+        <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
+      <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+        <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+          {successMessage}
+        </Alert>
+      </Snackbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -152,7 +182,7 @@ export default function PatientRegister() {
                     fullWidth
                     id="phone"
                     label="Phone"
-                    type="tel"
+                    type="number"
                     {...register("mobileNumber", { required: true, minLength: 8, maxLength: 16 })}
                     error={!!errors["mobileNumber"]}
                     helperText={errors["mobileNumber"]?.message}
@@ -245,7 +275,8 @@ export default function PatientRegister() {
                     fullWidth
                     id="emergencyPhone"
                     label="Phone"
-                    {...register("EmergencyPhone", { required: true, maxLength: 80 })}
+                    type="number"
+                    {...register("EmergencyPhone", { required: true, minLength: 8, maxLength: 16 })}
                     error={!!errors["EmergencyPhone"]}
                     helperText={errors["EmergencyPhone"]?.message}
                     onBlur={handleChange}

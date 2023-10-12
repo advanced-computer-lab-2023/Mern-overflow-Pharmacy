@@ -2,7 +2,7 @@ import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { TextField, Grid, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { TextField, Grid, Snackbar, Alert, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -17,13 +17,16 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import sha256 from 'js-sha256';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const defaultTheme = createTheme();
 
 export default function PharmacistRegister() {
-  const navigate = useNavigate();
   const { register, handleSubmit, setError, formState: { errors }, control } = useForm();
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const onSubmit = data => {
     const dataToServer = { ...data };
@@ -36,17 +39,22 @@ export default function PharmacistRegister() {
     axios.post('http://localhost:8000/pharmacists', dataToServer)
       .then((response) => {
         console.log('POST request successful', response);
-        navigate('/pharmacist/medicines');
+        setSuccessMessage('Your request has been succesfully sent.');
+        setSuccessOpen(true);
+        setErrorOpen(false);
       })
       .catch((error) => {
         console.error(error);
         if (error.response.data.code === 11000) {
-          alert('This username is already taken. Please choose another one.');
+          setErrorMessage('This username already exists. Please use another one.');
         } else {
-          alert((error.response.data.message || 'Unknown error'));
+          setErrorMessage(error.response.data.message || 'Unknown error');
         }
+        setErrorMessage(error.response.data);
+        setErrorOpen(true);
+        setSuccessOpen(false);
       });
-      console.log("sent data");
+    console.log("sent data");
   }
 
   console.log(errors);
@@ -61,8 +69,32 @@ export default function PharmacistRegister() {
     }
   }
 
+  const handleErrorClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorOpen(false);
+  };
+
+  const handleSuccessClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSuccessOpen(false);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
+        <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
+      <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+        <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+          {successMessage}
+        </Alert>
+      </Snackbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
