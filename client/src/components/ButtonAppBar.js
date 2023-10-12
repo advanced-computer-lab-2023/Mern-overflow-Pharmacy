@@ -4,9 +4,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-export default function ButtonAppBar(props) {
 
+export default function ButtonAppBar(props) {
 	const list = (anchor) => (
 		<Box
 			sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -30,7 +29,6 @@ export default function ButtonAppBar(props) {
 		bottom: false,
 		right: false,
 	});
-
 
 	const toggleDrawer = (anchor, open) => (event) => {
 		if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -59,7 +57,6 @@ export default function ButtonAppBar(props) {
 
 	useEffect(() => {
 		window.addEventListener('scroll', handleScroll);
-
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
 		};
@@ -82,7 +79,6 @@ export default function ButtonAppBar(props) {
 				</Drawer>
 			</div>
 			<Box sx={{ flexGrow: 1 }}>
-
 				<AppBar position="static">
 					<Toolbar>
 						<IconButton
@@ -106,6 +102,5 @@ export default function ButtonAppBar(props) {
 				</AppBar>
 			</Box>
 		</>
-
 	);
 }
