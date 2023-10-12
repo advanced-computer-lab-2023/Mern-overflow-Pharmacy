@@ -35,14 +35,15 @@ const EditMedicine = () => {
                 setAvailableQuantity(medicine.availableQuantity);
                 setSales(medicine.sales);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error(error);
+                alert('Error editing the medicine: ' + (error.response.data.message || 'Unknown error'));
             }
         };
         fetchData();
     }, []);
 
     const onSubmit = data => {
-        const details = {activeIngredients: activeIngredients.split(',').map(item => item.trim()), description: description}
+        const details = { activeIngredients: activeIngredients.split(',').map(item => item.trim()), description: description }
         const dataToServer = { name, medicinalUse, details, price, availableQuantity, sales };
         axios.put(`http://localhost:8000/medicines/${id}`, dataToServer)
             .then((response) => {
@@ -137,8 +138,8 @@ const EditMedicine = () => {
                         Update Medicine
                     </Button>
                     <Button type="button" variant="outlined" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}
-                    component={Link}
-                    to="/pharmacist/medicines">
+                        component={Link}
+                        to="/pharmacist/medicines">
                         Cancel
                     </Button>
                 </Box>

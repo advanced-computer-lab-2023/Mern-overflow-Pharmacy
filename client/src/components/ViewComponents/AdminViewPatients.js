@@ -68,7 +68,7 @@ export default function AdminViewPatients(props) {
       })
       .catch((error) => {
         console.error('Error making DELETE request', error);
-        alert('Error making DELETE request: ' + error.message);
+        alert('Error deleting the patient: ' + error.message);
       });
   }
 

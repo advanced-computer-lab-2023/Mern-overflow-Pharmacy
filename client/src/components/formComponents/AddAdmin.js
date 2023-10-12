@@ -17,10 +17,13 @@ const AddAdmin = (props) => {
         props.setDataIsUpdated(false);
       })
       .catch((error) => {
-        console.error('Error making POST request', error);
-        alert('Error making POST request: ' + error.message);
+        console.error(error);
+        if (error.response.data.code === 11000) {
+          alert('This username is already taken. Please choose another one.');
+        } else {
+          alert((error.response.data.message || 'Unknown error'));
+        }
       });
-
   }
 
   const handleChange = (event) => {

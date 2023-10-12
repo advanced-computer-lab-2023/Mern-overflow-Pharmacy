@@ -15,7 +15,7 @@ const AddMedicine = (props) => {
     const onSubmit = data => {
         const dataToServer = { ...data };
         dataToServer["sales"] = 0;
-        dataToServer["details"] = {description: data["description"], activeIngredients: data["activeIngredients"].split(',').map(item => item.trim())}
+        dataToServer["details"] = { description: data["description"], activeIngredients: data["activeIngredients"].split(',').map(item => item.trim()) }
         delete dataToServer.description
         delete dataToServer.activeIngredients
         axios.post('http://localhost:8000/medicines', dataToServer)
@@ -24,10 +24,13 @@ const AddMedicine = (props) => {
                 props.setDataIsUpdated(false);
             })
             .catch((error) => {
-                console.error('Error making POST request', error);
-                alert('Error making POST request: ' + error.message);
+                console.error(error);
+                if (error.response.data.code === 11000) {
+                    alert('This medicine name already exists. Please change the name.');
+                } else {
+                    alert((error.response.data.message || 'Unknown error'));
+                }
             });
-
     }
 
     const handleChange = (event) => {
@@ -73,7 +76,7 @@ const AddMedicine = (props) => {
                             <TextField
                                 id="medicinalUse"
                                 label="Medicinal Use"
-                                {...register("medicinalUse", { required: true})}
+                                {...register("medicinalUse", { required: true })}
                                 error={!!errors["medicinalUse"]}
                                 helperText={errors["medicinalUse"]?.message}
                                 type="text"
@@ -85,7 +88,7 @@ const AddMedicine = (props) => {
                             <TextField
                                 id="activeIngredients"
                                 label="Active Ingredients (Separate by comma)"
-                                {...register("activeIngredients", { required: true})}
+                                {...register("activeIngredients", { required: true })}
                                 error={!!errors["activeIngredients"]}
                                 helperText={errors["activeIngredients"]?.message}
                                 type="text"
@@ -103,7 +106,7 @@ const AddMedicine = (props) => {
                                     id="price"
                                     startAdornment={<InputAdornment position="start">EGP</InputAdornment>}
                                     label="Price"
-                                    {...register("price", { required: true})}
+                                    {...register("price", { required: true })}
                                     error={!!errors["price"]}
                                     helperText={errors["price"]?.message}
                                     onBlur={handleChange}
@@ -114,7 +117,7 @@ const AddMedicine = (props) => {
                             <TextField
                                 id="availableQuantity"
                                 label="Available Quantity"
-                                {...register("availableQuantity", { required: true})}
+                                {...register("availableQuantity", { required: true })}
                                 error={!!errors["availableQuantity"]}
                                 helperText={errors["availableQuantity"]?.message}
                                 type="number"
