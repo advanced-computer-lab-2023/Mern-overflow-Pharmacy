@@ -82,11 +82,10 @@ export default function AdminViewPatients(props) {
         <Container>
           <Table>
             <TableHead>
-              <TableRow>
-                <TableCell colSpan={6} sx={{ fontWeight: "bold", textAlign: "center", borderBottom: 'none', borderRight: '1px solid #ccc' }}>PATIENT</TableCell>
-                <TableCell colSpan={3} sx={{ fontWeight: "bold", textAlign: "center", color: '#5A5A5A', borderBottom: 'none', borderRight: '1px solid #ccc' }}>EMERGENCY CONTACT</TableCell>
-                <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold", borderBottom: 'none' }}>ACTION</TableCell>
-
+              <TableRow sx={{ height: "50%"}}>
+                <TableCell colSpan={6} sx={{ fontWeight: "bold", textAlign: "center" }}>PATIENT</TableCell>
+                <TableCell colSpan={3} sx={{ fontWeight: "bold", textAlign: "center", color: '#5A5A5A' }}>EMERGENCY CONTACT</TableCell>
+                <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell key="name" sx={{ fontWeight: "bold" }}>Name</TableCell>
@@ -98,7 +97,7 @@ export default function AdminViewPatients(props) {
                 <TableCell key="emergencyContactName" sx={{ fontWeight: "bold", color: '#5A5A5A' }}>Name</TableCell>
                 <TableCell key="emerencyContactMobileNumber" sx={{ fontWeight: "bold", color: '#5A5A5A' }}>Phone No.</TableCell>
                 <TableCell key="emerencyContactRelation" sx={{ fontWeight: "bold", color: '#5A5A5A', borderRight: '1px solid #ccc' }}>Relation</TableCell>
-                <TableCell sx={{ textAlign: 'center', fontWeight: "bold" }}>Delete</TableCell>
+                <TableCell sx={{ textAlign: 'center', fontWeight: "bold" }}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
