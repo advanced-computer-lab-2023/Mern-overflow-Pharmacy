@@ -1,4 +1,4 @@
-import { Input, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import { Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -53,6 +53,8 @@ const columns = [
 
 export default function AdminViewPatients(props) {
   const [data, setData] = useState([]);
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const fetchTableData = () => {
     axios.get(`http://localhost:8000/patients`).then((res) => {
@@ -65,6 +67,8 @@ export default function AdminViewPatients(props) {
       .then((response) => {
         console.log('DELETE request successful', response);
         fetchTableData();
+        setSuccessMessage('Patient deleted succesfully');
+        setSuccessOpen(true);
       })
       .catch((error) => {
         console.error('Error making DELETE request', error);
@@ -76,13 +80,25 @@ export default function AdminViewPatients(props) {
     fetchTableData();
   }, []);
 
+  const handleSuccessClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSuccessOpen(false);
+  };
+
   return (
     <Container maxWidth="xl">
+      <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+        <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+          {successMessage}
+        </Alert>
+      </Snackbar>
       <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
         <Container>
           <Table>
             <TableHead>
-              <TableRow sx={{ height: "50%"}}>
+              <TableRow sx={{ height: "50%" }}>
                 <TableCell colSpan={6} sx={{ fontWeight: "bold", textAlign: "center" }}>PATIENT</TableCell>
                 <TableCell colSpan={3} sx={{ fontWeight: "bold", textAlign: "center", color: '#5A5A5A' }}>EMERGENCY CONTACT</TableCell>
                 <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}></TableCell>

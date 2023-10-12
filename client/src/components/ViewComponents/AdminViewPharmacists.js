@@ -1,4 +1,4 @@
-import { Input, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import { Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -49,6 +49,8 @@ const columns = [
 
 export default function AdminViewPharmacists(props) {
     const [data, setData] = useState([]);
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/pharmacists`).then((res) => {
@@ -61,6 +63,8 @@ export default function AdminViewPharmacists(props) {
             .then((response) => {
                 console.log('DELETE request successful', response);
                 fetchTableData();
+                setSuccessMessage('Pharmacist deleted succesfully');
+                setSuccessOpen(true);
             })
             .catch((error) => {
                 console.error('Error making DELETE request', error);
@@ -72,8 +76,20 @@ export default function AdminViewPharmacists(props) {
         fetchTableData();
     }, []);
 
+    const handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessOpen(false);
+    };
+
     return (
         <Container maxWidth="xl">
+            <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+                    {successMessage}
+                </Alert>
+            </Snackbar>
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 <Container>
                     <Container>
@@ -93,19 +109,19 @@ export default function AdminViewPharmacists(props) {
                         <TableBody>
                             {data.map((row) => (
                                 <TableRow key={row.username}>
-                                <TableCell>{row.name}</TableCell>
-                                <TableCell>{row.email}</TableCell>
-                                <TableCell>{row.username}</TableCell>
-                                <TableCell>{row.dateOfBirth.slice(0,10)}</TableCell>
-                                <TableCell>EGP {row.hourlyRate}</TableCell>
-                                <TableCell>{row.affiliation}</TableCell>
-                                <TableCell>{row.education}</TableCell>
-                                <TableCell>
-                                  <IconButton onClick={() => handleDelete(row._id)}>
-                                    <DeleteIcon />
-                                  </IconButton>
-                                </TableCell>
-                              </TableRow>
+                                    <TableCell>{row.name}</TableCell>
+                                    <TableCell>{row.email}</TableCell>
+                                    <TableCell>{row.username}</TableCell>
+                                    <TableCell>{row.dateOfBirth.slice(0, 10)}</TableCell>
+                                    <TableCell>EGP {row.hourlyRate}</TableCell>
+                                    <TableCell>{row.affiliation}</TableCell>
+                                    <TableCell>{row.education}</TableCell>
+                                    <TableCell>
+                                        <IconButton onClick={() => handleDelete(row._id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
                             ))}
                         </TableBody>
                     </Table>
