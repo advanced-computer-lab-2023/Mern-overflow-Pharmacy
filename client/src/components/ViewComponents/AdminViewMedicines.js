@@ -57,12 +57,12 @@ export default function AdminViewMedicines() {
             fetchTableData();
         } else {
             axios
-          .post(`http://localhost:8000/medicines/filter`, {
-            medicinalUse: medUse,
-          })
-          .then((res) => {
-            setData(res.data);
-          });
+                .post(`http://localhost:8000/medicines/filter`, {
+                    medicinalUse: medUse,
+                })
+                .then((res) => {
+                    setData(res.data);
+                });
         }
     };
 
