@@ -137,15 +137,14 @@ export default function AdminViewRequests(props) {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {[
-                                    "Name", "Email", "Username",
-                                    "Birth Date", "Hourly Rate",
-                                    "Affiliation", "Education", "Status"
-                                ].map(header => (
-                                    <TableCell key={header} style={{ fontWeight: "bold" }}>
-                                        {header}
-                                    </TableCell>
-                                ))}
+                                <TableCell key="name" sx={{ fontWeight: "bold" }}>Name</TableCell>
+                                <TableCell key="email" sx={{ fontWeight: "bold" }}>Email</TableCell>
+                                <TableCell key="username" sx={{ fontWeight: "bold" }}>Username</TableCell>
+                                <TableCell key="dateOfBirth" sx={{ fontWeight: "bold" }}>Birth Date</TableCell>
+                                <TableCell key="hourlyRate" sx={{ fontWeight: "bold"}}>Hourly Rate</TableCell>
+                                <TableCell key="affiliation" sx={{ fontWeight: "bold"}}>Affiliation</TableCell>
+                                <TableCell key="education" sx={{ fontWeight: "bold"}}>Education</TableCell>
+                                <TableCell sx={{ textAlign: 'center', fontWeight: "bold" }}>Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -162,7 +161,7 @@ export default function AdminViewRequests(props) {
                                             <TableCell>{row.education}</TableCell>
                                             <TableCell style={{ display: 'flex', alignItems: 'center' }}>
                                                 {row.status === 'pending' ? <><PendingIcon style={{ color: '#1976d2', marginRight: '8px' }} /> Pending </> : null}
-                                                {row.status === 'rejected' ? <><CancelIcon style={{ color: '#bb2124', marginRight: '8px' }} /> Rejected </> : null}
+                                                {row.status === 'rejected' ? <><CancelIcon style={{ color: '#d33c5c', marginRight: '8px' }} /> Rejected </> : null}
                                                 {row.status === 'accepted' ? <><CheckCircleIcon style={{ color: '#22bb33', marginRight: '8px' }} /> Accepted </> : null}
                                             </TableCell>
 

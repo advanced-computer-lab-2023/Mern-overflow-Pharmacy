@@ -83,8 +83,8 @@ export default function AdminViewPatients(props) {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell colSpan={6} sx={{ fontWeight: "bold", textAlign: "center", borderBottom:'none', borderRight: '1px solid #ccc' }}>PATIENT</TableCell>
-                <TableCell colSpan={3} sx={{ fontWeight: "bold", textAlign: "center", color: '#5A5A5A', borderBottom:'none', borderRight: '1px solid #ccc' }}>EMERGENCY CONTACT</TableCell>
+                <TableCell colSpan={6} sx={{ fontWeight: "bold", textAlign: "center", borderBottom: 'none', borderRight: '1px solid #ccc' }}>PATIENT</TableCell>
+                <TableCell colSpan={3} sx={{ fontWeight: "bold", textAlign: "center", color: '#5A5A5A', borderBottom: 'none', borderRight: '1px solid #ccc' }}>EMERGENCY CONTACT</TableCell>
                 <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold", borderBottom: 'none' }}>ACTION</TableCell>
 
               </TableRow>
@@ -98,8 +98,7 @@ export default function AdminViewPatients(props) {
                 <TableCell key="emergencyContactName" sx={{ fontWeight: "bold", color: '#5A5A5A' }}>Name</TableCell>
                 <TableCell key="emerencyContactMobileNumber" sx={{ fontWeight: "bold", color: '#5A5A5A' }}>Phone No.</TableCell>
                 <TableCell key="emerencyContactRelation" sx={{ fontWeight: "bold", color: '#5A5A5A', borderRight: '1px solid #ccc' }}>Relation</TableCell>
-                <TableCell sx={{textAlign: 'center', fontWeight: "bold"}}>Delete</TableCell>
-
+                <TableCell sx={{ textAlign: 'center', fontWeight: "bold" }}>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -110,7 +109,7 @@ export default function AdminViewPatients(props) {
                   <TableCell>{row.username}</TableCell>
                   <TableCell>{row.dateOfBirth.slice(0, 10)}</TableCell>
                   <TableCell>{row.gender}</TableCell>
-                  <TableCell sx={{borderRight: '1px solid #ccc'}} >{row.mobileNumber}</TableCell>
+                  <TableCell sx={{ borderRight: '1px solid #ccc' }} >{row.mobileNumber}</TableCell>
                   <TableCell sx={{ color: '#5A5A5A' }}>{row.emergencyContact.name}</TableCell>
                   <TableCell sx={{ color: '#5A5A5A' }}>{row.emergencyContact.mobileNumber}</TableCell>
                   <TableCell sx={{ color: '#5A5A5A', borderRight: '1px solid #ccc' }}>{row.emergencyContact.relation}</TableCell>
