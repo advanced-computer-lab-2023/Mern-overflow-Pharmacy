@@ -1,23 +1,16 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { TextField, Grid, Snackbar, Alert, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import React, { useState } from 'react';
+import { Paper, CssBaseline, TextField, Grid, Snackbar, Alert, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio, Avatar, InputLabel, Select, MenuItem } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Controller, useForm } from "react-hook-form"
-import Avatar from '@mui/material/Avatar';
-import logo from '../../assets/gifs/logo.gif';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
+import { Controller, useForm } from "react-hook-form";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import sha256 from 'js-sha256';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { useState } from 'react';
+import logo from '../../assets/gifs/logo.gif';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
 
 const defaultTheme = createTheme();
 
@@ -30,33 +23,52 @@ export default function PatientRegister() {
 
   const onSubmit = data => {
     const dataToServer = { ...data };
-    dataToServer["passwordHash"] = sha256(data["password"]);
-    dataToServer["emergencyContact"] = { name: data["EmergencyName"], mobileNumber: data["EmergencyPhone"], relation: data["relation"] };
-    delete dataToServer.EmergencyName
-    delete dataToServer.EmergencyPhone
-    delete dataToServer.relation
-    delete dataToServer.Password
-    delete dataToServer.password
-    axios.post('http://localhost:8000/patients', dataToServer)
-      .then((response) => {
-        console.log('POST request successful', response);
-        setSuccessMessage('You have succesfully registered.');
-        setSuccessOpen(true);
-        setErrorOpen(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response.data.code === 11000) {
-          setErrorMessage('This username already exists. Please use another one.');
-        } else {
-          setErrorMessage(error.response.data.message || 'Unknown error');
-        }
-        setErrorMessage(error.response.data);
-        setErrorOpen(true);
-        setSuccessOpen(false);
+    if (dataToServer.mobileNumber.toString().length < 8 || dataToServer.mobileNumber.toString().length > 16) {
+      setErrorMessage("Your mobile number must be between 8 and 16 digits.");
+      setErrorOpen(true);
+      setSuccessOpen(false);
+      setError('mobileNumber', {
+        message: 'Must be between 8 and 16 digits'
       });
+    } else if (dataToServer.EmergencyPhone.toString().length < 8 || dataToServer.EmergencyPhone.toString().length > 16) {
+      setErrorMessage("Your emergency contact's mobile number must be between 8 and 16 digits.");
+      setErrorOpen(true);
+      setSuccessOpen(false);
+      setError('EmergencyPhone', {
+        message: 'Must be between 8 and 16 digits'
+      });
+    } else {
+      dataToServer["passwordHash"] = sha256(data["password"]);
+      dataToServer["emergencyContact"] = { name: data["EmergencyName"], mobileNumber: data["EmergencyPhone"], relation: data["relation"] };
+      delete dataToServer.EmergencyName
+      delete dataToServer.EmergencyPhone
+      delete dataToServer.relation
+      delete dataToServer.Password
+      delete dataToServer.password
+      axios.post('http://localhost:8000/patients', dataToServer)
+        .then((response) => {
+          console.log('POST request successful', response);
+          setSuccessMessage('You have succesfully registered.');
+          setSuccessOpen(true);
+          setErrorOpen(false);
+        })
+        .catch((error) => {
+          console.log('POST request failed', error);
+          if (error.response.data.indexOf("registered") !== -1) {
+            setError('email', {
+              data: 'Email is registered'
+            });
+          } else if (error.response.data.indexOf("Username") !== -1) {
+            setError('username', {
+              data: 'Username already exists'
+            });
+          }
+          setErrorMessage(error.response.data);
+          setErrorOpen(true);
+          setSuccessOpen(false);
+        });
+    }
   }
-  console.log(errors);
 
   const handleChange = (event) => {
     if (errors[event.target.name]) {
@@ -180,10 +192,10 @@ export default function PatientRegister() {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    id="phone"
-                    label="Phone"
+                    id="mobileNumber"
+                    label="Mobile Number"
                     type="number"
-                    {...register("mobileNumber", { required: true, minLength: 8, maxLength: 16 })}
+                    {...register("mobileNumber", { required: true })}
                     error={!!errors["mobileNumber"]}
                     helperText={errors["mobileNumber"]?.message}
                     onBlur={handleChange}
@@ -234,12 +246,12 @@ export default function PatientRegister() {
                     <FormLabel id="gender-label">Gender</FormLabel>
                     <Controller
                       control={control}
-                      name="gender" // Ensure the name matches the one used in RadioGroup
-                      defaultValue="male" // Set the default value if needed
+                      name="gender"
+                      defaultValue="male"
                       render={({ field }) => (
                         <RadioGroup
                           row
-                          {...field} // Spread the field props to RadioGroup
+                          {...field}
                         >
                           <FormControlLabel value="male" control={<Radio />} label="Male" />
                           <FormControlLabel value="female" control={<Radio />} label="Female" />
@@ -273,10 +285,10 @@ export default function PatientRegister() {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    id="emergencyPhone"
-                    label="Phone"
+                    id="emergencyMobileNumber"
+                    label="Mobile Number"
                     type="number"
-                    {...register("EmergencyPhone", { required: true, minLength: 8, maxLength: 16 })}
+                    {...register("EmergencyPhone", { required: true })}
                     error={!!errors["EmergencyPhone"]}
                     helperText={errors["EmergencyPhone"]?.message}
                     onBlur={handleChange}
