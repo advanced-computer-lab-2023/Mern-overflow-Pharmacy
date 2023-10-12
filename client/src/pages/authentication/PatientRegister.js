@@ -266,7 +266,7 @@ export default function PatientRegister() {
                     >
                       <MenuItem value="husband">Husband</MenuItem>
                       <MenuItem value="wife">Wife</MenuItem>
-                      <MenuItem value="chlid">Child</MenuItem>
+                      <MenuItem value="child">Child</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>

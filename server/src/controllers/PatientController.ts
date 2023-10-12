@@ -22,6 +22,7 @@ const createPatient = async (req: Request, res: Response) => {
                         })
                         .catch((err) => {
                             res.status(400).json(err);
+                            console.log(err);
                         });
                 }
             })
