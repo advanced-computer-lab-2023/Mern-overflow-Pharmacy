@@ -36,7 +36,7 @@ export default function PharmacistRegister() {
     axios.post('http://localhost:8000/pharmacists', dataToServer)
       .then((response) => {
         console.log('POST request successful', response);
-        navigate('/pharmacist/medicine');
+        navigate('/pharmacist/medicines');
       })
       .catch((error) => {
         console.error('Error making POST request', error);
