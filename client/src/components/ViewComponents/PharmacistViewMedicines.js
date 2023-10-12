@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Container, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
+import { useNavigate } from 'react-router-dom';
 
 export default function PharmacistViewMedicines(props) {
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
     const [Query, setQuery] = useState("");
@@ -60,6 +63,10 @@ export default function PharmacistViewMedicines(props) {
         setOpen(false);
     };
 
+    const handleClickEdit = (id) => {
+        navigate(`/pharmacist/medicines/${id}`);
+    }
+
     return (
         <Container maxWidth="xl">
             <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }}>
@@ -75,7 +82,7 @@ export default function PharmacistViewMedicines(props) {
                         <Container sx={{ width: "48%" }}>
                             <Input
                                 size="lg"
-                                placeholder="Search..."
+                                placeholder="Search by name..."
                                 onChange={(e) => setQuery(e.target.value)}
                                 fullWidth
                             />
@@ -102,12 +109,13 @@ export default function PharmacistViewMedicines(props) {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell key="name" sx={{ fontWeight: "bold" }}>Name</TableCell>
-                                <TableCell key="medicinalUse" sx={{ fontWeight: "bold" }}>Medicinal Use</TableCell>
-                                <TableCell key="price" sx={{ fontWeight: "bold" }}>Price</TableCell>
-                                <TableCell key="availableQuantity" sx={{ fontWeight: "bold" }}>Available Quantity</TableCell>
-                                <TableCell key="sales" sx={{ fontWeight: "bold" }}>Sales</TableCell>
-                                <TableCell key="details" sx={{ textAlign: 'right', fontWeight: "bold" }}>Details</TableCell>
+                                <TableCell key="name" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc' }}>Name</TableCell>
+                                <TableCell key="medicinalUse" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc' }}>Medicinal Use</TableCell>
+                                <TableCell key="price" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc' }}>Price</TableCell>
+                                <TableCell key="availableQuantity" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc' }}>Available Quantity</TableCell>
+                                <TableCell key="sales" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc', borderRight: '1px solid #ccc' }}>Sales</TableCell>
+                                <TableCell colSpan={2} key="details" sx={{ textAlign: 'center', fontWeight: "bold", borderTop: '1px solid #ccc' }}>Actions</TableCell>
+                                {/* <TableCell key="details" sx={{ textAlign: 'center', fontWeight: "bold" }}>Edit</TableCell> */}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -119,8 +127,8 @@ export default function PharmacistViewMedicines(props) {
                                             <TableCell>{row.medicinalUse}</TableCell>
                                             <TableCell>EGP {row.price}</TableCell>
                                             <TableCell>{row.availableQuantity}</TableCell>
-                                            <TableCell>{row.sales}</TableCell>
-                                            <TableCell sx={{ textAlign: 'right' }}>
+                                            <TableCell sx={{borderRight: '1px solid #ccc'}}>{row.sales}</TableCell>
+                                            <TableCell sx={{ textAlign: 'center' }}>
                                                 <IconButton onClick={() => handleClickOpen(row._id)}>
                                                     <InfoOutlinedIcon />
                                                 </IconButton>
@@ -138,6 +146,11 @@ export default function PharmacistViewMedicines(props) {
                                                         </Button>
                                                     </DialogActions>
                                                 </Dialog>
+                                            </TableCell>
+                                            <TableCell sx={{ textAlign: 'center' }}>
+                                                <IconButton onClick={() => handleClickEdit(row._id)}>
+                                                    <EditIcon />
+                                                </IconButton>
                                             </TableCell>
                                         </TableRow>
                                     ),

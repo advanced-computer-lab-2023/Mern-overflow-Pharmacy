@@ -25,6 +25,7 @@ const columns = [
 
 export default function AdminViewAdmins(props) {
     const [data, setData] = useState([]);
+    const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -69,6 +70,23 @@ export default function AdminViewAdmins(props) {
             </Snackbar>
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 <Container>
+                    <Container
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            my: 5,
+                        }}
+                    >
+                        <Container sx={{ width: "48%" }}>
+                            <Input
+                                size="lg"
+                                placeholder="Search by username..."
+                                onChange={(e) => setQuery(e.target.value)}
+                                fullWidth
+                            />
+                        </Container>
+                    </Container>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -77,7 +95,7 @@ export default function AdminViewAdmins(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {data.map((row) => (
+                            {data.map((row) => row.username.toLowerCase().includes(Query.toLowerCase()) && (
                                 <TableRow key={row.username}>
                                     <TableCell>{row.username}</TableCell>
                                     <TableCell sx={{ textAlign: 'right' }}>

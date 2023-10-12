@@ -74,7 +74,7 @@ export default function PatientViewMedicines() {
                         <Container sx={{ width: "48%" }}>
                             <Input
                                 size="lg"
-                                placeholder="Search..."
+                                placeholder="Search by name..."
                                 onChange={(e) => setQuery(e.target.value)}
                                 fullWidth
                             />

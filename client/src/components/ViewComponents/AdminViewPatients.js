@@ -53,6 +53,7 @@ const columns = [
 
 export default function AdminViewPatients(props) {
   const [data, setData] = useState([]);
+  const [Query, setQuery] = useState("");
   const [successOpen, setSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -96,6 +97,23 @@ export default function AdminViewPatients(props) {
       </Snackbar>
       <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
         <Container>
+          <Container
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mt:5, mb: 8,
+            }}
+          >
+            <Container sx={{ width: "48%" }}>
+              <Input
+                size="lg"
+                placeholder="Search by name..."
+                onChange={(e) => setQuery(e.target.value)}
+                fullWidth
+              />
+            </Container>
+          </Container>
           <Table>
             <TableHead>
               <TableRow sx={{ height: "50%" }}>
@@ -117,7 +135,7 @@ export default function AdminViewPatients(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
+              {data.map((row) => row.name.toLowerCase().includes(Query.toLowerCase()) && (
                 <TableRow key={row.username}>
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.email}</TableCell>
