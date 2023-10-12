@@ -106,7 +106,7 @@ export default function PharmacistRegister() {
             backgroundPosition: 'center',
           }}
         >
-          <img src={logo} style={{
+          <img src={logo} alt="" style={{
             height: '50%',
             position: 'fixed',
             top: '50%',

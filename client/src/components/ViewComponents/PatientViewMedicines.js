@@ -1,29 +1,12 @@
-import {
-    Input,
-    Tooltip,
-    Container,
-    Button,
-    List,
-    ListItem,
-    Paper,
-    FormControl,
-    Select,
-    InputLabel,
-    MenuItem,
-} from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Container, Button, List, ListItem, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Input, Tooltip, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import axios from "axios";
+import panadol from '../../assets/photos/panadol.jpg';
 
 export default function PatientViewMedicines() {
-    const [tooltipOpen, setTooltipOpen] = useState(false);
-    const [selectedRowId, setSelectedRowId] = useState(null);
+    const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
     const [Query, setQuery] = useState("");
     const [uniqueMedicinalUses, setUniqueMedicinalUses] = useState(["All"]);
@@ -44,7 +27,6 @@ export default function PatientViewMedicines() {
             })
     };
 
-
     useEffect(() => {
         fetchTableData();
     }, []);
@@ -57,36 +39,24 @@ export default function PatientViewMedicines() {
             fetchTableData();
         } else {
             axios
-          .post(`http://localhost:8000/medicines/filter`, {
-            medicinalUse: medUse,
-          })
-          .then((res) => {
-            setData(res.data);
-          });
-
-            // axios
-            //     .get(`http://localhost:8000/medicines/filter`, {
-            //         data: {
-            //             medicinalUse: medUse,
-            //         }
-            //     })
-            //     .then((res) => {
-            //         setData(res.data);
-            //         console.log(medUse);
-            //     });
+                .post(`http://localhost:8000/medicines/filter`, {
+                    medicinalUse: medUse,
+                })
+                .then((res) => {
+                    setData(res.data);
+                });
         }
     };
 
-    const handleDetails = (id) => {
-        setTooltipOpen(prevState => ({
+    const handleClickOpen = (id) => {
+        setOpen(prevState => ({
             ...prevState,
             [id]: !prevState[id]
         }));
-    }
+    };
 
-    const handleCloseTooltip = () => {
-        setSelectedRowId(null);
-        setTooltipOpen(false);
+    const handleClose = () => {
+        setOpen(false);
     };
 
     return (
@@ -141,25 +111,28 @@ export default function PatientViewMedicines() {
                             {data.map(
                                 (row) =>
                                     row.name.toLowerCase().includes(Query.toLowerCase()) && (
-                                        <TableRow key={row.username}>
-                                            <TableCell>{row.name}</TableCell>
+                                        <TableRow key={row.name}>
+                                            <TableCell >{row.name}</TableCell>
                                             <TableCell>{row.medicinalUse}</TableCell>
                                             <TableCell>EGP {row.price}</TableCell>
                                             <TableCell sx={{ textAlign: 'right' }}>
-                                                <IconButton onClick={() => handleDetails(row._id)}>
+                                                <IconButton onClick={() => handleClickOpen(row._id)}>
                                                     <InfoOutlinedIcon />
                                                 </IconButton>
-                                                <Tooltip
-                                                    open={tooltipOpen[row._id] || false}
-                                                    onClose={handleCloseTooltip}
-                                                    title={
+                                                <Dialog open={open[row._id] || false} onClose={handleClose} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.7)' } }}>
+                                                    <DialogTitle>{row.name}</DialogTitle>
+                                                    <DialogContent>
+                                                        <img src={panadol} alt="Popup Photo" />
                                                         <div style={{ whiteSpace: 'pre-line' }}>
                                                             {`Description: ${row.details.description}\n\nActive Ingredients: ${row.details.activeIngredients}`}
                                                         </div>
-                                                    }
-                                                >
-                                                    <span />
-                                                </Tooltip>
+                                                    </DialogContent>
+                                                    <DialogActions>
+                                                        <Button onClick={handleClose} color="primary">
+                                                            Close
+                                                        </Button>
+                                                    </DialogActions>
+                                                </Dialog>
                                             </TableCell>
                                         </TableRow>
                                     ),
