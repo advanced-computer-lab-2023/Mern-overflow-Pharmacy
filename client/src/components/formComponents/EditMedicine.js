@@ -7,8 +7,10 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const EditMedicine = () => {
+    const navigate = useNavigate();
     let { id } = useParams();
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
     const [name, setName] = useState("");
@@ -45,6 +47,7 @@ const EditMedicine = () => {
         axios.put(`http://localhost:8000/medicines/${id}`, dataToServer)
             .then((response) => {
                 console.log('PUT request successful', response);
+                navigate('/pharmacist/medicines');
             })
             .catch((error) => {
                 console.error('Error making PUT request', error);
