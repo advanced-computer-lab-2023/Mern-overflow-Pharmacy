@@ -28,22 +28,39 @@ export default function AdminViewRequests(props) {
     const [selectedRowId, setSelectedRowId] = useState(null);
     const [data, setData] = useState([]);
     const [Query, setQuery] = useState("");
-    const [uniqueMedicinalUses, setUniqueMedicinalUses] = useState(["All"]);
+    const statuses = ["all", "accepted", "pending", "rejected"];
+    const [allList, setAllList] = useState([]);
+    const [rejectedList, setRejectedList] = useState([]);
+    const [acceptedList, setAcceptedList] = useState([]);
+    const [pendingList, setPendingList] = useState([]);
 
     const fetchTableData = () => {
         axios
             .get(`http://localhost:8000/pharmacists/listAll`, {})
             .then((res) => {
                 setData(res.data);
-                let temp = ["All"];
+                let tempAll = [];
+                let tempRej = [];
+                let tempAcc = [];
+                let tempPen = [];
                 res.data.map((key) => {
-                    if (temp.indexOf(key.medicinalUse) === -1) {
-                        temp.push(key.medicinalUse);
+                    if (key.status === 'pending') {
+                        tempPen.push(key);
+                    } else if (key.status === 'rejected') {
+                        tempRej.push(key);
+                    } else {
+                        tempAcc.push(key);
                     }
+                    tempAll.push(key);
                     return null;
                 });
-                setUniqueMedicinalUses(temp);
-            })
+                setAcceptedList(tempAcc);
+                setRejectedList(tempRej);
+                setPendingList(tempPen);
+                setAllList(tempAll);
+            }).catch((error) => {
+                console.error('Error fetching data:', error);
+            });
     };
 
 
@@ -57,6 +74,21 @@ export default function AdminViewRequests(props) {
             [id]: !prevState[id]
         }));
     }
+
+    const handleFilter = (e) => {
+        e.preventDefault();
+        let selectedStatus = e.target.value;
+
+        if (selectedStatus === "" || selectedStatus === "all") {
+            setData(allList);
+        } else if (selectedStatus === "rejected") {
+            setData(rejectedList);
+        } else if (selectedStatus === "accepted") {
+            setData(acceptedList);
+        } else {
+            setData(pendingList);
+        }
+    };
 
     const handleCloseTooltip = () => {
         setSelectedRowId(null);
@@ -82,6 +114,24 @@ export default function AdminViewRequests(props) {
                                 onChange={(e) => setQuery(e.target.value)}
                                 fullWidth
                             />
+                        </Container>
+                        <Container sx={{ width: "48%" }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="filter-by-status">Status</InputLabel>
+                                <Select
+                                    onChange={(e) => handleFilter(e)}
+                                    sx={{ textAlign: 'left' }}
+                                    labelId="filter-by-status"
+                                    id="filter-by-status-select"
+                                    label="status"
+                                    uncontrolled="true"
+                                    fullWidth
+                                >
+                                    {statuses.map((value) => (
+                                        <MenuItem key={value} value={value}>{`${value.charAt(0).toUpperCase()}${value.slice(1)}`}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Container>
                     </Container>
                     <Table>

@@ -63,17 +63,6 @@ export default function AdminViewMedicines() {
           .then((res) => {
             setData(res.data);
           });
-
-            // axios
-            //     .get(`http://localhost:8000/medicines/filter`, {
-            //         data: {
-            //             medicinalUse: medUse,
-            //         }
-            //     })
-            //     .then((res) => {
-            //         setData(res.data);
-            //         console.log(medUse);
-            //     });
         }
     };
 
