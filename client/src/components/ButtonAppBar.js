@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { Typography, Toolbar, Box, AppBar, IconButton, Button, Drawer, List, ListItem, ListItemButton, ListItemIcon, InboxIcon, MailIcon, ListItemText, Divider } from '@mui/material';
+import { Typography, Zoom, Toolbar, Box, AppBar, IconButton, Button, Drawer, List, ListItem, ListItemButton, ListItemIcon, InboxIcon, MailIcon, ListItemText, Divider, Fab } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-
+import { useState, useEffect } from 'react';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 export default function ButtonAppBar(props) {
 
 	const list = (anchor) => (
@@ -22,7 +24,7 @@ export default function ButtonAppBar(props) {
 		</Box>
 	);
 
-	const [state, setState] = React.useState({
+	const [state, setState] = useState({
 		top: false,
 		left: false,
 		bottom: false,
@@ -37,8 +39,39 @@ export default function ButtonAppBar(props) {
 
 		setState({ ...state, [anchor]: open });
 	};
+
+	const [isVisible, setIsVisible] = useState(false);
+
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	};
+
+	const handleScroll = () => {
+		if (window.pageYOffset > 300) {
+			setIsVisible(true);
+		} else {
+			setIsVisible(false);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
+
 	return (
 		<>
+			<Zoom in={isVisible}>
+				<Fab color="primary" onClick={scrollToTop} sx={{ position: 'fixed', bottom: 30, right: 30 }}>
+					<ArrowUpwardIcon />
+				</Fab>
+			</Zoom>
 			<div>
 				<Drawer
 					anchor={"left"}
