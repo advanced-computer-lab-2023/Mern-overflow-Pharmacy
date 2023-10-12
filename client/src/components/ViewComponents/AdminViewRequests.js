@@ -18,7 +18,9 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import PendingIcon from '@mui/icons-material/Pending';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import axios from "axios";
 
 export default function AdminViewRequests(props) {
@@ -87,7 +89,7 @@ export default function AdminViewRequests(props) {
                             <TableRow>
                                 {[
                                     "Name", "Email", "Username",
-                                    "Date of Birth", "Hourly Rate",
+                                    "Birth Date", "Hourly Rate",
                                     "Affiliation", "Education", "Status"
                                 ].map(header => (
                                     <TableCell key={header} style={{ fontWeight: "bold" }}>
@@ -104,11 +106,16 @@ export default function AdminViewRequests(props) {
                                             <TableCell>{row.name}</TableCell>
                                             <TableCell>{row.email}</TableCell>
                                             <TableCell>{row.username}</TableCell>
-                                            <TableCell>{row.dateOfBirth}</TableCell>
+                                            <TableCell>{row.dateOfBirth.slice(0, 10)}</TableCell>
                                             <TableCell>EGP {row.hourlyRate}</TableCell>
                                             <TableCell>{row.affiliation}</TableCell>
                                             <TableCell>{row.education}</TableCell>
-                                            <TableCell>{row.status}</TableCell>
+                                            <TableCell style={{ display: 'flex', alignItems: 'center' }}>
+                                                {row.status === 'pending' ? <><PendingIcon style={{ color: '#1976d2', marginRight: '8px' }} /> Pending </> : null}
+                                                {row.status === 'rejected' ? <><CancelIcon style={{ color: '#bb2124', marginRight: '8px' }} /> Rejected </> : null}
+                                                {row.status === 'accepted' ? <><CheckCircleIcon style={{ color: '#22bb33', marginRight: '8px' }} /> Accepted </> : null}
+                                            </TableCell>
+
                                         </TableRow>
                                     ),
                             )}

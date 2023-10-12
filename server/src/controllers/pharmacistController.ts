@@ -34,12 +34,13 @@ const createPharmacist = async (req: Request, res: Response) => {
 const listPharmacistRequests = async (req: Request, res: Response) => {
   //view all of the information uploaded by a pharmacist (with pending requests) to apply to join the platform
   pharmacist
-    .find({ "status": "pending" })
+    .find({})
     .then((pharm) => {
       res.status(200).send(pharm);
     })
     .catch((err) => {
       res.status(400).send(err);
+      console.log(err);
     });
 }
 

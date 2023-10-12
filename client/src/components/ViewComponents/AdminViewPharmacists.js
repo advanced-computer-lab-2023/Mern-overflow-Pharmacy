@@ -27,7 +27,7 @@ const columns = [
     },
     {
         key: "dateOfBirth",
-        label: "Date of Birth",
+        label: "Birth Date",
     },
     {
         key: "hourlyRate",
@@ -70,7 +70,7 @@ export default function AdminViewPharmacists(props) {
 
     useEffect(() => {
         fetchTableData();
-    }, [props.dataIsUpdated]);
+    }, []);
 
     return (
         <Container maxWidth="xl">
@@ -96,7 +96,7 @@ export default function AdminViewPharmacists(props) {
                                 <TableCell>{row.name}</TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.username}</TableCell>
-                                <TableCell>{row.dateOfBirth}</TableCell>
+                                <TableCell>{row.dateOfBirth.slice(0,10)}</TableCell>
                                 <TableCell>EGP {row.hourlyRate}</TableCell>
                                 <TableCell>{row.affiliation}</TableCell>
                                 <TableCell>{row.education}</TableCell>

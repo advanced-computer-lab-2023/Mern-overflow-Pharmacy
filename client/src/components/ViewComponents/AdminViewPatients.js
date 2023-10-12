@@ -27,7 +27,7 @@ const columns = [
   },
   {
     key: "dateOfBirth",
-    label: "Date of Birth",
+    label: "Birth Date",
   },
   {
     key: "gender",
@@ -35,7 +35,7 @@ const columns = [
   },
   {
     key: "mobileNumber",
-    label: "Mobile Number",
+    label: "Phone No.",
   },
   {
     key: "emergencyName",
@@ -43,7 +43,7 @@ const columns = [
   },
   {
     key: "emergencyMobileNumber",
-    label: "Emergency Mobile Number",
+    label: "Emergency Phone No.",
   },
   {
     key: "action",
@@ -94,7 +94,7 @@ export default function AdminViewPatients(props) {
                   <TableCell>{row.username}</TableCell>
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.dateOfBirth}</TableCell>
+                  <TableCell>{row.dateOfBirth.slice(0,10)}</TableCell>
                   <TableCell>{row.gender}</TableCell>
                   <TableCell>{row.mobileNumber}</TableCell>
                   <TableCell>{row.emergencyContact.name}</TableCell>
