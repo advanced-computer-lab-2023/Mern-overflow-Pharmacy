@@ -5,8 +5,10 @@ import { useState } from "react";
 
 const AddMedicine = (props) => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
-    const [alertOpen, setAlertOpen] = useState(false);
-    const [alertMessage, setAlertMessage] = useState('');
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const onSubmit = data => {
         const dataToServer = { ...data };
@@ -17,16 +19,20 @@ const AddMedicine = (props) => {
         axios.post('http://localhost:8000/medicines', dataToServer)
             .then((response) => {
                 console.log('POST request successful', response);
+                setSuccessMessage('Medicine added succesfully');
+                setSuccessOpen(true);
+                setErrorOpen(false);
                 props.setDataIsUpdated(false);
             })
             .catch((error) => {
                 console.error(error);
                 if (error.response.data.code === 11000) {
-                    setAlertMessage('This medicine name already exists. Please change the name.');
+                    setErrorMessage('This medicine name already exists. Please use another name.');
                 } else {
-                    setAlertMessage(error.response.data.message || 'Unknown error');
+                    setErrorMessage(error.response.data.message || 'Unknown error');
                 }
-                setAlertOpen(true);
+                setErrorOpen(true);
+                setSuccessOpen(false);
             });
     }
 
@@ -40,22 +46,34 @@ const AddMedicine = (props) => {
         }
     }
 
-    const handleAlertClose = (event, reason) => {
+    const handleErrorClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-        setAlertOpen(false);
+        setErrorOpen(false);
+    };
+
+    const handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessOpen(false);
     };
 
     return (
         < Container maxWidth="lg" >
+            <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
+                <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+                    {successMessage}
+                </Alert>
+            </Snackbar>
             <Paper elevation={3} sx={{ p: '20px', my: '40px' }}>
                 <Typography variant="h6" sx={{ mb: 4 }}> Add a Medicine to the System </Typography>
-                <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
-                    <Alert elevation={6} variant="filled" onClose={handleAlertClose} severity="error">
-                        {alertMessage}
-                    </Alert>
-                </Snackbar>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={4}>

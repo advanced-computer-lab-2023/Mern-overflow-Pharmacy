@@ -57,19 +57,19 @@ const AddAdmin = (props) => {
 
   return (
     <Container maxWidth="lg">
+      <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
+        <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
+          {errorMessage}
+        </Alert>
+      </Snackbar>
+      <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+
+        <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+          {successMessage}
+        </Alert>
+      </Snackbar>
       <Paper elevation={3} sx={{ p: '20px', my: '40px' }}>
         <Typography variant="h6" sx={{ mb: 4 }}> Add a New Admin to the System </Typography>
-        <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
-          <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
-            {errorMessage}
-          </Alert>
-        </Snackbar>
-        <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
-
-          <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
-            {successMessage}
-          </Alert>
-        </Snackbar>
         <Box component="form" sx={{ display: 'flex', alignItems: 'center' }} onSubmit={handleSubmit(onSubmit)}>
           <TextField
             id="username"
