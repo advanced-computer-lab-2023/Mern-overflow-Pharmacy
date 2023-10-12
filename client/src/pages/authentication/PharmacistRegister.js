@@ -1,23 +1,16 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { TextField, Grid, Snackbar, Alert, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import React, { useState } from 'react';
+import { Paper, CssBaseline, TextField, Grid, Snackbar, Alert, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio, Avatar, InputLabel, OutlinedInput, InputAdornment } from '@mui/material';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Controller, useForm } from "react-hook-form"
-import Avatar from '@mui/material/Avatar';
-import logo from '../../assets/gifs/logo.gif';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
+import { Controller, useForm } from 'react-hook-form';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import sha256 from 'js-sha256';
-import { useState } from 'react';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import logo from '../../assets/gifs/logo.gif';
 
 const defaultTheme = createTheme();
 
@@ -45,10 +38,15 @@ export default function PharmacistRegister() {
       })
       .catch((error) => {
         console.error(error);
-        if (error.response.data.code === 11000) {
-          setErrorMessage('This username already exists. Please use another one.');
-        } else {
-          setErrorMessage(error.response.data.message || 'Unknown error');
+        setErrorMessage(error.response.data.message || 'Unknown error');
+        if (error.response.data.indexOf("registered") !== -1) {
+          setError('email', {
+            data: 'Email is registered'
+          });
+        } else if (error.response.data.indexOf("Username") !== -1) {
+          setError('username', {
+            data: 'Username already exists'
+          });
         }
         setErrorMessage(error.response.data);
         setErrorOpen(true);
