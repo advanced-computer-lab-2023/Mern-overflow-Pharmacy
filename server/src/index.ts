@@ -1,50 +1,59 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import mongoose, { ConnectOptions } from 'mongoose';
+import bodyParser from "body-parser";
+import adminstratorController from "./controllers/AdminstratorController.js";
+import medicineController from "./controllers/medicineController.js";
+import patientController from "./controllers/PatientController.js";
+import pharmacistController from "./controllers/pharmacistController.js";
+import config from "./config/config.js";
+import cors from 'cors'
 
-dotenv.config();
+import adminRouter from "./routes/Adminstrator.js";
+import medicineRouter from "./routes/Medicines.js"
+import patientRouter from "./routes/Patients.js"
+import pharmacistRouter from './routes/Pharmacists.js';
 
-// const app = express();
-// const PORT = 8000;
-const mongoUrl:string = process.env.MONGO_URI!;
-
-// app.use(express.json());
-
-// app.get('/', (req, res) => {
-//     res.send('Hello, World! This is your Express server.');
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+mongoose.set("strictQuery", false);
 
 
-// testDatabaseConnection();
+// dotenv.config();
+const MongoURI: string = "mongodb+srv://dbuser:987654321@acl.n4q8ykx.mongodb.net/?retryWrites=true&w=majority";
+const app = express();
+const port: number = config.server.port || 8000;
+app.use(bodyParser.json());
+app.use(cors());
 
-main().catch(err => console.log(err));
+const mongoUrl: string = process.env.MONGO_URI!;
 
-async function main() {
-  await mongoose.connect(mongoUrl);
 
-  const schema = new mongoose.Schema({
-	name: String,
-	age: Number,
-  });
+app.use(bodyParser.json());
 
-  const User = mongoose.model('User', schema);
+//ROUTES
+app.use("/adminstators", adminRouter);
+app.use("/medicines", medicineRouter);
+app.use("/patients", patientRouter);
+app.use("/pharmacists", pharmacistRouter);
 
-  // Create a new user document
-  const newUser = new User({ name: 'John', age: 30 });
 
-  // Save the user document to the database
-  await newUser.save();
 
-  console.log('Document inserted:', newUser);
+app.get("/", (req, res) => {
+  res.send("hello");
+  console.log("hello, world!");
+});
 
-  // Query the database for a user document
-  const queryResult = await User.findOne({ name: 'John' });
 
-  console.log('Document found:', queryResult);
 
-}
+mongoose
+  .connect(MongoURI)
+  .then(() => {
+    console.log("MongoDB is now connected!");
+    // Starting server
+    app.listen(port, () => {
+      console.log(`Listening to requests on http://localhost:${port}`);
+    });
+  })
+  .catch((err) => console.log(err));
+
+export default app;
+
 

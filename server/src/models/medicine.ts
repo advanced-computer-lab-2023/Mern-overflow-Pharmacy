@@ -6,26 +6,50 @@ interface MedicineImage {
     filename: string;
 }
 
+interface Details{
+    description: string;
+    activeIngredients: string[];
+}
+
 interface Imedicine {
     name: string;
-    details: string;
+    medicinalUse: string;
+    details: Details;
     price: number;
     availableQuantity: number;
+    sales : number ;
     image?: MedicineImage;
+
 }
 
 const medicineSchema = new Schema<Imedicine>({
     name: { type: String, required: true, unique: true },
-    details: { type: String, required: true },
+    medicinalUse: { type: String, required: true},
+    details: {
+        description: { type: String, required: true },
+        activeIngredients: [{ type: String, required: true }],
+    },
     price: { type: Number, required: true },
     availableQuantity: { type: Number, required: true },
+    sales: { type: Number, required: true },
     image: {
-        data: { type: Buffer, required: true, },
-        contentType: { type: String, required: true, },
-        filename: { type: String,required: true,},
-        required: false,
+        // requirements of these changed to false for testing purposes 
+        data: { type: Buffer, required: false, },
+        contentType: { type: String, required: false, },
+        filename: { type: String,required: false,},
     },
 })
+
+
+medicineSchema.pre('save', function (next) {
+    if (this.isModified('name')) {
+        this.name = this.name.toLowerCase();
+    }
+    if (this.isModified('medicinalUse')) {
+        this.medicinalUse = this.medicinalUse.toLowerCase();
+    }
+    next();
+});
 
 const Medicine = model<Imedicine>('Medicine', medicineSchema);
 
