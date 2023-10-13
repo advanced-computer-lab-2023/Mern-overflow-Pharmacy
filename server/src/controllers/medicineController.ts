@@ -12,13 +12,15 @@ const listAllMedicines = async (req: Request, res: Response) => {
 const listMedicines = async (req: Request, res: Response) => {
   //view a list of all available medicines (including picture of medicine, price, description)
   medicine.find()
-    .select('image price details')
+    .select('_id availableQuantity name medicinalUse image price details')
     .then(
+
       (results) => {
         var medResults: any[] = [];
         for (const med of results) {
           if (med.availableQuantity !== 0)
-            medResults.push({ "image": med.image, "price": med.price, "details": med.details });
+            medResults.push({ "_id":med._id, "name": med.name, "medicinalUse": med.medicinalUse, "image": med.image, "price": med.price, "details": med.details });
+          console.log(med);
         }
         res.status(200).send(medResults);
       })

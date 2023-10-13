@@ -34,7 +34,7 @@ const createPharmacist = async (req: Request, res: Response) => {
 const listPharmacistRequests = async (req: Request, res: Response) => {
   //view all of the information uploaded by a pharmacist (with pending requests) to apply to join the platform
   pharmacist
-    .find({})
+    .find({"status": {$in: ["pending", "rejected"]} })
     .then((pharm) => {
       res.status(200).send(pharm);
     })

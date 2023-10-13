@@ -13,7 +13,7 @@ export default function AdminViewMedicines() {
 
     const fetchTableData = () => {
         axios
-            .get(`http://localhost:8000/medicines/viewAll`, {})
+            .get(`http://localhost:8000/medicines/view`, {})
             .then((res) => {
                 setData(res.data);
                 let temp = ["All"];

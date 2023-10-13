@@ -4,14 +4,27 @@ import { useForm } from 'react-hook-form';
 import logo from '../../assets/gifs/logo.gif';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const navigate = useNavigate();
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
 
     const onSubmit = data => {
         console.log("Data to server" + JSON.stringify(data));
+        if (data.Username.includes("patient")) {
+            navigate("/patient/medicines");
+        }
+        else if (data.Username.includes("pharmacist")) {
+
+            navigate("/pharmacist/medicines");
+        }
+        else if (data.Username.includes("admin")) {
+            navigate("/admin/admins");
+        };
     }
     console.log(errors);
 
@@ -70,8 +83,7 @@ export default function SignIn() {
                                 </Grid>
                             </Grid>
                             <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}
-                                component={Link}
-                                to="/admin/admins">
+                                >
                                 Sign In
                             </Button>
                         </Box>
