@@ -20,7 +20,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import axios from "axios";
 
 export default function AdminViewRequests(props) {
@@ -28,10 +27,9 @@ export default function AdminViewRequests(props) {
     const [selectedRowId, setSelectedRowId] = useState(null);
     const [data, setData] = useState([]);
     const [Query, setQuery] = useState("");
-    const statuses = ["all", "accepted", "pending", "rejected"];
+    const statuses = ["all", "pending", "rejected"];
     const [allList, setAllList] = useState([]);
     const [rejectedList, setRejectedList] = useState([]);
-    const [acceptedList, setAcceptedList] = useState([]);
     const [pendingList, setPendingList] = useState([]);
 
     const fetchTableData = () => {
@@ -48,13 +46,10 @@ export default function AdminViewRequests(props) {
                         tempPen.push(key);
                     } else if (key.status === 'rejected') {
                         tempRej.push(key);
-                    } else {
-                        tempAcc.push(key);
                     }
                     tempAll.push(key);
                     return null;
                 });
-                setAcceptedList(tempAcc);
                 setRejectedList(tempRej);
                 setPendingList(tempPen);
                 setAllList(tempAll);
@@ -83,8 +78,6 @@ export default function AdminViewRequests(props) {
             setData(allList);
         } else if (selectedStatus === "rejected") {
             setData(rejectedList);
-        } else if (selectedStatus === "accepted") {
-            setData(acceptedList);
         } else {
             setData(pendingList);
         }
@@ -162,9 +155,7 @@ export default function AdminViewRequests(props) {
                                             <TableCell style={{ display: 'flex', alignItems: 'center' }}>
                                                 {row.status === 'pending' ? <><PendingIcon style={{ color: '#1976d2', marginRight: '8px' }} /> Pending </> : null}
                                                 {row.status === 'rejected' ? <><CancelIcon style={{ color: '#d33c5c', marginRight: '8px' }} /> Rejected </> : null}
-                                                {row.status === 'accepted' ? <><CheckCircleIcon style={{ color: '#22bb33', marginRight: '8px' }} /> Accepted </> : null}
                                             </TableCell>
-
                                         </TableRow>
                                     ),
                             )}

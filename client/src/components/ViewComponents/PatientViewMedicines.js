@@ -195,7 +195,7 @@ export default function PatientViewMedicines() {
                                                         return updatedCounts;
                                                     })}> + </Button>
                                                 </ButtonGroup>
-                                                <IconButton onClick={() => {
+                                                <IconButton sx={{ml: "15px"}} onClick={() => {
                                                     if (counts[index] > 0) {
                                                         setSuccessOpen(true);
                                                         setSuccessMessage(counts[index] == 1 ? `${counts[index]} ${row.name} has been added to your cart.` : `${counts[index]} ${row.name} have been added to your cart.`);
