@@ -206,7 +206,7 @@ export default function PatientViewMedicines() {
                                                         });
                                                     }
                                                 }}>
-                                                    <AddShoppingCartIcon />
+                                                    <AddShoppingCartIcon color="primary" />
                                                 </IconButton>
                                             </div>
                                         </Grid>
