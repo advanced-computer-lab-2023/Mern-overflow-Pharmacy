@@ -1,18 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { Container, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import EditIcon from '@mui/icons-material/Edit';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import UploadIcon from '@mui/icons-material/Upload';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
+import { styled } from '@mui/material/styles';
+
 import { useNavigate } from 'react-router-dom';
 
 export default function PharmacistViewMedicines(props) {
     const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
     const [Query, setQuery] = useState("");
     const [uniqueMedicinalUses, setUniqueMedicinalUses] = useState(["All"]);
+
+    const Img = styled('img')({
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+    });
+
+    const capitalize = (string) => {
+        return string.replace(/\b\w/g, function (match) {
+            return match.toUpperCase();
+        });
+    };
 
     const fetchTableData = () => {
         axios
@@ -52,114 +71,115 @@ export default function PharmacistViewMedicines(props) {
         }
     };
 
-    const handleClickOpen = (id) => {
-        setOpen(prevState => ({
-            ...prevState,
-            [id]: !prevState[id]
-        }));
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     const handleClickEdit = (id) => {
         navigate(`/pharmacist/medicines/${id}`);
-    }
+    };
 
     return (
-        <Container maxWidth="xl">
-            <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }}>
-                <Container>
-                    <Container
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            my: 5,
-                        }}
-                    >
-                        <Container sx={{ width: "48%" }}>
-                            <Input
-                                size="lg"
-                                placeholder="Search by name..."
-                                onChange={(e) => setQuery(e.target.value)}
-                                fullWidth
-                            />
-                        </Container>
-                        <Container sx={{ width: "48%" }}>
-                            <FormControl fullWidth>
-                                <InputLabel id="filter-by-medicinalUse">Medicinal Use</InputLabel>
-                                <Select
-                                    onChange={(e) => handleFilter(e)}
-                                    sx={{ textAlign: 'left' }}
-                                    labelId="filter-by-medicinalUse"
-                                    id="filter-by-medicinalUse-select"
-                                    label="medicinalUse"
-                                    uncontrolled="true"
+        <>
+            <Container maxWidth="xl">
+                <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }} >
+                    <Container>
+                        <Container
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                my: 5,
+                            }}
+                        >
+                            <Container sx={{ width: "48%" }}>
+                                <Input
+                                    size="lg"
+                                    placeholder="Search by name..."
+                                    onChange={(e) => setQuery(e.target.value)}
                                     fullWidth
-                                >
-                                    {uniqueMedicinalUses.map((value) => (
-                                        <MenuItem key={value} value={value}>{value}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                                />
+                            </Container>
+                            <Container sx={{ width: "48%" }}>
+                                <FormControl fullWidth>
+                                    <InputLabel id="filter-by-medicinalUse">Medicinal Use</InputLabel>
+                                    <Select
+                                        onChange={(e) => handleFilter(e)}
+                                        sx={{ textAlign: 'left' }}
+                                        labelId="filter-by-medicinalUse"
+                                        id="filter-by-medicinalUse-select"
+                                        label="medicinalUse"
+                                        uncontrolled="true"
+                                        fullWidth
+                                    >
+                                        {uniqueMedicinalUses.map((value) => (
+                                            <MenuItem key={value} value={value}>{value}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Container>
                         </Container>
-                    </Container>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell key="name" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc' }}>Name</TableCell>
-                                <TableCell key="medicinalUse" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc' }}>Medicinal Use</TableCell>
-                                <TableCell key="price" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc' }}>Price</TableCell>
-                                <TableCell key="availableQuantity" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc' }}>Available Quantity</TableCell>
-                                <TableCell key="sales" sx={{ fontWeight: "bold", borderTop: '1px solid #ccc', borderRight: '1px solid #ccc' }}>Sales</TableCell>
-                                <TableCell colSpan={2} key="details" sx={{ textAlign: 'center', fontWeight: "bold", borderTop: '1px solid #ccc' }}>Actions</TableCell>
-                                {/* <TableCell key="details" sx={{ textAlign: 'center', fontWeight: "bold" }}>Edit</TableCell> */}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {data.map(
-                                (row) =>
-                                    row.name.toLowerCase().includes(Query.toLowerCase()) && (
-                                        <TableRow key={row.username}>
-                                            <TableCell>{row.name}</TableCell>
-                                            <TableCell>{row.medicinalUse}</TableCell>
-                                            <TableCell>EGP {row.price}</TableCell>
-                                            <TableCell>{row.availableQuantity}</TableCell>
-                                            <TableCell sx={{borderRight: '1px solid #ccc'}}>{row.sales}</TableCell>
-                                            <TableCell sx={{ textAlign: 'center' }}>
-                                                <IconButton onClick={() => handleClickOpen(row._id)}>
-                                                    <InfoOutlinedIcon />
-                                                </IconButton>
-                                                <Dialog open={open[row._id] || false} onClose={handleClose} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.7)' } }}>
-                                                    <DialogTitle>{row.name}</DialogTitle>
-                                                    <DialogContent>
-                                                        <img src={panadol} alt="Popup Photo" />
-                                                        <div style={{ whiteSpace: 'pre-line' }}>
-                                                            {`Description: ${row.details.description}\n\nActive Ingredients: ${row.details.activeIngredients}`}
-                                                        </div>
-                                                    </DialogContent>
-                                                    <DialogActions>
-                                                        <Button onClick={handleClose} color="primary">
-                                                            Close
-                                                        </Button>
-                                                    </DialogActions>
-                                                </Dialog>
-                                            </TableCell>
-                                            <TableCell sx={{ textAlign: 'center' }}>
+                    </Container >
+
+                    <Container sx={{ p: "20px", my: "40px", paddingBottom: 5, maxWidth: 350, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                        {data.map(
+                            (row) =>
+                                row.name.toLowerCase().includes(Query.toLowerCase()) && (
+                                    <Paper
+                                        sx={{
+                                            p: 2,
+                                            my: '20px',
+                                            width: '40%',
+                                            maxWidth: '465px',
+                                            flexGrow: 1,
+                                            backgroundColor: (theme) =>
+                                                theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                                        }}
+                                    >
+                                        <Grid container spacing={2}>
+                                            <Grid item>
+                                                <ButtonBase sx={{ width: 128, height: '100%' }}>
+                                                    <Img alt={row.name} src={panadol} />
+                                                </ButtonBase>
+                                            </Grid>
+                                            <Grid item xs={12} sm container>
+                                                <Grid item xs container direction="column" spacing={2}>
+                                                    <Grid item xs>
+                                                        <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
+                                                            {capitalize(row.name)}
+                                                        </Typography>
+                                                        <Typography variant="body2" gutterBottom>
+                                                            {row.medicinalUse}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Typography variant="body2">
+                                                            {row.details.description}
+                                                        </Typography>
+                                                        <Typography variant="body2" sx={{ color: "#777" }}>
+                                                            Active Ingredients: {row.details.activeIngredients.join(', ')}
+                                                        </Typography>
+                                                    </Grid>
+
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems:"center"}}>
+                                                <Typography>
+                                                    EGP {row.price}
+                                                </Typography>
+                                                <Typography>
+                                                    {row.availableQuantity} In stock
+                                                </Typography>
+                                                <Typography>
+                                                    {row.sales} Sold
+                                                </Typography>
                                                 <IconButton onClick={() => handleClickEdit(row._id)}>
                                                     <EditIcon />
                                                 </IconButton>
-                                            </TableCell>
-                                        </TableRow>
-                                    ),
-                            )}
-                        </TableBody>
-                    </Table>
-
-                </Container >
-            </Paper>
-        </Container >
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
+                                ),
+                        )}
+                    </Container>
+                </Paper >
+            </Container >
+        </>
     );
 }
