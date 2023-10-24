@@ -159,7 +159,7 @@ export default function PharmacistViewMedicines(props) {
 
                                                 </Grid>
                                             </Grid>
-                                            <Grid item sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems:"center"}}>
+                                            <Grid item sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems:"center", }}>
                                                 <Typography>
                                                     EGP {row.price}
                                                 </Typography>

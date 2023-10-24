@@ -1,7 +1,11 @@
-import { Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField } from "@mui/material";
+import { Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField, IconButton } from "@mui/material";
 import axios from 'axios';
 import { useForm } from "react-hook-form"
 import { useState } from "react";
+import { styled } from '@mui/material/styles';
+import AddIcon from '@mui/icons-material/Add';
+import UploadIcon from '@mui/icons-material/Upload';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 const AddMedicine = (props) => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
@@ -60,6 +64,18 @@ const AddMedicine = (props) => {
         setSuccessOpen(false);
     };
 
+    const VisuallyHiddenInput = styled('input')({
+        clip: 'rect(0 0 0 0)',
+        clipPath: 'inset(50%)',
+        height: 1,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        whiteSpace: 'nowrap',
+        width: 1,
+      });
+
     return (
         <Container maxWidth="lg" >
             <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
@@ -111,7 +127,7 @@ const AddMedicine = (props) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={8}>
+                        <Grid item xs={12} sm={4}>
                             <TextField
                                 id="activeIngredients"
                                 label="Active Ingredients (Separate by comma)"
@@ -154,7 +170,13 @@ const AddMedicine = (props) => {
                             />
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <Button type="submit" variant="outlined" fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
+                            <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
+                                Upload Image
+                                <VisuallyHiddenInput type="file" />
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Button type="submit" variant="contained" startIcon={<AddIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
                                 Add Medicine
                             </Button>
                         </Grid>
