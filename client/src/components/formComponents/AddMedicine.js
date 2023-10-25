@@ -1,4 +1,4 @@
-import { Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField, IconButton } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField, IconButton } from "@mui/material";
 import axios from 'axios';
 import { useForm } from "react-hook-form"
 import { useState } from "react";
@@ -6,6 +6,9 @@ import { styled } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Upload';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 const AddMedicine = (props) => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
@@ -74,10 +77,10 @@ const AddMedicine = (props) => {
         left: 0,
         whiteSpace: 'nowrap',
         width: 1,
-      });
+    });
 
     return (
-        <Container maxWidth="lg" >
+        <Container maxWidth="lg" sx={{ mt: '50px'}} >
             <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
                 <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
                     {errorMessage}
@@ -88,101 +91,105 @@ const AddMedicine = (props) => {
                     {successMessage}
                 </Alert>
             </Snackbar>
-            <Paper elevation={3} sx={{ p: '20px', my: '40px' }}>
-                <Typography variant="h6" sx={{ mb: 4 }}> Add a Medicine to the System </Typography>
-                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={4}>
-                            <TextField
-                                id="name"
-                                label="Name"
-                                {...register("name", { required: true })}
-                                error={!!errors["name"]}
-                                helperText={errors["name"]?.message}
-                                fullWidth
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={8}>
-                            <TextField
-                                id="description"
-                                label="Description"
-                                {...register("description", { required: true })}
-                                error={!!errors["description"]}
-                                helperText={errors["description"]?.message}
-                                type="text"
-                                fullWidth
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <TextField
-                                id="medicinalUse"
-                                label="Medicinal Use"
-                                {...register("medicinalUse", { required: true })}
-                                error={!!errors["medicinalUse"]}
-                                helperText={errors["medicinalUse"]?.message}
-                                type="text"
-                                fullWidth
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <TextField
-                                id="activeIngredients"
-                                label="Active Ingredients (Separate by comma)"
-                                {...register("activeIngredients", { required: true })}
-                                error={!!errors["activeIngredients"]}
-                                helperText={errors["activeIngredients"]?.message}
-                                type="text"
-                                fullWidth
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <FormControl fullWidth >
-                                <InputLabel htmlFor="price">Price</InputLabel>
-                                <OutlinedInput
+            <Accordion sx={{ px: '20px', pt: '20px',pb: '0' }} elevation={3}>
+                <AccordionSummary expandIcon={<AddCircleIcon sx={{ mb: 2, fontSize: 40, }} />}>
+                    <Typography variant="h6" sx={{ mb: 3 }}> Add a Medicine to the System</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    id="name"
+                                    label="Name"
+                                    {...register("name", { required: true })}
+                                    error={!!errors["name"]}
+                                    helperText={errors["name"]?.message}
                                     fullWidth
-                                    inputProps={{ min: 1, max: 10000 }}
-                                    type="number"
-                                    id="price"
-                                    startAdornment={<InputAdornment position="start">EGP</InputAdornment>}
-                                    label="Price"
-                                    {...register("price", { required: true })}
-                                    error={!!errors["price"]}
-                                    helperText={errors["price"]?.message}
-                                    onBlur={handleChange}
+                                    required
                                 />
-                            </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sm={8}>
+                                <TextField
+                                    id="description"
+                                    label="Description"
+                                    {...register("description", { required: true })}
+                                    error={!!errors["description"]}
+                                    helperText={errors["description"]?.message}
+                                    type="text"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    id="medicinalUse"
+                                    label="Medicinal Use"
+                                    {...register("medicinalUse", { required: true })}
+                                    error={!!errors["medicinalUse"]}
+                                    helperText={errors["medicinalUse"]?.message}
+                                    type="text"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    id="activeIngredients"
+                                    label="Active Ingredients (Separate by comma)"
+                                    {...register("activeIngredients", { required: true })}
+                                    error={!!errors["activeIngredients"]}
+                                    helperText={errors["activeIngredients"]?.message}
+                                    type="text"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <FormControl fullWidth >
+                                    <InputLabel htmlFor="price">Price</InputLabel>
+                                    <OutlinedInput
+                                        fullWidth
+                                        inputProps={{ min: 1, max: 10000 }}
+                                        type="number"
+                                        id="price"
+                                        startAdornment={<InputAdornment position="start">EGP</InputAdornment>}
+                                        label="Price"
+                                        {...register("price", { required: true })}
+                                        error={!!errors["price"]}
+                                        helperText={errors["price"]?.message}
+                                        onBlur={handleChange}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    id="availableQuantity"
+                                    label="Available Quantity"
+                                    {...register("availableQuantity", { required: true })}
+                                    error={!!errors["availableQuantity"]}
+                                    helperText={errors["availableQuantity"]?.message}
+                                    type="number"
+                                    fullWidth
+                                    required
+                                    inputProps={{ min: 1 }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
+                                    Upload Image
+                                    <VisuallyHiddenInput type="file" />
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <Button type="submit" variant="contained" startIcon={<AddIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
+                                    Add Medicine
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <TextField
-                                id="availableQuantity"
-                                label="Available Quantity"
-                                {...register("availableQuantity", { required: true })}
-                                error={!!errors["availableQuantity"]}
-                                helperText={errors["availableQuantity"]?.message}
-                                type="number"
-                                fullWidth
-                                required
-                                inputProps={{ min: 1 }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
-                                Upload Image
-                                <VisuallyHiddenInput type="file" />
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Button type="submit" variant="contained" startIcon={<AddIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
-                                Add Medicine
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Paper>
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
         </Container >
     );
 }
