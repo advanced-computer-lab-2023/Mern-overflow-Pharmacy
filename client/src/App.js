@@ -12,6 +12,8 @@ import AdminManageMedicines from './pages/admin/AdminManageMedicines';
 import PharmacistManageMedicines from './pages/pharmacist/PharmacistManageMedicines';
 import PharmacistEditMedicine from './pages/pharmacist/PharmacistEditMedicine'
 import PatientManageMedicines from './pages/patient/PatientManageMedicines';
+import PatientManageCart from './pages/patient/PatientManageCart';
+import PatientManageOrders from './pages/patient/PatientManageOrders';
 import NotFoundPage from './NotFoundPage';
 
 import {
@@ -68,6 +70,12 @@ function App() {
     {
       path: "/patient/medicines",
       element: <PatientManageMedicines />,
+    },
+    { path: "/patient/cart",
+      element: <PatientManageCart />
+    },
+    { path: "/patient/orders",
+      element: <PatientManageOrders />
     },
     { path: "*",
       element: <NotFoundPage />
