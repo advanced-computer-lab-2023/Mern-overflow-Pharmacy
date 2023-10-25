@@ -12,6 +12,7 @@ import AdminManageMedicines from './pages/admin/AdminManageMedicines';
 import PharmacistManageMedicines from './pages/pharmacist/PharmacistManageMedicines';
 import PharmacistEditMedicine from './pages/pharmacist/PharmacistEditMedicine'
 import PatientManageMedicines from './pages/patient/PatientManageMedicines';
+import NotFoundPage from './NotFoundPage';
 
 import {
   createBrowserRouter,
@@ -67,6 +68,9 @@ function App() {
     {
       path: "/patient/medicines",
       element: <PatientManageMedicines />,
+    },
+    { path: "*",
+      element: <NotFoundPage />
     }
   ]);
 

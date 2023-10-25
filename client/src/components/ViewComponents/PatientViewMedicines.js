@@ -201,10 +201,10 @@ export default function PatientViewMedicines() {
                                                                 return updatedCounts;
                                                             })}> + </Button>
                                                         </ButtonGroup>
-                                                        <IconButton sx={{ ml: "15px" }} onClick={() => {
+                                                        <IconButton sx={{ ml: "15px" }} disabled={!counts[index]} onClick={() => {
                                                             if (counts[index] > 0) {
                                                                 setSuccessOpen(true);
-                                                                setSuccessMessage(counts[index] == 1 ? `${counts[index]} ${row.name} has been added to your cart.` : `${counts[index]} ${row.name} have been added to your cart.`);
+                                                                setSuccessMessage(counts[index] == 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${row.name} have been added to your cart.`);
                                                                 setCounts(prevCounts => {
                                                                     const updatedCounts = [...prevCounts];
                                                                     updatedCounts[index] = 0;
@@ -212,7 +212,7 @@ export default function PatientViewMedicines() {
                                                                 });
                                                             }
                                                         }}>
-                                                            <AddShoppingCartIcon color="primary" />
+                                                            <AddShoppingCartIcon color={!counts[index]? "grey" : "primary"} />
                                                         </IconButton>
                                                     </div>
                                                 </Grid>
