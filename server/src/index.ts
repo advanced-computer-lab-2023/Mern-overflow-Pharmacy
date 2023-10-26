@@ -12,6 +12,7 @@ import adminRouter from "./routes/Adminstrator.js";
 import medicineRouter from "./routes/Medicines.js"
 import patientRouter from "./routes/Patients.js"
 import pharmacistRouter from './routes/Pharmacists.js';
+import cartRouter from './routes/Cart.js'
 
 mongoose.set("strictQuery", false);
 
@@ -33,6 +34,7 @@ app.use("/adminstators", adminRouter);
 app.use("/medicines", medicineRouter);
 app.use("/patients", patientRouter);
 app.use("/pharmacists", pharmacistRouter);
+app.use("/cart", cartRouter);
 
 
 
