@@ -1,4 +1,4 @@
-import { Accordion, AccordionSummary, AccordionDetails, Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField } from "@mui/material";
+import { CircularProgress, Accordion, AccordionSummary, AccordionDetails, Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField } from "@mui/material";
 import axios from 'axios';
 import sha256 from 'js-sha256';
 import { useForm } from "react-hook-form"
@@ -11,8 +11,10 @@ const AddAdmin = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successOpen, setSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [loadingAdd, setLoadingAdd] = useState(false);
 
   const onSubmit = data => {
+    setLoadingAdd(true);
     const dataToServer = { ...data };
     dataToServer["passwordHash"] = sha256(data["password"]);
     delete dataToServer.password
@@ -23,11 +25,13 @@ const AddAdmin = (props) => {
         setSuccessOpen(true);
         setErrorOpen(false);
         props.setDataIsUpdated(false);
+        setLoadingAdd(false);
       })
       .catch(() => {
         setErrorMessage('This username is already taken. Please choose another one.');
         setErrorOpen(true);
         setSuccessOpen(false);
+        setLoadingAdd(false);
       });
     console.log('done')
   }
@@ -70,7 +74,7 @@ const AddAdmin = (props) => {
       </Snackbar>
       <Accordion sx={{ px: '20px', pt: '20px', pb: '0' }} elevation={3}>
         <AccordionSummary expandIcon={<AddCircleIcon sx={{ mb: 2, fontSize: 40, }} />}>
-          <Typography variant="h6" sx={{ mb: 3 }}> Add a Medicine to the System</Typography>
+          <Typography variant="h6" sx={{ mb: 3 }}> Add an Admin to the System</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box component="form" sx={{ display: 'flex', alignItems: 'center' }} onSubmit={handleSubmit(onSubmit)}>
@@ -97,6 +101,25 @@ const AddAdmin = (props) => {
           </Box>
         </AccordionDetails>
       </Accordion>
+      {loadingAdd && (
+        <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background: "rgba(0, 0, 0, 0.5)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 9999,
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+          <CircularProgress sx={{ color: "white" }}/>
+        </div>
+      )}
     </Container>
   );
 }

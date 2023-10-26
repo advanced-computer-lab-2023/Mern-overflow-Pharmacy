@@ -14,6 +14,7 @@ import PharmacistEditMedicine from './pages/pharmacist/PharmacistEditMedicine'
 import PatientManageMedicines from './pages/patient/PatientManageMedicines';
 import PatientManageCart from './pages/patient/PatientManageCart';
 import PatientManageOrders from './pages/patient/PatientManageOrders';
+import PatientCheckout from './pages/patient/PatientCheckout';
 import NotFoundPage from './NotFoundPage';
 
 import {
@@ -76,6 +77,9 @@ function App() {
     },
     { path: "/patient/orders",
       element: <PatientManageOrders />
+    },
+    { path: "/patient/checkout",
+      element: <PatientCheckout />
     },
     { path: "*",
       element: <NotFoundPage />

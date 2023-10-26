@@ -1,6 +1,7 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
 export default function PatientViewCart(props) {
@@ -12,7 +13,7 @@ export default function PatientViewCart(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
-        // axios.get(`http://localhost:8000/adminstators`).then((res) => {
+        // axios.get(`http://localhost:8000/cart`).then((res) => {
         //     setData(res.data);
         //     setTimeout(() => setLoading(false), 500);
         //     props.setDataIsUpdated(true);
@@ -53,7 +54,7 @@ export default function PatientViewCart(props) {
             </Snackbar> */}
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 {loading ? (
-                    <CircularProgress sx={{mt: '30px'}} />
+                    <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
                         <Container
@@ -77,19 +78,19 @@ export default function PatientViewCart(props) {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell key="name" sx={{ fontWeight: "bold" }}>Name</TableCell>
-                                    <TableCell key="price" sx={{ fontWeight: "bold" }}>Price</TableCell>
-                                    <TableCell key="quantity" sx={{ fontWeight: "bold" }}>Quantity</TableCell>
-                                    <TableCell key="action" sx={{ textAlign: 'right', fontWeight: "bold" }}>Remove</TableCell>
+                                    <TableCell key="name" sx={{ textAlign: 'center', fontWeight: "bold" }}>Name</TableCell>
+                                    <TableCell key="price" sx={{ textAlign: 'center', fontWeight: "bold" }}>Price</TableCell>
+                                    <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Quantity</TableCell>
+                                    <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>Remove</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {data.map((row) => row.name.toLowerCase().includes(Query.toLowerCase()) && (
                                     <TableRow key={row.name}>
-                                    <TableCell>{row.name}</TableCell>
-                                        <TableCell>{row.price}</TableCell>
-                                        <TableCell>{row.quantity}</TableCell>
-                                        <TableCell sx={{ textAlign: 'right' }}>
+                                        <TableCell sx={{ textAlign: 'center' }}>{row.name}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>{row.price}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>{row.quantity}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>
                                             <IconButton onClick={() => handleDelete(row._id)}>
                                                 <DeleteIcon />
                                             </IconButton>
@@ -98,14 +99,15 @@ export default function PatientViewCart(props) {
                                 ))}
                             </TableBody>
                         </Table>
-                        <Container sx={{display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px"}}>
+                        <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px" }}>
                             <Typography> {`Total: ${total}`} </Typography>
-                            <Button variant="contained"> Checkout </Button>
+                            <Button variant="contained"
+                                component={Link}
+                                to="/patient/checkout"> Checkout </Button>
                         </Container>
                     </Container>
                 )}
             </Paper>
         </Container>
-
     );
 }

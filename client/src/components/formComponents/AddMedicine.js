@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField, IconButton } from "@mui/material";
+import { CircularProgress, Accordion, AccordionDetails, AccordionSummary, Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField, IconButton } from "@mui/material";
 import axios from 'axios';
 import { useForm } from "react-hook-form"
 import { useState } from "react";
@@ -16,8 +16,10 @@ const AddMedicine = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const [loadingAdd, setLoadingAdd] = useState(false);
 
     const onSubmit = data => {
+        setLoadingAdd(true);
         const dataToServer = { ...data };
         dataToServer["sales"] = 0;
         dataToServer["details"] = { description: data["description"], activeIngredients: data["activeIngredients"].split(',').map(item => item.trim()) }
@@ -30,6 +32,7 @@ const AddMedicine = (props) => {
                 setSuccessOpen(true);
                 setErrorOpen(false);
                 props.setDataIsUpdated(false);
+                setLoadingAdd(false);
             })
             .catch((error) => {
                 console.error(error);
@@ -40,6 +43,7 @@ const AddMedicine = (props) => {
                 }
                 setErrorOpen(true);
                 setSuccessOpen(false);
+                setLoadingAdd(false);
             });
     }
 
@@ -80,7 +84,7 @@ const AddMedicine = (props) => {
     });
 
     return (
-        <Container maxWidth="lg" sx={{ mt: '50px'}} >
+        <Container maxWidth="lg" sx={{ mt: '50px' }} >
             <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
                 <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
                     {errorMessage}
@@ -91,7 +95,7 @@ const AddMedicine = (props) => {
                     {successMessage}
                 </Alert>
             </Snackbar>
-            <Accordion sx={{ px: '20px', pt: '20px',pb: '0' }} elevation={3}>
+            <Accordion sx={{ px: '20px', pt: '20px', pb: '0' }} elevation={3}>
                 <AccordionSummary expandIcon={<AddCircleIcon sx={{ mb: 2, fontSize: 40, }} />}>
                     <Typography variant="h6" sx={{ mb: 3 }}> Add a Medicine to the System</Typography>
                 </AccordionSummary>
@@ -190,6 +194,25 @@ const AddMedicine = (props) => {
                     </Box>
                 </AccordionDetails>
             </Accordion>
+            {loadingAdd && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <CircularProgress sx={{ color: "white" }} />
+                </div>
+            )}
         </Container >
     );
 }

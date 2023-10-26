@@ -1,4 +1,4 @@
-import { Box, Typography, Snackbar, Alert, FormControl, Button, Container, Paper, TextField } from "@mui/material";
+import { CircularProgress, Box, Typography, Snackbar, Alert, FormControl, Button, Container, Paper, TextField } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -22,6 +22,7 @@ const EditMedicine = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const [loadingEdit, setLoadingEdit] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,6 +45,7 @@ const EditMedicine = () => {
     }, []);
 
     const onSubmit = data => {
+        setLoadingEdit(true);
         const details = { activeIngredients: activeIngredients.split(',').map(item => item.trim()), description: description }
         const dataToServer = { name, medicinalUse, details, price, availableQuantity, sales };
         axios.put(`http://localhost:8000/medicines/${id}`, dataToServer)
@@ -52,12 +54,14 @@ const EditMedicine = () => {
                 setSuccessMessage('Medicine updated succesfully');
                 setSuccessOpen(true);
                 setErrorOpen(false);
+                setLoadingEdit(false);
             })
             .catch((error) => {
                 console.error('Error making PUT request', error);
                 setErrorMessage(error.response.data.message || 'Unknown error');
                 setErrorOpen(true);
                 setSuccessOpen(false);
+                setLoadingEdit(false);
             });
     }
 
@@ -173,8 +177,26 @@ const EditMedicine = () => {
                     </Button>
                 </Box>
             </Paper>
+            {loadingEdit && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <CircularProgress color="primary" />
+                </div>
+            )}
         </Container>
-
     );
 }
 

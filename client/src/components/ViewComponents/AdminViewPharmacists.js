@@ -41,6 +41,7 @@ const columns = [
 export default function AdminViewPharmacists(props) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingDel, setLoadingDel] = useState(false);
     const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
@@ -53,16 +54,19 @@ export default function AdminViewPharmacists(props) {
     };
 
     const handleDelete = (id) => {
+        setLoadingDel(true);
         axios.delete(`http://localhost:8000/pharmacists/${id}`)
             .then((response) => {
                 console.log('DELETE request successful', response);
                 fetchTableData();
                 setSuccessMessage('Pharmacist deleted succesfully');
                 setSuccessOpen(true);
+                setLoadingDel(false);
             })
             .catch((error) => {
                 console.error('Error making DELETE request', error);
                 alert('Error deleting the pharmacist: ' + error.message);
+                setLoadingDel(false);
             });
     }
 
@@ -136,7 +140,25 @@ export default function AdminViewPharmacists(props) {
                     </Container>
                 )}
             </Paper>
+            {loadingDel && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <CircularProgress sx={{ color: "white" }} />
+                </div>
+            )}
         </Container>
-
     );
 }

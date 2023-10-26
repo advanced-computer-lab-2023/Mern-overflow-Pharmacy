@@ -4,10 +4,11 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
 
-const columns = [{key: "username",label: "USERNAME",},{key: "action",label: "ACTION",},];
+const columns = [{ key: "username", label: "USERNAME", }, { key: "action", label: "ACTION", },];
 export default function AdminViewAdmins(props) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingDel, setLoadingDel] = useState(false);
     const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
@@ -21,16 +22,19 @@ export default function AdminViewAdmins(props) {
     };
 
     const handleDelete = (id) => {
+        setLoadingDel(true);
         axios.delete(`http://localhost:8000/adminstators/${id}`)
             .then((response) => {
                 console.log('DELETE request successful', response);
                 fetchTableData();
                 setSuccessMessage('Admin deleted succesfully');
                 setSuccessOpen(true);
+                setLoadingDel(false);
             })
             .catch((error) => {
                 console.error('Error making DELETE request', error);
                 alert('Error deleting the admin: ' + error.message);
+                setLoadingDel(false);
             });
     }
 
@@ -54,7 +58,7 @@ export default function AdminViewAdmins(props) {
             </Snackbar>
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 {loading ? (
-                    <CircularProgress sx={{mt: '30px'}} />
+                    <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
                         <Container
@@ -98,6 +102,25 @@ export default function AdminViewAdmins(props) {
                     </Container>
                 )}
             </Paper>
+            {loadingDel && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <CircularProgress sx={{ color: "white" }} />
+                </div>
+            )}
         </Container>
 
     );

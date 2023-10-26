@@ -8,8 +8,6 @@ interface emergencyContact {
     mobileNumber: string;
 }
 
-
-
 interface IPatient {
     // username: string;
     name: string;
@@ -21,6 +19,7 @@ interface IPatient {
     emergencyContact: emergencyContact;
     prescriptions?: Types.ObjectId[];
     package?: Types.ObjectId;
+    address: string[];
 }
 
 // 2. Create a Schema corresponding to the document interface.
@@ -42,7 +41,7 @@ const PatientSchema = new Schema<IPatient>({
 
     prescriptions: [{ type: mongoose.Types.ObjectId, ref: "Prescription", required: false }],
     package: { type: mongoose.Types.ObjectId, ref: "Package", required: false },
-
+    address: [{type: String, trim: true}]
 });
 
 PatientSchema.pre('save', function (next) {
