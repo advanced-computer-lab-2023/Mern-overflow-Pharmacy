@@ -204,7 +204,7 @@ export default function PatientViewMedicines() {
                                                         <IconButton sx={{ ml: "15px" }} disabled={!counts[index]} onClick={() => {
                                                             if (counts[index] > 0) {
                                                                 setSuccessOpen(true);
-                                                                setSuccessMessage(counts[index] == 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${row.name} have been added to your cart.`);
+                                                                setSuccessMessage(counts[index] == 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${capitalize(row.name)} have been added to your cart.`);
                                                                 setCounts(prevCounts => {
                                                                     const updatedCounts = [...prevCounts];
                                                                     updatedCounts[index] = 0;
