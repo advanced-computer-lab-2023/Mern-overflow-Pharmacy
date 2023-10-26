@@ -73,8 +73,11 @@ const AddAdmin = (props) => {
         </Alert>
       </Snackbar>
       <Accordion sx={{ px: '20px', pt: '20px', pb: '0' }} elevation={3}>
-        <AccordionSummary expandIcon={<AddCircleIcon sx={{ mb: 2, fontSize: 40, }} />}>
-          <Typography variant="h6" sx={{ mb: 3 }}> Add an Admin to the System</Typography>
+        <AccordionSummary >
+          <Container sx={{ display: "flex", alignItems: "center", alignContent: "center", justifyContent: "space-between"}}>
+            <Typography variant="h6" sx={{ mb: 3 }}> Add an Admin to the System</Typography>
+            <AddCircleIcon color="primary" sx={{ mb: 2, fontSize: 40, }} />
+          </Container>
         </AccordionSummary>
         <AccordionDetails>
           <Box component="form" sx={{ display: 'flex', alignItems: 'center' }} onSubmit={handleSubmit(onSubmit)}>
@@ -95,7 +98,7 @@ const AddAdmin = (props) => {
               helperText={errors["password"]?.message}
               onBlur={handleChange}
               sx={{ mr: "2%" }} type="password" fullWidth />
-            <Button type="submit" variant="outlined" fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
+            <Button type="submit" variant="contained" fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
               Add Admin
             </Button>
           </Box>
@@ -103,21 +106,21 @@ const AddAdmin = (props) => {
       </Accordion>
       {loadingAdd && (
         <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          background: "rgba(0, 0, 0, 0.5)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 9999,
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-          <CircularProgress sx={{ color: "white" }}/>
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <CircularProgress sx={{ color: "white" }} />
         </div>
       )}
     </Container>

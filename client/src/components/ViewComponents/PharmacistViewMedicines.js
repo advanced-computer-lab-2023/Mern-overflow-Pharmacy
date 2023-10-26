@@ -9,10 +9,12 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
-
+import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 export default function PharmacistViewMedicines(props) {
+    const theme = useTheme();
+
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -173,7 +175,7 @@ export default function PharmacistViewMedicines(props) {
                                                         <Typography>
                                                             {row.sales} Sold
                                                         </Typography>
-                                                        <IconButton onClick={() => handleClickEdit(row._id)}>
+                                                        <IconButton onClick={() => handleClickEdit(row._id)} sx={{ '&:hover': {color: theme.palette.info.main} }}>
                                                             <EditIcon />
                                                         </IconButton>
                                                     </Grid>

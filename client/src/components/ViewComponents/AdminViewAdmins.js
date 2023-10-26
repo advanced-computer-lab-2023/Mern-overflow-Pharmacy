@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
+import { useTheme } from '@mui/material/styles';
+
 
 const columns = [{ key: "username", label: "USERNAME", }, { key: "action", label: "ACTION", },];
 export default function AdminViewAdmins(props) {
+    const theme = useTheme();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingDel, setLoadingDel] = useState(false);
@@ -91,8 +94,8 @@ export default function AdminViewAdmins(props) {
                                     <TableRow key={row.username}>
                                         <TableCell>{row.username}</TableCell>
                                         <TableCell sx={{ textAlign: 'right' }}>
-                                            <IconButton onClick={() => handleDelete(row._id)}>
-                                                <DeleteIcon />
+                                            <IconButton onClick={() => handleDelete(row._id)} sx={{ '&:hover': {color: theme.palette.error.main} }}>
+                                                <DeleteIcon  />
                                             </IconButton>
                                         </TableCell>
                                     </TableRow>

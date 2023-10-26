@@ -96,8 +96,11 @@ const AddMedicine = (props) => {
                 </Alert>
             </Snackbar>
             <Accordion sx={{ px: '20px', pt: '20px', pb: '0' }} elevation={3}>
-                <AccordionSummary expandIcon={<AddCircleIcon sx={{ mb: 2, fontSize: 40, }} />}>
-                    <Typography variant="h6" sx={{ mb: 3 }}> Add a Medicine to the System</Typography>
+                <AccordionSummary >
+                    <Container sx={{ display: "flex", alignItems: "center", alignContent: "center", justifyContent: "space-between" }}>
+                        <Typography variant="h6" sx={{ mb: 3 }}> Add a Medicine to the System</Typography>
+                        <AddCircleIcon color="primary" sx={{ mb: 2, fontSize: 40, }} />
+                    </Container>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Box component="form" onSubmit={handleSubmit(onSubmit)}>

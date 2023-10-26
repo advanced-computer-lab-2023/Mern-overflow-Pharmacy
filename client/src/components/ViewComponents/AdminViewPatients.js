@@ -2,6 +2,7 @@ import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, Ci
 import React, { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
+import { useTheme } from '@mui/material/styles';
 
 const columns = [
   {
@@ -43,6 +44,7 @@ const columns = [
 ];
 
 export default function AdminViewPatients(props) {
+  const theme = useTheme();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingDel, setLoadingDel] = useState(false);
@@ -147,7 +149,7 @@ export default function AdminViewPatients(props) {
                     <TableCell sx={{ color: '#5A5A5A' }}>{row.emergencyContact.mobileNumber}</TableCell>
                     <TableCell sx={{ color: '#5A5A5A', borderRight: '1px solid #ccc' }}>{row.emergencyContact.relation}</TableCell>
                     <TableCell sx={{ textAlign: 'center' }}>
-                      <IconButton onClick={() => handleDelete(row._id)}>
+                    <IconButton onClick={() => handleDelete(row._id)} sx={{ '&:hover': {color: theme.palette.error.main} }}>
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
