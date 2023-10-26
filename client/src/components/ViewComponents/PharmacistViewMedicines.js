@@ -161,8 +161,10 @@ export default function PharmacistViewMedicines(props) {
                                                                 <Typography variant="body2" sx={{ color: "#777" }}>
                                                                     Active Ingredients: {row.details.activeIngredients.join(', ')}
                                                                 </Typography>
+                                                                <Typography variant="body2" sx={{ color: "#777", mt: '15px' }}>
+                                                                    {row.overTheCounter == true ? "Over the counter medicine" : "Prescription needed"}
+                                                                </Typography>
                                                             </Grid>
-
                                                         </Grid>
                                                     </Grid>
                                                     <Grid item sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: "center", }}>
@@ -175,7 +177,7 @@ export default function PharmacistViewMedicines(props) {
                                                         <Typography>
                                                             {row.sales} Sold
                                                         </Typography>
-                                                        <IconButton onClick={() => handleClickEdit(row._id)} sx={{ '&:hover': {color: theme.palette.info.main} }}>
+                                                        <IconButton onClick={() => handleClickEdit(row._id)} sx={{ '&:hover': { color: theme.palette.info.main } }}>
                                                             <EditIcon />
                                                         </IconButton>
                                                     </Grid>

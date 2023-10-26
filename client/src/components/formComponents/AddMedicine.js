@@ -1,4 +1,4 @@
-import { CircularProgress, Accordion, AccordionDetails, AccordionSummary, Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField, IconButton } from "@mui/material";
+import { Select, MenuItem, CircularProgress, Accordion, AccordionDetails, AccordionSummary, Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField, IconButton } from "@mui/material";
 import axios from 'axios';
 import { useForm } from "react-hook-form"
 import { useState } from "react";
@@ -169,7 +169,28 @@ const AddMedicine = (props) => {
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={3}>
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel id="overTheCounter">Over the Counter</InputLabel>
+                                    <Select
+                                        {...register("overTheCounter", { required: true, maxLength: 80 })}
+                                        error={!!errors["overTheCounter"]}
+                                        helperText={errors["overTheCounter"]?.message}
+                                        onBlur={handleChange}
+                                        type="text"
+                                        fullWidth
+                                        required
+                                        sx={{ textAlign: 'left' }}
+                                        labelId="overTheCounter-label"
+                                        id="overTheCounter-select"
+                                        label="Over the Counter"
+                                    >
+                                        <MenuItem value="true">Yes</MenuItem>
+                                        <MenuItem value="false">No</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sm={3}>
                                 <TextField
                                     id="availableQuantity"
                                     label="Available Quantity"
@@ -182,13 +203,13 @@ const AddMedicine = (props) => {
                                     inputProps={{ min: 1 }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={3}>
                                 <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
                                     Upload Image
                                     <VisuallyHiddenInput type="file" />
                                 </Button>
                             </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={3}>
                                 <Button type="submit" variant="contained" startIcon={<AddIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
                                     Add Medicine
                                 </Button>

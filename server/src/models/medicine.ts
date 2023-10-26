@@ -19,7 +19,7 @@ interface Imedicine {
     availableQuantity: number;
     sales : number ;
     image?: MedicineImage;
-
+    overTheCounter: boolean;
 }
 
 const medicineSchema = new Schema<Imedicine>({
@@ -38,6 +38,7 @@ const medicineSchema = new Schema<Imedicine>({
         contentType: { type: String, required: false, },
         filename: { type: String,required: false,},
     },
+    overTheCounter: {type: Boolean, required: true}
 })
 
 

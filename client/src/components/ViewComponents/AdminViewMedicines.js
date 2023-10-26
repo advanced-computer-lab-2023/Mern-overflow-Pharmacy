@@ -68,7 +68,7 @@ export default function AdminViewMedicines() {
         <Container maxWidth="xl">
             <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }} >
                 {loading ? (
-                    <CircularProgress sx={{mt: '30px'}} />
+                    <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <>
                         <Container>
@@ -148,9 +148,14 @@ export default function AdminViewMedicines() {
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item>
-                                                        <Typography>
-                                                            EGP {row.price}
-                                                        </Typography>
+                                                        <Container sx={{ display: "flex", justifyContent: "space-around"}}>
+                                                            <Typography variant="body2">
+                                                                EGP {row.price}
+                                                            </Typography>
+                                                            <Typography variant="body2" >
+                                                                {row.overTheCounter == true ? "Over the counter medicine" : "Prescription needed"}
+                                                            </Typography>
+                                                        </Container>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>

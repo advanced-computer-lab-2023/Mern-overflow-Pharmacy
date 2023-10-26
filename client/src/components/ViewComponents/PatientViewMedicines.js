@@ -184,37 +184,39 @@ export default function PatientViewMedicines() {
                                                     <Typography>
                                                         EGP {row.price}
                                                     </Typography>
-                                                    <div>
-                                                        <ButtonGroup
-                                                            disableElevation
-                                                            variant="outlined"
-                                                        >
-                                                            <Button onClick={() => setCounts(prevCounts => {
-                                                                const updatedCounts = [...prevCounts];
-                                                                updatedCounts[index] = Math.max(0, updatedCounts[index] - 1);
-                                                                return updatedCounts;
-                                                            })}> - </Button>
-                                                            <Button style={{ pointerEvents: 'none', cursor: 'not-allowed' }}>{counts[index]}</Button>
-                                                            <Button onClick={() => setCounts(prevCounts => {
-                                                                const updatedCounts = [...prevCounts];
-                                                                updatedCounts[index] = Math.min(100, updatedCounts[index] + 1);
-                                                                return updatedCounts;
-                                                            })}> + </Button>
-                                                        </ButtonGroup>
-                                                        <IconButton sx={{ ml: "15px" }} disabled={!counts[index]} onClick={() => {
-                                                            if (counts[index] > 0) {
-                                                                setSuccessOpen(true);
-                                                                setSuccessMessage(counts[index] == 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${capitalize(row.name)} have been added to your cart.`);
-                                                                setCounts(prevCounts => {
+                                                    {row.overTheCounter ? (
+                                                        <div>
+                                                            <ButtonGroup
+                                                                disableElevation
+                                                                variant="outlined"
+                                                            >
+                                                                <Button onClick={() => setCounts(prevCounts => {
                                                                     const updatedCounts = [...prevCounts];
-                                                                    updatedCounts[index] = 0;
+                                                                    updatedCounts[index] = Math.max(0, updatedCounts[index] - 1);
                                                                     return updatedCounts;
-                                                                });
-                                                            }
-                                                        }}>
-                                                            <AddShoppingCartIcon color={!counts[index]? "grey" : "primary"} />
-                                                        </IconButton>
-                                                    </div>
+                                                                })}> - </Button>
+                                                                <Button style={{ pointerEvents: 'none', cursor: 'not-allowed' }}>{counts[index]}</Button>
+                                                                <Button onClick={() => setCounts(prevCounts => {
+                                                                    const updatedCounts = [...prevCounts];
+                                                                    updatedCounts[index] = Math.min(100, updatedCounts[index] + 1);
+                                                                    return updatedCounts;
+                                                                })}> + </Button>
+                                                            </ButtonGroup>
+                                                            <IconButton sx={{ ml: "15px" }} disabled={!counts[index]} onClick={() => {
+                                                                if (counts[index] > 0) {
+                                                                    setSuccessOpen(true);
+                                                                    setSuccessMessage(counts[index] == 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${capitalize(row.name)} have been added to your cart.`);
+                                                                    setCounts(prevCounts => {
+                                                                        const updatedCounts = [...prevCounts];
+                                                                        updatedCounts[index] = 0;
+                                                                        return updatedCounts;
+                                                                    });
+                                                                }
+                                                            }}>
+                                                                <AddShoppingCartIcon color={!counts[index] ? "grey" : "primary"} />
+                                                            </IconButton>
+                                                        </div>
+                                                    ) : (<Typography>Prescription Needed </Typography>)}
                                                 </Grid>
                                             </Grid>
                                         </Paper>

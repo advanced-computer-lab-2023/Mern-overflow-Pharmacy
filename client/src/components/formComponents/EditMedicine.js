@@ -1,4 +1,4 @@
-import { CircularProgress, Box, Typography, Snackbar, Alert, FormControl, Button, Container, Paper, TextField } from "@mui/material";
+import { Grid, Select, MenuItem, CircularProgress, Box, Typography, Snackbar, Alert, FormControl, Button, Container, Paper, TextField } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -11,6 +11,7 @@ import axios from 'axios';
 const EditMedicine = () => {
     let { id } = useParams();
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
+    const [loading, setLoading] = useState(true);
     const [name, setName] = useState("");
     const [medicinalUse, setMedicinalUse] = useState("");
     const [description, setDescription] = useState("");
@@ -18,6 +19,7 @@ const EditMedicine = () => {
     const [price, setPrice] = useState("");
     const [availableQuantity, setAvailableQuantity] = useState("");
     const [sales, setSales] = useState("");
+    const [overTheCounter, setOverTheCounter] = useState("");
     const [errorOpen, setErrorOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
@@ -37,6 +39,8 @@ const EditMedicine = () => {
                 setPrice(medicine.price);
                 setAvailableQuantity(medicine.availableQuantity);
                 setSales(medicine.sales);
+                setOverTheCounter(medicine.overTheCounter)
+                setLoading(false);
             } catch (error) {
                 console.error(error);
             }
@@ -91,92 +95,102 @@ const EditMedicine = () => {
                     {successMessage}
                 </Alert>
             </Snackbar>
-            <Paper elevation={3} sx={{ p: '20px', my: '40px' }}>
-                <Typography variant="h6" sx={{ mb: 4 }}> Update Medicine </Typography>
-                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                    <TextField
-                        sx={{ mb: 3 }}
-                        value={name}
-                        onChange={(e) => { setName(e.target.value) }}
-                        type="text"
-                        label="Name"
-                        fullWidth
-                        disabled
-                        autoFocus
-                    />
-                    <TextField
-                        sx={{ mb: 3 }}
-                        value={medicinalUse}
-                        onChange={(e) => { setMedicinalUse(e.target.value) }}
-                        type="text"
-                        label="Medicinal Use"
-                        disabled
-                        fullWidth
-                    />
-                    <TextField
-                        sx={{ mb: 3 }}
-                        value={description}
-                        onChange={(e) => { setDescription(e.target.value) }}
-                        type="text"
-                        label="Description"
-                        required
-                        fullWidth
-                    />
-                    <TextField
-                        sx={{ mb: 3 }}
-                        value={activeIngredients}
-                        onChange={(e) => { setActiveIngredients(e.target.value) }}
-                        type="text"
-                        label="Active Ingredients (Separate by commas)"
-                        required
-                        fullWidth
-                    />
-                    <FormControl fullWidth >
-                        <InputLabel htmlFor="price">Price</InputLabel>
-                        <OutlinedInput
+            {loading ? (
+                <CircularProgress sx={{ mt: '30px' }} />
+            ) : (
+                <Paper elevation={3} sx={{ p: '20px', my: '40px' }}>
+                    <Typography variant="h6" sx={{ mb: 4 }}> Update Medicine </Typography>
+                    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                        <TextField
                             sx={{ mb: 3 }}
+                            value={name}
+                            type="text"
+                            label="Name"
                             fullWidth
-                            required
-                            inputProps={{ min: 1, max: 10000 }}
-                            type="number"
-                            id="price"
-                            startAdornment={<InputAdornment position="start">EGP</InputAdornment>}
-                            label="Price"
-                            value={price}
-                            onChange={(e) => { setPrice(e.target.value) }}
+                            disabled
+                            autoFocus
                         />
-                    </FormControl>
-                    <TextField
-                        sx={{ mb: 3 }}
-                        id="availableQuantity"
-                        label="Available Quantity"
-                        type="number"
-                        fullWidth
-                        disabled
-                        inputProps={{ min: 1 }}
-                        value={availableQuantity}
-                        onChange={(e) => { setAvailableQuantity(e.target.value) }}
-                    />
-                    <TextField
-                        sx={{ mb: 3 }}
-                        id="sales"
-                        label="Sales"
-                        type="number"
-                        fullWidth
-                        disabled
-                        value={sales}
-                        onChange={(e) => { setSales(e.target.value) }}
-                    />
-                    <Button type="submit" variant="contained" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}>
-                        Update Medicine
-                    </Button>
-                    <Button type="button" variant="outlined" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}
-                        component={Link}
-                        to="/pharmacist/medicines">
-                        Return
-                    </Button>
-                </Box>
-            </Paper>
+                        <TextField
+                            sx={{ mb: 3 }}
+                            value={medicinalUse}
+                            type="text"
+                            label="Medicinal Use"
+                            disabled
+                            fullWidth
+                        />
+                        <TextField
+                            sx={{ mb: 3 }}
+                            value={description}
+                            onChange={(e) => { setDescription(e.target.value) }}
+                            type="text"
+                            label="Description"
+                            required
+                            fullWidth
+                        />
+                        <TextField
+                            sx={{ mb: 3 }}
+                            value={activeIngredients}
+                            onChange={(e) => { setActiveIngredients(e.target.value) }}
+                            type="text"
+                            label="Active Ingredients (Separate by commas)"
+                            required
+                            fullWidth
+                        />
+                        <FormControl fullWidth >
+                            <InputLabel htmlFor="price">Price</InputLabel>
+                            <OutlinedInput
+                                sx={{ mb: 3 }}
+                                fullWidth
+                                required
+                                inputProps={{ min: 1, max: 10000 }}
+                                type="number"
+                                id="price"
+                                startAdornment={<InputAdornment position="start">EGP</InputAdornment>}
+                                label="Price"
+                                value={price}
+                                onChange={(e) => { setPrice(e.target.value) }}
+                            />
+                        </FormControl>
+                        <TextField
+                            sx={{ mb: 3 }}
+                            id="availableQuantity"
+                            label="Available Quantity"
+                            type="number"
+                            fullWidth
+                            disabled
+                            inputProps={{ min: 1 }}
+                            value={availableQuantity}
+                        />
+                        <TextField
+                            sx={{ mb: 3 }}
+                            id="sales"
+                            label="Sales"
+                            type="number"
+                            fullWidth
+                            disabled
+                            value={sales}
+                        />
+                        <TextField
+                            sx={{ mb: 3 }}
+                            id="overTheCounter"
+                            label="Over The Counter"
+                            type="text"
+                            fullWidth
+                            disabled
+                            value={overTheCounter}
+                            onChange={(e) => { setSales(e.target.value) }}
+                        />
+                        <Button type="submit" variant="contained" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}>
+                            Update Medicine
+                        </Button>
+                        <Button type="button" variant="outlined" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}
+                            component={Link}
+                            to="/pharmacist/medicines">
+                            Return
+                        </Button>
+                    </Box>
+                </Paper>
+            )}
             {loadingEdit && (
                 <div
                     style={{
