@@ -23,7 +23,7 @@ export default function AdminViewAdmins(props) {
             props.setDataIsUpdated(true);
         });
     };
-
+    
     const handleDelete = (id) => {
         setLoadingDel(true);
         axios.delete(`http://localhost:8000/adminstators/${id}`)

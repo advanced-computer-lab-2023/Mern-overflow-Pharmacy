@@ -15,16 +15,24 @@ import mongoose, {Schema, model} from "mongoose";
 //     cartObjects: [{type: mongoose.Types.ObjectId, required: true}]
 // })
 
+interface CartObject {
+    medName: String;
+    medPrice: Number;
+    medQuantity: Number;
+}
+
 interface ICart {
     patient: typeof mongoose.Types.ObjectId;
-    medicines: typeof mongoose.Types.ObjectId[];
-    quantities: Number[];
+    medicines: CartObject[];
 }
 
 const cartSchema = new Schema<ICart>({
     patient: { type: mongoose.Types.ObjectId, required: true, ref: "Patient", unique:true },
-    medicines: [{type: mongoose.Types.ObjectId, required: true}],
-    quantities: [{type: Number, required: true}]
+    medicines: [{
+        medName: { type: String, required: true, },
+        medPrice: { type: Number, required: true, },
+        medQuantity: { type: Number,required: true,},
+    },],
 })
 
 const Cart = model<ICart>('Cart', cartSchema);
