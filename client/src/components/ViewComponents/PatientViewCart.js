@@ -1,20 +1,23 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
 export default function PatientViewCart(props) {
     const [data, setData] = useState([]);
+    const [meds, setMeds] = useState([]);
     const [loading, setLoading] = useState(false);
     const [total, setTotal] = useState(0);
-    const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/cart`).then((res) => {
-            setData(res.data);
+            setData(res.data)
+            setMeds(res.data[0].medicines);
             setTimeout(() => setLoading(false), 500);
         });
     };
@@ -23,18 +26,19 @@ export default function PatientViewCart(props) {
         fetchTableData();
     }, []);
 
-    const handleDelete = (id) => {
-        // axios.delete(`http://localhost:8000/adminstators/${id}`)
-        //     .then((response) => {
-        //         console.log('DELETE request successful', response);
-        //         fetchTableData();
-        //         setSuccessMessage('Admin deleted succesfully');
-        //         setSuccessOpen(true);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error making DELETE request', error);
-        //         alert('Error deleting the admin: ' + error.message);
-        //     });
+    const handleDelete = (medName) => {
+        axios.delete(`http://localhost:8000/cart/${medName}`)
+            .then((response) => {
+                console.log(medName);
+                console.log('DELETE request successful', response);
+                fetchTableData();
+                setSuccessMessage('Medicine removed successfully');
+                setSuccessOpen(true);
+            })
+            .catch((error) => {
+                console.error('Error making DELETE request', error);
+                alert('Error deleting the medicine: ' + error.message);
+            });
     }
 
     return (
@@ -49,51 +53,36 @@ export default function PatientViewCart(props) {
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
-                        <Container
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                my: 5,
-                            }}
-                        >
-                            <Container sx={{ width: "48%" }}>
-                                <Input
-                                    size="lg"
-                                    placeholder="Search by name..."
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    fullWidth
-                                />
-                            </Container>
-                        </Container>
-
-                        <Table>
+                        <Table sx={{ mt: "20px" }}>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell key="name" sx={{ textAlign: 'center', fontWeight: "bold" }}>Name</TableCell>
-                                    <TableCell key="price" sx={{ textAlign: 'center', fontWeight: "bold" }}>Price</TableCell>
-                                    <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Quantity</TableCell>
-                                    <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>Remove</TableCell>
+                                    <TableCell key="name" sx={{ textAlign: 'center', fontWeight: "bold" }}>Medicine Name</TableCell>
+                                    <TableCell key="price" sx={{ textAlign: 'center', fontWeight: "bold" }}>Medicine Price</TableCell>
+                                    <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Quantity in Cart</TableCell>
+                                    <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>Remove from Cart </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {console.log(data)}{data.map((row) => row.name.toLowerCase().includes(Query.toLowerCase()) && (
-                                    <TableRow key={row.name}>
-                                        {console.log(row)}
-                                        <TableCell sx={{ textAlign: 'center' }}>{row.medicines[0].name}</TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>{row.quantities[0]}</TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>{row.quantity}</TableCell>
+                                {meds.map((med) =>
+                                    <TableRow key={med.medName}>
+                                        <TableCell sx={{ textAlign: 'center' }}> {med.medName} </TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice} </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>
-                                            <IconButton onClick={() => handleDelete(row._id)}>
+                                            <IconButton aria-label="delete"><RemoveCircleOutlineIcon /></IconButton>
+                                            {med.medQuantity}
+                                            <IconButton aria-label="delete"><AddCircleOutlineIcon /></IconButton>
+                                        </TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>
+                                            <IconButton onClick={() => handleDelete(med.medName)}>
                                                 <DeleteIcon />
                                             </IconButton>
                                         </TableCell>
                                     </TableRow>
-                                ))}
+                                )}
                             </TableBody>
                         </Table>
                         <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px" }}>
-                            <Typography> {`Total: ${total}`} </Typography>
+                            <Typography> {`Total: EGP ${total}`} </Typography>
                             <Button variant="contained"
                                 component={Link}
                                 to="/patient/checkout"> Checkout </Button>

@@ -8,6 +8,6 @@ router.use(bodyParser.json());
 
 router.get("/",CartController.viewCart);
 //router.post("/", CartController.);
-//router.delete("/:id", CartController.);
+router.delete("/:medName", CartController.removeMedicineFromCart);
 
 export default router;

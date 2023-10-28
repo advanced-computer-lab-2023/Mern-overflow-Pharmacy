@@ -25,25 +25,10 @@ export default function PatientViewAddresses(props) {
                 ) : (
                     <Container>
                         <Typography sx={{ fontWeight: "bold", my: "20px" }}>Choose Delivery Address</Typography>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell key="name" sx={{ textAlign: 'center', fontWeight: "bold" }}>Apartment Number</TableCell>
-                                    <TableCell key="price" sx={{ textAlign: 'center', fontWeight: "bold" }}>Street</TableCell>
-                                    <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Town</TableCell>
-                                    <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>City</TableCell>
-                                    <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>Country</TableCell>
-                                    <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>Selected</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                            </TableBody>
-                        </Table>
+                        
                         <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px" }}>
                             <Typography></Typography>
-                            <Button variant="outlined"
-                                component={Link}
-                                to="/patient/cart"> Add an Address </Button>
+                            {/* <AddAddress /> */}
                         </Container>
                     </Container>
                 )}
