@@ -48,6 +48,23 @@ export default function PatientViewMedicines() {
             })
     };
 
+    const handleAddMedicine = (medName, medPrice, medQuantity) => {
+        const requestData = {
+            medName: medName,
+            medPrice: medPrice,
+            medQuantity: medQuantity
+        };
+
+        axios.post('http://localhost:8000/cart/add', requestData)
+            .then((response) => {
+                console.log('POST request successful', response);
+            })
+            .catch((error) => {
+                console.error('Error making POST request', error);
+                alert('Error adding medicine to cart: ' + error.message);
+            });
+    }
+
     useEffect(() => {
         fetchTableData();
     }, []);
@@ -202,19 +219,25 @@ export default function PatientViewMedicines() {
                                                                     return updatedCounts;
                                                                 })}> + </Button>
                                                             </ButtonGroup>
-                                                            <IconButton sx={{ ml: "15px" }} disabled={!counts[index]} onClick={() => {
-                                                                if (counts[index] > 0) {
-                                                                    setSuccessOpen(true);
-                                                                    setSuccessMessage(counts[index] == 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${capitalize(row.name)} have been added to your cart.`);
-                                                                    setCounts(prevCounts => {
-                                                                        const updatedCounts = [...prevCounts];
-                                                                        updatedCounts[index] = 0;
-                                                                        return updatedCounts;
-                                                                    });
-                                                                }
-                                                            }}>
+                                                            <IconButton
+                                                                sx={{ ml: "15px" }}
+                                                                disabled={!counts[index]}
+                                                                onClick={() => {
+                                                                    if (counts[index] > 0) {
+                                                                        handleAddMedicine(row.name, row.price, counts[index]); // Call handleAddMedicine here
+                                                                        setSuccessOpen(true);
+                                                                        setSuccessMessage(counts[index] === 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${capitalize(row.name)} have been added to your cart.`);
+                                                                        setCounts(prevCounts => {
+                                                                            const updatedCounts = [...prevCounts];
+                                                                            updatedCounts[index] = 0;
+                                                                            return updatedCounts;
+                                                                        });
+                                                                    }
+                                                                }}
+                                                            >
                                                                 <AddShoppingCartIcon color={!counts[index] ? "grey" : "primary"} />
                                                             </IconButton>
+
                                                         </div>
                                                     ) : (<Typography>Prescription Needed </Typography>)}
                                                 </Grid>

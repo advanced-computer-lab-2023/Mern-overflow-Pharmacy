@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 router.get("/",CartController.viewCart);
-//router.post("/", CartController.);
+router.post("/add", CartController.addMedicineToCart);
 router.delete("/:medName", CartController.removeMedicineFromCart);
 
 export default router;
