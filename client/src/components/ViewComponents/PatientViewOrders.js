@@ -9,6 +9,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PendingIcon from '@mui/icons-material/Pending';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import {capitalize} from '../../utils'
 
 export default function PatientViewCart(props) {
     const [data, setData] = useState([]);
@@ -18,12 +19,6 @@ export default function PatientViewCart(props) {
     const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
-
-    const capitalize = (string) => {
-        return string.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-        });
-    };
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/orders`).then((res) => {

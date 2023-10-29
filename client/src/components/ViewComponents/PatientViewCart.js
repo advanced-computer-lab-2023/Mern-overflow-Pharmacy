@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link } from 'react-router-dom';
+import {capitalize} from '../../utils'
 import axios from "axios";
 
 export default function PatientViewCart(props) {
@@ -16,12 +17,6 @@ export default function PatientViewCart(props) {
     const [errorMessage, setErrorMessage] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
-
-    const capitalize = (string) => {
-        return string.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-        });
-    };
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/cart`).then((res) => {

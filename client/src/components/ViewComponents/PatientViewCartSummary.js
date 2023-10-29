@@ -3,18 +3,13 @@ import React, { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import {capitalize} from '../../utils'
 
 export default function PatientViewCartSummary(props) {
     const [data, setData] = useState([]);
     const [meds, setMeds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [total, setTotal] = useState(280);
-
-    const capitalize = (string) => {
-        return string.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-        });
-    };
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/cart`).then((res) => {

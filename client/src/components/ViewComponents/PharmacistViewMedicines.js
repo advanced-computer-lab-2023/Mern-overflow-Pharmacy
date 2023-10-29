@@ -11,6 +11,7 @@ import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import {capitalize} from '../../utils'
 
 export default function PharmacistViewMedicines(props) {
     const theme = useTheme();
@@ -27,12 +28,6 @@ export default function PharmacistViewMedicines(props) {
         maxWidth: '100%',
         maxHeight: '100%',
     });
-
-    const capitalize = (string) => {
-        return string.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-        });
-    };
 
     const fetchTableData = () => {
         axios

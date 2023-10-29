@@ -3,7 +3,7 @@ import { ButtonBase, Paper, Table, TableBody, TableCell, TableHead, TableRow, Ci
 import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
-
+import {capitalize} from '../../utils'
 
 export default function AdminViewMedicines() {
     const [data, setData] = useState([]);
@@ -17,13 +17,7 @@ export default function AdminViewMedicines() {
         maxWidth: '100%',
         maxHeight: '100%',
     });
-
-    const capitalize = (string) => {
-        return string.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-        });
-    };
-
+    
     const fetchTableData = () => {
         axios
             .get(`http://localhost:8000/medicines/view`, {})

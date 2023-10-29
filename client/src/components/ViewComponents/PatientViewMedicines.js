@@ -5,7 +5,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
-
+import { capitalize } from '../../utils'
 
 export default function PatientViewMedicines() {
     const [open, setOpen] = useState(false);
@@ -24,12 +24,6 @@ export default function PatientViewMedicines() {
         maxWidth: '100%',
         maxHeight: '100%',
     });
-
-    const capitalize = (string) => {
-        return string.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-        });
-    };
 
     const fetchTableData = () => {
         axios
@@ -251,24 +245,24 @@ export default function PatientViewMedicines() {
                     )}
                 </Paper >
                 {loadingChange && (
-                <div
-                    style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100vw",
-                        height: "100vh",
-                        background: "rgba(0, 0, 0, 0.5)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 9999,
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <CircularProgress sx={{ color: "white" }} />
-                </div>
-            )}
+                    <div
+                        style={{
+                            position: "fixed",
+                            top: 0,
+                            left: 0,
+                            width: "100vw",
+                            height: "100vh",
+                            background: "rgba(0, 0, 0, 0.5)",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            zIndex: 9999,
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <CircularProgress sx={{ color: "white" }} />
+                    </div>
+                )}
             </Container >
         </>
     );
