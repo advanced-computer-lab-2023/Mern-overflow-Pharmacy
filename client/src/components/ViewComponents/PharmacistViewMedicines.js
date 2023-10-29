@@ -11,7 +11,7 @@ import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import {capitalize} from '../../utils'
+import { capitalize } from '../../utils'
 
 export default function PharmacistViewMedicines(props) {
     const theme = useTheme();

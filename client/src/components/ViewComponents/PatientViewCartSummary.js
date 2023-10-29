@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 import axios from "axios";
-import {capitalize} from '../../utils'
+import { capitalize } from '../../utils'
 
 export default function PatientViewCartSummary(props) {
     const [data, setData] = useState([]);
     const [meds, setMeds] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingChange, setLoadingChange] = useState(false);
     const [total, setTotal] = useState(280);
 
     const fetchTableData = () => {
@@ -30,6 +31,21 @@ export default function PatientViewCartSummary(props) {
         });
         setTotal(total);
     }, [meds]);
+
+    const handleCheckout = () => {
+        setLoadingChange(true);
+        const medicines = meds;
+        axios.post('http://localhost:8000/orders/add', { medicines, total })
+            .then(response => {
+                axios.put('http://localhost:8000/cart/empty').then((response) => {
+                    setLoadingChange(false);
+                    fetchTableData();
+                });
+            })
+            .catch(error => {
+                console.error('Error creating order:', error);
+            });
+    }
 
     return (
         <Container maxWidth="xl">
@@ -54,13 +70,36 @@ export default function PatientViewCartSummary(props) {
                         </Table>
                         <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "50px" }}>
                             <Typography> {`Total: EGP ${total}`} </Typography>
-                            <Button variant="outlined"
-                                component={Link}
-                                to="/patient/cart"> Return to Cart </Button>
+                            <div>
+                                <Button variant="outlined"
+                                    component={Link}
+                                    to="/patient/cart"
+                                    sx={{mr: "25px"}}> Return to Cart </Button>
+                                <Button variant="contained" onClick={() => handleCheckout()}> Proceed </Button>
+                            </div>
                         </Container>
                     </Container>
                 )}
             </Paper>
+            {loadingChange && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <CircularProgress sx={{ color: "white" }} />
+                </div>
+            )}
         </Container>
     );
 }

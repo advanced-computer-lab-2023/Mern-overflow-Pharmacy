@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link } from 'react-router-dom';
-import {capitalize} from '../../utils'
+import { capitalize } from '../../utils'
 import axios from "axios";
 
 export default function PatientViewCart(props) {
@@ -65,21 +65,6 @@ export default function PatientViewCart(props) {
                 setErrorMessage(error.response.data);
                 setLoadingChange(false);
                 setErrorOpen(true);
-            });
-    }
-
-    const handleCheckout = () => {
-        setLoadingChange(true);
-        const medicines = meds;
-        axios.post('http://localhost:8000/orders/add', { medicines, total })
-            .then(response => {
-                axios.put('http://localhost:8000/cart/empty').then((response) => {
-                    setLoadingChange(false);
-                    fetchTableData();
-                });
-            })
-            .catch(error => {
-                console.error('Error creating order:', error);
             });
     }
 
@@ -156,7 +141,9 @@ export default function PatientViewCart(props) {
                         </Table>
                         <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px" }}>
                             <Typography> {`Total: EGP ${total}`} </Typography>
-                            <Button variant="contained" onClick={() => handleCheckout()} > Checkout </Button>
+                            <Button variant="contained"
+                                component={Link}
+                                to="/patient/checkout"> Checkout </Button>
                         </Container>
                     </Container>
                 )
