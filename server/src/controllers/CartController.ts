@@ -60,6 +60,38 @@ const removeMedicineFromCart = async (req: Request, res: Response) => {
 }
 
 const changeAmountofMedicineInCart = async (req: Request, res: Response) => {
+    const { medName, increment } = req.body;
+
+    try {
+        const cart = await carts.findOne({ patient: "6527d5aa11c64e3b65860e67" });
+
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+
+        const existingMedicine = cart.medicines.find(med => med.medName === medName);
+
+        if (existingMedicine) {
+            if (increment) {
+                if (Number(existingMedicine.medQuantity) < 100)
+                    existingMedicine.medQuantity = Number(existingMedicine.medQuantity) + 1;
+                else
+                    return res.status(400).send("Quantity is already at 100. Cannot add more.");
+            } else {
+                if (Number(existingMedicine.medQuantity) > 1)
+                    existingMedicine.medQuantity = Number(existingMedicine.medQuantity) - 1;
+                else
+                    return res.status(400).send("Quantity is already at 1. Cannot remove more.");
+            }
+        } else {
+            return res.status(404).json({ message: 'Medicine not found in cart' });
+        }
+        await cart.save();
+        res.json({ message: 'Medicine quantity updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 }
 
 export default {

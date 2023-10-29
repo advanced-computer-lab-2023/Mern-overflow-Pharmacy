@@ -11,6 +11,7 @@ export default function PatientViewMedicines() {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingChange, setLoadingChange] = useState(false);
     const [Query, setQuery] = useState("");
     const [uniqueMedicinalUses, setUniqueMedicinalUses] = useState(["All"]);
     const [counts, setCounts] = useState([]);
@@ -54,10 +55,11 @@ export default function PatientViewMedicines() {
             medPrice: medPrice,
             medQuantity: medQuantity
         };
-
+        setLoadingChange(true);
         axios.post('http://localhost:8000/cart/add', requestData)
             .then((response) => {
                 console.log('POST request successful', response);
+                setLoadingChange(false);
             })
             .catch((error) => {
                 console.error('Error making POST request', error);
@@ -249,6 +251,25 @@ export default function PatientViewMedicines() {
                         </>
                     )}
                 </Paper >
+                {loadingChange && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <CircularProgress sx={{ color: "white" }} />
+                </div>
+            )}
             </Container >
         </>
     );

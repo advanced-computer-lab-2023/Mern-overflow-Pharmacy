@@ -9,8 +9,11 @@ import axios from "axios";
 export default function PatientViewCart(props) {
     const [data, setData] = useState([]);
     const [meds, setMeds] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [loadingChange, setLoadingChange] = useState(false);
     const [total, setTotal] = useState(0);
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -27,12 +30,14 @@ export default function PatientViewCart(props) {
     }, []);
 
     const handleDelete = (medName) => {
+        setLoadingChange(true);
         axios.delete(`http://localhost:8000/cart/${medName}`)
             .then((response) => {
                 console.log(medName);
                 console.log('DELETE request successful', response);
                 fetchTableData();
                 setSuccessMessage('Medicine removed successfully');
+                setLoadingChange(false);
                 setSuccessOpen(true);
             })
             .catch((error) => {
@@ -41,13 +46,48 @@ export default function PatientViewCart(props) {
             });
     }
 
+    const handleChangeAmount = (medName, increment) => {
+        setLoadingChange(true);
+        axios.post('http://localhost:8000/cart/changeAmount', { medName, increment })
+            .then((response) => {
+                console.log('POST request successful', response);
+                setLoadingChange(false);
+                fetchTableData();
+            })
+            .catch((error) => {
+                console.error('Error making POST request', error);
+                setErrorMessage(error.response.data);
+                setLoadingChange(false);
+                setErrorOpen(true);
+            });
+    }
+
+    const handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessOpen(false);
+    };
+
+    const handleErrorClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setErrorOpen(false);
+    };
+
     return (
         <Container maxWidth="xl">
-            {/* <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+            <Snackbar open={errorOpen} autoHideDuration={3000} onClose={handleErrorClose}>
+                <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
                 <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
                     {successMessage}
                 </Alert>
-            </Snackbar> */}
+            </Snackbar>
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 {loading ? (
                     <CircularProgress sx={{ mt: '30px' }} />
@@ -68,9 +108,9 @@ export default function PatientViewCart(props) {
                                         <TableCell sx={{ textAlign: 'center' }}> {med.medName} </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice} </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>
-                                            <IconButton aria-label="delete"><RemoveCircleOutlineIcon /></IconButton>
+                                            <IconButton onClick={() => handleChangeAmount(med.medName, false)}><RemoveCircleOutlineIcon /></IconButton>
                                             {med.medQuantity}
-                                            <IconButton aria-label="delete"><AddCircleOutlineIcon /></IconButton>
+                                            <IconButton onClick={() => handleChangeAmount(med.medName, true)}><AddCircleOutlineIcon /></IconButton>
                                         </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>
                                             <IconButton onClick={() => handleDelete(med.medName)}>
@@ -90,6 +130,25 @@ export default function PatientViewCart(props) {
                     </Container>
                 )}
             </Paper>
+            {loadingChange && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <CircularProgress sx={{ color: "white" }} />
+                </div>
+            )}
         </Container>
     );
 }

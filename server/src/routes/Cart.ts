@@ -9,5 +9,6 @@ router.use(bodyParser.json());
 router.get("/",CartController.viewCart);
 router.post("/add", CartController.addMedicineToCart);
 router.delete("/:medName", CartController.removeMedicineFromCart);
+router.post("/changeAmount", CartController.changeAmountofMedicineInCart);
 
 export default router;
