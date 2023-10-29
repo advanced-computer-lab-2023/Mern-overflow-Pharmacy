@@ -29,6 +29,14 @@ export default function PatientViewCart(props) {
         fetchTableData();
     }, []);
 
+    useEffect(() => {
+        let total = 0;
+        meds.forEach(med => {
+            total += med.medPrice * med.medQuantity;
+        });
+        setTotal(total);
+    }, [meds]);
+
     const handleDelete = (medName) => {
         setLoadingChange(true);
         axios.delete(`http://localhost:8000/cart/${medName}`)
@@ -128,8 +136,9 @@ export default function PatientViewCart(props) {
                                 to="/patient/checkout"> Checkout </Button>
                         </Container>
                     </Container>
-                )}
-            </Paper>
+                )
+                }
+            </Paper >
             {loadingChange && (
                 <div
                     style={{
@@ -149,6 +158,6 @@ export default function PatientViewCart(props) {
                     <CircularProgress sx={{ color: "white" }} />
                 </div>
             )}
-        </Container>
+        </Container >
     );
 }
