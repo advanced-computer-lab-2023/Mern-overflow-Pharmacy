@@ -15,7 +15,7 @@ interface IOrder {
 }
 
 const orderSchema = new Schema<IOrder>({
-    patient: { type: mongoose.Types.ObjectId, required: true, ref: "Patient", unique: true },
+    patient: { type: mongoose.Types.ObjectId, required: true, ref: "Patient" },
     status: { type: String, required: true, lowercase: true, enum: ['pending', 'shipped', 'delievered', 'cancelled'] },
     date: { type: Date, required: true },
     total: { type: Number, required: true },

@@ -90,9 +90,25 @@ const changeAmountofMedicineInCart = async (req: Request, res: Response) => {
     }
 }
 
+const emptyCart = async (req: Request, res: Response) => {
+    try {
+        const cart = await carts.findOne({ patient: "6527d5aa11c64e3b65860e67" });
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+        cart.medicines = [];
+        await cart.save();
+        res.json({ message: 'Cart emptied successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
 export default {
     addMedicineToCart,
     viewCart,
     removeMedicineFromCart,
-    changeAmountofMedicineInCart
+    changeAmountofMedicineInCart,
+    emptyCart
 };

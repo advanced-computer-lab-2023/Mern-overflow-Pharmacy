@@ -4,6 +4,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "fuse.js": "^6.6.2"
+    "fuse.js": "^6.6.2",
+    "mongo": "^0.1.0"
   }
 }

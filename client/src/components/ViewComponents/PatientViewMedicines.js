@@ -59,6 +59,7 @@ export default function PatientViewMedicines() {
         axios.post('http://localhost:8000/cart/add', requestData)
             .then((response) => {
                 setLoadingChange(false);
+                setSuccessOpen(true);
             })
             .catch((error) => {
                 console.error('Error making POST request', error);
@@ -226,7 +227,6 @@ export default function PatientViewMedicines() {
                                                                 onClick={() => {
                                                                     if (counts[index] > 0) {
                                                                         handleAddMedicine(row.name, row.price, counts[index]); // Call handleAddMedicine here
-                                                                        setSuccessOpen(true);
                                                                         setSuccessMessage(counts[index] === 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${capitalize(row.name)} have been added to your cart.`);
                                                                         setCounts(prevCounts => {
                                                                             const updatedCounts = [...prevCounts];

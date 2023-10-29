@@ -10,5 +10,6 @@ router.get("/",CartController.viewCart);
 router.post("/add", CartController.addMedicineToCart);
 router.delete("/:medName", CartController.removeMedicineFromCart);
 router.post("/changeAmount", CartController.changeAmountofMedicineInCart);
+router.put("/empty", CartController.emptyCart);
 
 export default router;

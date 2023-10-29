@@ -73,6 +73,21 @@ export default function PatientViewCart(props) {
             });
     }
 
+    const handleCheckout = () => {
+        setLoadingChange(true);
+        const medicines = meds;
+        axios.post('http://localhost:8000/orders/add', { medicines, total })
+            .then(response => {
+                axios.put('http://localhost:8000/cart/empty').then((response) => {
+                    setLoadingChange(false);
+                    fetchTableData();
+                });
+            })
+            .catch(error => {
+                console.error('Error creating order:', error);
+            });
+    }
+
     const handleSuccessClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -146,9 +161,7 @@ export default function PatientViewCart(props) {
                         </Table>
                         <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px" }}>
                             <Typography> {`Total: EGP ${total}`} </Typography>
-                            <Button variant="contained"
-                                component={Link}
-                                to="/patient/checkout"> Checkout </Button>
+                            <Button variant="contained" onClick={() => handleCheckout()} > Checkout </Button>
                         </Container>
                     </Container>
                 )

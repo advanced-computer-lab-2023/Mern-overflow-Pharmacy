@@ -12,88 +12,126 @@ import axios from "axios";
 
 export default function PatientViewCart(props) {
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [loadingChange, setLoadingChange] = useState(false);
     const [total, setTotal] = useState(0);
     const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+
+    const capitalize = (string) => {
+        return string.replace(/\b\w/g, function (match) {
+            return match.toUpperCase();
+        });
+    };
+
+    const fetchTableData = () => {
+        axios.get(`http://localhost:8000/orders`).then((res) => {
+            const reversedData = res.data.reverse();
+            setData(reversedData);
+            setTimeout(() => setLoading(false), 500);
+        });
+    };
+
+    useEffect(() => {
+        fetchTableData();
+    }, []);
+
+    const displayDate = (date) => {
+        date = new Date(date);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${hours}:${minutes} ${day}/${month}/${year}`;
+    }
+
+    const handleCancel = (orderId) => {
+        setLoadingChange(true);
+        axios.put(`http://localhost:8000/orders/${orderId}`)
+            .then((response) => {
+                setSuccessMessage(`Order ${orderId.toUpperCase()} has been cancelled.`);
+                setLoadingChange(false);
+                setSuccessOpen(true);
+                fetchTableData();
+            })
+            .catch((error) => {
+                console.error('Error making PUT request', error);
+                setSuccessOpen(false);
+                setLoadingChange(false);
+            });
+    }
+
+    const handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessOpen(false);
+    };
+
     return (
         <Container maxWidth="xl">
-            {/* <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
-                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+            <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="warning">
                     {successMessage}
                 </Alert>
-            </Snackbar> */}
+            </Snackbar>
             <Paper sx={{ p: '20px', my: '40px', paddingBottom: 5, border: "none", boxShadow: "none" }}>
                 {loading ? (
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
-                        <Accordion elevation="3" >
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
-                            <Typography sx={{ display: 'flex', alignItems: 'center', textAlign: 'left', width: '70%', flexShrink: 0, fontWeight: "bold" }}>
-                                    ORDER 14234435798 <CheckCircleIcon color="success" sx={{ml: "15px"}} />
-                                </Typography>
-                                <Typography sx={{ color: 'text.secondary', width: '20%' }}> 05/12/2023 1:03 PM </Typography>
-                                <Typography sx={{ color: 'text.secondary', width: '10%' }}> 540 EGP </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography sx={{ textAlign: "left", mb: "20px" }}> Status: Delivered </Typography>
-                                <Typography sx={{ textAlign: "left" }}> 1x Minoxidil 5%: EGP 510 </Typography>
-                                <Typography sx={{ textAlign: "left" }}> Delivery Fees: EGP 30 </Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                        <Accordion elevation="3">
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
-                                <Typography sx={{ display: 'flex', alignItems: 'center', textAlign: 'left', width: '70%', flexShrink: 0, fontWeight: "bold" }}>
-                                    ORDER 34123513523 <PendingIcon color="primary" sx={{ml: "15px"}} />
-                                </Typography>
-                                <Typography sx={{ color: 'text.secondary', width: '20%' }}> 14/11/2023 5:40 PM </Typography>
-                                <Typography sx={{ color: 'text.secondary', width: '10%' }}> 280 EGP </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography sx={{ textAlign: "left", mb: "20px" }}> Status: Pending </Typography>
-                                <Typography sx={{ textAlign: "left" }}> 1x Panadol: EGP 100 </Typography>
-                                <Typography sx={{ textAlign: "left" }}> 3x Aspirin: EGP 150 </Typography>
-                                <Typography sx={{ textAlign: "left" }}> Delivery Fees: EGP 30 </Typography>
-                                <Button component="label" variant="contained" color="error" startIcon={<CancelIcon />}>
-                                    Cancel Order
-                                </Button>
-                            </AccordionDetails>
-                        </Accordion>
-                        <Accordion elevation="3">
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
-                            <Typography sx={{ display: 'flex', alignItems: 'center', textAlign: 'left', width: '70%', flexShrink: 0, fontWeight: "bold" }}>
-                                    ORDER 21358902342 <LocalShippingIcon color="warning" sx={{ml: "15px"}} />
-                                </Typography>
-                                <Typography sx={{ color: 'text.secondary', width: '20%' }}> 14/11/2023 5:40 PM </Typography>
-                                <Typography sx={{ color: 'text.secondary', width: '10%' }}> 280 EGP </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography sx={{ textAlign: "left", mb: "20px" }}> Status: Shipped </Typography>
-                                <Typography sx={{ textAlign: "left" }}> 1x Panadol: EGP 100 </Typography>
-                                <Typography sx={{ textAlign: "left" }}> 3x Aspirin: EGP 150 </Typography>
-                                <Typography sx={{ textAlign: "left" }}> Delivery Fees: EGP 30 </Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                        <Accordion elevation="3">
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }}>
-                            <Typography sx={{ display: 'flex', alignItems: 'center', textAlign: 'left', width: '70%', flexShrink: 0, fontWeight: "bold" }}>
-                                    ORDER 21358902342 <CancelIcon color="error" sx={{ml: "15px"}} />
-                                </Typography>
-                                <Typography sx={{ color: 'text.secondary', width: '20%' }}> 14/11/2023 5:40 PM </Typography>
-                                <Typography sx={{ color: 'text.secondary', width: '10%' }}> 280 EGP </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography sx={{ textAlign: "left", mb: "20px" }}> Status: Canceled </Typography>
-                                <Typography sx={{ textAlign: "left" }}> 1x Panadol: EGP 100 </Typography>
-                                <Typography sx={{ textAlign: "left" }}> 3x Aspirin: EGP 150 </Typography>
-                                <Typography sx={{ textAlign: "left" }}> Delivery Fees: EGP 30 </Typography>
-                            </AccordionDetails>
-                        </Accordion>
+                        {data.map((order) =>
+                            <Accordion elevation="3" >
+                                <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
+                                    <Typography sx={{ display: 'flex', alignItems: 'center', textAlign: 'left', width: '70%', flexShrink: 0, fontWeight: "bold" }}>
+                                        ORDER {order._id.toUpperCase()}
+                                        {order.status == "pending" ? (<PendingIcon color="primary" sx={{ ml: "15px" }} />)
+                                            : order.status == "delivered" ? (<CheckCircleIcon color="success" sx={{ ml: "15px" }} />)
+                                                : order.status == "shipped" ? (<LocalShippingIcon color="warning" sx={{ ml: "15px" }} />)
+                                                    : (<CancelIcon color="error" sx={{ ml: "15px" }} />)
+                                        }
+                                    </Typography>
+                                    <Typography sx={{ color: 'text.secondary', width: '20%' }}> {displayDate(order.date)} </Typography>
+                                    <Typography sx={{ color: 'text.secondary', width: '10%' }}> {order.total} EGP </Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Typography sx={{ textAlign: "left", mb: "20px" }}> Status: {capitalize(order.status)} </Typography>
+                                    {order.medicines.map((medicine) =>
+                                        <Typography sx={{ textAlign: "left" }}> {medicine.medQuantity}x {capitalize(medicine.medName)}: EGP {medicine.medPrice * medicine.medQuantity} </Typography>
+                                    )}
+                                    {order.status == "pending" &&
+                                        <Button component="label" variant="outlined" color="error"
+                                            startIcon={<CancelIcon />} sx={{ mb: "10px" }}
+                                            onClick={() => handleCancel(order._id)}>
+                                            Cancel Order
+                                        </Button>}
+                                </AccordionDetails>
+                            </Accordion>
+                        )}
                     </Container>
                 )}
             </Paper>
+            {loadingChange && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <CircularProgress color="primary" />
+                </div>
+            )}
         </Container>
     );
 }
