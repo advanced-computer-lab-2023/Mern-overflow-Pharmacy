@@ -27,7 +27,6 @@ const AddMedicine = (props) => {
         delete dataToServer.activeIngredients
         axios.post('http://localhost:8000/medicines', dataToServer)
             .then((response) => {
-                console.log('POST request successful', response);
                 setSuccessMessage('Medicine added succesfully');
                 setSuccessOpen(true);
                 setErrorOpen(false);

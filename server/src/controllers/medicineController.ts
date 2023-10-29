@@ -19,7 +19,6 @@ const listMedicines = async (req: Request, res: Response) => {
         for (const med of results) {
           if (med.availableQuantity !== 0)
             medResults.push({ "_id": med._id, "name": med.name, "medicinalUse": med.medicinalUse, "image": med.image, "price": med.price, "details": med.details, "overTheCounter":med.overTheCounter });
-          console.log(med);
         }
         res.status(200).send(medResults);
       })
@@ -82,7 +81,6 @@ const filterMedicines = async (req: Request, res: Response) => {
 
   const medUse = req.body.medicinalUse;
   medicine.find({ "medicinalUse": medUse }).then((results) => {
-    console.log(results);
     if (results.length === 0) {
       res.status(404).send("no medicines found under this medicinalUse")
     } else {

@@ -40,7 +40,6 @@ app.use("/cart", cartRouter);
 
 app.get("/", (req, res) => {
   res.send("hello");
-  console.log("hello, world!");
 });
 
 

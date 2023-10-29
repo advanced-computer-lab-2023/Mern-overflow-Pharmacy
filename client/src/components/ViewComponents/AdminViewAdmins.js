@@ -28,7 +28,6 @@ export default function AdminViewAdmins(props) {
         setLoadingDel(true);
         axios.delete(`http://localhost:8000/adminstators/${id}`)
             .then((response) => {
-                console.log('DELETE request successful', response);
                 fetchTableData();
                 setSuccessMessage('Admin deleted succesfully');
                 setSuccessOpen(true);

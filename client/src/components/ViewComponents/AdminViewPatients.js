@@ -63,7 +63,6 @@ export default function AdminViewPatients(props) {
     setLoadingDel(true);
     axios.delete(`http://localhost:8000/patients/${id}`)
       .then((response) => {
-        console.log('DELETE request successful', response);
         fetchTableData();
         setSuccessMessage('Patient deleted succesfully');
         setSuccessOpen(true);

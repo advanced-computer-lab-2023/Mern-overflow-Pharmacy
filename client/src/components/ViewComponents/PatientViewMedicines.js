@@ -58,7 +58,6 @@ export default function PatientViewMedicines() {
         setLoadingChange(true);
         axios.post('http://localhost:8000/cart/add', requestData)
             .then((response) => {
-                console.log('POST request successful', response);
                 setLoadingChange(false);
             })
             .catch((error) => {

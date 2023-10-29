@@ -58,18 +58,12 @@ PatientSchema.pre('save', function (next) {
 // const Patient = model<IPatient>('Patient', PatientSchema);
 const Patient = User.discriminator<IPatient>('Patient', PatientSchema);
 
-
 // let p;
 // export async function f():Promise<any> {
 //     await connect(mongoUrl);
 //     p = await User.deleteMany({name:'Ahmed'}).exec();
 //     console.log(p);
 // }
-
-
-
-
-
 
 // run().catch(err => console.log(err));
 

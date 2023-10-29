@@ -59,7 +59,6 @@ export default function AdminViewPharmacists(props) {
         setLoadingDel(true);
         axios.delete(`http://localhost:8000/pharmacists/${id}`)
             .then((response) => {
-                console.log('DELETE request successful', response);
                 fetchTableData();
                 setSuccessMessage('Pharmacist deleted succesfully');
                 setSuccessOpen(true);

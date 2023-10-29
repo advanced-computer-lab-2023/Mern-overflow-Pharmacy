@@ -20,7 +20,6 @@ const AddAdmin = (props) => {
     delete dataToServer.password
     axios.post('http://localhost:8000/adminstators', dataToServer)
       .then((response) => {
-        console.log('POST request successful', response);
         setSuccessMessage('Admin created succesfully');
         setSuccessOpen(true);
         setErrorOpen(false);
@@ -33,7 +32,6 @@ const AddAdmin = (props) => {
         setSuccessOpen(false);
         setLoadingAdd(false);
       });
-    console.log('done')
   }
 
   const handleChange = (event) => {

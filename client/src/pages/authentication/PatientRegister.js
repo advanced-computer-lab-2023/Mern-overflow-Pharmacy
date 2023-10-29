@@ -47,13 +47,11 @@ export default function PatientRegister() {
       delete dataToServer.password
       axios.post('http://localhost:8000/patients', dataToServer)
         .then((response) => {
-          console.log('POST request successful', response);
           setSuccessMessage('You have succesfully registered.');
           setSuccessOpen(true);
           setErrorOpen(false);
         })
         .catch((error) => {
-          console.log('POST request failed', error);
           if (error.response.data.indexOf("registered") !== -1) {
             setError('email', {
               data: 'Email is registered'

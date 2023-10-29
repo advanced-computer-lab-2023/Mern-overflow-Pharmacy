@@ -41,8 +41,6 @@ export default function PatientViewCart(props) {
         setLoadingChange(true);
         axios.delete(`http://localhost:8000/cart/${medName}`)
             .then((response) => {
-                console.log(medName);
-                console.log('DELETE request successful', response);
                 fetchTableData();
                 setSuccessMessage('Medicine removed successfully');
                 setLoadingChange(false);
@@ -58,7 +56,6 @@ export default function PatientViewCart(props) {
         setLoadingChange(true);
         axios.post('http://localhost:8000/cart/changeAmount', { medName, increment })
             .then((response) => {
-                console.log('POST request successful', response);
                 setLoadingChange(false);
                 fetchTableData();
             })

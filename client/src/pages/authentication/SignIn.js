@@ -14,7 +14,6 @@ export default function SignIn() {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
 
     const onSubmit = data => {
-        console.log("Data to server" + JSON.stringify(data));
         if (data.Username.includes("patient")) {
             navigate("/patient/medicines");
         }
@@ -26,7 +25,6 @@ export default function SignIn() {
             navigate("/admin/admins");
         };
     }
-    console.log(errors);
 
     const handleChange = (event) => {
         if (errors[event.target.name]) {

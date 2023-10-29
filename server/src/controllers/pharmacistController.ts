@@ -105,7 +105,6 @@ const listAllPharmacists = async (req: Request, res: Response) => {
 
 const deletePharmacist = async (req: Request, res: Response) => {
   //remove a pharmacist from the system
-  console.log('entered delete pharmacist');
   const id = req.params.id;
   const pharm = pharmacist
     .findByIdAndDelete({ _id: id })

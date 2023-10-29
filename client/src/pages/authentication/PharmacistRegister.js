@@ -26,12 +26,9 @@ export default function PharmacistRegister() {
 
     dataToServer["passwordHash"] = sha256(data["password"]);
     delete dataToServer.password
-    console.log('sending data')
-    console.log(JSON.stringify(dataToServer));
 
     axios.post('http://localhost:8000/pharmacists', dataToServer)
       .then((response) => {
-        console.log('POST request successful', response);
         setSuccessMessage('Your request has been succesfully sent.');
         setSuccessOpen(true);
         setErrorOpen(false);
@@ -52,10 +49,7 @@ export default function PharmacistRegister() {
         setErrorOpen(true);
         setSuccessOpen(false);
       });
-    console.log("sent data");
   }
-
-  console.log(errors);
 
   const handleChange = (event) => {
     if (errors[event.target.name]) {

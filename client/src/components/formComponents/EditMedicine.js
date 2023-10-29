@@ -29,7 +29,6 @@ const EditMedicine = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log('started fetching');
                 const response = await axios.get(`http://localhost:8000/medicines/viewAll`);
                 const medicine = response.data.find(item => item._id === id);
                 setName(medicine.name);
@@ -54,7 +53,6 @@ const EditMedicine = () => {
         const dataToServer = { name, medicinalUse, details, price, availableQuantity, sales };
         axios.put(`http://localhost:8000/medicines/${id}`, dataToServer)
             .then((response) => {
-                console.log('PUT request successful', response);
                 setSuccessMessage('Medicine updated succesfully');
                 setSuccessOpen(true);
                 setErrorOpen(false);
