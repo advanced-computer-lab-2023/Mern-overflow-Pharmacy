@@ -6,19 +6,38 @@ import axios from "axios";
 
 export default function PatientViewCartSummary(props) {
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [meds, setMeds] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [total, setTotal] = useState(280);
-    const [Query, setQuery] = useState("");
-    const [successOpen, setSuccessOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
+
+    const capitalize = (string) => {
+        return string.replace(/\b\w/g, function (match) {
+            return match.toUpperCase();
+        });
+    };
+
+    const fetchTableData = () => {
+        axios.get(`http://localhost:8000/cart`).then((res) => {
+            setData(res.data)
+            setMeds(res.data[0].medicines);
+            setTimeout(() => setLoading(false), 500);
+        });
+    };
+
+    useEffect(() => {
+        fetchTableData();
+    }, []);
+
+    useEffect(() => {
+        let total = 0;
+        meds.forEach(med => {
+            total += med.medPrice * med.medQuantity;
+        });
+        setTotal(total);
+    }, [meds]);
 
     return (
         <Container maxWidth="xl">
-            {/* <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
-                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
-                    {successMessage}
-                </Alert>
-            </Snackbar> */}
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 {loading ? (
                     <CircularProgress sx={{ mt: '30px' }} />
@@ -30,18 +49,12 @@ export default function PatientViewCartSummary(props) {
                             <TableHead>
                             </TableHead>
                             <TableBody>
-                                <TableRow>
-                                    <TableCell sx={{ textAlign: 'center' }}>1x Panadol</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>EGP 100</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell sx={{ textAlign: 'center' }}>3x Aspirin</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>EGP 150</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell sx={{ textAlign: 'center' }}>Delivery</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>EGP 30</TableCell>
-                                </TableRow>
+                                {meds.map((med) =>
+                                    <TableRow>
+                                        <TableCell sx={{ textAlign: 'center' }}>{med.medQuantity}x {capitalize(med.medName)}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>EGP {med.medPrice * med.medQuantity}</TableCell>
+                                    </TableRow>
+                                )}
                             </TableBody>
                         </Table>
                         <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "50px" }}>
@@ -54,6 +67,5 @@ export default function PatientViewCartSummary(props) {
                 )}
             </Paper>
         </Container>
-
     );
 }
