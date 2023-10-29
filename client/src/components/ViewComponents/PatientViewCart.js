@@ -17,6 +17,12 @@ export default function PatientViewCart(props) {
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
+    const capitalize = (string) => {
+        return string.replace(/\b\w/g, function (match) {
+            return match.toUpperCase();
+        });
+    };
+
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/cart`).then((res) => {
             setData(res.data)
@@ -52,9 +58,9 @@ export default function PatientViewCart(props) {
             });
     }
 
-    const handleChangeAmount = (medName, increment) => {
+    const handleChangeAmount = (medName, newAmount) => {
         setLoadingChange(true);
-        axios.post('http://localhost:8000/cart/changeAmount', { medName, increment })
+        axios.post('http://localhost:8000/cart/changeAmount', { medName, newAmount })
             .then((response) => {
                 setLoadingChange(false);
                 fetchTableData();
@@ -104,19 +110,31 @@ export default function PatientViewCart(props) {
                                     <TableCell key="name" sx={{ textAlign: 'center', fontWeight: "bold" }}>Medicine Name</TableCell>
                                     <TableCell key="price" sx={{ textAlign: 'center', fontWeight: "bold" }}>Medicine Price</TableCell>
                                     <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Quantity in Cart</TableCell>
+                                    <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Total Price</TableCell>
                                     <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>Remove from Cart </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {meds.map((med) =>
                                     <TableRow key={med.medName}>
-                                        <TableCell sx={{ textAlign: 'center' }}> {med.medName} </TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}> {capitalize(med.medName)} </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice} </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>
-                                            <IconButton onClick={() => handleChangeAmount(med.medName, false)}><RemoveCircleOutlineIcon /></IconButton>
-                                            {med.medQuantity}
-                                            <IconButton onClick={() => handleChangeAmount(med.medName, true)}><AddCircleOutlineIcon /></IconButton>
+                                            <IconButton onClick={() => handleChangeAmount(med.medName, med.medQuantity - 1)}><RemoveCircleOutlineIcon /></IconButton>
+                                            <input
+                                                value={med.medQuantity}
+                                                onChange={(e) => {
+                                                    if (e.target.value >= 1 && e.target.value <= 100) {
+                                                        handleChangeAmount(med.medName, e.target.value)
+                                                    }
+                                                }
+                                                }
+                                                style={{ width: '40px', textAlign: 'center' }}
+                                                min="0"
+                                            />
+                                            <IconButton onClick={() => handleChangeAmount(med.medName, med.medQuantity + 1)}><AddCircleOutlineIcon /></IconButton>
                                         </TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice * med.medQuantity} </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>
                                             <IconButton onClick={() => handleDelete(med.medName)}>
                                                 <DeleteIcon />

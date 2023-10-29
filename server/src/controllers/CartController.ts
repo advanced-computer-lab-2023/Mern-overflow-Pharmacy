@@ -60,7 +60,7 @@ const removeMedicineFromCart = async (req: Request, res: Response) => {
 }
 
 const changeAmountofMedicineInCart = async (req: Request, res: Response) => {
-    const { medName, increment } = req.body;
+    const { medName, newAmount } = req.body;
 
     try {
         const cart = await carts.findOne({ patient: "6527d5aa11c64e3b65860e67" });
@@ -72,16 +72,12 @@ const changeAmountofMedicineInCart = async (req: Request, res: Response) => {
         const existingMedicine = cart.medicines.find(med => med.medName === medName);
 
         if (existingMedicine) {
-            if (increment) {
-                if (Number(existingMedicine.medQuantity) < 100)
-                    existingMedicine.medQuantity = Number(existingMedicine.medQuantity) + 1;
-                else
-                    return res.status(400).send("Quantity is already at 100. Cannot add more.");
+            if (newAmount > 100) {
+                return res.status(400).send("Quantity cannot be more than 100.");
+            } else if (newAmount < 1) {
+                return res.status(400).send("Quantity cannot be less than 1.");
             } else {
-                if (Number(existingMedicine.medQuantity) > 1)
-                    existingMedicine.medQuantity = Number(existingMedicine.medQuantity) - 1;
-                else
-                    return res.status(400).send("Quantity is already at 1. Cannot remove more.");
+                existingMedicine.medQuantity = Number(newAmount);
             }
         } else {
             return res.status(404).json({ message: 'Medicine not found in cart' });
