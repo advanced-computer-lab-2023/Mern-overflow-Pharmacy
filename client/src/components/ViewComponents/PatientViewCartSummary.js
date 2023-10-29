@@ -74,8 +74,10 @@ export default function PatientViewCartSummary(props) {
                                 <Button variant="outlined"
                                     component={Link}
                                     to="/patient/cart"
-                                    sx={{mr: "25px"}}> Return to Cart </Button>
-                                <Button variant="contained" onClick={() => handleCheckout()}> Proceed </Button>
+                                    sx={{ mr: "25px" }}> Return to Cart </Button>
+                                <Button variant="contained" onClick={() => handleCheckout()}
+                                    component={Link}
+                                    to="/patient/orders"> Proceed </Button>
                             </div>
                         </Container>
                     </Container>

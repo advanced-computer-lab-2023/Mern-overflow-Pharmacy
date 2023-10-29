@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 const PatientDashboard = (props) => {
     return (
-        <ButtonAppBar user="Patient" actionButton="Log out" title={props.title}>
+        <ButtonAppBar user="Patient" actionButton="Log out" title={props.title} cart="true">
             <List>
                 <ListItem disablePadding>
                     <ListItemButton component={Link} to='/patient/medicines'>

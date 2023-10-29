@@ -99,52 +99,70 @@ export default function PatientViewCart(props) {
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
-                        <Table sx={{ mt: "20px" }}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell key="name" sx={{ textAlign: 'center', fontWeight: "bold" }}>Medicine Name</TableCell>
-                                    <TableCell key="price" sx={{ textAlign: 'center', fontWeight: "bold" }}>Medicine Price</TableCell>
-                                    <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Quantity in Cart</TableCell>
-                                    <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Total Price</TableCell>
-                                    <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>Remove from Cart </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {meds.map((med) =>
-                                    <TableRow key={med.medName}>
-                                        <TableCell sx={{ textAlign: 'center' }}> {capitalize(med.medName)} </TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice} </TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>
-                                            <IconButton onClick={() => handleChangeAmount(med.medName, med.medQuantity - 1)}><RemoveCircleOutlineIcon /></IconButton>
-                                            <input
-                                                value={med.medQuantity}
-                                                onChange={(e) => {
-                                                    if (e.target.value >= 1 && e.target.value <= 100) {
-                                                        handleChangeAmount(med.medName, e.target.value)
-                                                    }
-                                                }
-                                                }
-                                                style={{ width: '40px', textAlign: 'center' }}
-                                                min="0"
-                                            />
-                                            <IconButton onClick={() => handleChangeAmount(med.medName, med.medQuantity + 1)}><AddCircleOutlineIcon /></IconButton>
-                                        </TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice * med.medQuantity} </TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>
-                                            <IconButton onClick={() => handleDelete(med.medName)}>
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                        <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px" }}>
-                            <Typography> {`Total: EGP ${total}`} </Typography>
-                            <Button variant="contained"
-                                component={Link}
-                                to="/patient/checkout"> Checkout </Button>
-                        </Container>
+                        {meds.length > 0 ? (
+                            <>
+                                <Table sx={{ mt: "20px" }}>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell key="name" sx={{ textAlign: 'center', fontWeight: "bold" }}>Medicine Name</TableCell>
+                                            <TableCell key="price" sx={{ textAlign: 'center', fontWeight: "bold" }}>Medicine Price</TableCell>
+                                            <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Quantity in Cart</TableCell>
+                                            <TableCell key="quantity" sx={{ textAlign: 'center', fontWeight: "bold" }}>Total Price</TableCell>
+                                            <TableCell key="action" sx={{ textAlign: 'center', fontWeight: "bold" }}>Remove from Cart </TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {meds.map((med) =>
+                                            <TableRow key={med.medName}>
+                                                <TableCell sx={{ textAlign: 'center' }}> {capitalize(med.medName)} </TableCell>
+                                                <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice} </TableCell>
+                                                <TableCell sx={{ textAlign: 'center' }}>
+                                                    <IconButton onClick={() => handleChangeAmount(med.medName, med.medQuantity - 1)}><RemoveCircleOutlineIcon /></IconButton>
+                                                    <input
+                                                        value={med.medQuantity}
+                                                        onChange={(e) => {
+                                                            if (e.target.value >= 1 && e.target.value <= 100) {
+                                                                handleChangeAmount(med.medName, e.target.value)
+                                                            }
+                                                        }
+                                                        }
+                                                        style={{ width: '40px', textAlign: 'center' }}
+                                                        min="0"
+                                                    />
+                                                    <IconButton onClick={() => handleChangeAmount(med.medName, med.medQuantity + 1)}><AddCircleOutlineIcon /></IconButton>
+                                                </TableCell>
+                                                <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice * med.medQuantity} </TableCell>
+                                                <TableCell sx={{ textAlign: 'center' }}>
+                                                    <IconButton onClick={() => handleDelete(med.medName)}>
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                </Table>
+                                <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px" }}>
+                                    <Typography> {`Total: EGP ${total}`} </Typography>
+                                    <div>
+                                        <Button variant="outlined"
+                                            component={Link}
+                                            to="/patient/medicines"
+                                            sx={{ mr: "25px" }}> Back to medicines </Button>
+                                        <Button variant="contained"
+                                            component={Link}
+                                            to="/patient/checkout"> Checkout </Button>
+                                    </div>
+                                </Container>
+                            </>
+                        ) : (
+                            <>
+                                <Typography variant="h6">Your Cart is Empty.</Typography>
+                                <Button variant="contained"
+                                    component={Link}
+                                    to="/patient/medicines"
+                                    sx={{ mt: "25px" }}> Back to medicines </Button>
+                            </>
+                        )}
                     </Container>
                 )
                 }

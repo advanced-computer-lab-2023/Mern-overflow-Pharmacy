@@ -1,15 +1,15 @@
 import { Accordion, AccordionSummary, AccordionDetails, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DoorFrontIcon from '@mui/icons-material/DoorFront';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PendingIcon from '@mui/icons-material/Pending';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import MedicationIcon from '@mui/icons-material/Medication';
 import { Link } from 'react-router-dom';
 import axios from "axios";
-import {capitalize} from '../../utils'
+import { capitalize } from '../../utils'
 
 export default function PatientViewCart(props) {
     const [data, setData] = useState([]);
@@ -73,6 +73,14 @@ export default function PatientViewCart(props) {
                 </Alert>
             </Snackbar>
             <Paper sx={{ p: '20px', my: '40px', paddingBottom: 5, border: "none", boxShadow: "none" }}>
+                <Container sx={{width: "50%", display: "flex", justifyContent: "space-around", mb: "50px"}}>
+                    <Button variant="outlined" component={Link} to='/patient/medicines'>
+                        Go To Medicines <MedicationIcon sx={{ml: "15px"}}/>
+                    </Button>
+                    <Button variant="outlined" component={Link} to='/patient/cart'>
+                        Go To Cart <ShoppingCartIcon sx={{ml: "15px"}}/>
+                    </Button>
+                </Container>
                 {loading ? (
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
