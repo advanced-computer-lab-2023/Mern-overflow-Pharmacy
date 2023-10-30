@@ -100,7 +100,8 @@ export default function PatientViewCart(props) {
                                     <Typography sx={{ color: 'text.secondary', width: '10%' }}> {order.total} EGP </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    <Typography sx={{ textAlign: "left", mb: "20px" }}> Status: {capitalize(order.status)} </Typography>
+                                <Typography sx={{ textAlign: "left" }}> Status: {capitalize(order.status)} </Typography>
+                                <Typography sx={{ textAlign: "left", mb: "20px" }}> Delivery Address: {order.address} </Typography>
                                     {order.medicines.map((medicine) =>
                                         <Typography sx={{ textAlign: "left" }}> {medicine.medQuantity}x {capitalize(medicine.medName)}: EGP {medicine.medPrice * medicine.medQuantity} </Typography>
                                     )}

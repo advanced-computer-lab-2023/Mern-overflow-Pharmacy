@@ -11,6 +11,7 @@ interface IOrder {
     status: String;
     date: Date;
     total: Number;
+    address: String;
     medicines: CartObject[];
 }
 
@@ -19,6 +20,7 @@ const orderSchema = new Schema<IOrder>({
     status: { type: String, required: true, lowercase: true, enum: ['pending', 'shipped', 'delievered', 'cancelled'] },
     date: { type: Date, required: true },
     total: { type: Number, required: true },
+    address: { type: String, required: true },
     medicines: [{
         medName: { type: String, required: true, },
         medPrice: { type: Number, required: true, },

@@ -25,11 +25,8 @@ export default function PatientViewAddresses(props) {
                 ) : (
                     <Container>
                         <Typography sx={{ fontWeight: "bold", my: "20px" }}>Choose Delivery Address</Typography>
-                        
-                        <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "100px" }}>
-                            <Typography></Typography>
-                            {/* <AddAddress /> */}
-                        </Container>
+                        <TextField sx={{width: "50%"}} label="Delivery Address"
+                        value = {props.address} onChange={(e) => props.setAddress(e.target.value)}></TextField>
                     </Container>
                 )}
             </Paper>
