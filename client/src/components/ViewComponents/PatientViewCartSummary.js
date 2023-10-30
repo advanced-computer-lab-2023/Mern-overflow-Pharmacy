@@ -90,7 +90,7 @@ export default function PatientViewCartSummary(props) {
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
-                        <Typography sx={{ fontWeight: "bold", my: "20px" }}>Your Order Summary</Typography>
+                        <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily:"monospace" }}>Your Order Summary</Typography>
                         <Divider fullwidth />
                         <Table>
                             <TableHead>
@@ -98,14 +98,17 @@ export default function PatientViewCartSummary(props) {
                             <TableBody>
                                 {meds.map((med) =>
                                     <TableRow>
-                                        <TableCell sx={{ textAlign: 'center' }}>{med.medQuantity}x {capitalize(med.medName)}</TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>EGP {med.medPrice * med.medQuantity}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center', fontFamily:"monospace" }}>{med.medQuantity}x {capitalize(med.medName)}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center', fontFamily:"monospace" }}>EGP {med.medPrice * med.medQuantity}</TableCell>
                                     </TableRow>
                                 )}
+                                <TableRow>
+                                    <TableCell sx={{ textAlign: 'center', fontFamily:"monospace" }}>Total</TableCell>
+                                    <TableCell sx={{ textAlign: 'center', fontFamily:"monospace" }}>EGP {total}</TableCell>
+                                </TableRow>
                             </TableBody>
                         </Table>
-                        <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: "50px" }}>
-                            <Typography> {`Total: EGP ${total}`} </Typography>
+                        <Container sx={{ display: "flex", justifyContent: "end", alignItems: "center", pt: "50px", width: "80%" }}>
                             <div>
                                 <Button variant="outlined"
                                     component={Link}
