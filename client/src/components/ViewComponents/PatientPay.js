@@ -13,7 +13,7 @@ export default function PatientPay(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="md">
             {/* <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
                 <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
                     {successMessage}
@@ -25,6 +25,8 @@ export default function PatientPay(props) {
                 ) : (
                     <Container>
                         <Typography sx={{ fontWeight: "bold", my: "20px" }}>Choose Payment Method</Typography>
+                        <TextField sx={{width: "50%"}} label="Payment Method" placeholder="Cash / Wallet / Card"
+                        value = {props.paymentMethod} onChange={(e) => props.setPaymentMethod(e.target.value)}></TextField>
                     </Container>
                 )}
             </Paper>

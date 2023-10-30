@@ -5,14 +5,15 @@ import PatientViewAddresses from "../../components/ViewComponents/PatientViewAdd
 import PatientPay from "../../components/ViewComponents/PatientPay";
 
 const PatientCheckout = () => {
-    const [address, setAddress] = useState([]);
+    const [address, setAddress] = useState("");
+    const [paymentMethod, setPaymentMethod] = useState("");
 
     return (
         <>
             <PatientDashboard title="Checkout" />
-            <PatientViewCartSummary address={address} />
             <PatientViewAddresses setAddress={setAddress} address={address} />
-            <PatientPay />
+            <PatientPay setPaymentMethod={setPaymentMethod} paymentMethod={paymentMethod} />
+            <PatientViewCartSummary address={address} paymentMethod={paymentMethod} />
         </>
     );
 }

@@ -12,6 +12,7 @@ interface IOrder {
     date: Date;
     total: Number;
     address: String;
+    paymentMethod: String;
     medicines: CartObject[];
 }
 
@@ -21,6 +22,7 @@ const orderSchema = new Schema<IOrder>({
     date: { type: Date, required: true },
     total: { type: Number, required: true },
     address: { type: String, required: true },
+    paymentMethod: { type: String, required: true, lowercase: true, enum: ['cash on delivery', 'wallet', 'credit card'] },
     medicines: [{
         medName: { type: String, required: true, },
         medPrice: { type: Number, required: true, },

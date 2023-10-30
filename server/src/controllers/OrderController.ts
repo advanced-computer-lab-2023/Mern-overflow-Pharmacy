@@ -12,7 +12,7 @@ const viewOrders = async (req: Request, res: Response) => {
 }
 
 const addOrder = async (req: Request, res: Response) => {
-    const { medicines, total, address } = req.body;
+    const { medicines, total, address, paymentMethod } = req.body;
     const patientId = "6527d5aa11c64e3b65860e67";
 
     try {
@@ -22,6 +22,7 @@ const addOrder = async (req: Request, res: Response) => {
             date: new Date(),
             total: total,
             address: address,
+            paymentMethod: paymentMethod,
             medicines: medicines
         });
 

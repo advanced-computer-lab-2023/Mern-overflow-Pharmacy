@@ -7,6 +7,9 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PendingIcon from '@mui/icons-material/Pending';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MedicationIcon from '@mui/icons-material/Medication';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { capitalize } from '../../utils'
@@ -73,13 +76,15 @@ export default function PatientViewCart(props) {
                 </Alert>
             </Snackbar>
             <Paper sx={{ p: '20px', my: '40px', paddingBottom: 5, border: "none", boxShadow: "none" }}>
-                <Container sx={{width: "50%", display: "flex", justifyContent: "space-around", mb: "50px"}}>
-                    <Button variant="outlined" component={Link} to='/patient/medicines'>
-                        Go To Medicines <MedicationIcon sx={{ml: "15px"}}/>
-                    </Button>
-                    <Button variant="outlined" component={Link} to='/patient/cart'>
-                        Go To Cart <ShoppingCartIcon sx={{ml: "15px"}}/>
-                    </Button>
+                <Container maxWidth="sm">
+                    <Paper elevation={3} width="md" sx={{ p: '20px', mb: "40px", display: "flex", justifyContent: "space-around" }}>
+                        <Button variant="outlined" component={Link} to='/patient/cart'>
+                            Go To Cart <ShoppingCartIcon sx={{ ml: "15px" }} />
+                        </Button>
+                        <Button variant="contained" component={Link} to='/patient/medicines'>
+                            Go To Medicines <MedicationIcon sx={{ ml: "15px" }} />
+                        </Button>
+                    </Paper>
                 </Container>
                 {loading ? (
                     <CircularProgress sx={{ mt: '30px' }} />
@@ -88,20 +93,25 @@ export default function PatientViewCart(props) {
                         {data.map((order) =>
                             <Accordion elevation="3" >
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
-                                    <Typography sx={{ display: 'flex', alignItems: 'center', textAlign: 'left', width: '70%', flexShrink: 0, fontWeight: "bold" }}>
-                                        ORDER {order._id.toUpperCase()}
-                                        {order.status == "pending" ? (<PendingIcon color="primary" sx={{ ml: "15px" }} />)
-                                            : order.status == "delivered" ? (<CheckCircleIcon color="success" sx={{ ml: "15px" }} />)
-                                                : order.status == "shipped" ? (<LocalShippingIcon color="warning" sx={{ ml: "15px" }} />)
-                                                    : (<CancelIcon color="error" sx={{ ml: "15px" }} />)
+                                    <Typography sx={{ display: 'flex', alignItems: 'center', textAlign: 'left', width: '60%', flexShrink: 0, fontWeight: "bold" }}>
+                                        {order.status == "pending" ? (<PendingIcon color="primary" sx={{ mr: "15px" }} />)
+                                            : order.status == "delivered" ? (<CheckCircleIcon color="success" sx={{ mr: "15px" }} />)
+                                                : order.status == "shipped" ? (<LocalShippingIcon color="warning" sx={{ mr: "15px" }} />)
+                                                    : (<CancelIcon color="error" sx={{ mr: "15px" }} />)
                                         }
+                                        ORDER {order._id.toUpperCase()}
                                     </Typography>
-                                    <Typography sx={{ color: 'text.secondary', width: '20%' }}> {displayDate(order.date)} </Typography>
+                                    <Typography sx={{ color: 'text.secondary', width: '30%' }}> {displayDate(order.date)} </Typography>
+                                    {order.paymentMethod.toLowerCase() == "cash on delivery" ? (<PaymentsIcon color="action" />)
+                                        : order.paymentMethod.toLowerCase() == "wallet" ? (<AccountBalanceWalletIcon color="action" />)
+                                            : (<CreditCardIcon color="action" />)
+                                    }
                                     <Typography sx={{ color: 'text.secondary', width: '10%' }}> {order.total} EGP </Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                <Typography sx={{ textAlign: "left" }}> Status: {capitalize(order.status)} </Typography>
-                                <Typography sx={{ textAlign: "left", mb: "20px" }}> Delivery Address: {order.address} </Typography>
+                                    <Typography sx={{ textAlign: "left" }}> Status: {capitalize(order.status)} </Typography>
+                                    <Typography sx={{ textAlign: "left" }}> Delivery Address: {order.address} </Typography>
+                                    <Typography sx={{ textAlign: "left", mb: "20px" }}> Payment Method: {order.paymentMethod.toLowerCase() == "cash on delivery" ? "Cash on Delivery" : order.paymentMethod.toLowerCase() == "wallet" ? "Wallet" : "Credit Card"} </Typography>
                                     {order.medicines.map((medicine) =>
                                         <Typography sx={{ textAlign: "left" }}> {medicine.medQuantity}x {capitalize(medicine.medName)}: EGP {medicine.medPrice * medicine.medQuantity} </Typography>
                                     )}

@@ -13,7 +13,7 @@ export default function PatientViewAddresses(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="md">
             {/* <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
                 <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
                     {successMessage}

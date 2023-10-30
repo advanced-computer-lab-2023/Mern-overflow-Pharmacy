@@ -1,6 +1,7 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { capitalize } from '../../utils'
@@ -41,7 +42,8 @@ export default function PatientViewCartSummary(props) {
         setLoadingChange(true);
         const medicines = meds;
         const address = props.address;
-        axios.post('http://localhost:8000/orders/add', { medicines, total, address })
+        const paymentMethod = props.paymentMethod;
+        axios.post('http://localhost:8000/orders/add', { medicines, total, address, paymentMethod })
             .then(response => {
                 axios.put('http://localhost:8000/cart/empty').then((response) => {
                     setLoadingChange(false);
@@ -74,7 +76,7 @@ export default function PatientViewCartSummary(props) {
     };
 
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="md">
             <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
                 <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
                     {successMessage}
@@ -90,31 +92,31 @@ export default function PatientViewCartSummary(props) {
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
-                        <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily:"monospace" }}>Your Order Summary</Typography>
-                        <Divider fullwidth />
+                        <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily: "monospace" }}>Your Order Summary</Typography>
+                        <Divider />
                         <Table>
                             <TableHead>
                             </TableHead>
                             <TableBody>
                                 {meds.map((med) =>
                                     <TableRow>
-                                        <TableCell sx={{ textAlign: 'center', fontFamily:"monospace" }}>{med.medQuantity}x {capitalize(med.medName)}</TableCell>
-                                        <TableCell sx={{ textAlign: 'center', fontFamily:"monospace" }}>EGP {med.medPrice * med.medQuantity}</TableCell>
+                                        <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>{med.medQuantity}x {capitalize(med.medName)}</TableCell>
+                                        <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>EGP {med.medPrice * med.medQuantity}</TableCell>
                                     </TableRow>
                                 )}
                                 <TableRow>
-                                    <TableCell sx={{ textAlign: 'center', fontFamily:"monospace" }}>Total</TableCell>
-                                    <TableCell sx={{ textAlign: 'center', fontFamily:"monospace" }}>EGP {total}</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", fontWeight: "bold" }}>Total Amount</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", fontWeight: "bold" }}>EGP {total}</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
-                        <Container sx={{ display: "flex", justifyContent: "end", alignItems: "center", pt: "50px", width: "80%" }}>
+                        <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center", pt: "50px", width: "80%" }}>
                             <div>
                                 <Button variant="outlined"
                                     component={Link}
                                     to="/patient/cart"
-                                    sx={{ mr: "25px" }}> Return to Cart </Button>
-                                <Button variant="contained" onClick={() => handleCheckout()}> Proceed </Button>
+                                    sx={{ mr: "25px" }}> <NavigateBeforeIcon sx={{ mr: "15px" }} /> Return to Cart </Button>
+                                <Button variant="contained" onClick={() => handleCheckout()}> Confirm Order <NavigateNextIcon sx={{ ml: "15px" }} /> </Button>
                             </div>
                         </Container>
                     </Container>

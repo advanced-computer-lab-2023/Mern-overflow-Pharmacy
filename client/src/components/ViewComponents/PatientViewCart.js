@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import MedicationIcon from '@mui/icons-material/Medication';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import { Link } from 'react-router-dom';
 import { capitalize } from '../../utils'
 import axios from "axios";
@@ -147,10 +149,10 @@ export default function PatientViewCart(props) {
                                         <Button variant="outlined"
                                             component={Link}
                                             to="/patient/medicines"
-                                            sx={{ mr: "25px" }}> Back to medicines </Button>
+                                            sx={{ mr: "25px" }}> Back to medicines <MedicationIcon sx={{ ml: "15px" }} /> </Button>
                                         <Button variant="contained"
                                             component={Link}
-                                            to="/patient/checkout"> Checkout </Button>
+                                            to="/patient/checkout"> Checkout <PointOfSaleIcon sx={{ ml: "15px" }} /> </Button>
                                     </div>
                                 </Container>
                             </>
@@ -160,7 +162,7 @@ export default function PatientViewCart(props) {
                                 <Button variant="contained"
                                     component={Link}
                                     to="/patient/medicines"
-                                    sx={{ mt: "25px" }}> Back to medicines </Button>
+                                    sx={{ mt: "25px" }}> Back to medicines <MedicationIcon sx={{ ml: "15px" }} /> </Button>
                             </>
                         )}
                     </Container>
