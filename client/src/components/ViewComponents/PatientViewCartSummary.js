@@ -38,6 +38,10 @@ export default function PatientViewCartSummary(props) {
         setTotal(total);
     }, [meds]);
 
+    const handleReturnToCart = () => {
+        navigate("/patient/cart");
+    }
+
     const handleCheckout = () => {
         setLoadingChange(true);
         const medicines = meds;
@@ -56,7 +60,13 @@ export default function PatientViewCartSummary(props) {
             .catch(error => {
                 console.error('Error creating order:', error);
                 setLoadingChange(false);
-                setErrorMessage("Error in checking out");
+                if (!props.address) {
+                    setErrorMessage("Please choose a delivery address.");
+                } else if (!props.paymentMethod) {
+                    setErrorMessage("Please choose a payment method.");
+                } else {
+                    setErrorMessage("Unexpected Error in checking out.");
+                }
                 setErrorOpen(true);
             });
     }
@@ -105,19 +115,24 @@ export default function PatientViewCartSummary(props) {
                                     </TableRow>
                                 )}
                                 <TableRow>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", fontWeight: "bold" }}>Total Amount</TableCell>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", fontWeight: "bold" }}>EGP {total}</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>Total Amount</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>EGP {total}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", borderTop: '2px solid #ccc' }}>Delivery Address</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", borderTop: '2px solid #ccc' }}>{props.address ? props.address : "——"}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>Payment Method</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>{props.paymentMethod ? props.paymentMethod : "——"}</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
-                        <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center", pt: "50px", width: "80%" }}>
-                            <div>
-                                <Button variant="outlined"
-                                    component={Link}
-                                    to="/patient/cart"
-                                    sx={{ mr: "25px" }}> <NavigateBeforeIcon sx={{ mr: "15px" }} /> Return to Cart </Button>
-                                <Button variant="contained" onClick={() => handleCheckout()}> Confirm Order <NavigateNextIcon sx={{ ml: "15px" }} /> </Button>
-                            </div>
+                        <Container sx={{ display: "flex", justifyContent: "space-around", alignItems: "center", pt: "50px", width: "80%" }}>
+                            <Button variant="outlined"
+                                onClick={() => handleReturnToCart()}
+                                sx={{}}> <NavigateBeforeIcon sx={{ mr: "15px" }} /> Return to Cart </Button>
+                            <Button variant="contained" onClick={() => handleCheckout()}> Confirm Order <NavigateNextIcon sx={{ ml: "15px" }} /> </Button>
                         </Container>
                     </Container>
                 )}

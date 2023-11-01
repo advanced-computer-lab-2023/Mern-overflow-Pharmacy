@@ -31,6 +31,5 @@ export default function PatientViewAddresses(props) {
                 )}
             </Paper>
         </Container>
-
     );
 }

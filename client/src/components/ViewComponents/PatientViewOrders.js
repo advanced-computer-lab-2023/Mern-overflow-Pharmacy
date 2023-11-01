@@ -71,7 +71,7 @@ export default function PatientViewCart(props) {
     return (
         <Container maxWidth="xl">
             <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
-                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="warning">
+                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="">
                     {successMessage}
                 </Alert>
             </Snackbar>
@@ -90,8 +90,8 @@ export default function PatientViewCart(props) {
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
-                        {data.map((order) =>
-                            <Accordion elevation="3" >
+                        {data.map((order, index) =>
+                            <Accordion elevation="3" defaultExpanded={index == 0}>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
                                     <Typography sx={{ display: 'flex', alignItems: 'center', textAlign: 'left', width: '60%', flexShrink: 0, fontWeight: "bold" }}>
                                         {order.status == "pending" ? (<PendingIcon color="primary" sx={{ mr: "15px" }} />)
