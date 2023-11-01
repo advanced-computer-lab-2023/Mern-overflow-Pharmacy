@@ -71,7 +71,7 @@ export default function PatientViewCart(props) {
     return (
         <Container maxWidth="xl">
             <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
-                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="">
+                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="info">
                     {successMessage}
                 </Alert>
             </Snackbar>
