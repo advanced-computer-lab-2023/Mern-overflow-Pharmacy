@@ -7,6 +7,7 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import { Link } from 'react-router-dom';
 import { capitalize } from '../../utils'
+import emptyCart from "../../assets/photos/empty-cart.png"
 import axios from "axios";
 
 export default function PatientViewCart(props) {
@@ -158,7 +159,12 @@ export default function PatientViewCart(props) {
                             </>
                         ) : (
                             <>
-                                <Typography variant="h6">Your Cart is Empty.</Typography>
+                                <Typography variant="h5">Your Cart is Empty.</Typography>
+                                <Typography variant="h6">Seems like you haven't added anything to your cart yet.</Typography>
+                                <Typography variant="h6">Check out our available medicines and start adding to your cart now!</Typography>
+                                <Container maxWidth="sm" sx={{my: "30px"}}>
+                                    <img src={emptyCart} loading="lazy" width="30%" />
+                                </Container>
                                 <Button variant="contained"
                                     component={Link}
                                     to="/patient/medicines"
