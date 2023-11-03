@@ -89,17 +89,7 @@ export default function PharmacistRegister() {
       </Snackbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundSize: 'cover',
-            backgroundColor: '#d9d9d9',
-            backgroundPosition: 'center',
-          }}
-        >
+        <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#F9FAF8', backgroundPosition: 'center' }}>
           <img src={logo} alt="" style={{
             height: '50%',
             position: 'fixed',

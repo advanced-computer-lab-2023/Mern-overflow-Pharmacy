@@ -40,7 +40,7 @@ export default function SignIn() {
         <ThemeProvider theme={defaultTheme}>
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#d9d9d9', backgroundPosition: 'center' }}>
+                <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#F9FAF8', backgroundPosition: 'center' }}>
                     <img src={logo} alt="" style={{ height: '50%', position: 'fixed', top: '50%', transform: 'translate(-50%, -50%)' }} />
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
