@@ -16,7 +16,6 @@ import { capitalize } from '../../utils'
 
 export default function PharmacistViewMedicines(props) {
     const theme = useTheme();
-
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -166,7 +165,10 @@ export default function PharmacistViewMedicines(props) {
                                                         <Typography variant="body1" sx={{ textAlign: "left", color: "#777" }}>
                                                             Active Ingredients: {row.details.activeIngredients.join(', ')}
                                                         </Typography>
-                                                        <Container sx={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around", mt: "20px"}}>
+                                                        <Typography variant="body1" sx={{ color: "#777", textAlign: "center", mt: "10px" }}>
+                                                            {row.overTheCounter ? "Over the Counter" : "Prescription Needed"}
+                                                        </Typography>
+                                                        <Container sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around", mt: "10px" }}>
                                                             <Typography>
                                                                 {row.availableQuantity} In stock
                                                             </Typography>

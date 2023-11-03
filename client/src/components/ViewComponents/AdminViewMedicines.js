@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { ButtonBase, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import { IconButton, InputAdornment, Accordion, AccordionDetails, AccordionSummary, ButtonBase, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
+import SearchIcon from '@mui/icons-material/Search';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
-import {capitalize} from '../../utils'
+import { useTheme } from '@mui/material/styles';
+import { capitalize } from '../../utils'
 
 export default function AdminViewMedicines() {
+    const theme = useTheme();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [Query, setQuery] = useState("");
@@ -17,7 +21,7 @@ export default function AdminViewMedicines() {
         maxWidth: '100%',
         maxHeight: '100%',
     });
-    
+
     const fetchTableData = () => {
         axios
             .get(`http://localhost:8000/medicines/view`, {})
@@ -80,6 +84,11 @@ export default function AdminViewMedicines() {
                                         placeholder="Search by name..."
                                         onChange={(e) => setQuery(e.target.value)}
                                         fullWidth
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <SearchIcon />
+                                            </InputAdornment>
+                                        }
                                     />
                                 </Container>
                                 <Container sx={{ width: "48%" }}>
@@ -113,47 +122,43 @@ export default function AdminViewMedicines() {
                                             width: '40%',
                                             maxWidth: '465px',
                                             flexGrow: 1,
-                                            backgroundColor: (theme) =>
-                                                theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                                            boxShadow: "none"
                                         }}
                                     >
-                                        <Grid container spacing={2}>
-                                            <Grid item>
+                                        <Accordion elevation="3">
+                                            <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
                                                 <ButtonBase sx={{ width: 128, height: '100%' }}>
                                                     <Img alt={row.name} src={panadol} />
                                                 </ButtonBase>
-                                            </Grid>
-                                            <Grid item xs={12} sm container>
-                                                <Grid item xs container direction="column" spacing={2}>
-                                                    <Grid item xs>
-                                                        <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
-                                                            {capitalize(row.name)}
+                                                <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+                                                    <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
+                                                        {capitalize(row.name)}
+                                                    </Typography>
+                                                    <Typography variant="body2" gutterBottom>
+                                                        {row.medicinalUse}
+                                                    </Typography>
+                                                    <Container sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: "center", justifyItems: "center", flexDirection: "column" }}>
+                                                        <Typography sx={{ my: "10px", fontFamily: "monospace" }}>
+                                                            EGP {row.price}
                                                         </Typography>
-                                                        <Typography variant="body2" gutterBottom>
-                                                            {row.medicinalUse}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        <Typography variant="body2">
-                                                            {row.details.description}
-                                                        </Typography>
-                                                        <Typography variant="body2" sx={{ color: "#777" }}>
-                                                            Active Ingredients: {row.details.activeIngredients.join(', ')}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        <Container sx={{ display: "flex", justifyContent: "space-around"}}>
-                                                            <Typography variant="body2">
-                                                                EGP {row.price}
-                                                            </Typography>
-                                                            <Typography variant="body2" >
-                                                                {row.overTheCounter == true ? "Over the counter medicine" : "Prescription needed"}
-                                                            </Typography>
-                                                        </Container>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
+                                                        {row.overTheCounter ? (<></>
+                                                        ) : (<Typography>Prescription Needed </Typography>)}
+                                                    </Container>
+                                                </Container>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Typography variant="body1" sx={{ textAlign: "left", mb: "5px" }}>
+                                                    {row.details.description}
+                                                </Typography>
+                                                <Typography variant="body1" sx={{ textAlign: "left", color: "#777", mb: "5px"  }}>
+                                                    Active Ingredients: {row.details.activeIngredients.join(', ')}
+                                                </Typography>
+                                                <Typography variant="body1" sx={{ color: "#777", textAlign: "center" }}>
+                                                    {row.overTheCounter? "Over the Counter" : "Prescription Needed"}
+                                                </Typography>
+
+                                            </AccordionDetails>
+                                        </Accordion>
                                     </Paper>
                                 );
                             })}
