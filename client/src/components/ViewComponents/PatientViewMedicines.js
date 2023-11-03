@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Snackbar, Alert, ButtonGroup, CircularProgress, Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { InputAdornment, Accordion, AccordionDetails, AccordionSummary, Snackbar, Alert, ButtonGroup, CircularProgress, Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
@@ -43,7 +45,9 @@ export default function PatientViewMedicines() {
             })
     };
 
-    const handleAddMedicine = (medName, medPrice, medQuantity) => {
+    const handleAddMedicine = (medName, medPrice, medQuantity, e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const requestData = {
             medName: medName,
             medPrice: medPrice,
@@ -128,6 +132,11 @@ export default function PatientViewMedicines() {
                                             placeholder="Search by name..."
                                             onChange={(e) => setQuery(e.target.value)}
                                             fullWidth
+                                            startAdornment={
+                                                <InputAdornment position="start">
+                                                    <SearchIcon />
+                                                </InputAdornment>
+                                            }
                                         />
                                     </Container>
                                     <Container sx={{ width: "48%" }}>
@@ -162,81 +171,79 @@ export default function PatientViewMedicines() {
                                                 width: '40%',
                                                 maxWidth: '465px',
                                                 flexGrow: 1,
-                                                backgroundColor: (theme) =>
-                                                    theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                                                boxShadow: "none"
                                             }}
                                         >
-                                            <Grid container spacing={2}>
-                                                <Grid item>
+                                            <Accordion elevation="3">
+                                                <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
                                                     <ButtonBase sx={{ width: 128, height: '100%' }}>
                                                         <Img alt={row.name} src={panadol} />
                                                     </ButtonBase>
-                                                </Grid>
-                                                <Grid item xs={12} sm container>
-                                                    <Grid item xs container direction="column" spacing={2}>
-                                                        <Grid item xs>
-                                                            <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
-                                                                {capitalize(row.name)}
+                                                    <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+                                                        <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
+                                                            {capitalize(row.name)}
+                                                        </Typography>
+                                                        <Typography variant="body2" gutterBottom>
+                                                            {row.medicinalUse}
+                                                        </Typography>
+                                                        <Container sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: "center", justifyItems: "center", flexDirection: "column"}}>
+                                                            <Typography sx={{my: "10px", fontFamily: "monospace"}}>
+                                                                EGP {row.price}
                                                             </Typography>
-                                                            <Typography variant="body2" gutterBottom>
-                                                                {row.medicinalUse}
-                                                            </Typography>
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <Typography variant="body2">
-                                                                {row.details.description}
-                                                            </Typography>
-                                                            <Typography variant="body2" sx={{ color: "#777" }}>
-                                                                Active Ingredients: {row.details.activeIngredients.join(', ')}
-                                                            </Typography>
-                                                        </Grid>
-
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid item sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: "center", }}>
-                                                    <Typography>
-                                                        EGP {row.price}
-                                                    </Typography>
-                                                    {row.overTheCounter ? (
-                                                        <div>
-                                                            <ButtonGroup
-                                                                disableElevation
-                                                                variant="outlined"
-                                                            >
-                                                                <Button onClick={() => setCounts(prevCounts => {
-                                                                    const updatedCounts = [...prevCounts];
-                                                                    updatedCounts[index] = Math.max(0, updatedCounts[index] - 1);
-                                                                    return updatedCounts;
-                                                                })}> - </Button>
-                                                                <Button style={{ pointerEvents: 'none', cursor: 'not-allowed' }}>{counts[index]}</Button>
-                                                                <Button onClick={() => setCounts(prevCounts => {
-                                                                    const updatedCounts = [...prevCounts];
-                                                                    updatedCounts[index] = Math.min(100, updatedCounts[index] + 1);
-                                                                    return updatedCounts;
-                                                                })}> + </Button>
-                                                            </ButtonGroup>
-                                                            <IconButton
-                                                                sx={{ ml: "15px" }}
-                                                                disabled={!counts[index]}
-                                                                onClick={() => {
-                                                                    if (counts[index] > 0) {
-                                                                        handleAddMedicine(row.name, row.price, counts[index]); // Call handleAddMedicine here
-                                                                        setSuccessMessage(counts[index] === 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${capitalize(row.name)} have been added to your cart.`);
-                                                                        setCounts(prevCounts => {
+                                                            {row.overTheCounter ? (
+                                                                <div>
+                                                                    <ButtonGroup
+                                                                        disableElevation
+                                                                        variant="outlined"
+                                                                    >
+                                                                        <Button onClick={(e) => setCounts(prevCounts => {
+                                                                            e.preventDefault();
+                                                                            e.stopPropagation();
                                                                             const updatedCounts = [...prevCounts];
-                                                                            updatedCounts[index] = 0;
+                                                                            updatedCounts[index] = Math.max(0, updatedCounts[index] - 1);
                                                                             return updatedCounts;
-                                                                        });
-                                                                    }
-                                                                }}
-                                                            >
-                                                                <AddShoppingCartIcon color={!counts[index] ? "grey" : "primary"} />
-                                                            </IconButton>
+                                                                        })}> - </Button>
+                                                                        <Button style={{ pointerEvents: 'none', cursor: 'not-allowed' }}>{counts[index]}</Button>
+                                                                        <Button onClick={(e) => setCounts(prevCounts => {
+                                                                            e.preventDefault();
+                                                                            e.stopPropagation();
+                                                                            const updatedCounts = [...prevCounts];
+                                                                            updatedCounts[index] = Math.min(100, updatedCounts[index] + 1);
+                                                                            return updatedCounts;
+                                                                        })}> + </Button>
+                                                                    </ButtonGroup>
+                                                                    <IconButton
+                                                                        sx={{ ml: "15px" }}
+                                                                        disabled={!counts[index]}
+                                                                        onClick={(e) => {
+                                                                            if (counts[index] > 0) {
+                                                                                handleAddMedicine(row.name, row.price, counts[index], e);
+                                                                                setSuccessMessage(counts[index] === 1 ? `${counts[index]} ${capitalize(row.name)} has been added to your cart.` : `${counts[index]} ${capitalize(row.name)} have been added to your cart.`);
+                                                                                setCounts(prevCounts => {
+                                                                                    const updatedCounts = [...prevCounts];
+                                                                                    updatedCounts[index] = 0;
+                                                                                    return updatedCounts;
+                                                                                });
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <AddShoppingCartIcon color={!counts[index] ? "grey" : "primary"} />
+                                                                    </IconButton>
 
-                                                        </div>
-                                                    ) : (<Typography>Prescription Needed </Typography>)}
-                                                </Grid>
-                                            </Grid>
+                                                                </div>
+                                                            ) : (<Typography>Prescription Needed </Typography>)}
+                                                        </Container>
+                                                    </Container>
+                                                </AccordionSummary>
+                                                <AccordionDetails>
+                                                    <Typography variant="body1" sx={{textAlign: "left", mb: "5px"}}>
+                                                        {row.details.description}
+                                                    </Typography>
+                                                    <Typography variant="body1" sx={{ textAlign: "left", color: "#777" }}>
+                                                        Active Ingredients: {row.details.activeIngredients.join(', ')}
+                                                    </Typography>
+                                                </AccordionDetails>
+                                            </Accordion>
                                         </Paper>
                                     );
                                 })}
