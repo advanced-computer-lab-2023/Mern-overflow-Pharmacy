@@ -121,7 +121,7 @@ export default function PatientViewCart(props) {
                                                 <TableCell sx={{ textAlign: 'center' }}> EGP {med.medPrice} </TableCell>
                                                 <TableCell sx={{ textAlign: 'center' }}>
                                                     <IconButton onClick={() => handleChangeAmount(med.medName, med.medQuantity - 1)}><RemoveCircleOutlineIcon /></IconButton>
-                                                    <input
+                                                    <TextField
                                                         value={med.medQuantity}
                                                         onChange={(e) => {
                                                             if (e.target.value >= 1 && e.target.value <= 100) {
@@ -129,8 +129,9 @@ export default function PatientViewCart(props) {
                                                             }
                                                         }
                                                         }
-                                                        style={{ width: '40px', textAlign: 'center' }}
+                                                        sx={{ width: '40px', textAlign: "center", textAlignLast: "center" }}
                                                         min="0"
+                                                        variant="standard"
                                                     />
                                                     <IconButton onClick={() => handleChangeAmount(med.medName, med.medQuantity + 1)}><AddCircleOutlineIcon /></IconButton>
                                                 </TableCell>
@@ -162,7 +163,7 @@ export default function PatientViewCart(props) {
                                 <Typography variant="h5">Your Cart is Empty.</Typography>
                                 <Typography variant="h6">Seems like you haven't added anything to your cart yet.</Typography>
                                 <Typography variant="h6">Check out our available medicines and start adding to your cart now!</Typography>
-                                <Container maxWidth="sm" sx={{my: "30px"}}>
+                                <Container maxWidth="sm" sx={{ my: "30px" }}>
                                     <img src={emptyCart} loading="lazy" width="30%" />
                                 </Container>
                                 <Button variant="contained"
