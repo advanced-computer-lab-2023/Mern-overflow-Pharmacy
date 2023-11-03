@@ -40,8 +40,17 @@ export default function SignIn() {
         <ThemeProvider theme={defaultTheme}>
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
-                <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#F9FAF8', backgroundPosition: 'center' }}>
-                    <img src={logo} alt="" style={{ height: '50%', position: 'fixed', top: '50%', transform: 'translate(-50%, -50%)' }} />
+                <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#132629', backgroundPosition: 'center' }}>
+                    <Typography variant="h4" sx={{
+                        color: "white", position: 'fixed',
+                        top: '15%', left: '20%'
+                    }}>El7a2ni Pharmacy</Typography>
+                    <img src={logo} alt="" style={{
+                        height: '50%',
+                        position: 'fixed',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }} />
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <Box sx={{ my: 8, mx: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
@@ -81,7 +90,7 @@ export default function SignIn() {
                                 </Grid>
                             </Grid>
                             <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}
-                                >
+                            >
                                 Sign In
                             </Button>
                         </Box>
