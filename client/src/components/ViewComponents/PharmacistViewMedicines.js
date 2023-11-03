@@ -133,7 +133,6 @@ export default function PharmacistViewMedicines(props) {
                                                     my: '20px',
                                                     width: '40%',
                                                     maxWidth: '465px',
-                                                    flexGrow: 1,
                                                     boxShadow: "none"
                                                 }}
                                             >
@@ -153,8 +152,6 @@ export default function PharmacistViewMedicines(props) {
                                                                 <Typography sx={{ my: "10px", fontFamily: "monospace" }}>
                                                                     EGP {row.price}
                                                                 </Typography>
-                                                                {row.overTheCounter ? (<></>
-                                                                ) : (<Typography>Prescription Needed </Typography>)}
                                                             </Container>
                                                         </Container>
                                                     </AccordionSummary>
