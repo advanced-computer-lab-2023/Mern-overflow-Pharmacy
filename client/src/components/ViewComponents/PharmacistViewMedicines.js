@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { CircularProgress, Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { InputAdornment, Accordion, AccordionDetails, AccordionSummary, CircularProgress, Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UploadIcon from '@mui/icons-material/Upload';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
@@ -95,6 +96,11 @@ export default function PharmacistViewMedicines(props) {
                                             placeholder="Search by name..."
                                             onChange={(e) => setQuery(e.target.value)}
                                             fullWidth
+                                            startAdornment={
+                                                <InputAdornment position="start">
+                                                    <SearchIcon />
+                                                </InputAdornment>
+                                            }
                                         />
                                     </Container>
                                     <Container sx={{ width: "48%" }}>
@@ -129,60 +135,57 @@ export default function PharmacistViewMedicines(props) {
                                                     width: '40%',
                                                     maxWidth: '465px',
                                                     flexGrow: 1,
-                                                    backgroundColor: (theme) =>
-                                                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                                                    boxShadow: "none"
                                                 }}
                                             >
-                                                <Grid container spacing={2}>
-                                                    <Grid item>
+                                                <Accordion elevation="3">
+                                                    <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
                                                         <ButtonBase sx={{ width: 128, height: '100%' }}>
                                                             <Img alt={row.name} src={panadol} />
                                                         </ButtonBase>
-                                                    </Grid>
-                                                    <Grid item xs={12} sm container>
-                                                        <Grid item xs container direction="column" spacing={2}>
-                                                            <Grid item xs>
-                                                                <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
-                                                                    {capitalize(row.name)}
+                                                        <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+                                                            <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
+                                                                {capitalize(row.name)}
+                                                            </Typography>
+                                                            <Typography variant="body2" gutterBottom>
+                                                                {row.medicinalUse}
+                                                            </Typography>
+                                                            <Container sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: "center", justifyItems: "center", flexDirection: "column" }}>
+                                                                <Typography sx={{ my: "10px", fontFamily: "monospace" }}>
+                                                                    EGP {row.price}
                                                                 </Typography>
-                                                                <Typography variant="body2" gutterBottom>
-                                                                    {row.medicinalUse}
-                                                                </Typography>
-                                                            </Grid>
-                                                            <Grid item>
-                                                                <Typography variant="body2">
-                                                                    {row.details.description}
-                                                                </Typography>
-                                                                <Typography variant="body2" sx={{ color: "#777" }}>
-                                                                    Active Ingredients: {row.details.activeIngredients.join(', ')}
-                                                                </Typography>
-                                                                <Typography variant="body2" sx={{ color: "#777", mt: '15px' }}>
-                                                                    {row.overTheCounter == true ? "Over the counter medicine" : "Prescription needed"}
-                                                                </Typography>
-                                                            </Grid>
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Grid item sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: "center", }}>
-                                                        <Typography>
-                                                            EGP {row.price}
+                                                                {row.overTheCounter ? (<></>
+                                                                ) : (<Typography>Prescription Needed </Typography>)}
+                                                            </Container>
+                                                        </Container>
+                                                    </AccordionSummary>
+                                                    <AccordionDetails>
+                                                        <Typography variant="body1" sx={{ textAlign: "left", mb: "5px" }}>
+                                                            {row.details.description}
                                                         </Typography>
-                                                        <Typography>
-                                                            {row.availableQuantity} In stock
+                                                        <Typography variant="body1" sx={{ textAlign: "left", color: "#777" }}>
+                                                            Active Ingredients: {row.details.activeIngredients.join(', ')}
                                                         </Typography>
-                                                        <Typography>
-                                                            {row.sales} Sold
-                                                        </Typography>
-                                                        <IconButton onClick={() => handleClickEdit(row._id)} sx={{ '&:hover': { color: theme.palette.info.main } }}>
-                                                            <EditIcon />
-                                                        </IconButton>
-                                                    </Grid>
-                                                </Grid>
+                                                        <Container sx={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around", mt: "20px"}}>
+                                                            <Typography>
+                                                                {row.availableQuantity} In stock
+                                                            </Typography>
+                                                            <Typography>
+                                                                {row.sales} Sold
+                                                            </Typography>
+                                                            <IconButton onClick={() => handleClickEdit(row._id)} sx={{ '&:hover': { color: theme.palette.info.main } }}>
+                                                                <EditIcon />
+                                                            </IconButton>
+                                                        </Container>
+                                                    </AccordionDetails>
+                                                </Accordion>
                                             </Paper>
                                         ),
                                 )}
                             </Container>
                         </>
-                    )}
+                    )
+                    }
                 </Paper >
             </Container >
         </>
