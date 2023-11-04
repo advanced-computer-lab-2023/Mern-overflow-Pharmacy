@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom';
 const AdminDashboard = (props) => {
     return (
         <ButtonAppBar user="Admin" actionButton="Log out" title={props.title}>
-            <Box sx={{ display: 'inline-flex', alignItems: 'center', mt: 2, ml: 3 }}>
-                <Avatar sx={{ m: 0, bgcolor: 'white', color: 'inherit', width: 40, height: 40, }}>
+            <Box sx={{ display: 'inline-flex', alignItems: 'center', mt: 2, ml: 2 }}>
+                <Avatar sx={{ m: 0, bgcolor: 'white', color: 'black', width: 30, height: 30, padding: 0 }}>
                     <PersonIcon sx={{ width: 30, height: 30 }} />
                 </Avatar>
-                <Typography sx={{ fontWeight: "normal", verticalAlign: "text-bottom" }}> System Users</Typography>
+                <Typography variant="body1" sx={{ fontWeight: "normal", verticalAlign: "text-bottom", ml: 1 }}> System Users</Typography>
             </Box>
             <List>
                 {[ {name: 'Admins', route: '/admin/admins'} , {name: 'Pharmacists', route: '/admin/pharmacists'}, {name: 'Patients', route: '/admin/patients'}].map((text, index) => (
