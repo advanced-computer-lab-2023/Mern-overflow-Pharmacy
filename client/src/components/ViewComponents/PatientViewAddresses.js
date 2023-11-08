@@ -31,7 +31,7 @@ export default function PatientViewAddresses(props) {
     };
 
     const handleSubmit = () => {
-        if (newAddress.length >= 20) {
+        if (newAddress.length >= 20 && !(data.addresses.some(existingAddress => existingAddress === newAddress))) {
             setLoadingChange(true);
             const patientId = "6527d5aa11c64e3b65860e67";
             axios.put(`http://localhost:8000/patients/address/${patientId}`, { newAddress: newAddress })
@@ -41,6 +41,7 @@ export default function PatientViewAddresses(props) {
                     setNewAddress('');
                     setSuccessMessage("Address added successfully.")
                     setSuccessOpen(true);
+                    setTriedSubmit(false);
                 })
                 .catch((error) => {
                     setLoadingChange(false);
@@ -89,8 +90,8 @@ export default function PatientViewAddresses(props) {
                                 onChange={(e) => setNewAddress(e.target.value)}
                                 sx={{ width: "70%" }}
                                 inputProps={{ minLength: 20 }}
-                                error={newAddress.length < 20  && triedSubmit}
-                                helperText={newAddress.length < 20 && triedSubmit ? 'Minimum 20 characters required' : ''}
+                                error={(newAddress.length < 20  && triedSubmit) || (data.addresses.some(existingAddress => existingAddress === newAddress))}
+                                helperText={newAddress.length < 20 && triedSubmit ? 'Minimum 20 characters required' : (data.addresses.some(existingAddress => existingAddress === newAddress)) ? 'This address already exists' : ''}
                             />
                             <Button type="submit" variant="outlined" sx={{height: "55px"}} startIcon={<AddIcon />} onClick={(e) => {
                                 e.preventDefault();
