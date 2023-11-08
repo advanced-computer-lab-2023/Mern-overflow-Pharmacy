@@ -28,6 +28,7 @@ export default function PatientViewAddresses(props) {
     const handleAddressChange = (event) => {
         setSelectedAddress(event.target.value);
         props.setAddress(event.target.value);
+        setTriedSubmit(false);
     };
 
     const handleSubmit = () => {

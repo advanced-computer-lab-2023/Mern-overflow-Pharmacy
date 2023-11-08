@@ -142,7 +142,7 @@ export default function AdminViewMedicines() {
                                                             EGP {row.price}
                                                         </Typography>
                                                         {row.overTheCounter ? (<></>
-                                                        ) : (<Typography>Prescription Needed </Typography>)}
+                                                        ) : <></>}
                                                     </Container>
                                                 </Container>
                                             </AccordionSummary>
