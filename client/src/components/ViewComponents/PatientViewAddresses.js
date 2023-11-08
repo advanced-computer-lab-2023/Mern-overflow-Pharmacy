@@ -1,7 +1,5 @@
 import { List, ListItem, ListItemText, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import axios from "axios";
 
@@ -9,12 +7,11 @@ export default function PatientViewAddresses(props) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingChange, setLoadingChange] = useState(false);
-    const [total, setTotal] = useState(0);
-    const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [selectedAddress, setSelectedAddress] = useState('');
     const [newAddress, setNewAddress] = useState('');
+    const [triedSubmit, setTriedSubmit] = useState(false);
 
     const fetchAddresses = () => {
         const patientId = "6527d5aa11c64e3b65860e67";
@@ -34,20 +31,22 @@ export default function PatientViewAddresses(props) {
     };
 
     const handleSubmit = () => {
-        setLoadingChange(true);
-        const patientId = "6527d5aa11c64e3b65860e67";
-        axios.put(`http://localhost:8000/patients/address/${patientId}`, { newAddress: newAddress })
-            .then((response) => {
-                fetchAddresses();
-                setLoadingChange(false);
-                setNewAddress('');
-                setSuccessMessage("Address added successfully.")
-                setSuccessOpen(true);
-            })
-            .catch((error) => {
-                setLoadingChange(false);
-                console.error('Error adding address:', error);
-            });
+        if (newAddress.length >= 20) {
+            setLoadingChange(true);
+            const patientId = "6527d5aa11c64e3b65860e67";
+            axios.put(`http://localhost:8000/patients/address/${patientId}`, { newAddress: newAddress })
+                .then((response) => {
+                    fetchAddresses();
+                    setLoadingChange(false);
+                    setNewAddress('');
+                    setSuccessMessage("Address added successfully.")
+                    setSuccessOpen(true);
+                })
+                .catch((error) => {
+                    setLoadingChange(false);
+                    console.error('Error adding address:', error);
+                });
+        }
     };
 
     const handleSuccessClose = (event, reason) => {
@@ -83,19 +82,24 @@ export default function PatientViewAddresses(props) {
                                 ))}
                             </List>
                         </RadioGroup>
-                        <form onSubmit={handleSubmit}>
-                            <Container sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                                <TextField
-                                    label="New Address"
-                                    value={newAddress}
-                                    onChange={(e) => setNewAddress(e.target.value)}
-                                    sx={{ width: "70%" }}
-                                />
-                                <Button type="submit" variant="outlined" startIcon={<AddIcon />}>
-                                    Add Address
-                                </Button>
-                            </Container>
-                        </form>
+                        <Container sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                            <TextField
+                                label="New Address"
+                                value={newAddress}
+                                onChange={(e) => setNewAddress(e.target.value)}
+                                sx={{ width: "70%" }}
+                                inputProps={{ minLength: 20 }}
+                                error={newAddress.length < 20  && triedSubmit}
+                                helperText={newAddress.length < 20 && triedSubmit ? 'Minimum 20 characters required' : ''}
+                            />
+                            <Button type="submit" variant="outlined" sx={{height: "55px"}} startIcon={<AddIcon />} onClick={(e) => {
+                                e.preventDefault();
+                                setTriedSubmit(true);
+                                handleSubmit();
+                            }}>
+                                Add Address
+                            </Button>
+                        </Container>
                     </Container>
                 )}
             </Paper>
