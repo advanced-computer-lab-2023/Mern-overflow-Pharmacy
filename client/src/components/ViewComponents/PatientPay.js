@@ -1,32 +1,74 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FaceIcon from '@mui/icons-material/Face';
+import StarIcon from '@mui/icons-material/Star';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import PaymentsIcon from '@mui/icons-material/Payments';
 
 export default function PatientPay(props) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [total, setTotal] = useState(0);
     const [Query, setQuery] = useState("");
-    const [successOpen, setSuccessOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
+    const [value, setValue] = useState('');
+    const [cash, setCash] = useState(false);
+    const [credit, setCredit] = useState(false);
+    const [wallet, setWallet] = useState(false);
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
+
+    const handleCash = (event) => {
+        props.setPaymentMethod("Cash on Delivery");
+        setCash(true);
+        setCredit(false);
+        setWallet(false);
+    };
+
+    const handleCredit = (event) => {
+        props.setPaymentMethod("Credit Card");
+        setCash(false);
+        setCredit(true);
+        setWallet(false);
+
+    };
+
+    const handleWallet = (event) => {
+        props.setPaymentMethod("Wallet");
+        setCash(false);
+        setCredit(false);
+        setWallet(true);
+    };
 
     return (
         <Container maxWidth="md">
-            {/* <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
-                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
-                    {successMessage}
-                </Alert>
-            </Snackbar> */}
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
                 {loading ? (
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
                     <Container>
                         <Typography sx={{ fontWeight: "bold", my: "20px" }}>Choose Payment Method</Typography>
-                        <TextField sx={{width: "50%"}} label="Payment Method" placeholder="Cash / Wallet / Card"
-                        value = {props.paymentMethod} onChange={(e) => props.setPaymentMethod(e.target.value)}></TextField>
+                        <Container sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", mt: '50px' }}>
+                            <Button elevation={3} variant={cash ? "contained" : "outlined"} sx={{ padding: 2, textAlign: 'center', width: "30%" }} onClick={() => handleCash()} style={{ textTransform: 'none' }}>
+                                <PaymentsIcon fontSize="large" />
+                                <Typography variant="body1" sx={{ml: "10px"}}>Cash on Delivery</Typography>
+                            </Button>
+
+                            <Button elevation={3} variant={credit ? "contained" : "outlined"} sx={{ padding: 2, textAlign: 'center', width: "30%" }} onClick={() => handleCredit()} style={{ textTransform: 'none' }}>
+                                <CreditCardIcon fontSize="large" />
+                                <Typography variant="body1" sx={{ml: "10px"}}>Credit Card</Typography>
+                            </Button>
+
+                            <Button elevation={3} variant={wallet ? "contained" : "outlined"} sx={{ padding: 2, textAlign: 'center', width: "30%" }} onClick={() => handleWallet()} style={{ textTransform: 'none' }}>
+                                <AccountBalanceWalletIcon fontSize="large" />
+                                <Typography variant="body1" sx={{ml: "10px"}}>Wallet</Typography>
+                            </Button>
+                        </Container>
                     </Container>
                 )}
             </Paper>
