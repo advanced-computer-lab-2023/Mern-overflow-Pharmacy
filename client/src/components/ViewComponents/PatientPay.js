@@ -54,17 +54,17 @@ export default function PatientPay(props) {
                     <Container>
                         <Typography sx={{ fontWeight: "bold", my: "20px" }}>Choose Payment Method</Typography>
                         <Container sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", mt: '50px' }}>
-                            <Button elevation={3} variant={cash ? "contained" : "outlined"} sx={{ padding: 2, textAlign: 'center', width: "30%" }} onClick={() => handleCash()} style={{ textTransform: 'none' }}>
+                            <Button elevation={3} variant={cash ? "contained" : "outlined"} sx={{ color: cash? "white" : "#036704", backgroundColor: cash? "#036704" : "transparent",borderColor: '#036704', padding: 2, textAlign: 'center', width: "30%", '&:hover': {backgroundColor: cash? "#036704" : "transparent"}}} onClick={() => handleCash()} style={{ textTransform: 'none' }}>
                                 <PaymentsIcon fontSize="large" />
                                 <Typography variant="body1" sx={{ml: "10px"}}>Cash on Delivery</Typography>
                             </Button>
 
-                            <Button elevation={3} variant={credit ? "contained" : "outlined"} sx={{ padding: 2, textAlign: 'center', width: "30%" }} onClick={() => handleCredit()} style={{ textTransform: 'none' }}>
+                            <Button elevation={3} variant={credit ? "contained" : "outlined"} sx={{ color: credit? "white" : "#023047", backgroundColor: credit? "#023047" : "transparent",borderColor: '#023047', padding: 2, textAlign: 'center', width: "30%", '&:hover': {backgroundColor: credit? "#023047" : "transparent"}}} onClick={() => handleCredit()} style={{ textTransform: 'none' }}>
                                 <CreditCardIcon fontSize="large" />
                                 <Typography variant="body1" sx={{ml: "10px"}}>Credit Card</Typography>
                             </Button>
 
-                            <Button elevation={3} variant={wallet ? "contained" : "outlined"} sx={{ padding: 2, textAlign: 'center', width: "30%" }} onClick={() => handleWallet()} style={{ textTransform: 'none' }}>
+                            <Button elevation={3} variant={wallet ? "contained" : "outlined"} sx={{ color: wallet? "white" : "#7C4700", backgroundColor: wallet? "#7C4700" : "transparent",borderColor: '#7C4700', padding: 2, textAlign: 'center', width: "30%", '&:hover': {backgroundColor: wallet? "#7C4700" : "transparent"}}} onClick={() => handleWallet()} style={{ textTransform: 'none' }}>
                                 <AccountBalanceWalletIcon fontSize="large" />
                                 <Typography variant="body1" sx={{ml: "10px"}}>Wallet</Typography>
                             </Button>
