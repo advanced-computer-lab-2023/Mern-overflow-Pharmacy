@@ -8,9 +8,9 @@ router.use(bodyParser.json());
 
 router.get("/", patientController.listPatients);
 router.get("/:id", patientController.readPatient);
-
 router.post("/", patientController.createPatient);
-
 router.delete("/:id", patientController.deletePatient);
+router.get("/address/:patientId", patientController.viewAddresses);
+router.put("/address/:patientId", patientController.addAddress);
 
 export default router;
