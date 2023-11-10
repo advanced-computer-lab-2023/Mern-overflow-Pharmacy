@@ -26,12 +26,14 @@
     "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.1",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
     "stripe": "^14.4.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.14",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/multer": "^1.4.10",
     "cors": "^2.8.5",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"

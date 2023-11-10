@@ -1,4 +1,6 @@
 import express from "express";
+import { Request, Response } from 'express';
+
 import mongoose, { ConnectOptions } from "mongoose";
 import bodyParser from "body-parser";
 // import adminstratorController from "./controllers/AdminstratorController.js";
@@ -18,6 +20,9 @@ import orderRouter from './routes/Order.js'
 import cookieParser from "cookie-parser";
 import paymentRouter from "./routes/Payment.js";
 import walletPaymentRouter from "./routes/WalletPayment.js";
+import multer from 'multer';
+import path from 'path';
+import Medicine from './models/medicine.js';
 
 mongoose.set("strictQuery", false);
 
@@ -37,6 +42,7 @@ const port: number = config.server.port || 8000;
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use("/images", express.static('./images'))
 
 const mongoUrl: string = process.env.MONGO_URI!;
 
@@ -56,6 +62,47 @@ app.use("/walletPayment", walletPaymentRouter);
 app.get("/", (req, res) => {
   res.send("hello");
 });
+
+//code for image upload 
+
+const storage= multer.diskStorage({
+  destination: (req: any,file: any,cb: (arg0: null, arg1: string) => void) =>{
+    cb(null,'./images')
+  },
+  filename:(req: any,file: { fieldname: string; originalname: any; },cb: (arg0: null, arg1: string) => void) =>{
+    cb(null, file.originalname);
+  }
+
+})
+
+const upload = multer({
+  storage:storage
+})
+
+
+
+// app.post('/upload', upload.single('file'), (req, res) => {
+//   UserModel.create({image:req.file.filename})
+//   .then(result=> res.json(result))
+//   .catch (err =>console.log(err))
+// })
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  try {
+    if (!req.file) {
+      throw new Error('No file uploaded.');
+    }
+
+    Medicine.create({ image: req.file.filename})
+      .then(result => res.json(result))
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ error: 'Error storing image in the database.' });
+      });
+  } catch (error) {
+    console.error(error);  }
+});
+
 
 mongoose
   .connect(MongoURI)

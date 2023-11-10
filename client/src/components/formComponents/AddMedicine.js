@@ -17,9 +17,19 @@ const AddMedicine = (props) => {
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [loadingAdd, setLoadingAdd] = useState(false);
+    const [file, setFile] = useState();
 
+ 
     const onSubmit = data => {
         setLoadingAdd(true);
+        if (file) {
+            const imageName = file.name;
+            console.log(imageName)
+
+            // Include imageName in the data sent to the server
+            data.image = imageName;
+        }
+
         const dataToServer = { ...data };
         dataToServer["sales"] = 0;
         dataToServer["details"] = { description: data["description"], activeIngredients: data["activeIngredients"].split(',').map(item => item.trim()) }
@@ -69,6 +79,14 @@ const AddMedicine = (props) => {
         }
         setSuccessOpen(false);
     };
+
+    const handleImageUpload = (e) =>{
+        const formData= new FormData()
+        formData.append('file', file)
+        axios.post('http://localhost:8000/upload', formData)
+        .then(res => console.log(res))
+        .catch(err=> console.log(err))
+    }
 
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
@@ -202,12 +220,30 @@ const AddMedicine = (props) => {
                                     inputProps={{ min: 1 }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={3}>
+
+                            {/* <Grid item xs={12} sm={3}>
                                 <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
                                     Upload Image
                                     <VisuallyHiddenInput type="file" />
                                 </Button>
+                            </Grid> */}
+                            <input type="hidden" {...register("imageName")} />
+                            <Grid item xs={12} sm={3}>
+                                <input type="file" onChange={e => setFile(e.target.files[0])} />
+                                <button type="button" onClick={handleImageUpload}>Upload</button>
                             </Grid>
+                            
+                            {/* <Grid item xs={12} sm={3}>
+                            <input
+                                type="file"
+                                onChange={e => setFile(e.target.files[0])}
+                                style={{ display: 'none' }}
+                                id="fileInput" // Provide an ID for associating with the label
+                            />
+                            <label htmlFor="fileInput">
+                                <button type = "button" onClick={handleImageUpload}>Upload</button>
+                            </label>
+                            </Grid> */}
                             <Grid item xs={12} sm={3}>
                                 <Button type="submit" variant="contained" startIcon={<AddIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
                                     Add Medicine
