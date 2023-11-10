@@ -24,7 +24,8 @@ export default function PatientViewCart(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
-        axios.get(`http://localhost:8000/orders`).then((res) => {
+        const patientId = "654e031fb6190cbe9837f2a3";
+        axios.get(`http://localhost:8000/orders/${patientId}`).then((res) => {
             const reversedData = res.data.reverse();
             setData(reversedData);
             setTimeout(() => setLoading(false), 500);

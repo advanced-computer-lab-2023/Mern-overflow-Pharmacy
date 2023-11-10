@@ -14,6 +14,8 @@ const viewOrders = async (req: Request, res: Response) => {
 const addOrder = async (req: Request, res: Response) => {
     const { medicines, total, address, paymentMethod } = req.body;
     const patientId = req.params.patientId;
+    console.log("HII");
+    console.log(medicines, total, address, paymentMethod, patientId);
     try {
         const order = new orders({
             patient: patientId,

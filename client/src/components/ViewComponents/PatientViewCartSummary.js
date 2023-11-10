@@ -19,9 +19,10 @@ export default function PatientViewCartSummary(props) {
     const [errorMessage, setErrorMessage] = useState('');
 
     const fetchTableData = () => {
-        axios.get(`http://localhost:8000/cart`).then((res) => {
+        const patientId = "654e031fb6190cbe9837f2a3";
+        axios.get(`http://localhost:8000/cart/${patientId}`).then((res) => {
             setData(res.data)
-            setMeds(res.data[0].medicines);
+            setMeds(res.data.medicines);
             setTimeout(() => setLoading(false), 500);
         });
     };
@@ -47,9 +48,11 @@ export default function PatientViewCartSummary(props) {
         const medicines = meds;
         const address = props.address;
         const paymentMethod = props.paymentMethod;
-        axios.post('http://localhost:8000/orders/add', { medicines, total, address, paymentMethod })
+        const patientId = "654e031fb6190cbe9837f2a3";
+        axios.post(`http://localhost:8000/orders/${patientId}/add`, { medicines, total, address, paymentMethod })
             .then(response => {
-                axios.put('http://localhost:8000/cart/empty').then((response) => {
+                const patientId = "654e031fb6190cbe9837f2a3";
+                axios.put(`http://localhost:8000/cart/${patientId}/empty`).then((response) => {
                     setLoadingChange(false);
                     setSuccessMessage("Order received");
                     setSuccessOpen(true);
