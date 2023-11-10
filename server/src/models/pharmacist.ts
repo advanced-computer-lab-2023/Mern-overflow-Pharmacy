@@ -21,13 +21,7 @@ interface document {
     
 }
 
-interface document {
-    filename: string;
-    path: string;
-    
-}
-
-const PharmacistShema = new Schema<IPharmacist>({
+const pharmacistShema = new Schema<IPharmacist>({
     // username: { type: String, required: true , unique: true },
     name: { type: String, required: true , trim: true },
     email: { type: String, required: true, match : [/\S+@\S+\.\S+/, "invalid email"], },
@@ -46,7 +40,7 @@ const PharmacistShema = new Schema<IPharmacist>({
 })
 
 
-PharmacistShema.pre('save', function (next) {
+pharmacistShema.pre('save', function (next) {
     if (this.isModified('name')) {
         this.name = this.name.toLowerCase();
     }
@@ -58,10 +52,10 @@ PharmacistShema.pre('save', function (next) {
 
 
 // const pharmacist = model<IPharmacist>('pharmacist', pharmacistShema);
-const Pharmacist = User.discriminator<IPharmacist>('Pharmacist', PharmacistShema);
+const pharmacist = User.discriminator<IPharmacist>('pharmacist', pharmacistShema);
 
 
-export default Pharmacist
+export default pharmacist
 
 
 
