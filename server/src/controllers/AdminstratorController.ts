@@ -63,7 +63,7 @@ const acceptPharmacistRequest = async (req: Request, res: Response) => {
 
   // Use findOneAndUpdate to find and update the document
   const filter = { _id: reqid };
-  pharmacist
+  Pharmacist
     .findOneAndUpdate(filter, update, options)
     .then((result) => {
       res.status(200).send("accepted");
@@ -88,7 +88,7 @@ const rejectPharmacistRequest = async (req: Request, res: Response) => {
 
   // Use findOneAndUpdate to find and update the document
   const filter = { _id: reqid };
-  pharmacist
+  Pharmacist
     .findOneAndUpdate(filter, update, options)
     .then((result) => {
       res.status(200).send("rejected");
