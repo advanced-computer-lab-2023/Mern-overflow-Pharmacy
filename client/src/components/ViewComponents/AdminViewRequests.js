@@ -144,6 +144,7 @@ export default function AdminViewRequests(props) {
                                 <TableCell key="hourlyRate" sx={{ fontWeight: "bold"}}>Hourly Rate</TableCell>
                                 <TableCell key="affiliation" sx={{ fontWeight: "bold"}}>Affiliation</TableCell>
                                 <TableCell key="education" sx={{ fontWeight: "bold"}}>Education</TableCell>
+                                <TableCell key="files" sx={{ fontWeight: "bold"}}>Documents</TableCell>
                                 <TableCell sx={{ textAlign: 'center', fontWeight: "bold" }}>Status</TableCell>
                             </TableRow>
                         </TableHead>
@@ -159,6 +160,13 @@ export default function AdminViewRequests(props) {
                                             <TableCell>EGP {row.hourlyRate}</TableCell>
                                             <TableCell>{row.affiliation}</TableCell>
                                             <TableCell>{row.education}</TableCell>
+                                            <TableCell>{
+        <ul>
+          {row.files.map((file, index) => (
+          <li key={index}>{file.filename}
+          <a href = {`http://localhost:8000/uploads/` + file.filename} target = "_blank">            View</a></li>
+          ))}
+      </ul>}</TableCell>
                                             <TableCell style={{ display: 'flex', alignItems: 'center' }}>
                                                 {row.status === 'pending' ? <><PendingIcon style={{ color: '#1976d2', marginRight: '8px' }} /> Pending </> : null}
                                                 {row.status === 'rejected' ? <><CancelIcon style={{ color: '#d33c5c', marginRight: '8px' }} /> Rejected </> : null}

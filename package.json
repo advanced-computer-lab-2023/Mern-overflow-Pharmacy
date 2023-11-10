@@ -4,6 +4,8 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "fuse.js": "^6.6.2"
+    "cors": "^2.8.5",
+    "fuse.js": "^6.6.2",
+    "js-sha256": "^0.10.1"
   }
 }
