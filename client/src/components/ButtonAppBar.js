@@ -6,6 +6,9 @@ import { useState, useEffect } from 'react';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useUser } from "../userContest";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ButtonAppBar(props) {
 	const list = (anchor) => (
@@ -31,6 +34,10 @@ export default function ButtonAppBar(props) {
 		bottom: false,
 		right: false,
 	});
+
+	const navigate = useNavigate();
+
+	const { userId, setUserId } = useUser();
 
 	const toggleDrawer = (anchor, open) => (event) => {
 		if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -63,6 +70,19 @@ export default function ButtonAppBar(props) {
 			window.removeEventListener('scroll', handleScroll);
 		};
 	}, []);
+
+	const handleLogout = () => {
+		axios
+			.post("http://localhost:8000/auth/logout")
+			.then((response) => {
+				console.log(response);
+				setUserId("");
+				navigate("/signin");
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
+	};
 
 	return (
 		<>

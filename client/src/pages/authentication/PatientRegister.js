@@ -11,10 +11,14 @@ import axios from 'axios';
 import sha256 from 'js-sha256';
 import logo from '../../assets/gifs/logo.gif';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
+import { useUser } from "../../userContest";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
 export default function PatientRegister() {
+  const navigate = useNavigate();
+  const { userId, setUserId, userRole, setUserRole } = useUser();
   const { register, handleSubmit, setError, formState: { errors }, control } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -23,13 +27,32 @@ export default function PatientRegister() {
 
   const onSubmit = data => {
     const dataToServer = { ...data };
-    if (dataToServer.mobileNumber.toString().length < 8 || dataToServer.mobileNumber.toString().length > 16) {
-      setErrorMessage("Your mobile number must be between 8 and 16 digits.");
-      setErrorOpen(true);
-      setSuccessOpen(false);
-      setError('mobileNumber', {
-        message: 'Must be between 8 and 16 digits'
+
+    dataToServer["passwordHash"] = sha256(data["password"]);
+    dataToServer["emergencyContact"] = {
+      name: data["EmergencyName"],
+      mobileNumber: data["EmergencyPhone"],
+    };
+    delete dataToServer.EmergencyName;
+    delete dataToServer.EmergencyPhone;
+    delete dataToServer.password;
+
+    console.log("Data to server" + JSON.stringify(dataToServer));
+    axios
+      .post("http://localhost:8000/patients", dataToServer)
+      .then((response) => {
+        console.log("POST request successful", response);
+        const userId = response.data.userId;
+
+        setUserId(userId);
+        setUserRole("Patient");
+        navigate("/patient/family");
+      })
+      .catch((error) => {
+        console.error("Error making POST request", error);
+        alert("Error making POST request: " + error.message);
       });
+<<<<<<< HEAD
     } else if (dataToServer.EmergencyPhone.toString().length < 8 || dataToServer.EmergencyPhone.toString().length > 16) {
       setErrorMessage("Your emergency contact's mobile number must be between 8 and 16 digits.");
       setErrorOpen(true);
@@ -67,6 +90,9 @@ export default function PatientRegister() {
         });
     }
   }
+=======
+  };
+>>>>>>> f79c4add590d3a8116a38beac114c5e6d72e5889
 
   const handleChange = (event) => {
     if (errors[event.target.name]) {

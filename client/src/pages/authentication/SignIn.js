@@ -5,26 +5,50 @@ import logo from '../../assets/gifs/logo.gif';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "../../userContest";
+import axios from "axios";
+import sha256 from "js-sha256";
 
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const { userId, setUserId, userRole, setUserRole } = useUser();
     const navigate = useNavigate();
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
+    
+    axios.defaults.withCredentials = true;
 
     const onSubmit = data => {
-        if (data.Username.includes("patient")) {
-            navigate("/patient/medicines");
+        data["passwordHash"] = sha256(data["Password"]);
+    data["username"] = data["Username"];
+    delete data.Username;
+    delete data.Password;
+    console.log("Data to server" + JSON.stringify(data));
+    axios
+      .post("http://localhost:8000/auth/login", data)
+      .then((response) => {
+        console.log(response);
+        const type = response.data.type;
+        const userId = response.data.userId;
+        setUserId(userId);
+        console.log(type);
+        if (type === "Patient") {
+          setUserRole("Patient");
+          navigate("/patient/medicines");
+        } else if (type === "pharmacist") {
+          setUserRole("Pharmacist");
+          navigate("/pharmacist/medicines");
+        } else if (type === "Admin") {
+          setUserRole("Admin");
+          navigate("/admin/patients");
         }
-        else if (data.Username.includes("pharmacist")) {
-
-            navigate("/pharmacist/medicines");
-        }
-        else if (data.Username.includes("admin")) {
-            navigate("/admin/admins");
-        };
-    }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    };
+    console.log(errors);
 
     const handleChange = (event) => {
         if (errors[event.target.name]) {
