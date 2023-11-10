@@ -26,15 +26,8 @@ const MongoURI: string =
   "mongodb+srv://dbuser:987654321@acl.n4q8ykx.mongodb.net/?retryWrites=true&w=majority";
 const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:3000/patient/checkout",
-  })
-)
-
 const corsOptions = {
-  //To allow requests from client
-  origin: ["http://localhost:3000", "http://127.0.0.1"],
+  origin: ["http://localhost:3000", "http://127.0.0.1", "http://localhost:3000/patient/checkout"],
   credentials: true,
   exposedHeaders: ["set-cookie"],
 };
@@ -43,7 +36,6 @@ const port: number = config.server.port || 8000;
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
-
 const mongoUrl: string = process.env.MONGO_URI!;
 
 app.use(bodyParser.json());
