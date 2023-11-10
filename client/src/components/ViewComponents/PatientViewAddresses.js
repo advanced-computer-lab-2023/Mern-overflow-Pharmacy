@@ -2,8 +2,11 @@ import { List, ListItem, ListItemText, IconButton, Paper, Table, TableBody, Tabl
 import React, { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import axios from "axios";
+import { useUser } from "../../userContest";
+
 
 export default function PatientViewAddresses(props) {
+    const { userId } = useUser();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingChange, setLoadingChange] = useState(false);
@@ -14,8 +17,7 @@ export default function PatientViewAddresses(props) {
     const [triedSubmit, setTriedSubmit] = useState(false);
 
     const fetchAddresses = () => {
-        const patientId = "6527d5aa11c64e3b65860e67";
-        axios.get(`http://localhost:8000/patients/address/${patientId}`).then((res) => {
+        axios.get(`http://localhost:8000/patients/address/${userId}`).then((res) => {
             setData(res.data);
             setTimeout(() => setLoading(false), 500);
         });
@@ -34,8 +36,7 @@ export default function PatientViewAddresses(props) {
     const handleSubmit = () => {
         if (newAddress.length >= 20 && !(data.addresses.some(existingAddress => existingAddress === newAddress))) {
             setLoadingChange(true);
-            const patientId = "6527d5aa11c64e3b65860e67";
-            axios.put(`http://localhost:8000/patients/address/${patientId}`, { newAddress: newAddress })
+            axios.put(`http://localhost:8000/patients/address/${userId}`, { newAddress: newAddress })
                 .then((response) => {
                     fetchAddresses();
                     setLoadingChange(false);

@@ -13,8 +13,10 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import { capitalize } from '../../utils'
+import { useUser } from "../../userContest";
 
 export default function PatientViewCart(props) {
+    const { userId } = useUser();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingChange, setLoadingChange] = useState(false);
@@ -24,8 +26,7 @@ export default function PatientViewCart(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
-        const patientId = "654e031fb6190cbe9837f2a3";
-        axios.get(`http://localhost:8000/orders/${patientId}`).then((res) => {
+        axios.get(`http://localhost:8000/orders/${userId}`).then((res) => {
             const reversedData = res.data.reverse();
             setData(reversedData);
             setTimeout(() => setLoading(false), 500);

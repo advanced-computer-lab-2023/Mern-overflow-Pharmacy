@@ -5,8 +5,10 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { capitalize } from '../../utils'
+import { useUser } from "../../userContest";
 
 export default function PatientViewCartSummary(props) {
+    const { userId } = useUser();
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [meds, setMeds] = useState([]);
@@ -19,8 +21,7 @@ export default function PatientViewCartSummary(props) {
     const [errorMessage, setErrorMessage] = useState('');
 
     const fetchTableData = () => {
-        const patientId = "654e031fb6190cbe9837f2a3";
-        axios.get(`http://localhost:8000/cart/${patientId}`).then((res) => {
+        axios.get(`http://localhost:8000/cart/${userId}`).then((res) => {
             setData(res.data)
             setMeds(res.data.medicines);
             setTimeout(() => setLoading(false), 500);
@@ -48,11 +49,9 @@ export default function PatientViewCartSummary(props) {
         const medicines = meds;
         const address = props.address;
         const paymentMethod = props.paymentMethod;
-        const patientId = "654e031fb6190cbe9837f2a3";
-        axios.post(`http://localhost:8000/orders/${patientId}/add`, { medicines, total, address, paymentMethod })
+        axios.post(`http://localhost:8000/orders/${userId}/add`, { medicines, total, address, paymentMethod })
             .then(response => {
-                const patientId = "654e031fb6190cbe9837f2a3";
-                axios.put(`http://localhost:8000/cart/${patientId}/empty`).then((response) => {
+                axios.put(`http://localhost:8000/cart/${userId}/empty`).then((response) => {
                     setLoadingChange(false);
                     setSuccessMessage("Order received");
                     setSuccessOpen(true);

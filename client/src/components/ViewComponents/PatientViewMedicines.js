@@ -56,8 +56,7 @@ export default function PatientViewMedicines(props) {
             medQuantity: medQuantity
         };
         setLoadingChange(true);
-        const patientId = "654e031fb6190cbe9837f2a3";
-        axios.post(`http://localhost:8000/cart/${patientId}/add`, requestData)
+        axios.post(`http://localhost:8000/cart/${userId}/add`, requestData)
             .then((response) => {
                 setLoadingChange(false);
                 setSuccessOpen(true);
