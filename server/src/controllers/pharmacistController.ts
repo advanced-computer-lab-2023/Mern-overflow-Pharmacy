@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import pharmacist from "../models/pharmacist.js";
+import Pharmacist from "../models/pharmacist.js";
 
 
 const createPharmacist = async (req: Request, res: Response) => {
@@ -55,7 +55,7 @@ const createPharmacist = async (req: Request, res: Response) => {
 
 const listPharmacistRequests = async (req: Request, res: Response) => {
   //view all of the information uploaded by a pharmacist (with pending requests) to apply to join the platform
-  pharmacist
+  Pharmacist
     .find({"status": {$in: ["pending", "rejected"]} })
     .then((pharm) => {
       res.status(200).send(pharm);
@@ -70,10 +70,10 @@ const acceptPharmacist = async (req: Request, res: Response) => {
   //accepting a pharmacist's request
   const id = req.params.id;
   const query = { _id: id };
-  const pharm = await pharmacist.findById({ _id: id }).then((pharm) => {
+  const pharm = await Pharmacist.findById({ _id: id }).then((pharm) => {
     const update: { [key: string]: any } = {};
     if (pharm!.status === "pending") update["status"] = "accepted";
-    pharmacist
+    Pharmacist
       .findOneAndUpdate(query, update, { new: true })
       .then((updatedPharm) => {
         if (updatedPharm) {
@@ -88,7 +88,7 @@ const acceptPharmacist = async (req: Request, res: Response) => {
 
 const listPharmacists = async (req: Request, res: Response) => {
   //view all of the information uploaded by a pharmacist (with approved requests) to select one of them to view his info
-  const pharm = pharmacist
+  const pharm = Pharmacist
     .find({})
     .then((pharm) => {
       var newPharms = [];
@@ -107,7 +107,7 @@ const listPharmacists = async (req: Request, res: Response) => {
 const readPharmacist = async (req: Request, res: Response) => {
   //view a pharmacist's information
   const id = req.params.id;
-  const pharm = pharmacist
+  const pharm = Pharmacist
     .findById(id)
     .then((pharm) => res.status(200).json(pharm))
     .catch((err) => {
@@ -117,7 +117,7 @@ const readPharmacist = async (req: Request, res: Response) => {
 
 const listAllPharmacists = async (req: Request, res: Response) => {
   //view a pharmacist's information
-  pharmacist
+  Pharmacist
     .find({})
     .then((pharm) => res.status(200).json(pharm))
     .catch((err) => {
@@ -129,7 +129,7 @@ const deletePharmacist = async (req: Request, res: Response) => {
   //remove a pharmacist from the system
   console.log('entered delete pharmacist');
   const id = req.params.id;
-  const pharm = pharmacist
+  const pharm = Pharmacist
     .findByIdAndDelete({ _id: id })
     .then((pharm) => {
       res.status(200).json(pharm);
