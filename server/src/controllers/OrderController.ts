@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import orders from "../models/Order.js";
 
 const viewOrders = async (req: Request, res: Response) => {
-    const patientId = "6527d5aa11c64e3b65860e67";
+    const patientId = req.params.patientId;
     try {
         const patientOrders = await orders.find({ patient: patientId });
         res.status(200).json(patientOrders);
@@ -13,8 +13,7 @@ const viewOrders = async (req: Request, res: Response) => {
 
 const addOrder = async (req: Request, res: Response) => {
     const { medicines, total, address, paymentMethod } = req.body;
-    const patientId = "6527d5aa11c64e3b65860e67";
-
+    const patientId = req.params.patientId;
     try {
         const order = new orders({
             patient: patientId,

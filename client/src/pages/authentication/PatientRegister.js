@@ -28,31 +28,13 @@ export default function PatientRegister() {
   const onSubmit = data => {
     const dataToServer = { ...data };
 
-    dataToServer["passwordHash"] = sha256(data["password"]);
-    dataToServer["emergencyContact"] = {
-      name: data["EmergencyName"],
-      mobileNumber: data["EmergencyPhone"],
-    };
-    delete dataToServer.EmergencyName;
-    delete dataToServer.EmergencyPhone;
-    delete dataToServer.password;
-
-    console.log("Data to server" + JSON.stringify(dataToServer));
-    axios
-      .post("http://localhost:8000/patients", dataToServer)
-      .then((response) => {
-        console.log("POST request successful", response);
-        const userId = response.data.userId;
-
-        setUserId(userId);
-        setUserRole("Patient");
-        navigate("/patient/family");
-      })
-      .catch((error) => {
-        console.error("Error making POST request", error);
-        alert("Error making POST request: " + error.message);
+    if (dataToServer.mobileNumber.toString().length < 8 || dataToServer.mobileNumber.toString().length > 16) {
+      setErrorMessage("Your mobile number must be between 8 and 16 digits.");
+      setErrorOpen(true);
+      setSuccessOpen(false);
+      setError('mobileNumber', {
+        message: 'Must be between 8 and 16 digits'
       });
-<<<<<<< HEAD
     } else if (dataToServer.EmergencyPhone.toString().length < 8 || dataToServer.EmergencyPhone.toString().length > 16) {
       setErrorMessage("Your emergency contact's mobile number must be between 8 and 16 digits.");
       setErrorOpen(true);
@@ -61,38 +43,32 @@ export default function PatientRegister() {
         message: 'Must be between 8 and 16 digits'
       });
     } else {
+
       dataToServer["passwordHash"] = sha256(data["password"]);
       dataToServer["emergencyContact"] = { name: data["EmergencyName"], mobileNumber: data["EmergencyPhone"], relation: data["relation"] };
-      delete dataToServer.EmergencyName
-      delete dataToServer.EmergencyPhone
+      delete dataToServer.EmergencyName;
+      delete dataToServer.EmergencyPhone;
       delete dataToServer.relation
+      delete dataToServer.password;
       delete dataToServer.Password
-      delete dataToServer.password
-      axios.post('http://localhost:8000/patients', dataToServer)
+
+      console.log("Data to server" + JSON.stringify(dataToServer));
+      axios
+        .post("http://localhost:8000/patients", dataToServer)
         .then((response) => {
-          setSuccessMessage('You have succesfully registered.');
-          setSuccessOpen(true);
-          setErrorOpen(false);
+          console.log("POST request successful", response);
+          const userId = response.data.userId;
+          setUserId(userId);
+          setUserRole("Patient");
+          navigate("/patient/medicines");
         })
         .catch((error) => {
-          if (error.response.data.indexOf("registered") !== -1) {
-            setError('email', {
-              data: 'Email is registered'
-            });
-          } else if (error.response.data.indexOf("Username") !== -1) {
-            setError('username', {
-              data: 'Username already exists'
-            });
-          }
-          setErrorMessage(error.response.data);
-          setErrorOpen(true);
-          setSuccessOpen(false);
+          console.error("Error making POST request", error);
+          alert("Error making POST request: " + error.message);
         });
-    }
+
+    };
   }
-=======
-  };
->>>>>>> f79c4add590d3a8116a38beac114c5e6d72e5889
 
   const handleChange = (event) => {
     if (errors[event.target.name]) {
@@ -133,14 +109,16 @@ export default function PatientRegister() {
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#132629', backgroundPosition: 'center' }}>
-            <Typography variant="h4" sx={{ color: "white", position: 'fixed',
-              top: '15%', left: '20%' }}>El7a2ni Pharmacy</Typography>
-            <img src={logo} alt="" style={{
-              height: '50%',
-              position: 'fixed',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-            }} />
+          <Typography variant="h4" sx={{
+            color: "white", position: 'fixed',
+            top: '15%', left: '20%'
+          }}>El7a2ni Pharmacy</Typography>
+          <img src={logo} alt="" style={{
+            height: '50%',
+            position: 'fixed',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }} />
         </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box

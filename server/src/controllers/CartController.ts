@@ -3,12 +3,12 @@ import carts from "../models/Cart.js";
 
 const addMedicineToCart = async (req: Request, res: Response) => {
     const { medName, medPrice, medQuantity } = req.body;
+    const patientId = req.params.patientId;
     try {
-        const cart = await carts.findOne({ patient: "6527d5aa11c64e3b65860e67" });
+        const cart = await carts.findOne({ patient: patientId });
         if (!cart) {
             return res.status(404).json({ message: 'Cart not found' });
         }
-
         const existingMedicine = cart.medicines.find(med => med.medName === medName);
 
         if (existingMedicine) {
@@ -30,8 +30,9 @@ const addMedicineToCart = async (req: Request, res: Response) => {
 }
 
 const viewCart = async (req: Request, res: Response) => {
-    carts.find({}).then((results) => {
-        res.status(200).send(results);
+    const patientId = req.params.patientId;
+    carts.find({ patient: patientId }).then((results) => {
+        res.status(200).send(results[0]);
     }).catch((err) => {
         res.status(400).send(err);
     })
@@ -39,16 +40,17 @@ const viewCart = async (req: Request, res: Response) => {
 
 const removeMedicineFromCart = async (req: Request, res: Response) => {
     const medName = req.params.medName;
+
+    const patientId = req.params.patientId;
     try {
-        //const cart = await carts.findOne({ patient: req.user._id }); // Assuming you have user authentication and req.user contains the patient's ID
-        const cart = await carts.findOne({ patient: "6527d5aa11c64e3b65860e67" });
+        const cart = await carts.findOne({ patient: patientId });
         if (!cart) {
             return res.status(404).json({ message: 'Cart not found' });
         }
 
         const updatedMedicines = cart.medicines.filter(med => med.medName !== medName);
         await carts.findOneAndUpdate(
-            { patient: "6527d5aa11c64e3b65860e67" },
+            { patient: patientId },
             { medicines: updatedMedicines },
             { new: true }
         );
@@ -62,15 +64,16 @@ const removeMedicineFromCart = async (req: Request, res: Response) => {
 const changeAmountofMedicineInCart = async (req: Request, res: Response) => {
     const { medName, newAmount } = req.body;
 
+    const patientId = req.params.patientId;
+    console.log(medName + " " + newAmount);
+    console.log(patientId)
     try {
-        const cart = await carts.findOne({ patient: "6527d5aa11c64e3b65860e67" });
-
+        const cart = await carts.findOne({ patient: patientId });
         if (!cart) {
             return res.status(404).json({ message: 'Cart not found' });
         }
 
         const existingMedicine = cart.medicines.find(med => med.medName === medName);
-
         if (existingMedicine) {
             if (newAmount > 100) {
                 return res.status(400).send("Quantity cannot be more than 100.");
@@ -91,8 +94,9 @@ const changeAmountofMedicineInCart = async (req: Request, res: Response) => {
 }
 
 const emptyCart = async (req: Request, res: Response) => {
+    const patientId = req.params.patientId;
     try {
-        const cart = await carts.findOne({ patient: "6527d5aa11c64e3b65860e67" });
+        const cart = await carts.findOne({ patient: patientId });
         if (!cart) {
             return res.status(404).json({ message: 'Cart not found' });
         }

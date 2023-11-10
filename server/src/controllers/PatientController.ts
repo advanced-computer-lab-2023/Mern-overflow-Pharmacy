@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import patient from "../models/Patient.js";
+import cart from "../models/Cart.js"
 
 
 // register patient 
@@ -18,6 +19,10 @@ const createPatient = async (req: Request, res: Response) => {
                     const newPatient = patient
                         .create(req.body)
                         .then((newPatient) => {
+                            const newCart = cart.create({
+                                patient: newPatient._id,
+                                medicines: [],
+                            });
                             res.status(200).json(newPatient);
                         })
                         .catch((err) => {

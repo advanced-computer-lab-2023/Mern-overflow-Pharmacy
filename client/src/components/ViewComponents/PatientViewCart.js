@@ -22,9 +22,10 @@ export default function PatientViewCart(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
-        axios.get(`http://localhost:8000/cart`).then((res) => {
+        const patientId = "654e031fb6190cbe9837f2a3";
+        axios.get(`http://localhost:8000/cart/${patientId}`).then((res) => {
             setData(res.data)
-            setMeds(res.data[0].medicines);
+            setMeds(res.data.medicines);
             setTimeout(() => setLoading(false), 500);
         });
     };
@@ -43,7 +44,8 @@ export default function PatientViewCart(props) {
 
     const handleDelete = (medName) => {
         setLoadingChange(true);
-        axios.delete(`http://localhost:8000/cart/${medName}`)
+        const patientId = "654e031fb6190cbe9837f2a3";
+        axios.delete(`http://localhost:8000/cart/${patientId}/${medName}`)
             .then((response) => {
                 fetchTableData();
                 setSuccessMessage('Medicine removed successfully');
@@ -58,7 +60,8 @@ export default function PatientViewCart(props) {
 
     const handleChangeAmount = (medName, newAmount) => {
         setLoadingChange(true);
-        axios.post('http://localhost:8000/cart/changeAmount', { medName, newAmount })
+        const patientId = "654e031fb6190cbe9837f2a3";
+        axios.post(`http://localhost:8000/cart/${patientId}/changeAmount`, { medName, newAmount })
             .then((response) => {
                 setLoadingChange(false);
                 fetchTableData();
