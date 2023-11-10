@@ -7,10 +7,10 @@ const createPharmacist = async (req: Request, res: Response) => {
   const data = req.body.datatoserver;
   const dataToServer = JSON.parse(data);
   console.log("i am here")
-  const entry = pharmacist.find({ 'username': dataToServer.username }).then((document) => {
+  const entry = Pharmacist.find({ 'username': dataToServer.username }).then((document) => {
     if (document.length === 0) {
 
-      pharmacist.find({ 'email': dataToServer.email }).then((emailRes) => {
+      Pharmacist.find({ 'email': dataToServer.email }).then((emailRes) => {
 
         if (emailRes.length !== 0)
           res.status(404).send("You are already registered, please sign in.");
@@ -36,7 +36,7 @@ const createPharmacist = async (req: Request, res: Response) => {
       dataToServer.files = documents;
 
       console.log("Modified Data:", JSON.stringify(dataToServer));  
-          const newPharmacist = pharmacist
+          const newPharmacist = Pharmacist
             .create(dataToServer)
             .then((newPharmacist) => {
               res.status(200).json(newPharmacist);
