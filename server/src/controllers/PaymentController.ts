@@ -8,6 +8,7 @@ const stripe = new Stripe(
 
 const payCCShoppingCart = async (req: Request, res: Response) => {
   try {
+    console.log(req.body.pId);
     const cartId = (await Cart.find({ patient: req.body.pId }))[0]._id;
     const meds = (await Cart.findById(cartId))?.medicines;
     const session = await stripe.checkout.sessions.create({
