@@ -221,16 +221,28 @@ const AddMedicine = (props) => {
                                 />
                             </Grid>
 
+
+{/* 
+                            <Grid item xs={12} sm={3}>
+                            <input type="file" onChange={e => setFile(e.target.files[0])} />
+                                <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
+                                    Upload Image
+                                    <VisuallyHiddenInput type="file" />
+                                </Button>
+                            </Grid> */}
+
+
                             {/* <Grid item xs={12} sm={3}>
                                 <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
                                     Upload Image
                                     <VisuallyHiddenInput type="file" />
                                 </Button>
                             </Grid> */}
+
                             <input type="hidden" {...register("imageName")} />
                             <Grid item xs={12} sm={3}>
                                 <input type="file" onChange={e => setFile(e.target.files[0])} />
-                                <button type="button" onClick={handleImageUpload}>Upload</button>
+                                <Button type="button" onClick={handleImageUpload}>Upload Medicine Image</Button>
                             </Grid>
                             
                             {/* <Grid item xs={12} sm={3}>
