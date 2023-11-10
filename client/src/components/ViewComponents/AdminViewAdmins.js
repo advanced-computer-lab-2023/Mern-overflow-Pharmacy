@@ -23,7 +23,7 @@ export default function AdminViewAdmins(props) {
             props.setDataIsUpdated(true);
         });
     };
-    
+
     const handleDelete = (id) => {
         setLoadingDel(true);
         axios.delete(`http://localhost:8000/adminstators/${id}`)
@@ -93,8 +93,8 @@ export default function AdminViewAdmins(props) {
                                     <TableRow key={row.username}>
                                         <TableCell>{row.username}</TableCell>
                                         <TableCell sx={{ textAlign: 'right' }}>
-                                            <IconButton onClick={() => handleDelete(row._id)} sx={{ '&:hover': {color: theme.palette.error.main} }}>
-                                                <DeleteIcon  />
+                                            <IconButton onClick={() => handleDelete(row._id)} sx={{ '&:hover': { color: theme.palette.error.main } }}>
+                                                <DeleteIcon />
                                             </IconButton>
                                         </TableCell>
                                     </TableRow>

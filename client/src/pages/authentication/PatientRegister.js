@@ -11,10 +11,14 @@ import axios from 'axios';
 import sha256 from 'js-sha256';
 import logo from '../../assets/gifs/logo.gif';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
+import { useUser } from "../../userContest";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
 export default function PatientRegister() {
+  const navigate = useNavigate();
+  const { userId, setUserId, userRole, setUserRole } = useUser();
   const { register, handleSubmit, setError, formState: { errors }, control } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -23,6 +27,7 @@ export default function PatientRegister() {
 
   const onSubmit = data => {
     const dataToServer = { ...data };
+
     if (dataToServer.mobileNumber.toString().length < 8 || dataToServer.mobileNumber.toString().length > 16) {
       setErrorMessage("Your mobile number must be between 8 and 16 digits.");
       setErrorOpen(true);
@@ -38,34 +43,31 @@ export default function PatientRegister() {
         message: 'Must be between 8 and 16 digits'
       });
     } else {
+
       dataToServer["passwordHash"] = sha256(data["password"]);
       dataToServer["emergencyContact"] = { name: data["EmergencyName"], mobileNumber: data["EmergencyPhone"], relation: data["relation"] };
-      delete dataToServer.EmergencyName
-      delete dataToServer.EmergencyPhone
+      delete dataToServer.EmergencyName;
+      delete dataToServer.EmergencyPhone;
       delete dataToServer.relation
+      delete dataToServer.password;
       delete dataToServer.Password
-      delete dataToServer.password
-      axios.post('http://localhost:8000/patients', dataToServer)
+
+      console.log("Data to server" + JSON.stringify(dataToServer));
+      axios
+        .post("http://localhost:8000/patients", dataToServer)
         .then((response) => {
-          setSuccessMessage('You have succesfully registered.');
-          setSuccessOpen(true);
-          setErrorOpen(false);
+          console.log("POST request successful", response);
+          const userId = response.data.userId;
+          setUserId(userId);
+          setUserRole("Patient");
+          navigate("/patient/medicines");
         })
         .catch((error) => {
-          if (error.response.data.indexOf("registered") !== -1) {
-            setError('email', {
-              data: 'Email is registered'
-            });
-          } else if (error.response.data.indexOf("Username") !== -1) {
-            setError('username', {
-              data: 'Username already exists'
-            });
-          }
-          setErrorMessage(error.response.data);
-          setErrorOpen(true);
-          setSuccessOpen(false);
+          console.error("Error making POST request", error);
+          alert("Error making POST request: " + error.message);
         });
-    }
+
+    };
   }
 
   const handleChange = (event) => {
@@ -107,14 +109,16 @@ export default function PatientRegister() {
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#132629', backgroundPosition: 'center' }}>
-            <Typography variant="h4" sx={{ color: "white", position: 'fixed',
-              top: '15%', left: '20%' }}>El7a2ni Pharmacy</Typography>
-            <img src={logo} alt="" style={{
-              height: '50%',
-              position: 'fixed',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-            }} />
+          <Typography variant="h4" sx={{
+            color: "white", position: 'fixed',
+            top: '15%', left: '20%'
+          }}>El7a2ni Pharmacy</Typography>
+          <img src={logo} alt="" style={{
+            height: '50%',
+            position: 'fixed',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }} />
         </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box

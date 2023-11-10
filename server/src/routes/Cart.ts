@@ -6,10 +6,10 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-router.get("/",CartController.viewCart);
-router.post("/add", CartController.addMedicineToCart);
-router.delete("/:medName", CartController.removeMedicineFromCart);
-router.post("/changeAmount", CartController.changeAmountofMedicineInCart);
-router.put("/empty", CartController.emptyCart);
+router.get("/:patientId",CartController.viewCart);
+router.post("/:patientId/add", CartController.addMedicineToCart);
+router.delete("/:patientId/:medName", CartController.removeMedicineFromCart);
+router.post("/:patientId/changeAmount", CartController.changeAmountofMedicineInCart);
+router.put("/:patientId/empty", CartController.emptyCart);
 
 export default router;

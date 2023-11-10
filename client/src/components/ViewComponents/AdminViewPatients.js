@@ -148,7 +148,7 @@ export default function AdminViewPatients(props) {
                     <TableCell sx={{ color: '#5A5A5A' }}>{row.emergencyContact.mobileNumber}</TableCell>
                     <TableCell sx={{ color: '#5A5A5A', borderRight: '1px solid #ccc' }}>{row.emergencyContact.relation}</TableCell>
                     <TableCell sx={{ textAlign: 'center' }}>
-                    <IconButton onClick={() => handleDelete(row._id)} sx={{ '&:hover': {color: theme.palette.error.main} }}>
+                      <IconButton onClick={() => handleDelete(row._id)} sx={{ '&:hover': { color: theme.palette.error.main } }}>
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>

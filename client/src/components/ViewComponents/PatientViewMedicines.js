@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, useContext  } from "react";
 import { InputAdornment, Accordion, AccordionDetails, AccordionSummary, Snackbar, Alert, ButtonGroup, CircularProgress, Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -8,8 +8,10 @@ import axios from "axios";
 import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
 import { capitalize } from '../../utils'
+import { useUser } from "../../userContest";
 
-export default function PatientViewMedicines() {
+export default function PatientViewMedicines(props) {
+    const { userId } = useUser();
     const [open, setOpen] = useState(false);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -54,7 +56,7 @@ export default function PatientViewMedicines() {
             medQuantity: medQuantity
         };
         setLoadingChange(true);
-        axios.post('http://localhost:8000/cart/add', requestData)
+        axios.post(`http://localhost:8000/cart/${userId}/add`, requestData)
             .then((response) => {
                 setLoadingChange(false);
                 setSuccessOpen(true);

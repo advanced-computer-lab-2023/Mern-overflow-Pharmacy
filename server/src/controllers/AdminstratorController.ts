@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import adminstrator from "../models/Adminstrator.js";
-import pharmacist from "../models/pharmacist.js";
+import Pharmacist from "../models/pharmacist.js";
 import patient from "../models/Patient.js";
 
 const createAdminstrator = async (req: Request, res: Response) => {
