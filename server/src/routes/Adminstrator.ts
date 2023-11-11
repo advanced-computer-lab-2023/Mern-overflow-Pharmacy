@@ -1,8 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import adminstratorController from "../controllers/AdminstratorController.js";
-import exp from "constants";
 import isAuthenticated from "../middlewares/permissions/isAuthenticated.js";
+import isAuthorized from "../middlewares/permissions/isAuthorized.js";
+import { UserTypesNames } from "../enums/UserTypes.js";
 const router = express.Router();
 
 router.use(bodyParser.json());

@@ -17,7 +17,6 @@ export default function SignIn() {
     const navigate = useNavigate();
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
     
-    axios.defaults.withCredentials = true;
 
     const onSubmit = data => {
         data["passwordHash"] = sha256(data["Password"]);
