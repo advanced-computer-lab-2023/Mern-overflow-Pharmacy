@@ -27,11 +27,11 @@ export default function PatientRegister() {
 
   const onSubmit = data => {
     const dataToServer = { ...data };
-
     dataToServer["passwordHash"] = sha256(data["password"]);
     dataToServer["emergencyContact"] = {
       name: data["EmergencyName"],
       mobileNumber: data["EmergencyPhone"],
+      relation: data["relation"],
     };
     delete dataToServer.EmergencyName;
     delete dataToServer.EmergencyPhone;
@@ -46,7 +46,9 @@ export default function PatientRegister() {
 
         setUserId(userId);
         setUserRole("Patient");
-        navigate("/patient/family");
+        axios.post("http://localhost:8000/auth/login",{username : dataToServer.username, passwordHash : dataToServer.passwordHash}).then((response)=> {
+          navigate("/patient/medicines");
+        })
       })
       .catch((error) => {
         console.error("Error making POST request", error);
