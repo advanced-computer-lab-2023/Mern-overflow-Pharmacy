@@ -43,7 +43,7 @@ app.use(bodyParser.json());
 
 //ROUTES
 app.use("/auth", authRouter);
-app.use("/adminstators", adminRouter);
+app.use("/adminstrators", adminRouter);
 app.use("/medicines", medicineRouter);
 app.use("/patients", patientRouter);
 app.use("/pharmacists", pharmacistRouter);

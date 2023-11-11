@@ -39,8 +39,8 @@ export default function SignIn() {
         } else if (type === "pharmacist") {
           setUserRole("Pharmacist");
           navigate("/pharmacist/medicines");
-        } else if (type === "Admin") {
-          setUserRole("Admin");
+        } else if (type === "Adminstrator") {
+          setUserRole("Adminstrator");
           navigate("/admin/patients");
         }
       })

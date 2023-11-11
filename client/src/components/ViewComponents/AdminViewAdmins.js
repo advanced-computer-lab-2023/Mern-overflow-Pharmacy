@@ -30,14 +30,14 @@ export default function AdminViewAdmins(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
-        axios.get(`http://localhost:8000/adminstators`).then((res) => {
+        axios.get(`http://localhost:8000/adminstrators`).then((res) => {
             setData(res.data);
             props.setDataIsUpdated(true);
         });
     };
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:8000/adminstators/${id}`)
+        axios.delete(`http://localhost:8000/adminstrators/${id}`)
             .then((response) => {
                 console.log('DELETE request successful', response);
                 fetchTableData();
