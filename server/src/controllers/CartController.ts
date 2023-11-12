@@ -40,7 +40,6 @@ const viewCart = async (req: Request, res: Response) => {
 
 const removeMedicineFromCart = async (req: Request, res: Response) => {
     const medName = req.params.medName;
-
     const patientId = req.params.patientId;
     try {
         const cart = await carts.findOne({ patient: patientId });

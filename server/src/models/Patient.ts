@@ -70,7 +70,7 @@ const PatientSchema = new Schema<IPatient>({
   ],
   package: { type: mongoose.Types.ObjectId, ref: "Package", required: false },
   address: [{ type: String, trim: true }],
-  wallet: { type: Number, required: true },
+  wallet: { type: Number, required: false },
 });
 
 PatientSchema.pre("save", function (next) {

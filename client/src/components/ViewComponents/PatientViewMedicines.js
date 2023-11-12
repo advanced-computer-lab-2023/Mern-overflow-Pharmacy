@@ -179,7 +179,7 @@ export default function PatientViewMedicines(props) {
                                             <Accordion elevation="3">
                                                 <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
                                                     <ButtonBase sx={{ width: 128, height: '100%' }}>
-                                                        <Img alt={row.name} src={panadol} />
+                                                    <Img alt={row.name} src={`http://localhost:8000/images/${row.image}`} />
                                                     </ButtonBase>
                                                     <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
                                                         <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
