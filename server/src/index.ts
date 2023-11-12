@@ -36,13 +36,16 @@ const port: number = config.server.port || 8000;
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use("/uploads", express.static('./src/uploads'));
+
+
 const mongoUrl: string = process.env.MONGO_URI!;
 
 app.use(bodyParser.json());
 
 //ROUTES
 app.use("/auth", authRouter);
-app.use("/adminstators", adminRouter);
+app.use("/adminstrators", adminRouter);
 app.use("/medicines", medicineRouter);
 app.use("/patients", patientRouter);
 app.use("/pharmacists", pharmacistRouter);

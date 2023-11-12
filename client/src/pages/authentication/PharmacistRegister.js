@@ -11,6 +11,8 @@ import axios from 'axios';
 import sha256 from 'js-sha256';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import logo from '../../assets/gifs/logo.gif';
+import { useNavigate } from 'react-router-dom';
+
 
 const defaultTheme = createTheme();
 
@@ -20,14 +22,49 @@ export default function PharmacistRegister() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successOpen, setSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [file, setFiles] = useState([]);
+  const [selectedType, setSelectedType] = useState('nationalID');
+  const [allTypes, setAllTypes] = useState([]);
+
+  //const formData = new FormData();
+
+ 
+  const handleTypeChange = (event) => {
+    setSelectedType(event.target.value);
+  };
+
+  const handleFileChange = (e) => {
+    const file = Array.from(e.target.files);
+    setFiles(file);
+  };
+
+  function openPDF(e, path) {
+    e.preventDefault(); // Prevent the default behavior of the link (e.g., opening in a new tab)
+    
+    // Open the PDF in a new tab or window using the provided path
+    window.open(path, '_blank');
+  }
+
+
+  const navigate = useNavigate();
+
+
 
   const onSubmit = data => {
+    const formData = new FormData();
+    for (let i = 0; i < file.length; i++) {
+      const f = file[i];   
+      formData.append(`files`, f);
+       console.log("file is: " + JSON.stringify(f));
+    }
     const dataToServer = { ...data };
-
     dataToServer["passwordHash"] = sha256(data["password"]);
     delete dataToServer.password
 
-    axios.post('http://localhost:8000/pharmacists', dataToServer)
+    if (file.length === 0) return alert("Please select a file to upload");
+    formData.append('datatoserver', JSON.stringify(dataToServer));
+
+    axios.post('http://localhost:8000/pharmacists', formData)
       .then((response) => {
         setSuccessMessage('Your request has been succesfully sent.');
         setSuccessOpen(true);
@@ -244,6 +281,38 @@ export default function PharmacistRegister() {
                     onBlur={handleChange}
                   />
                 </Grid>
+
+               
+
+                <Grid container direction="column">
+  <Grid item>
+    <Typography variant="h5" sx={{ fontWeight: "normal", my: 2 }}>
+      upload all required documents
+    </Typography>
+  </Grid>
+  {/* <Grid item>
+    <label htmlFor="id">document Type:</label>
+    <select id="id" value={selectedType} onChange={handleTypeChange}>
+      <option value="nationalID">nationalID</option>
+      <option value="medical degree">medical degree</option>
+      <option value="medical licenses">medical licenses</option>
+    </select>
+  </Grid> */}
+  <Grid>
+              <input type="file" multiple onChange={handleFileChange} />
+        {/* {
+        <ul>
+          {files.map((file, index) => (
+          <li key={index}>{file.name}</li>
+          //<img src={file.path} alt="Document" onClick={(e) => openPDF(e, file.path)} style={{ width: '100px', height: '100px' }} />
+          ))}
+      </ul>}     */}
+    </Grid>
+</Grid>
+
+               
+                
+
 
               </Grid>
               <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2, p: 2, fontWeight: 'bold' }}>

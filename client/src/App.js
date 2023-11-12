@@ -1,6 +1,7 @@
 import './App.css';
 import * as ReactDOM from "react-dom/client";
 import ButtonAppBar from './components/ButtonAppBar';
+import axios from "axios";
 import PatientRegister from './pages/authentication/PatientRegister';
 import PharmacistRegister from './pages/authentication/PharmacistRegister';
 import SignIn from './pages/authentication/SignIn';
@@ -23,6 +24,8 @@ import {
 } from "react-router-dom";
 
 function App() {
+  axios.defaults.withCredentials = true;
+
   const router = createBrowserRouter([
     {
       path: "/signin",

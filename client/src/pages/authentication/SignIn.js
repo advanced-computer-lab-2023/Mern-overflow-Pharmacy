@@ -21,32 +21,32 @@ export default function SignIn() {
 
     const onSubmit = data => {
         data["passwordHash"] = sha256(data["Password"]);
-        data["username"] = data["Username"];
-        delete data.Username;
-        delete data.Password;
-        console.log("Data to server" + JSON.stringify(data));
-        axios
-            .post("http://localhost:8000/auth/login", data)
-            .then((response) => {
-                console.log(response);
-                const type = response.data.type;
-                const userId = response.data.userId;
-                setUserId(userId);
-                console.log(type);
-                if (type === "Patient") {
-                    setUserRole("Patient");
-                    navigate("/patient/medicines");
-                } else if (type === "pharmacist") {
-                    setUserRole("Pharmacist");
-                    navigate("/pharmacist/medicines");
-                } else if (type === "Admin") {
-                    setUserRole("Admin");
-                    navigate("/admin/patients");
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+    data["username"] = data["Username"];
+    delete data.Username;
+    delete data.Password;
+    console.log("Data to server" + JSON.stringify(data));
+    axios
+      .post("http://localhost:8000/auth/login", data)
+      .then((response) => {
+        console.log(response);
+        const type = response.data.type;
+        const userId = response.data.userId;
+        setUserId(userId);
+        console.log(type);
+        if (type === "Patient") {
+          setUserRole("Patient");
+          navigate("/patient/medicines");
+        } else if (type === "pharmacist") {
+          setUserRole("Pharmacist");
+          navigate("/pharmacist/medicines");
+        } else if (type === "Adminstrator") {
+          setUserRole("Adminstrator");
+          navigate("/admin/patients");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     };
     console.log(errors);
 
