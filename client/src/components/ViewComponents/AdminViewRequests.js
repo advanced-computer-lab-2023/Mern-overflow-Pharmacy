@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
 import axios from "axios";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -88,40 +89,42 @@ export default function AdminViewRequests(props) {
                 {loading ? (
                     <CircularProgress sx={{ mt: '30px' }} />
                 ) : (
-                    <Container>
-                        <Container
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                my: 5,
-                            }}
-                        >
-                            <Container sx={{ width: "48%" }}>
-                                <Input
-                                    size="lg"
-                                    placeholder="Search by name..."
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    fullWidth
-                                />
-                            </Container>
-                            <Container sx={{ width: "48%" }}>
-                                <FormControl fullWidth>
-                                    <InputLabel id="filter-by-status">Status</InputLabel>
-                                    <Select
-                                        onChange={(e) => handleFilter(e)}
-                                        sx={{ textAlign: 'left' }}
-                                        labelId="filter-by-status"
-                                        id="filter-by-status-select"
-                                        label="status"
-                                        uncontrolled="true"
+                    <>
+                        <Container>
+                            <Container
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    my: 5,
+                                }}
+                            >
+                                <Container sx={{ width: "48%" }}>
+                                    <Input
+                                        size="lg"
+                                        placeholder="Search by name..."
+                                        onChange={(e) => setQuery(e.target.value)}
                                         fullWidth
-                                    >
-                                        {statuses.map((value) => (
-                                            <MenuItem key={value} value={value}>{`${value.charAt(0).toUpperCase()}${value.slice(1)}`}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                                    />
+                                </Container>
+                                <Container sx={{ width: "48%" }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="filter-by-status">Status</InputLabel>
+                                        <Select
+                                            onChange={(e) => handleFilter(e)}
+                                            sx={{ textAlign: 'left' }}
+                                            labelId="filter-by-status"
+                                            id="filter-by-status-select"
+                                            label="status"
+                                            uncontrolled="true"
+                                            fullWidth
+                                        >
+                                            {statuses.map((value) => (
+                                                <MenuItem key={value} value={value}>{`${value.charAt(0).toUpperCase()}${value.slice(1)}`}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Container>
                             </Container>
                         </Container>
                         <Table>
@@ -134,6 +137,7 @@ export default function AdminViewRequests(props) {
                                     <TableCell key="hourlyRate" sx={{ fontWeight: "bold" }}>Rate</TableCell>
                                     <TableCell key="affiliation" sx={{ fontWeight: "bold" }}>Affiliation</TableCell>
                                     <TableCell key="education" sx={{ fontWeight: "bold" }}>Education</TableCell>
+                                    <TableCell key="files" sx={{ fontWeight: "bold" }}>Documents</TableCell>
                                     
                                     <TableCell sx={{ textAlign: 'center', fontWeight: "bold" }}>Status</TableCell>
                                     <TableCell sx={{fontWeight: "bold" }}>Action</TableCell>
@@ -152,10 +156,19 @@ export default function AdminViewRequests(props) {
                                                 <TableCell>EGP {row.hourlyRate}</TableCell>
                                                 <TableCell>{row.affiliation}</TableCell>
                                                 <TableCell>{row.education}</TableCell>
+                                                <TableCell>{
+                                                    <ul>
+                                                        {row.files.map((file, index) => (
+                                                            <li key={index}>{file.filename}
+                                                                <a href={`http://localhost:8000/uploads/` + file.filename} target="_blank">            View</a></li>
+                                                        ))}
+                                                    </ul>}</TableCell>
                                                 <TableCell style={{ display: 'flex', alignItems: 'center' }}>
                                                     {row.status === 'pending' ? <><PendingIcon style={{ color: '#1976d2', marginRight: '8px' }} /> Pending </> : null}
                                                     {row.status === 'rejected' ? <><CancelIcon style={{ color: '#d33c5c', marginRight: '8px' }} /> Rejected </> : null}
+                                                    {row.status === 'accepted' ? <><CheckCircleIcon style={{ color: '#22bb33', marginRight: '8px' }} /> Accepted </> : null}
                                                 </TableCell>
+
                                                 <TableCell>
                                                 {row.status === 'pending' ? 
                                                     <>
@@ -174,7 +187,7 @@ export default function AdminViewRequests(props) {
                                 )}
                             </TableBody>
                         </Table>
-                    </Container >
+                    </>
                 )}
             </Paper>
         </Container >

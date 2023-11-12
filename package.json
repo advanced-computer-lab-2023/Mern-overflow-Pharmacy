@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "fuse.js": "^6.6.2",
-    "mongo": "^0.1.0"
+    "mongo": "^0.1.0",
+    "multer": "^1.4.5-lts.1"
   }
 }

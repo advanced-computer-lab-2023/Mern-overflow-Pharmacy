@@ -1,21 +1,43 @@
 import { Request, Response } from "express";
 import Pharmacist from "../models/pharmacist.js";
-
+import multer from "multer";
 
 const createPharmacist = async (req: Request, res: Response) => {
   //submit a request to register as a pharmacist 
-  req.body.status = "pending";
-  const entry = Pharmacist.find({ 'username': req.body.username }).then((document) => {
+  const data = req.body.datatoserver;
+  const dataToServer = JSON.parse(data);
+  console.log("i am here")
+  const entry = Pharmacist.find({ 'username': dataToServer.username }).then((document) => {
     if (document.length === 0) {
 
-      Pharmacist.find({ 'email': req.body.email }).then((emailRes) => {
+      Pharmacist.find({ 'email': dataToServer.email }).then((emailRes) => {
 
         if (emailRes.length !== 0)
           res.status(404).send("You are already registered, please sign in.");
 
         else {
+          const files = req.files as Express.Multer.File[];
+          console.log("Files:", files);
+          console.log('additional Field: ' + data);
+          console.log('additional Field2: ' + dataToServer.name);
+          const documents = [];
+          if (files !== undefined) {
+            for (const file of files) {
+              const fileInfo = {
+                filename: file.originalname,
+                path: file.path,
+              };
+              documents.push(fileInfo);
+            }
+          }
+          console.log("DOCUMENTS: " + JSON.stringify(documents));
+          dataToServer.status = "pending";
+
+          dataToServer.files = documents;
+
+          console.log("Modified Data:", JSON.stringify(dataToServer));
           const newPharmacist = Pharmacist
-            .create(req.body)
+            .create(dataToServer)
             .then((newPharmacist) => {
               res.status(200).json(newPharmacist);
             })
@@ -34,7 +56,7 @@ const createPharmacist = async (req: Request, res: Response) => {
 const listPharmacistRequests = async (req: Request, res: Response) => {
   //view all of the information uploaded by a pharmacist (with pending requests) to apply to join the platform
   Pharmacist
-    .find({"status": {$in: ["pending", "rejected"]} })
+    .find({ "status": { $in: ["pending", "rejected"] } })
     .then((pharm) => {
       res.status(200).send(pharm);
     })
