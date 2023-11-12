@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import TokenUtils from "../../utils/Token.js";
 import { UserType, UserTypesNames } from "../../enums/UserTypes.js";
-
+import pharmacist from "../../models/pharmacist.js";
 interface TokenPayload {
   userId: string;
   userRole: UserType;
@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+const isAuthenticated = async(req: Request, res: Response, next: NextFunction) => {
   let token, decodedToken: any;
 
   try {
@@ -30,20 +30,17 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 
     decodedToken = TokenUtils.decodeToken(token);
 
-    // if (decodedToken.userRole === UserType.DOCTOR) {
-    //   getDoctor(decodedToken.userId)
-    //     .then((doc) => {
-    //       if (!doc || doc.status != "accepted") {
-    //         return res
-    //           .status(401)
-    //           .json({ message: "Unauthorized - Invalid token" });
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //       return res.status(500).json({ message: "Internal server error" });
-    //     });
-    // }
+    if (decodedToken.userRole === UserType.PHARMACIST) {
+			try {
+				const pharm = await pharmacist.findById(decodedToken.userId).exec();
+				if (!pharm || pharm.status !== "accepted") {
+				  return res.status(401).json({ message: "Unauthorized - Invalid token" });
+				}
+			  } catch (error) {
+				console.error(error);
+				return res.status(500).json({ message: "Internal server error" });
+			  }	
+		}
   } catch {
     if (!decodedToken) {
       return res.status(401).json({ message: "Unauthorized - Invalid token" });
