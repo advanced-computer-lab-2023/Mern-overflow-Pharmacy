@@ -4,11 +4,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useUser } from "../userContest";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-
 
 export default function ButtonAppBar(props) {
 	const list = (anchor) => (
@@ -116,10 +116,30 @@ export default function ButtonAppBar(props) {
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'left' }}>
 							{props.title}
 						</Typography>
-						<Button type="button" color="inherit" onClick={handleLogout}>
-							{" "}
-							Log out{" "}
-						</Button>
+						{
+							props.cart && <IconButton
+								size="large"
+								edge="end"
+								color="inherit"
+								aria-label="logout"
+								sx={{ mr: 0 }}
+								component={Link}
+								to="/patient/cart"
+							>
+								<ShoppingCartIcon />
+							</IconButton>
+						}
+						<IconButton
+							size="large"
+							edge="end"
+							color="inherit"
+							aria-label="logout"
+							sx={{ mr: 2 }}
+							component={Link}
+							to="/signin"
+						>
+							<LogoutIcon />
+						</IconButton>
 					</Toolbar>
 				</AppBar>
 			</Box>

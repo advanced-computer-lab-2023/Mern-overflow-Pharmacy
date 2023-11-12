@@ -27,34 +27,48 @@ export default function PatientRegister() {
 
   const onSubmit = data => {
     const dataToServer = { ...data };
-    dataToServer["passwordHash"] = sha256(data["password"]);
-    dataToServer["emergencyContact"] = {
-      name: data["EmergencyName"],
-      mobileNumber: data["EmergencyPhone"],
-      relation: data["relation"],
-    };
-    delete dataToServer.EmergencyName;
-    delete dataToServer.EmergencyPhone;
-    delete dataToServer.password;
 
-    console.log("Data to server" + JSON.stringify(dataToServer));
-    axios
-      .post("http://localhost:8000/patients", dataToServer)
-      .then((response) => {
-        console.log("POST request successful", response);
-        const userId = response.data.userId;
+    if (dataToServer.mobileNumber.toString().length < 8 || dataToServer.mobileNumber.toString().length > 16) {
+      setErrorMessage("Your mobile number must be between 8 and 16 digits.");
+      setErrorOpen(true);
+      setSuccessOpen(false);
+      setError('mobileNumber', {
+        message: 'Must be between 8 and 16 digits'
+      });
+    } else if (dataToServer.EmergencyPhone.toString().length < 8 || dataToServer.EmergencyPhone.toString().length > 16) {
+      setErrorMessage("Your emergency contact's mobile number must be between 8 and 16 digits.");
+      setErrorOpen(true);
+      setSuccessOpen(false);
+      setError('EmergencyPhone', {
+        message: 'Must be between 8 and 16 digits'
+      });
+    } else {
 
-        setUserId(userId);
-        setUserRole("Patient");
-        axios.post("http://localhost:8000/auth/login",{username : dataToServer.username, passwordHash : dataToServer.passwordHash}).then((response)=> {
+      dataToServer["passwordHash"] = sha256(data["password"]);
+      dataToServer["emergencyContact"] = { name: data["EmergencyName"], mobileNumber: data["EmergencyPhone"], relation: data["relation"] };
+      delete dataToServer.EmergencyName;
+      delete dataToServer.EmergencyPhone;
+      delete dataToServer.relation
+      delete dataToServer.password;
+      delete dataToServer.Password
+
+      console.log("Data to server" + JSON.stringify(dataToServer));
+      axios
+        .post("http://localhost:8000/patients", dataToServer)
+        .then((response) => {
+          console.log("POST request successful", response);
+          const userId = response.data.userId;
+          setUserId(userId);
+          setUserRole("Patient");
           navigate("/patient/medicines");
         })
-      })
-      .catch((error) => {
-        console.error("Error making POST request", error);
-        alert("Error making POST request: " + error.message);
-      });
-  };
+        .catch((error) => {
+          console.error("Error making POST request", error);
+          alert("Error making POST request: " + error.message);
+        });
+
+    };
+  }
 
   const handleChange = (event) => {
     if (errors[event.target.name]) {
@@ -94,17 +108,11 @@ export default function PatientRegister() {
       </Snackbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundSize: 'cover',
-            backgroundColor: '#d9d9d9',
-            backgroundPosition: 'center',
-          }}
-        >
+        <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#132629', backgroundPosition: 'center' }}>
+          <Typography variant="h4" sx={{
+            color: "white", position: 'fixed',
+            top: '15%', left: '20%'
+          }}>El7a2ni Pharmacy</Typography>
           <img src={logo} alt="" style={{
             height: '50%',
             position: 'fixed',

@@ -1,26 +1,24 @@
 import { Request, Response } from "express";
 import medicine from "../models/medicine.js";
 import { log } from "console";
+import { isNull } from "util";
 
 
 const listAllMedicines = async (req: Request, res: Response) => {
   medicine.find({}).then(results => { res.status(200).send(results) }).catch(err => res.status(400).send(err));
 }
 
-
-
 const listMedicines = async (req: Request, res: Response) => {
   //view a list of all available medicines (including picture of medicine, price, description)
   medicine.find()
-    .select('_id availableQuantity name medicinalUse image price details')
+    .select('_id availableQuantity name medicinalUse image price details overTheCounter')
     .then(
 
       (results) => {
         var medResults: any[] = [];
         for (const med of results) {
           if (med.availableQuantity !== 0)
-            medResults.push({ "_id":med._id, "name": med.name, "medicinalUse": med.medicinalUse, "image": med.image, "price": med.price, "details": med.details });
-          console.log(med);
+            medResults.push({ "_id": med._id, "name": med.name, "medicinalUse": med.medicinalUse, "image": med.image, "price": med.price, "details": med.details, "overTheCounter":med.overTheCounter });
         }
         res.status(200).send(medResults);
       })
@@ -83,7 +81,6 @@ const filterMedicines = async (req: Request, res: Response) => {
 
   const medUse = req.body.medicinalUse;
   medicine.find({ "medicinalUse": medUse }).then((results) => {
-    console.log(results);
     if (results.length === 0) {
       res.status(404).send("no medicines found under this medicinalUse")
     } else {
@@ -98,6 +95,9 @@ const filterMedicines = async (req: Request, res: Response) => {
 const createMedicine = async (req: Request, res: Response) => {
   //add a medicine with its details (active ingredients) , price and available quantity 
   try {
+    var overTheCounter = req.body.overTheCounter;
+    if (overTheCounter == null)
+      overTheCounter = false;
     if (req.body.availableQuantity === 0)
       res.status(400).send("cannot add medicine with 0 available quantity");
     else {

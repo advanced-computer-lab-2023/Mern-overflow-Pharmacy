@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import patient from "../models/Patient.js";
+import cart from "../models/Cart.js"
 
 
 // register patient 
@@ -18,6 +19,10 @@ const createPatient = async (req: Request, res: Response) => {
                     const newPatient = patient
                         .create(req.body)
                         .then((newPatient) => {
+                            const newCart = cart.create({
+                                patient: newPatient._id,
+                                medicines: [],
+                            });
                             res.status(200).json(newPatient);
                         })
                         .catch((err) => {
@@ -68,11 +73,45 @@ const deletePatient = async (req: Request, res: Response) => {
         });
 }
 
+const viewAddresses = async (req: Request, res: Response) => {
+    const patientId = req.params.patientId;
+    try {
+        const p = await patient.findOne({ _id: patientId });
 
+        if (!p) {
+            return res.status(404).json({ message: 'Patient not found' });
+        }
+
+        const addresses = p.address;
+        res.status(200).json({ addresses });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
+const addAddress = async (req: Request, res: Response) => {
+    const patientId = req.params.patientId;
+    const newAddress = req.body.newAddress;
+    try {
+        const p = await patient.findOne({ _id: patientId });
+        if (!p) {
+            return res.status(404).json({ message: 'Patient not found' });
+        }
+        p.address.push(newAddress);
+        await p.save();
+        res.json({ message: 'Address added successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
 
 export default {
     createPatient,
     listPatients,
     readPatient,
-    deletePatient
+    deletePatient,
+    viewAddresses,
+    addAddress,
 };

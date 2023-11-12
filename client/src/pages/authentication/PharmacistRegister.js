@@ -60,15 +60,12 @@ export default function PharmacistRegister() {
     const dataToServer = { ...data };
     dataToServer["passwordHash"] = sha256(data["password"]);
     delete dataToServer.password
-    console.log('sending data')
-    console.log(JSON.stringify(dataToServer));
 
     if (file.length === 0) return alert("Please select a file to upload");
     formData.append('datatoserver', JSON.stringify(dataToServer));
 
     axios.post('http://localhost:8000/pharmacists', formData)
       .then((response) => {
-        console.log('POST request successful', response);
         setSuccessMessage('Your request has been succesfully sent.');
         setSuccessOpen(true);
         setErrorOpen(false);
@@ -89,10 +86,7 @@ export default function PharmacistRegister() {
         setErrorOpen(true);
         setSuccessOpen(false);
       });
-    console.log("sent data");
   }
-
-  console.log(errors);
 
   const handleChange = (event) => {
     if (errors[event.target.name]) {
@@ -132,23 +126,15 @@ export default function PharmacistRegister() {
       </Snackbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundSize: 'cover',
-            backgroundColor: '#d9d9d9',
-            backgroundPosition: 'center',
-          }}
-        >
-          <img src={logo} alt="" style={{
-            height: '50%',
-            position: 'fixed',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-          }} />
+        <Grid item xs={false} sm={4} md={7} sx={{ backgroundSize: 'cover', backgroundColor: '#132629', backgroundPosition: 'center' }}>
+            <Typography variant="h4" sx={{ color: "white", position: 'fixed',
+              top: '15%', left: '20%' }}>El7a2ni Pharmacy</Typography>
+            <img src={logo} alt="" style={{
+              height: '50%',
+              position: 'fixed',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+            }} />
         </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
