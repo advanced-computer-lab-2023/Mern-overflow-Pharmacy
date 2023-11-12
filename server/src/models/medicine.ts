@@ -1,10 +1,10 @@
 import mongoose, { Schema, model } from "mongoose";
 
-interface MedicineImage {
-    data: Buffer;
-    contentType: string;
-    filename: string;
-}
+// interface MedicineImage {
+//     data: Buffer;
+//     contentType: string;
+//     filename: string;
+// }
 
 interface Details{
     description: string;
@@ -18,7 +18,7 @@ interface Imedicine {
     price: number;
     availableQuantity: number;
     sales : number ;
-    image?: MedicineImage;
+    image: string;
     overTheCounter: boolean;
 }
 
@@ -32,12 +32,11 @@ const medicineSchema = new Schema<Imedicine>({
     price: { type: Number, required: true },
     availableQuantity: { type: Number, required: true },
     sales: { type: Number, required: true },
-    image: {
-        // requirements of these changed to false for testing purposes 
-        data: { type: Buffer, required: false, },
-        contentType: { type: String, required: false, },
-        filename: { type: String,required: false,},
-    },
+    image: { type: String, required: true, unique: true }
+        // data: { type: Buffer, required: false, },
+        // contentType: { type: String, required: false, },
+        // filename: { type: String,required: false,},
+    ,
     overTheCounter: {type: Boolean, required: true}
 })
 
