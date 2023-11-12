@@ -4,6 +4,9 @@ import PendingIcon from '@mui/icons-material/Pending';
 import CancelIcon from '@mui/icons-material/Cancel';
 import axios from "axios";
 
+import DoneIcon from '@material-ui/icons/Done';
+import ClearIcon from '@material-ui/icons/Clear';
+
 export default function AdminViewRequests(props) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -40,6 +43,27 @@ export default function AdminViewRequests(props) {
             });
     };
 
+    const handleAccept = (id) => {
+        axios.post(`http://localhost:8000/pharmacists/acceptPharmacist`,{id:id})
+          .then((response) => {
+            console.log('POST request successful', response);
+            fetchTableData();
+          })
+          .catch((error) => {
+            console.error('Error making POST request', error);
+          });
+      }
+    
+      const handleReject= (id) => {
+        axios.post(`http://localhost:8000/pharmacists/rejectPharmacist`,{id:id})
+          .then((response) => {
+            console.log('POST request successful', response);
+            fetchTableData();
+          })
+          .catch((error) => {
+            console.error('Error making POST request', error);
+          });
+      }
 
     useEffect(() => {
         fetchTableData();
@@ -107,10 +131,13 @@ export default function AdminViewRequests(props) {
                                     <TableCell key="email" sx={{ fontWeight: "bold" }}>Email</TableCell>
                                     <TableCell key="username" sx={{ fontWeight: "bold" }}>Username</TableCell>
                                     <TableCell key="dateOfBirth" sx={{ fontWeight: "bold" }}>Birth Date</TableCell>
-                                    <TableCell key="hourlyRate" sx={{ fontWeight: "bold" }}>Hourly Rate</TableCell>
+                                    <TableCell key="hourlyRate" sx={{ fontWeight: "bold" }}>Rate</TableCell>
                                     <TableCell key="affiliation" sx={{ fontWeight: "bold" }}>Affiliation</TableCell>
                                     <TableCell key="education" sx={{ fontWeight: "bold" }}>Education</TableCell>
+                                    
                                     <TableCell sx={{ textAlign: 'center', fontWeight: "bold" }}>Status</TableCell>
+                                    <TableCell sx={{fontWeight: "bold" }}>Action</TableCell>
+                                    
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -128,6 +155,19 @@ export default function AdminViewRequests(props) {
                                                 <TableCell style={{ display: 'flex', alignItems: 'center' }}>
                                                     {row.status === 'pending' ? <><PendingIcon style={{ color: '#1976d2', marginRight: '8px' }} /> Pending </> : null}
                                                     {row.status === 'rejected' ? <><CancelIcon style={{ color: '#d33c5c', marginRight: '8px' }} /> Rejected </> : null}
+                                                </TableCell>
+                                                <TableCell>
+                                                {row.status === 'pending' ? 
+                                                    <>
+                                                    <IconButton onClick={() => handleAccept(row._id)}>
+                                                        <DoneIcon />
+                                                    </IconButton>
+
+                                                    <IconButton onClick={() => handleReject(row._id)}>
+                                                        <ClearIcon />
+                                                    </IconButton>
+                                                    </>
+                                                 : null}
                                                 </TableCell>
                                             </TableRow>
                                         ),
