@@ -21,17 +21,19 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
             product_data: {
               name: item.medName,
             },
-            unit_amount: item.medPrice,
+            unit_amount: item.medPrice*100,
           },
           quantity: item.medQuantity,
         };
       }),
-      success_url: `http://localhost:3000`,
-      cancel_url: `http://localhost:3000`,
+      success_url: `http://localhost:3000/patient/orders`,
+      cancel_url: `http://localhost:3000/patient/checkout`,
     });
     res.json({ url: session.url });
   } catch (e) {
+    console.log(e);
     res.status(500).json(e);
+    
   }
 };
 

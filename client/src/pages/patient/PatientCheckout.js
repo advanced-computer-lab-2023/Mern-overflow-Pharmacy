@@ -8,6 +8,7 @@ const PatientCheckout = () => {
     const [address, setAddress] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
 
+    
     return (
         <>
             <PatientDashboard title="Checkout" />

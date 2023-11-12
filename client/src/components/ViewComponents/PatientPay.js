@@ -53,12 +53,13 @@ export default function PatientPay(props) {
                     if (res.ok) return res.json()
                     const json = await res.json();
                     return await Promise.reject(json);
+                    
                 })
                 .then(({ url }) => {
                     window.location = url
                 })
                 .catch(e => {
-                    console.error(e.error)
+                    console.error(e)
                 })
         }
     };
