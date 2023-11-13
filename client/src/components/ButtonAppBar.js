@@ -136,7 +136,7 @@ export default function ButtonAppBar(props) {
 							aria-label="logout"
 							sx={{ mr: 2 }}
 							component={Link}
-							to="/signin"
+							onClick={handleLogout}
 						>
 							<LogoutIcon />
 						</IconButton>
