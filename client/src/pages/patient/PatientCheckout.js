@@ -8,13 +8,28 @@ const PatientCheckout = () => {
     const [address, setAddress] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
 
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     
     return (
         <>
             <PatientDashboard title="Checkout" />
             <PatientViewAddresses setAddress={setAddress} address={address} />
-            <PatientPay setPaymentMethod={setPaymentMethod} paymentMethod={paymentMethod} />
-            <PatientViewCartSummary address={address} paymentMethod={paymentMethod} />
+            <PatientPay setPaymentMethod={setPaymentMethod} paymentMethod={paymentMethod} 
+            successOpen = {successOpen} setSuccessOpen = {setSuccessOpen}
+            successMessage = {successMessage} setSuccessMessage = {setSuccessMessage}
+            errorOpen = {errorOpen} setErrorOpen = {setErrorOpen}
+            errorMessage = {errorMessage} setErrorMessage = {setErrorMessage}
+            
+            />
+            <PatientViewCartSummary address={address} paymentMethod={paymentMethod} 
+                        successOpen = {successOpen} setSuccessOpen = {setSuccessOpen}
+                        successMessage = {successMessage} setSuccessMessage = {setSuccessMessage}
+                        errorOpen = {errorOpen} setErrorOpen = {setErrorOpen}
+                        errorMessage = {errorMessage} setErrorMessage = {setErrorMessage}
+            />
         </>
     );
 }

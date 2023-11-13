@@ -40,6 +40,7 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
 const payWalletShoppingCart = async (req: Request, res: Response) => {
   // assuming id of logged in user  comes from req.body but should come from login session
   const userId = req.body.id;
+  console.log("user id "+userId);
   const userCart = Cart.find({ patient: userId }).then(async (result) => {
     var totalAmount = 0;
     for (const med of result[0].medicines) {
@@ -52,6 +53,7 @@ const payWalletShoppingCart = async (req: Request, res: Response) => {
     // assuming patient id is took from logged in session
     const pat = await Patient.findById(userId);
     const walletValue = pat?.wallet;
+    console.log(walletValue+" "+totalAmount);
     if (totalAmount != undefined && walletValue != undefined) {
       if (walletValue < totalAmount) {
         res

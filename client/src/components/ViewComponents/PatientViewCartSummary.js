@@ -15,10 +15,7 @@ export default function PatientViewCartSummary(props) {
     const [loading, setLoading] = useState(true);
     const [loadingChange, setLoadingChange] = useState(false);
     const [total, setTotal] = useState(0);
-    const [successOpen, setSuccessOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
-    const [errorOpen, setErrorOpen] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/cart/${userId}`).then((res) => {
@@ -53,8 +50,8 @@ export default function PatientViewCartSummary(props) {
             .then(response => {
                 axios.put(`http://localhost:8000/cart/${userId}/empty`).then((response) => {
                     setLoadingChange(false);
-                    setSuccessMessage("Order received");
-                    setSuccessOpen(true);
+                    props.setSuccessMessage("Order received");
+                    props.setSuccessOpen(true);
                     fetchTableData();
                     navigate('/patient/orders');
                 });
@@ -63,13 +60,13 @@ export default function PatientViewCartSummary(props) {
                 console.error('Error creating order:', error);
                 setLoadingChange(false);
                 if (!props.address) {
-                    setErrorMessage("Please choose a delivery address.");
+                    props.setErrorMessage("Please choose a delivery address.");
                 } else if (!props.paymentMethod) {
-                    setErrorMessage("Please choose a payment method.");
+                    props.setErrorMessage("Please choose a payment method.");
                 } else {
-                    setErrorMessage("Unexpected Error in checking out.");
+                    props.setErrorMessage("Unexpected Error in checking out.");
                 }
-                setErrorOpen(true);
+                props.setErrorOpen(true);
             });
     }
 
@@ -77,26 +74,26 @@ export default function PatientViewCartSummary(props) {
         if (reason === 'clickaway') {
             return;
         }
-        setSuccessOpen(false);
+        props.setSuccessOpen(false);
     };
 
     const handleErrorClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-        setErrorOpen(false);
+        props.setErrorOpen(false);
     };
 
     return (
         <Container maxWidth="md">
-            <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+            <Snackbar open={props.successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
                 <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
-                    {successMessage}
+                    {props.successMessage}
                 </Alert>
             </Snackbar>
-            <Snackbar open={errorOpen} autoHideDuration={3000} onClose={handleErrorClose}>
+            <Snackbar open={props.errorOpen} autoHideDuration={3000} onClose={handleErrorClose}>
                 <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
-                    {errorMessage}
+                    {props.errorMessage}
                 </Alert>
             </Snackbar>
             <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>

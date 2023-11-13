@@ -1,6 +1,6 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, json, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FaceIcon from '@mui/icons-material/Face';
@@ -11,6 +11,7 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 import { useUser } from "../../userContest";
 
 export default function PatientPay(props) {
+    const navigate = useNavigate();
     const { userId } = useUser();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -64,12 +65,51 @@ export default function PatientPay(props) {
         }
     };
 
+
     const handleWallet = (event) => {
         props.setPaymentMethod("Wallet");
         setCash(false);
         setCredit(false);
         setWallet(true);
+
+        axios.post('http://localhost:8000/walletPayment/shoppingCart', {id:userId}, {
+  headers: {
+    'Content-Type': 'application/json', // Set the content type based on your API requirements
+    // Add other headers as needed
+  },
+})
+  .then(response => {
+    console.log(response.data);
+    props.setSuccessMessage(JSON.stringify(response.data));
+    props.setSuccessOpen(true);
+  })
+  .catch(error => {
+    console.error('Error:', error.response ? error.response.data : error.message);
+    props.setErrorMessage(JSON.stringify(error.response ? error.response.data : error.message));
+    props.setErrorOpen(true);
+  });
     };
+
+    // const handleWallet = (event) => {
+    //     props.setPaymentMethod("Wallet");
+    //     setCash(false);
+    //     setCredit(false);
+    //     setWallet(true);
+
+    //     axios.post(`http://localhost:8000/walletPayment/shoppingCart`,{id:userId} )
+    //     .then(res => {
+    //         console.log(res)
+    //         // props.setSuccessMessage(JSON.stringify(res));
+    //         // props.setSuccessOpen(true);
+    //         // navigate('/patient/orders');
+    //     })
+    //     .catch(error => {
+    //         console.log(error)
+    //         // props.setErrorMessage(JSON.stringify(error));
+    //         // props.setErrorOpen(true);
+    //     });
+
+    // };
 
     return (
         <Container maxWidth="md">
