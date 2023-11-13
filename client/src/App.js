@@ -1,27 +1,27 @@
-import './App.css';
+import "./App.css";
 import * as ReactDOM from "react-dom/client";
-import ButtonAppBar from './components/ButtonAppBar';
+import ButtonAppBar from "./components/ButtonAppBar";
 import axios from "axios";
-import PatientRegister from './pages/authentication/PatientRegister';
-import PharmacistRegister from './pages/authentication/PharmacistRegister';
-import SignIn from './pages/authentication/SignIn';
-import AdminManageAdmins from './pages/admin/AdminManageAdmins';
-import AdminManagePharmacists from './pages/admin/AdminManagePharmacists';
-import AdminManagePatients from './pages/admin/AdminManagePatients'
-import AdminManagePharmacistRequests from './pages/admin/AdminManagePharmacistRequests';
-import AdminManageMedicines from './pages/admin/AdminManageMedicines';
-import PharmacistManageMedicines from './pages/pharmacist/PharmacistManageMedicines';
-import PharmacistEditMedicine from './pages/pharmacist/PharmacistEditMedicine'
-import PatientManageMedicines from './pages/patient/PatientManageMedicines';
-import PatientManageCart from './pages/patient/PatientManageCart';
-import PatientManageOrders from './pages/patient/PatientManageOrders';
-import PatientCheckout from './pages/patient/PatientCheckout';
-import NotFoundPage from './NotFoundPage';
+import PatientRegister from "./pages/authentication/PatientRegister";
+import PharmacistRegister from "./pages/authentication/PharmacistRegister";
+import SignIn from "./pages/authentication/SignIn";
+import AdminManageAdmins from "./pages/admin/AdminManageAdmins";
+import AdminManagePharmacists from "./pages/admin/AdminManagePharmacists";
+import AdminManagePatients from "./pages/admin/AdminManagePatients";
+import AdminManagePharmacistRequests from "./pages/admin/AdminManagePharmacistRequests";
+import AdminManageMedicines from "./pages/admin/AdminManageMedicines";
+import PharmacistManageMedicines from "./pages/pharmacist/PharmacistManageMedicines";
+import PharmacistEditMedicine from "./pages/pharmacist/PharmacistEditMedicine";
+import PatientManageMedicines from "./pages/patient/PatientManageMedicines";
+import PatientManageCart from "./pages/patient/PatientManageCart";
+import PatientManageOrders from "./pages/patient/PatientManageOrders";
+import PatientCheckout from "./pages/patient/PatientCheckout";
+import NotFoundPage from "./NotFoundPage";
+import ChangePassword from "./pages/authentication/ChangePassword";
+import ResetPassword from "./pages/authentication/ResetPassword";
+import ForgotPassword from "./pages/authentication/ForgotPassword";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
   axios.defaults.withCredentials = true;
@@ -41,7 +41,7 @@ function App() {
     },
     {
       path: "/register/pharmacist",
-      element: <PharmacistRegister />
+      element: <PharmacistRegister />,
     },
     {
       path: "/admin/admins",
@@ -75,24 +75,29 @@ function App() {
       path: "/patient/medicines",
       element: <PatientManageMedicines />,
     },
-    { path: "/patient/cart",
-      element: <PatientManageCart />
+    { path: "/patient/cart", element: <PatientManageCart /> },
+    { path: "/patient/orders", element: <PatientManageOrders /> },
+    { path: "/patient/checkout", element: <PatientCheckout /> },
+
+    {
+      path: "/auth/changepassword",
+      element: <ChangePassword />,
     },
-    { path: "/patient/orders",
-      element: <PatientManageOrders />
+    {
+      path: "/auth/resetpassword",
+      element: <ResetPassword />,
     },
-    { path: "/patient/checkout",
-      element: <PatientCheckout />
+    {
+      path: "/auth/forgotpassword",
+      element: <ForgotPassword />,
     },
-    { path: "*",
-      element: <NotFoundPage />
-    }
+
+    { path: "*", element: <NotFoundPage /> },
   ]);
 
   return (
     <div className="App">
       <RouterProvider router={router} />
-
     </div>
   );
 }

@@ -9,12 +9,13 @@ import sendMailService from "../services/emails/sendMailService.js";
 
 const login = async (req: Request, res: Response) => {
   const { username, passwordHash } = req.body;
-  console.log(username,passwordHash);
+  console.log(username, passwordHash);
   try {
     const user: HydratedDocument<IUser> | null = await User.findOne({
       username,
       passwordHash,
     });
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     } else {
@@ -79,34 +80,34 @@ const requestPasswordReset = async (req: Request, res: Response) => {
       expiresIn: "5m",
     });
 
-		const subject = "Password Reset Token";
-		const html = `<p>Click the following link to reset your password: <a href="http://localhost:3000/reset/${token}">Reset Password</a></p>`;
+    const subject = "Password Reset Token";
+    const html = `<p>Click the following link to reset your password: <a href="http://localhost:3000/reset/${token}">Reset Password</a></p>`;
 
-		sendMailService.sendMail(email, subject, html);
-		res.status(200).json({ message: 'Password reset token sent successfully' });
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ message: 'Internal server error' });
-	}
+    sendMailService.sendMail(email, subject, html);
+    res.status(200).json({ message: "Password reset token sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 const resetPasswordWithToken = async (req: Request, res: Response) => {
-	const token = req.params.token;
-	const  newPassword  = req.body.newPassword;
+  const token = req.params.token;
+  const newPasswordHash = req.body.newPassword;
 
-	try {
-		const decodedToken: any = jwt.verify(token, config.jwt.secret);
+  try {
+    const decodedToken: any = jwt.verify(token, config.jwt.secret);
 
     if (!decodedToken) {
       return res.status(401).json({ message: "Invalid or expired token" });
     }
 
-		// Update the user's password in the database
-		const user = await User.findByIdAndUpdate(decodedToken.userId, { password: newPassword });
-
-		if (!user) {
-			return res.status(404).json({ message: 'User not found' });
-		}
+    const user = await User.findById(decodedToken?.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.passwordHash = newPasswordHash;
+    await user.save();
 
     return res.status(200).json({ message: "Password reset successfully" });
   } catch (error) {
