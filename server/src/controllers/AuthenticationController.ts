@@ -81,7 +81,7 @@ const requestPasswordReset = async (req: Request, res: Response) => {
     });
 
     const subject = "Password Reset Token";
-    const html = `<p>Click the following link to reset your password: <a href="http://localhost:3000/reset/${token}">Reset Password</a></p>`;
+    const html = `<p>Click the following link to reset your password: <a href="http://localhost:3000/auth/resetpassword?token=${token}">Reset Password</a></p>`;
 
     sendMailService.sendMail(email, subject, html);
     res.status(200).json({ message: "Password reset token sent successfully" });
@@ -92,7 +92,7 @@ const requestPasswordReset = async (req: Request, res: Response) => {
 };
 
 const resetPasswordWithToken = async (req: Request, res: Response) => {
-  const token = req.params.token;
+  const token = req.body.token;
   const newPasswordHash = req.body.newPassword;
 
   try {
