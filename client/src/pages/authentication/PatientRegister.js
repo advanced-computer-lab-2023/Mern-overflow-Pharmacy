@@ -60,7 +60,13 @@ export default function PatientRegister() {
           const userId = response.data.userId;
           setUserId(userId);
           setUserRole("Patient");
-          navigate("/patient/medicines");
+          axios.post("http://localhost:8000/auth/login", {
+            username: dataToServer.username,
+            passwordHash: dataToServer.passwordHash,
+          })
+            .then(() => {
+              navigate("/patient/medicines");
+            });
         })
         .catch((error) => {
           console.error("Error making POST request", error);

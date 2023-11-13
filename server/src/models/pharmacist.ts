@@ -5,7 +5,6 @@ import User from "./User.js";
 interface IPharmacist {
     // username:string;
     name: string;
-    email: string;
     // passwordHash: string;
     dateOfBirth: Date;
     hourlyRate: number;
@@ -24,7 +23,6 @@ interface document {
 const pharmacistShema = new Schema<IPharmacist>({
     // username: { type: String, required: true , unique: true },
     name: { type: String, required: true , trim: true },
-    email: { type: String, required: true, match : [/\S+@\S+\.\S+/, "invalid email"], },
     // passwordHash:{ type: String, required: true },
     dateOfBirth: { type: Date, required: true },
     hourlyRate: { type: Number, required: true },
@@ -43,9 +41,6 @@ const pharmacistShema = new Schema<IPharmacist>({
 pharmacistShema.pre('save', function (next) {
     if (this.isModified('name')) {
         this.name = this.name.toLowerCase();
-    }
-    if (this.isModified('email')) {
-        this.email = this.email.toLowerCase();
     }
     next();
 });

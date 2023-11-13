@@ -26,7 +26,8 @@ const AddAdmin = (props) => {
         props.setDataIsUpdated(false);
         setLoadingAdd(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         setErrorMessage('This username is already taken. Please choose another one.');
         setErrorOpen(true);
         setSuccessOpen(false);
@@ -72,7 +73,7 @@ const AddAdmin = (props) => {
       </Snackbar>
       <Accordion sx={{ px: '20px', pt: '20px', pb: '0' }} elevation={3}>
         <AccordionSummary >
-          <Container sx={{ display: "flex", alignItems: "center", alignContent: "center", justifyContent: "space-between"}}>
+          <Container sx={{ display: "flex", alignItems: "center", alignContent: "center", justifyContent: "space-between" }}>
             <Typography variant="h6" sx={{ mb: 3 }}> Add an Admin to the System</Typography>
             <AddCircleIcon color="primary" sx={{ mb: 2, fontSize: 40, }} />
           </Container>
@@ -87,7 +88,16 @@ const AddAdmin = (props) => {
               helperText={errors["username"]?.message}
               onBlur={handleChange}
               sx={{ mr: "2%" }} fullWidth />
-
+            <TextField
+              fullWidth
+              id="email"
+              label="Email"
+              type="email"
+              {...register("email", { required: true, maxLength: 80 })}
+              error={!!errors["email"]}
+              helperText={errors["email"]?.message}
+              onBlur={handleChange}
+            />
             <TextField
               id="password"
               label="Password"

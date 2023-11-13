@@ -67,11 +67,12 @@ const changePassword = async (req: Request, res: Response) => {
 };
 
 const requestPasswordReset = async (req: Request, res: Response) => {
-  const email = req.body.email;
+  const email :string = req.body.email.toLowerCase();
+  console.log("email", email)
 
   try {
     const user: HydratedDocument<IUser> | null = await User.findOne({ email });
-
+    console.log("user", user)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

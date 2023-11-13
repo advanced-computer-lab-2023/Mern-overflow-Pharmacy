@@ -77,12 +77,12 @@ export default function PharmacistRegister() {
     for (let i = 0; i < file.length; i++) {
       const f = file[i];
       formData.append(`files`, f);
-      console.log("file is: " + JSON.stringify(f));
+      // console.log("file is: " + JSON.stringify(f));
     }
     const dataToServer = { ...data };
     dataToServer["passwordHash"] = sha256(data["password"]);
     delete dataToServer.password;
-
+    console.log(dataToServer);
     if (file.length === 0) return alert("Please select a file to upload");
     formData.append("datatoserver", JSON.stringify(dataToServer));
 

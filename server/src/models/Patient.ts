@@ -11,7 +11,6 @@ interface emergencyContact {
 interface IPatient {
   // username: string;
   name: string;
-  email: string;
   // passwordHash: string;
   dateOfBirth: Date;
   gender: string;
@@ -27,12 +26,6 @@ interface IPatient {
 const PatientSchema = new Schema<IPatient>({
   // username: { type: String, required: true, unique: true },
   name: { type: String, required: true, trim: true },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: [/\S+@\S+\.\S+/, "invalid email"],
-  },
   // passwordHash: { type: String, required: true },
   dateOfBirth: { type: Date, required: true },
   gender: {
@@ -77,9 +70,9 @@ PatientSchema.pre("save", function (next) {
   if (this.isModified("name")) {
     this.name = this.name.toLowerCase();
   }
-  if (this.isModified("email")) {
-    this.email = this.email.toLowerCase();
-  }
+  // if (this.isModified("email")) {
+  //   this.email = this.email.toLowerCase();
+  // }
   next();
 });
 
