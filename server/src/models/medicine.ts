@@ -11,7 +11,7 @@ interface Details{
     activeIngredients: string[];
 }
 
-interface Imedicine {
+export interface Imedicine {
     name: string;
     medicinalUse: string;
     details: Details;

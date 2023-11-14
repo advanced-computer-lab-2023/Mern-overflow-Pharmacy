@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import carts from "../models/Cart.js";
+import medicine, {Imedicine} from "../models/medicine.js";
+import { HydratedDocument } from "mongoose";
 
 const addMedicineToCart = async (req: Request, res: Response) => {
     const { medName, medPrice, medQuantity } = req.body;
@@ -10,10 +12,20 @@ const addMedicineToCart = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Cart not found' });
         }
         const existingMedicine = cart.medicines.find(med => med.medName === medName);
+        const med : HydratedDocument<Imedicine> | null = await medicine.findOne({"name" : medName});
+        if(!med){
+            return res.status(404).send("medicine not found");
+        }
 
         if (existingMedicine) {
+            if((existingMedicine.medQuantity + medQuantity)> med.availableQuantity){
+                return res.status(400).send("Not enough stock");
+            }
             existingMedicine.medQuantity += medQuantity;
         } else {
+            if(medQuantity> med.availableQuantity){
+                return res.status(400).send("Not enough stock");
+            }
             const newMedicine = {
                 medName,
                 medPrice,
@@ -79,6 +91,13 @@ const changeAmountofMedicineInCart = async (req: Request, res: Response) => {
             } else if (newAmount < 1) {
                 return res.status(400).send("Quantity cannot be less than 1.");
             } else {
+                const med : HydratedDocument<Imedicine> | null = await medicine.findOne({"name" : medName});
+                if(!med){
+                    return res.status(404).send("medicine not found");
+                }
+                if(med.availableQuantity< newAmount){
+                    return res.status(400).send("No more stock");
+                }
                 existingMedicine.medQuantity = Number(newAmount);
             }
         } else {

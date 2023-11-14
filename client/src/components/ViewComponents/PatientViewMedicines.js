@@ -62,6 +62,7 @@ export default function PatientViewMedicines(props) {
                 setSuccessOpen(true);
             })
             .catch((error) => {
+                setLoadingChange(false);
                 console.error('Error making POST request', error);
                 alert('Error adding medicine to cart: ' + error.message);
             });
