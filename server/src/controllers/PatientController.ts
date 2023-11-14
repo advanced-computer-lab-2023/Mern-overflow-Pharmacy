@@ -16,6 +16,7 @@ const createPatient = async (req: Request, res: Response) => {
                     res.status(404).send("You are already registered, please sign in.");
 
                 else {
+                    req.body.wallet = 0;
                     const newPatient = patient
                         .create(req.body)
                         .then((newPatient) => {
