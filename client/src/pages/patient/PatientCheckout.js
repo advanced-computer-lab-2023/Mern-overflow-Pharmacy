@@ -12,6 +12,8 @@ const PatientCheckout = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [meds, setMeds] = useState([]);
+    const [total, setTotal] = useState(0);
     
     return (
         <>
@@ -22,6 +24,9 @@ const PatientCheckout = () => {
             successMessage = {successMessage} setSuccessMessage = {setSuccessMessage}
             errorOpen = {errorOpen} setErrorOpen = {setErrorOpen}
             errorMessage = {errorMessage} setErrorMessage = {setErrorMessage}
+            address = {address} setAddress = {setAddress}
+            meds = {meds} setMeds = {setMeds}
+            total = {total} setTotal = {setTotal}
             
             />
             <PatientViewCartSummary address={address} paymentMethod={paymentMethod} 
@@ -29,6 +34,8 @@ const PatientCheckout = () => {
                         successMessage = {successMessage} setSuccessMessage = {setSuccessMessage}
                         errorOpen = {errorOpen} setErrorOpen = {setErrorOpen}
                         errorMessage = {errorMessage} setErrorMessage = {setErrorMessage}
+                        meds = {meds} setMeds = {setMeds}
+                        total = {total} setTotal = {setTotal}
             />
         </>
     );

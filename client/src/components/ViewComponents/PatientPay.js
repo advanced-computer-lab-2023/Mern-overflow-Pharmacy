@@ -15,7 +15,6 @@ export default function PatientPay(props) {
     const { userId } = useUser();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [total, setTotal] = useState(0);
     const [Query, setQuery] = useState("");
     const [value, setValue] = useState('');
     const [cash, setCash] = useState(false);
@@ -46,7 +45,11 @@ export default function PatientPay(props) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    pId: userId
+                    pId: userId,
+                    medicines:props.meds,
+                    total:props.total,
+                    address:props.address
+
                 }),
             })
                 .then(async res => {

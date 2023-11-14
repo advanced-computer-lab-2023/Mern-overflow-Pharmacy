@@ -11,16 +11,16 @@ export default function PatientViewCartSummary(props) {
     const { userId } = useUser();
     const navigate = useNavigate();
     const [data, setData] = useState([]);
-    const [meds, setMeds] = useState([]);
+
     const [loading, setLoading] = useState(true);
     const [loadingChange, setLoadingChange] = useState(false);
-    const [total, setTotal] = useState(0);
+    
 
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/cart/${userId}`).then((res) => {
             setData(res.data)
-            setMeds(res.data.medicines);
+            props.setMeds(res.data.medicines);
             setTimeout(() => setLoading(false), 500);
         });
     };
@@ -31,11 +31,11 @@ export default function PatientViewCartSummary(props) {
 
     useEffect(() => {
         let total = 0;
-        meds.forEach(med => {
+        props.meds.forEach(med => {
             total += med.medPrice * med.medQuantity;
         });
-        setTotal(total);
-    }, [meds]);
+        props.setTotal(total);
+    }, [props.meds]);
 
     const handleReturnToCart = () => {
         navigate("/patient/cart");
@@ -43,10 +43,11 @@ export default function PatientViewCartSummary(props) {
 
     const handleCheckout = () => {
         setLoadingChange(true);
-        const medicines = meds;
+        const medicines = props.meds;
         const address = props.address;
         const paymentMethod = props.paymentMethod;
-        axios.post(`http://localhost:8000/orders/${userId}/add`, { medicines, total, address, paymentMethod })
+
+        axios.post(`http://localhost:8000/orders/${userId}/add`, { medicines, total:props.total, address, paymentMethod })
             .then(response => {
                 axios.put(`http://localhost:8000/cart/${userId}/empty`).then((response) => {
                     setLoadingChange(false);
@@ -107,7 +108,7 @@ export default function PatientViewCartSummary(props) {
                             <TableHead>
                             </TableHead>
                             <TableBody>
-                                {meds.map((med) =>
+                                {props.meds.map((med) =>
                                     <TableRow>
                                         <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>{med.medQuantity}x {capitalize(med.medName)}</TableCell>
                                         <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>EGP {med.medPrice * med.medQuantity}</TableCell>
@@ -115,7 +116,7 @@ export default function PatientViewCartSummary(props) {
                                 )}
                                 <TableRow>
                                     <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>Total Amount</TableCell>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>EGP {total}</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>EGP {props.total}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", borderTop: '2px solid #ccc' }}>Delivery Address</TableCell>

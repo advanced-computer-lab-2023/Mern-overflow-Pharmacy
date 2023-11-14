@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
+import carts from "../models/Cart.js";
 import Cart from "../models/Cart.js";
 import Stripe from "stripe";
 import Patient from "../models/Patient.js";
+import orders from "../models/Order.js";
+import { HydratedDocument } from "mongoose";
+import medicine, { Imedicine } from "../models/medicine.js";
 const stripe = new Stripe(
   "sk_test_51O9bKeHqEqnZHrbzSpBS6JOvMryqZfvDolGqcPDOb19E9gXdSe3rKy5UbUgCOmqLVFyHxn1U0Fp7G3IFujKuYhn500g0lhxoDO"
 );
@@ -29,8 +33,69 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
       success_url: `http://localhost:3000/patient/orders`,
       cancel_url: `http://localhost:3000/patient/checkout`,
     });
+
+
+
+
+
+
+
+
+    const { medicines, total, address} = req.body;
+    const paymentMethod = "Credit Card";
+    
+    const patientId = req.body.pId;
+    console.log("HII");
+    console.log(medicines, total, address, paymentMethod, patientId);
+    try {
+        for (const med of medicines) {
+            const med2: HydratedDocument<Imedicine> | null = await medicine.findOne({ "name": med.medName });
+            if (!med2) {
+                return ;
+            }
+            med2.availableQuantity -= med.medQuantity; //TODO names
+            await med2.save();
+        }
+        const order = new orders({
+            patient: patientId,
+            status: 'pending',
+            date: new Date(),
+            total: total,
+            address: address,
+            paymentMethod: paymentMethod,
+            medicines: medicines
+        });
+
+        await order.save();
+    } catch (error) {
+        console.error(error);
+    }
+
+
+    try {
+        const cart = await carts.findOne({ patient: patientId });
+        if (!cart) {
+            return;
+        }
+        cart.medicines = [];
+        await cart.save();
+    } catch (error) {
+        console.error(error);
+    }
+    
+
+
+
+
+
+
+
+
+    ///post(`http://localhost:8000/orders/${req.body.pId}/add`, { medicines:req.body.meds, total:req.body.total, address:req.body.address, paymentMethod:"Credit Card" })
+    //put(`http://localhost:8000/cart/${req.body.pId}/empty`)
     res.json({ url: session.url });
-  } catch (e) {
+  } 
+  catch (e) {
     console.log(e);
     res.status(500).json(e);
     
