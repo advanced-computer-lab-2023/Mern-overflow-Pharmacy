@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import orders from "../models/Order.js";
+import medicine, { Imedicine } from "../models/medicine.js";
+import { HydratedDocument } from "mongoose";
 
 const viewOrders = async (req: Request, res: Response) => {
     const patientId = req.params.patientId;
@@ -17,6 +19,14 @@ const addOrder = async (req: Request, res: Response) => {
     console.log("HII");
     console.log(medicines, total, address, paymentMethod, patientId);
     try {
+        for (const med of medicines) {
+            const med2: HydratedDocument<Imedicine> | null = await medicine.findOne({ "name": med.medName });
+            if (!med2) {
+                return res.status(404).send("medicine not found");
+            }
+            med2.availableQuantity -= med.medQuantity; //TODO names
+            await med2.save();
+        }
         const order = new orders({
             patient: patientId,
             status: 'pending',
@@ -45,6 +55,14 @@ const cancelOrder = async (req: Request, res: Response) => {
         );
         if (!updatedOrder) {
             return res.status(404).json({ message: 'Order not found' });
+        }
+        for(const med of updatedOrder.medicines){
+            const med2: HydratedDocument<Imedicine> | null = await medicine.findOne({ "name": med.medName });
+            if (!med2) {
+                return res.status(404).send("medicine not found");
+            }
+            med2.availableQuantity += med.medQuantity.valueOf(); //TODO names
+            await med2.save();
         }
         res.json({ message: 'Order cancelled successfully', updatedOrder });
     } catch (error) {
