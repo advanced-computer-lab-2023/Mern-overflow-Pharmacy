@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext, useContext  } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import { InputAdornment, Accordion, AccordionDetails, AccordionSummary, Snackbar, Alert, ButtonGroup, CircularProgress, Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -166,7 +166,7 @@ export default function PatientViewMedicines(props) {
                             <Container sx={{ p: "20px", my: "40px", paddingBottom: 5, maxWidth: 350, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                                 {data.map((row, index) => {
                                     const count = 0;
-                                    return row.name.toLowerCase().includes(Query.toLowerCase()) && (
+                                    return row.name.toLowerCase().includes(Query.toLowerCase()) && !row.isArchived && (
                                         <Paper
                                             sx={{
                                                 p: 2,
@@ -180,7 +180,7 @@ export default function PatientViewMedicines(props) {
                                             <Accordion elevation="3">
                                                 <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
                                                     <ButtonBase sx={{ width: 128, height: '100%' }}>
-                                                    <Img alt={row.name} src={`http://localhost:8000/images/${row.image}`} />
+                                                        <Img alt={row.name} src={`http://localhost:8000/images/${row.image}`} />
                                                     </ButtonBase>
                                                     <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
                                                         <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">
@@ -189,8 +189,8 @@ export default function PatientViewMedicines(props) {
                                                         <Typography variant="body2" gutterBottom>
                                                             {row.medicinalUse}
                                                         </Typography>
-                                                        <Container sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: "center", justifyItems: "center", flexDirection: "column"}}>
-                                                            <Typography sx={{my: "10px", fontFamily: "monospace"}}>
+                                                        <Container sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: "center", justifyItems: "center", flexDirection: "column" }}>
+                                                            <Typography sx={{ my: "10px", fontFamily: "monospace" }}>
                                                                 EGP {row.price}
                                                             </Typography>
                                                             {row.overTheCounter ? (
@@ -239,13 +239,12 @@ export default function PatientViewMedicines(props) {
                                                     </Container>
                                                 </AccordionSummary>
                                                 <AccordionDetails>
-                                                    <Typography variant="body1" sx={{textAlign: "left", mb: "5px"}}>
+                                                    <Typography variant="body1" sx={{ textAlign: "left", mb: "5px" }}>
                                                         {row.details.description}
                                                     </Typography>
                                                     <Typography variant="body1" sx={{ textAlign: "left", color: "#777" }}>
                                                         Active Ingredients: {row.details.activeIngredients.join(', ')}
-                                                    </Typography>
-                                                </AccordionDetails>
+                                                    </Typography>                                          </AccordionDetails>
                                             </Accordion>
                                         </Paper>
                                     );

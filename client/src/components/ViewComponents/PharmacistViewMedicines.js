@@ -80,11 +80,13 @@ export default function PharmacistViewMedicines(props) {
         navigate(`/pharmacist/medicines/${id}`);
     };
 
-    const handleClickArchive = (id) => {
+    const handleClickArchive = (id, isArchived) => {
         setLoadingEdit(true);
         axios.put(`http://localhost:8000/medicines/${id}/archive`)
             .then((response) => {
-                setSuccessMessage('Medicine has been archived succesfully');
+                isArchived == true
+                ? setSuccessMessage('Medicine has been unarchived succesfully')
+                : setSuccessMessage('Medicine has been archived succesfully');
                 setSuccessOpen(true);
                 setErrorOpen(false);
                 setLoadingEdit(false);
@@ -229,7 +231,7 @@ export default function PharmacistViewMedicines(props) {
                                                             <IconButton onClick={() => handleClickEdit(row._id)} sx={{ '&:hover': { color: theme.palette.info.main } }}>
                                                                 <EditIcon />
                                                             </IconButton>
-                                                            <IconButton onClick={() => handleClickArchive(row._id)} sx={{ '&:hover': { color: theme.palette.info.main } }}>
+                                                            <IconButton onClick={() => handleClickArchive(row._id, row.isArchived)} sx={{ '&:hover': { color: theme.palette.info.main } }}>
                                                                 {row.isArchived? <><UnarchiveIcon/ ><Typography sx={{ml: "3px"}}>Unarchive</Typography></>
                                                                 : <><ArchiveIcon /><Typography sx={{ml: "3px"}}>Archive</Typography></>}
                                                             </IconButton>

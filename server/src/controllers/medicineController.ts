@@ -11,14 +11,14 @@ const listAllMedicines = async (req: Request, res: Response) => {
 const listMedicines = async (req: Request, res: Response) => {
   //view a list of all available medicines (including picture of medicine, price, description)
   medicine.find()
-    .select('_id availableQuantity name medicinalUse image price details overTheCounter')
+    .select('_id availableQuantity name medicinalUse image price details overTheCounter isArchived')
     .then(
 
       (results) => {
         var medResults: any[] = [];
         for (const med of results) {
           if (med.availableQuantity !== 0)
-            medResults.push({ "_id": med._id, "name": med.name, "medicinalUse": med.medicinalUse, "image": med.image, "price": med.price, "details": med.details, "overTheCounter":med.overTheCounter });
+            medResults.push({ "_id": med._id, "name": med.name, "medicinalUse": med.medicinalUse, "image": med.image, "price": med.price, "details": med.details, "overTheCounter":med.overTheCounter, "isArchived":med.isArchived });
         }
         res.status(200).send(medResults);
       })
