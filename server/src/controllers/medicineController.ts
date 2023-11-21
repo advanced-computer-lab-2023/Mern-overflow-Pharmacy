@@ -43,8 +43,6 @@ const readMedicine = async (req: Request, res: Response) => {
     });
 }
 
-
-
 const searchMedicineByName = async (req: Request, res: Response) => {
   const medname = req.body.name.toLowerCase();
 
@@ -71,10 +69,6 @@ const searchMedicineByName = async (req: Request, res: Response) => {
     res.status(400).json(err);
   }
 };
-
-
-
-
 
 const filterMedicines = async (req: Request, res: Response) => {
   //filter medicines based on medicinal use
@@ -134,6 +128,20 @@ const updateMedicine = async (req: Request, res: Response) => {
     });
 }
 
+const archiveMedicine = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  try {
+    const existingMedicine = await medicine.findById(id);
+    if (!existingMedicine) {
+      return res.status(404).send({ message: 'Medicine not found' });
+    }
+    existingMedicine.isArchived = !existingMedicine.isArchived;
+    const updatedMed = await existingMedicine.save();
+    res.status(200).send(updatedMed);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 
 export default {
   listMedicines,
@@ -142,5 +150,6 @@ export default {
   filterMedicines,
   createMedicine,
   updateMedicine,
-  listAllMedicines
+  listAllMedicines,
+  archiveMedicine
 };

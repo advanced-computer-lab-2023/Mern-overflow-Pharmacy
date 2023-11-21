@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { InputAdornment, Accordion, AccordionDetails, AccordionSummary, CircularProgress, Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Snackbar, Alert, InputAdornment, Accordion, AccordionDetails, AccordionSummary, CircularProgress, Grid, ButtonBase, Container, Card, CardHeader, CardMedia, CardContent, Typography, Button, Paper, FormControl, Select, InputLabel, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import UploadIcon from '@mui/icons-material/Upload';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import SearchIcon from '@mui/icons-material/Search';
@@ -13,6 +15,7 @@ import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { capitalize } from '../../utils'
+import Archive from "@mui/icons-material/Archive";
 
 export default function PharmacistViewMedicines(props) {
     const theme = useTheme();
@@ -21,6 +24,11 @@ export default function PharmacistViewMedicines(props) {
     const [loading, setLoading] = useState(true);
     const [Query, setQuery] = useState("");
     const [uniqueMedicinalUses, setUniqueMedicinalUses] = useState(["All"]);
+    const [loadingEdit, setLoadingEdit] = useState(false);
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const Img = styled('img')({
         margin: 'auto',
@@ -72,9 +80,52 @@ export default function PharmacistViewMedicines(props) {
         navigate(`/pharmacist/medicines/${id}`);
     };
 
+    const handleClickArchive = (id) => {
+        setLoadingEdit(true);
+        axios.put(`http://localhost:8000/medicines/${id}/archive`)
+            .then((response) => {
+                setSuccessMessage('Medicine has been archived succesfully');
+                setSuccessOpen(true);
+                setErrorOpen(false);
+                setLoadingEdit(false);
+                fetchTableData();
+            })
+            .catch((error) => {
+                console.error('Error making PUT request', error);
+                setErrorMessage(error.response.data.message || 'Unknown error');
+                setErrorOpen(true);
+                setSuccessOpen(false);
+                setLoadingEdit(false);
+            });
+    };
+
+    const handleErrorClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setErrorOpen(false);
+    };
+
+    const handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessOpen(false);
+    };
+
     return (
         <>
             <Container maxWidth="xl">
+            <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
+                <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSuccessClose}>
+                <Alert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+                    {successMessage}
+                </Alert>
+            </Snackbar>
                 <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }} >
                     {loading ? (
                         <CircularProgress sx={{ mt: '30px' }} />
@@ -165,6 +216,9 @@ export default function PharmacistViewMedicines(props) {
                                                         <Typography variant="body1" sx={{ color: "#777", textAlign: "center", mt: "10px" }}>
                                                             {row.overTheCounter ? "Over the Counter" : "Prescription Needed"}
                                                         </Typography>
+                                                        <Typography variant="body1" sx={{ color: "#777", textAlign: "center", mt: "10px" }}>
+                                                            {row.isArchived ? "Medicine is archived" : "Medicine is visible"}
+                                                        </Typography>
                                                         <Container sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around", mt: "10px" }}>
                                                             <Typography>
                                                                 {row.availableQuantity} In stock
@@ -175,11 +229,34 @@ export default function PharmacistViewMedicines(props) {
                                                             <IconButton onClick={() => handleClickEdit(row._id)} sx={{ '&:hover': { color: theme.palette.info.main } }}>
                                                                 <EditIcon />
                                                             </IconButton>
+                                                            <IconButton onClick={() => handleClickArchive(row._id)} sx={{ '&:hover': { color: theme.palette.info.main } }}>
+                                                                {row.isArchived? <><UnarchiveIcon/ ><Typography sx={{ml: "3px"}}>Unarchive</Typography></>
+                                                                : <><ArchiveIcon /><Typography sx={{ml: "3px"}}>Archive</Typography></>}
+                                                            </IconButton>
                                                         </Container>
                                                     </AccordionDetails>
                                                 </Accordion>
                                             </Paper>
                                         ),
+                                )}
+                                {loadingEdit && (
+                                    <div
+                                        style={{
+                                            position: "fixed",
+                                            top: 0,
+                                            left: 0,
+                                            width: "100vw",
+                                            height: "100vh",
+                                            background: "rgba(0, 0, 0, 0.5)",
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            zIndex: 9999,
+                                        }}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <CircularProgress color="primary" />
+                                    </div>
                                 )}
                             </Container>
                         </>

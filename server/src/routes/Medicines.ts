@@ -18,5 +18,6 @@ router.post("/", medicineController.createMedicine);
 
 //PUT
 router.put("/:id", medicineController.updateMedicine);
+router.put("/:id/archive", medicineController.archiveMedicine);
 
 export default router;

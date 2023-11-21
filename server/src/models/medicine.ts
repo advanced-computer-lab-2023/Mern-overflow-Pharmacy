@@ -20,6 +20,7 @@ export interface Imedicine {
     sales : number ;
     image: string;
     overTheCounter: boolean;
+    isArchived: boolean;
 }
 
 const medicineSchema = new Schema<Imedicine>({
@@ -37,7 +38,8 @@ const medicineSchema = new Schema<Imedicine>({
         // contentType: { type: String, required: false, },
         // filename: { type: String,required: false,},
     ,
-    overTheCounter: {type: Boolean, required: true}
+    overTheCounter: {type: Boolean, required: true},
+    isArchived: {type: Boolean, required: true, default: false}
 })
 
 
