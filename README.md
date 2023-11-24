@@ -1,6 +1,9 @@
-![Logo](https://i.imgur.com/M5HToBU.png)
+<p align="center">
+    <img width="100" src="https://i.imgur.com/M5HToBU.png" alt="logo">
+</p>
+<p style="text-align: center; font-size: 35px">El7a2ny App</p>
 
-# El7a2ny App
+#
 El7a2ny is a robust software solution designed to enhance and automate interactions within the healthcare ecosystem, catering to clinics, doctors, pharmacists, and patients. Our platform seamlessly connects patients with healthcare providers, offering a comprehensive suite of features to streamline the entire healthcare process. We offer a holistic approach to healthcare management, addressing a spectrum of needs that includes discovering the right healthcare professional, seamlessly coordinating appointments, facilitating both on-premise and online consultations, managing prescriptions, receiving timely reminders for follow-ups, securely accessing comprehensive medical histories, and effortlessly ordering prescribed medications. Our platform is designed to streamline and enhance every facet of the healthcare journey, ensuring a seamless and patient-centric experience from finding the right doctor to managing ongoing care.
 ## Badges
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
