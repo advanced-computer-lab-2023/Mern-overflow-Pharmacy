@@ -144,12 +144,67 @@ You will then need to run the following command each time before your next commi
 <details>
 <summary> Pharmacists can </summary>
 
--   </details>
+-   View the available quantity and sales of each medicine
+-   Add a medicine with its details, price and available quantity
+-   Upload medicine image
+-   Edit medicine details and price
+-   Archive / unarchive a medicine
+-   View a total sales report based on a chosen month
+-   Filter sales report based on a medicine / date
+-   Chat with a patient
+-   View the amount in my wallet
+-   Receive a notification once a medicine is out of stock on the system and via email
+</details>
 
 <details>
 <summary> Patients can </summary>
 
--   </details>
+-   Upload / remove documents (PDF,JPEG,JPG,PNG) for their medical history
+-   View uploaded health records
+-   Add family members to the system
+-   Link another existing patient's account as a family member
+-   View registered family members
+-   Choose to pay for their appointments using wallet or credit card
+-   Enter credit card details and pay for an appointment using Stripe
+-   Filter appointments by date / status
+-   View all new and old prescriptions and their statuses
+-   View health package options and details
+-   Subscribe to a health package for themselves and their family members
+-   Pay for the chosen health package using wallet or credit card
+-   View subscribed health package for themselves and their family members
+-   View the status of their health care package subscription
+-   Cancel a subscription of a health package
+-   View a list of all doctors along with their speciality, session price (based on subscribed health package if any)
+-   Search for a doctor by name and/or speciality
+-   Filter a doctor by speciality and/or availability on a certain date and at a specific time
+-   View details about a specific selected doctor
+-   Select an appointment date and time for themselves or for a family member
+-   Receive a notification of their appointment on the system and by mail
+-   View a list of their upcoming / past appointments
+-   Filter appointments by date or status
+-   Reschedule an appointment for themselves or for a family member
+-   Cancel an appointment for themselves or for a family member
+-   Receive a notification about cancelled or rescheduled appointments on the system and by mail
+-   View a list of all their perscriptions
+-   Filter prescriptions based on date or doctor or fulfillment status
+-   View the details of a selected prescription
+-   Pay directly for the prescription items by wallet or credit card
+-   Download a prescription (PDF)
+-   Start / End a video call with a doctor
+-   Chat with a doctor or pharmacist
+-   Request a follow-up to a previous appointment for themselves or a family member
+-   Receive a refund in their wallet when a doctor cancels an appointment
+-   View the amount in their wallet
+-   Add an over the counter medicine or a prescription medicine included in their prescriptions in their cart
+-   View their cart items
+-   Remove an item from their cart
+-   Update the amount of an item in their cart
+-   Checkout their orders with address and payment method (wallet/COD/credit card)
+-   Add new delivery addresses
+-   View details and status of all their orders
+-   Cancel a pending order
+-   View alternatives to a medicine that is out of stock based on main active ingredient
+</details>
 
 ## Code Examples
 
