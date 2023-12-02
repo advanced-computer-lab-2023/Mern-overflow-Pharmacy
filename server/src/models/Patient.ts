@@ -4,76 +4,74 @@ import User from "./User.js";
 //dotenv.config();
 
 interface emergencyContact {
-  name: string;
-  mobileNumber: string;
+    name: string;
+    mobileNumber: string;
 }
 
 interface IPatient {
-  // username: string;
-  name: string;
-  // passwordHash: string;
-  dateOfBirth: Date;
-  gender: string;
-  mobileNumber: string;
-  emergencyContact: emergencyContact;
-  prescriptions?: Types.ObjectId[];
-  package?: Types.ObjectId;
-  address: string[];
-  wallet?: number;
+    // username: string;
+    name: string;
+    // passwordHash: string;
+    dateOfBirth: Date;
+    gender: string;
+    mobileNumber: string;
+    emergencyContact: emergencyContact;
+    prescriptions?: Types.ObjectId[];
+    package?: Types.ObjectId;
+    address: string[];
+    wallet?: number;
 }
 
 // 2. Create a Schema corresponding to the document interface.
 const PatientSchema = new Schema<IPatient>({
-  // username: { type: String, required: true, unique: true },
-  name: { type: String, required: true, trim: true },
-  // passwordHash: { type: String, required: true },
-  dateOfBirth: { type: Date, required: true },
-  gender: {
-    type: String,
-    required: true,
-    lowercase: true,
-    enum: ["male", "female"],
-  },
-  mobileNumber: {
-    type: String,
-    required: true,
-    unique: true,
-    min: 8,
-    max: 16,
-    match: [/^(\+\d{8,15}|\d{8,15})$/, "invalid charachters"],
-  },
-  emergencyContact: {
+    // username: { type: String, required: true, unique: true },
     name: { type: String, required: true, trim: true },
+    // passwordHash: { type: String, required: true },
+    dateOfBirth: { type: Date, required: true },
+    gender: {
+        type: String,
+        required: true,
+        lowercase: true,
+        enum: ["male", "female"]
+    },
     mobileNumber: {
-      type: String,
-      required: true,
-      min: 8,
-      max: 16,
-      match: [/^(\+\d{8,15}|\d{8,15})$/, "invalid charachters"],
+        type: String,
+        required: true,
+        unique: true,
+        min: 8,
+        max: 16,
+        match: [/^(\+\d{8,15}|\d{8,15})$/, "invalid charachters"]
     },
-    relation: {
-      type: String,
-      required: true,
-      trim: true,
-      enum: ["wife", "husband", "child"],
+    emergencyContact: {
+        name: { type: String, required: true, trim: true },
+        mobileNumber: {
+            type: String,
+            required: true,
+            min: 8,
+            max: 16,
+            match: [/^(\+\d{8,15}|\d{8,15})$/, "invalid charachters"]
+        },
+        relation: {
+            type: String,
+            required: true,
+            trim: true,
+            enum: ["wife", "husband", "child"]
+        }
     },
-  },
-  prescriptions: [
-    { type: mongoose.Types.ObjectId, ref: "Prescription", required: false },
-  ],
-  package: { type: mongoose.Types.ObjectId, ref: "Package", required: false },
-  address: [{ type: String, trim: true }],
-  wallet: { type: Number, required: false },
+    prescriptions: [{ type: mongoose.Types.ObjectId, ref: "Prescription", required: false }],
+    package: { type: mongoose.Types.ObjectId, ref: "Package", required: false },
+    address: [{ type: String, trim: true }],
+    wallet: { type: Number, required: false }
 });
 
 PatientSchema.pre("save", function (next) {
-  if (this.isModified("name")) {
-    this.name = this.name.toLowerCase();
-  }
-  // if (this.isModified("email")) {
-  //   this.email = this.email.toLowerCase();
-  // }
-  next();
+    if (this.isModified("name")) {
+        this.name = this.name.toLowerCase();
+    }
+    // if (this.isModified("email")) {
+    //   this.email = this.email.toLowerCase();
+    // }
+    next();
 });
 
 // 3. Create a Model.

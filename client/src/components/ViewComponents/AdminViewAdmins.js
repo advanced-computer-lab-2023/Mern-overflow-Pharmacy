@@ -1,12 +1,40 @@
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import {
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    CircularProgress,
+    Input,
+    Snackbar,
+    Alert,
+    InputLabel,
+    TextField,
+    Grid,
+    Select,
+    MenuItem,
+    Button,
+    Box,
+    Container,
+    FormControl,
+    Typography,
+    Divider,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Radio
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 
-
-const columns = [{ key: "username", label: "USERNAME", }, { key: "action", label: "ACTION", },];
+const columns = [
+    { key: "username", label: "USERNAME" },
+    { key: "action", label: "ACTION" }
+];
 export default function AdminViewAdmins(props) {
     const theme = useTheme();
     const [data, setData] = useState([]);
@@ -14,7 +42,7 @@ export default function AdminViewAdmins(props) {
     const [loadingDel, setLoadingDel] = useState(false);
     const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState("");
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8000/adminstrators`).then((res) => {
@@ -26,26 +54,27 @@ export default function AdminViewAdmins(props) {
 
     const handleDelete = (id) => {
         setLoadingDel(true);
-        axios.delete(`http://localhost:8000/adminstrators/${id}`)
+        axios
+            .delete(`http://localhost:8000/adminstrators/${id}`)
             .then((response) => {
                 fetchTableData();
-                setSuccessMessage('Admin deleted succesfully');
+                setSuccessMessage("Admin deleted succesfully");
                 setSuccessOpen(true);
                 setLoadingDel(false);
             })
             .catch((error) => {
-                console.error('Error making DELETE request', error);
-                alert('Error deleting the admin: ' + error.message);
+                console.error("Error making DELETE request", error);
+                alert("Error deleting the admin: " + error.message);
                 setLoadingDel(false);
             });
-    }
+    };
 
     useEffect(() => {
         fetchTableData();
     }, [props.dataIsUpdated]);
 
     const handleSuccessClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         setSuccessOpen(false);
@@ -58,9 +87,9 @@ export default function AdminViewAdmins(props) {
                     {successMessage}
                 </Alert>
             </Snackbar>
-            <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
+            <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }}>
                 {loading ? (
-                    <CircularProgress sx={{ mt: '30px' }} />
+                    <CircularProgress sx={{ mt: "30px" }} />
                 ) : (
                     <Container>
                         <Container
@@ -68,7 +97,7 @@ export default function AdminViewAdmins(props) {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between",
-                                my: 5,
+                                my: 5
                             }}
                         >
                             <Container sx={{ width: "48%" }}>
@@ -84,21 +113,31 @@ export default function AdminViewAdmins(props) {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell key="username" sx={{ fontWeight: "bold" }}>Username</TableCell>
-                                    <TableCell key="action" sx={{ textAlign: 'right', fontWeight: "bold" }}>Action</TableCell>
+                                    <TableCell key="username" sx={{ fontWeight: "bold" }}>
+                                        Username
+                                    </TableCell>
+                                    <TableCell key="action" sx={{ textAlign: "right", fontWeight: "bold" }}>
+                                        Action
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data.map((row) => row.username.toLowerCase().includes(Query.toLowerCase()) && (
-                                    <TableRow key={row.username}>
-                                        <TableCell>{row.username}</TableCell>
-                                        <TableCell sx={{ textAlign: 'right' }}>
-                                            <IconButton onClick={() => handleDelete(row._id)} sx={{ '&:hover': { color: theme.palette.error.main } }}>
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                {data.map(
+                                    (row) =>
+                                        row.username.toLowerCase().includes(Query.toLowerCase()) && (
+                                            <TableRow key={row.username}>
+                                                <TableCell>{row.username}</TableCell>
+                                                <TableCell sx={{ textAlign: "right" }}>
+                                                    <IconButton
+                                                        onClick={() => handleDelete(row._id)}
+                                                        sx={{ "&:hover": { color: theme.palette.error.main } }}
+                                                    >
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                )}
                             </TableBody>
                         </Table>
                     </Container>
@@ -116,7 +155,7 @@ export default function AdminViewAdmins(props) {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        zIndex: 9999,
+                        zIndex: 9999
                     }}
                     onClick={(e) => e.stopPropagation()}
                 >
@@ -124,6 +163,5 @@ export default function AdminViewAdmins(props) {
                 </div>
             )}
         </Container>
-
     );
 }

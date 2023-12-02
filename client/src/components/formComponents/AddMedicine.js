@@ -1,30 +1,54 @@
-import { Select, MenuItem, CircularProgress, Accordion, AccordionDetails, AccordionSummary, Box, Grid, Alert, Typography, Snackbar, InputAdornment, OutlinedInput, InputLabel, FormControl, Button, Container, Paper, TextField, IconButton } from "@mui/material";
-import axios from 'axios';
-import { useForm } from "react-hook-form"
+import {
+    Select,
+    MenuItem,
+    CircularProgress,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Box,
+    Grid,
+    Alert,
+    Typography,
+    Snackbar,
+    InputAdornment,
+    OutlinedInput,
+    InputLabel,
+    FormControl,
+    Button,
+    Container,
+    Paper,
+    TextField,
+    IconButton
+} from "@mui/material";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { styled } from '@mui/material/styles';
-import AddIcon from '@mui/icons-material/Add';
-import UploadIcon from '@mui/icons-material/Upload';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import { styled } from "@mui/material/styles";
+import AddIcon from "@mui/icons-material/Add";
+import UploadIcon from "@mui/icons-material/Upload";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const AddMedicine = (props) => {
-    const { register, handleSubmit, setError, formState: { errors } } = useForm();
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors }
+    } = useForm();
     const [errorOpen, setErrorOpen] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState("");
     const [loadingAdd, setLoadingAdd] = useState(false);
     const [file, setFile] = useState();
 
- 
-    const onSubmit = data => {
+    const onSubmit = (data) => {
         setLoadingAdd(true);
         if (file) {
             const imageName = file.name;
-            console.log(imageName)
+            console.log(imageName);
 
             // Include imageName in the data sent to the server
             data.image = imageName;
@@ -32,12 +56,16 @@ const AddMedicine = (props) => {
 
         const dataToServer = { ...data };
         dataToServer["sales"] = 0;
-        dataToServer["details"] = { description: data["description"], activeIngredients: data["activeIngredients"].split(',').map(item => item.trim()) }
-        delete dataToServer.description
-        delete dataToServer.activeIngredients
-        axios.post('http://localhost:8000/medicines', dataToServer)
+        dataToServer["details"] = {
+            description: data["description"],
+            activeIngredients: data["activeIngredients"].split(",").map((item) => item.trim())
+        };
+        delete dataToServer.description;
+        delete dataToServer.activeIngredients;
+        axios
+            .post("http://localhost:8000/medicines", dataToServer)
             .then((response) => {
-                setSuccessMessage('Medicine added succesfully');
+                setSuccessMessage("Medicine added succesfully");
                 setSuccessOpen(true);
                 setErrorOpen(false);
                 props.setDataIsUpdated(false);
@@ -46,62 +74,62 @@ const AddMedicine = (props) => {
             .catch((error) => {
                 console.error(error);
                 if (error.response.data.code === 11000) {
-                    setErrorMessage('This medicine name already exists. Please use another name.');
+                    setErrorMessage("This medicine name already exists. Please use another name.");
                 } else {
-                    setErrorMessage(error.response.data.message || 'Unknown error');
+                    setErrorMessage(error.response.data.message || "Unknown error");
                 }
                 setErrorOpen(true);
                 setSuccessOpen(false);
                 setLoadingAdd(false);
             });
-    }
+    };
 
     const handleChange = (event) => {
         if (errors[event.target.name]) {
-            setError(event.target.name,
-                {
-                    type: errors[event.target.name]["type"],
-                    message: errors[event.target.name]["type"]
-                })
+            setError(event.target.name, {
+                type: errors[event.target.name]["type"],
+                message: errors[event.target.name]["type"]
+            });
         }
-    }
+    };
 
     const handleErrorClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         setErrorOpen(false);
     };
 
     const handleSuccessClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         setSuccessOpen(false);
     };
 
-    const handleImageUpload = (e) =>{
-        const formData= new FormData()
-        formData.append('file', file)
-        axios.post('http://localhost:8000/upload', formData)
-        .then(res => console.log(res))
-        .catch(err=> console.log(err))
-    }
+    const handleImageUpload = (e) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        axios
+            .post("http://localhost:8000/upload", formData)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+    };
 
-    const VisuallyHiddenInput = styled('input')({
-        clip: 'rect(0 0 0 0)',
-        clipPath: 'inset(50%)',
+    const VisuallyHiddenInput = styled("input")({
+        clip: "rect(0 0 0 0)",
+        clipPath: "inset(50%)",
         height: 1,
-        overflow: 'hidden',
-        position: 'absolute',
+        overflow: "hidden",
+        position: "absolute",
         bottom: 0,
         left: 0,
-        whiteSpace: 'nowrap',
-        width: 1,
+        whiteSpace: "nowrap",
+        width: 1
     });
 
     return (
-        <Container maxWidth="lg" sx={{ mt: '50px' }} >
+        <Container maxWidth="lg" sx={{ mt: "50px" }}>
             <Snackbar open={errorOpen} autoHideDuration={5000} onClose={handleErrorClose}>
                 <Alert elevation={6} variant="filled" onClose={handleErrorClose} severity="error">
                     {errorMessage}
@@ -112,11 +140,21 @@ const AddMedicine = (props) => {
                     {successMessage}
                 </Alert>
             </Snackbar>
-            <Accordion sx={{ px: '20px', pt: '20px', pb: '0' }} elevation={3}>
-                <AccordionSummary >
-                    <Container sx={{ display: "flex", alignItems: "center", alignContent: "center", justifyContent: "space-between" }}>
-                        <Typography variant="h6" sx={{ mb: 3 }}> Add a Medicine to the System</Typography>
-                        <AddCircleIcon color="primary" sx={{ mb: 2, fontSize: 40, }} />
+            <Accordion sx={{ px: "20px", pt: "20px", pb: "0" }} elevation={3}>
+                <AccordionSummary>
+                    <Container
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            alignContent: "center",
+                            justifyContent: "space-between"
+                        }}
+                    >
+                        <Typography variant="h6" sx={{ mb: 3 }}>
+                            {" "}
+                            Add a Medicine to the System
+                        </Typography>
+                        <AddCircleIcon color="primary" sx={{ mb: 2, fontSize: 40 }} />
                     </Container>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -170,7 +208,7 @@ const AddMedicine = (props) => {
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <FormControl fullWidth >
+                                <FormControl fullWidth>
                                     <InputLabel htmlFor="price">Price</InputLabel>
                                     <OutlinedInput
                                         fullWidth
@@ -197,7 +235,7 @@ const AddMedicine = (props) => {
                                         type="text"
                                         fullWidth
                                         required
-                                        sx={{ textAlign: 'left' }}
+                                        sx={{ textAlign: "left" }}
                                         labelId="overTheCounter-label"
                                         id="overTheCounter-select"
                                         label="Over the Counter"
@@ -221,8 +259,7 @@ const AddMedicine = (props) => {
                                 />
                             </Grid>
 
-
-{/* 
+                            {/*
                             <Grid item xs={12} sm={3}>
                             <input type="file" onChange={e => setFile(e.target.files[0])} />
                                 <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
@@ -230,7 +267,6 @@ const AddMedicine = (props) => {
                                     <VisuallyHiddenInput type="file" />
                                 </Button>
                             </Grid> */}
-
 
                             {/* <Grid item xs={12} sm={3}>
                                 <Button component="label" variant="outlined" startIcon={<UploadIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
@@ -241,10 +277,12 @@ const AddMedicine = (props) => {
 
                             <input type="hidden" {...register("imageName")} />
                             <Grid item xs={12} sm={3}>
-                                <input type="file" onChange={e => setFile(e.target.files[0])} />
-                                <Button type="button" onClick={handleImageUpload}>Upload Medicine Image</Button>
+                                <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+                                <Button type="button" onClick={handleImageUpload}>
+                                    Upload Medicine Image
+                                </Button>
                             </Grid>
-                            
+
                             {/* <Grid item xs={12} sm={3}>
                             <input
                                 type="file"
@@ -257,7 +295,13 @@ const AddMedicine = (props) => {
                             </label>
                             </Grid> */}
                             <Grid item xs={12} sm={3}>
-                                <Button type="submit" variant="contained" startIcon={<AddIcon />} fullWidth sx={{ p: 1.8, fontWeight: 'bold' }}>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    startIcon={<AddIcon />}
+                                    fullWidth
+                                    sx={{ p: 1.8, fontWeight: "bold" }}
+                                >
                                     Add Medicine
                                 </Button>
                             </Grid>
@@ -277,15 +321,15 @@ const AddMedicine = (props) => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        zIndex: 9999,
+                        zIndex: 9999
                     }}
                     onClick={(e) => e.stopPropagation()}
                 >
                     <CircularProgress sx={{ color: "white" }} />
                 </div>
             )}
-        </Container >
+        </Container>
     );
-}
+};
 
 export default AddMedicine;

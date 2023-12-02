@@ -1,9 +1,22 @@
-import { List, ListItem, ListItemText, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import {
+    List,
+    ListItem,
+    Paper,
+    CircularProgress,
+    Snackbar,
+    Alert,
+    TextField,
+    Button,
+    Container,
+    Typography,
+    RadioGroup,
+    FormControlLabel,
+    Radio
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 import { useUser } from "../../userContest";
-
 
 export default function PatientViewAddresses(props) {
     const { userId } = useUser();
@@ -11,9 +24,9 @@ export default function PatientViewAddresses(props) {
     const [loading, setLoading] = useState(true);
     const [loadingChange, setLoadingChange] = useState(false);
     const [successOpen, setSuccessOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
-    const [selectedAddress, setSelectedAddress] = useState('');
-    const [newAddress, setNewAddress] = useState('');
+    const [successMessage, setSuccessMessage] = useState("");
+    const [selectedAddress, setSelectedAddress] = useState("");
+    const [newAddress, setNewAddress] = useState("");
     const [triedSubmit, setTriedSubmit] = useState(false);
 
     const fetchAddresses = () => {
@@ -34,26 +47,27 @@ export default function PatientViewAddresses(props) {
     };
 
     const handleSubmit = () => {
-        if (newAddress.length >= 20 && !(data.addresses.some(existingAddress => existingAddress === newAddress))) {
+        if (newAddress.length >= 20 && !data.addresses.some((existingAddress) => existingAddress === newAddress)) {
             setLoadingChange(true);
-            axios.put(`http://localhost:8000/patients/address/${userId}`, { newAddress: newAddress })
+            axios
+                .put(`http://localhost:8000/patients/address/${userId}`, { newAddress: newAddress })
                 .then((response) => {
                     fetchAddresses();
                     setLoadingChange(false);
-                    setNewAddress('');
-                    setSuccessMessage("Address added successfully.")
+                    setNewAddress("");
+                    setSuccessMessage("Address added successfully.");
                     setSuccessOpen(true);
                     setTriedSubmit(false);
                 })
                 .catch((error) => {
                     setLoadingChange(false);
-                    console.error('Error adding address:', error);
+                    console.error("Error adding address:", error);
                 });
         }
     };
 
     const handleSuccessClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         setSuccessOpen(false);
@@ -66,9 +80,9 @@ export default function PatientViewAddresses(props) {
                     {successMessage}
                 </Alert>
             </Snackbar>
-            <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
+            <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }}>
                 {loading ? (
-                    <CircularProgress sx={{ mt: '30px' }} />
+                    <CircularProgress sx={{ mt: "30px" }} />
                 ) : (
                     <Container>
                         <Typography sx={{ fontWeight: "bold", my: "20px" }}>Choose Delivery Address</Typography>
@@ -76,11 +90,7 @@ export default function PatientViewAddresses(props) {
                             <List>
                                 {data.addresses.map((address, index) => (
                                     <ListItem key={index}>
-                                        <FormControlLabel
-                                            value={address}
-                                            control={<Radio />}
-                                            label={address}
-                                        />
+                                        <FormControlLabel value={address} control={<Radio />} label={address} />
                                     </ListItem>
                                 ))}
                             </List>
@@ -92,14 +102,29 @@ export default function PatientViewAddresses(props) {
                                 onChange={(e) => setNewAddress(e.target.value)}
                                 sx={{ width: "70%" }}
                                 inputProps={{ minLength: 20 }}
-                                error={(newAddress.length < 20  && triedSubmit) || (data.addresses.some(existingAddress => existingAddress === newAddress))}
-                                helperText={newAddress.length < 20 && triedSubmit ? 'Minimum 20 characters required' : (data.addresses.some(existingAddress => existingAddress === newAddress)) ? 'This address already exists' : ''}
+                                error={
+                                    (newAddress.length < 20 && triedSubmit) ||
+                                    data.addresses.some((existingAddress) => existingAddress === newAddress)
+                                }
+                                helperText={
+                                    newAddress.length < 20 && triedSubmit
+                                        ? "Minimum 20 characters required"
+                                        : data.addresses.some((existingAddress) => existingAddress === newAddress)
+                                        ? "This address already exists"
+                                        : ""
+                                }
                             />
-                            <Button type="submit" variant="outlined" sx={{height: "55px"}} startIcon={<AddIcon />} onClick={(e) => {
-                                e.preventDefault();
-                                setTriedSubmit(true);
-                                handleSubmit();
-                            }}>
+                            <Button
+                                type="submit"
+                                variant="outlined"
+                                sx={{ height: "55px" }}
+                                startIcon={<AddIcon />}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setTriedSubmit(true);
+                                    handleSubmit();
+                                }}
+                            >
                                 Add Address
                             </Button>
                         </Container>
@@ -118,7 +143,7 @@ export default function PatientViewAddresses(props) {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        zIndex: 9999,
+                        zIndex: 9999
                     }}
                     onClick={(e) => e.stopPropagation()}
                 >

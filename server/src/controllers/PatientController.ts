@@ -1,20 +1,14 @@
 import { Request, Response } from "express";
 import patient from "../models/Patient.js";
-import cart from "../models/Cart.js"
+import cart from "../models/Cart.js";
 
-
-// register patient 
-// add the checking of already registered or not 
+// register patient
+// add the checking of already registered or not
 const createPatient = async (req: Request, res: Response) => {
-
-    const entry = patient.find({ 'username': req.body.username }).then((document) => {
+    const entry = patient.find({ username: req.body.username }).then((document) => {
         if (document.length === 0) {
-
-            patient.find({ 'email': req.body.email }).then((emailRes) => {
-
-                if (emailRes.length !== 0)
-                    res.status(404).send("You are already registered, please sign in.");
-
+            patient.find({ email: req.body.email }).then((emailRes) => {
+                if (emailRes.length !== 0) res.status(404).send("You are already registered, please sign in.");
                 else {
                     req.body.wallet = 0;
                     const newPatient = patient
@@ -22,7 +16,7 @@ const createPatient = async (req: Request, res: Response) => {
                         .then((newPatient) => {
                             const newCart = cart.create({
                                 patient: newPatient._id,
-                                medicines: [],
+                                medicines: []
                             });
                             res.status(200).json(newPatient);
                         })
@@ -31,35 +25,37 @@ const createPatient = async (req: Request, res: Response) => {
                             console.log(err);
                         });
                 }
-            })
-        }
-        else if (document.length !== 0)
-            res.status(400).send("Username taken, please choose another one.");
-    })
-
+            });
+        } else if (document.length !== 0) res.status(400).send("Username taken, please choose another one.");
+    });
 };
-
 
 const listPatients = async (req: Request, res: Response) => {
     //view all patients to select a patient to view his basic information
     //should we do it?
-    patient.find().then(results => {
-        res.status(200).send(results);
-    }).catch(err => {
-        res.status(404).send(err)
-    });
-}
+    patient
+        .find()
+        .then((results) => {
+            res.status(200).send(results);
+        })
+        .catch((err) => {
+            res.status(404).send(err);
+        });
+};
 
 const readPatient = async (req: Request, res: Response) => {
     //view a patients's basic information (all information except presecriptions of the patient)
     const id = req.params.id; //id of the patient that we want to read
-    const pat = patient.find({ _id: id })
-        .select('username name email passwordHash dateOfBirth gender mobileNumber emergencyContact package')
-        .then(pat => { res.status(200).send(pat); })
-        .catch(err => {
-            res.status(404).send(err)
+    const pat = patient
+        .find({ _id: id })
+        .select("username name email passwordHash dateOfBirth gender mobileNumber emergencyContact package")
+        .then((pat) => {
+            res.status(200).send(pat);
+        })
+        .catch((err) => {
+            res.status(404).send(err);
         });
-}
+};
 
 const deletePatient = async (req: Request, res: Response) => {
     //remove a patient from the system
@@ -72,7 +68,7 @@ const deletePatient = async (req: Request, res: Response) => {
         .catch((err) => {
             res.status(400).json(err);
         });
-}
+};
 
 const viewAddresses = async (req: Request, res: Response) => {
     const patientId = req.params.patientId;
@@ -80,16 +76,16 @@ const viewAddresses = async (req: Request, res: Response) => {
         const p = await patient.findOne({ _id: patientId });
 
         if (!p) {
-            return res.status(404).json({ message: 'Patient not found' });
+            return res.status(404).json({ message: "Patient not found" });
         }
 
         const addresses = p.address;
         res.status(200).json({ addresses });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: "Internal Server Error" });
     }
-}
+};
 
 const addAddress = async (req: Request, res: Response) => {
     const patientId = req.params.patientId;
@@ -97,16 +93,16 @@ const addAddress = async (req: Request, res: Response) => {
     try {
         const p = await patient.findOne({ _id: patientId });
         if (!p) {
-            return res.status(404).json({ message: 'Patient not found' });
+            return res.status(404).json({ message: "Patient not found" });
         }
         p.address.push(newAddress);
         await p.save();
-        res.json({ message: 'Address added successfully' });
+        res.json({ message: "Address added successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: "Internal Server Error" });
     }
-}
+};
 
 export default {
     createPatient,
@@ -114,5 +110,5 @@ export default {
     readPatient,
     deletePatient,
     viewAddresses,
-    addAddress,
+    addAddress
 };

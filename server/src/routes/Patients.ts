@@ -8,7 +8,7 @@ import { UserType } from "../enums/UserTypes.js";
 const router = express.Router();
 router.use(bodyParser.json());
 
-router.get("/",isAuthenticated,isAuthorized([UserType.ADMINSTARTOR]), patientController.listPatients);
+router.get("/", isAuthenticated, isAuthorized([UserType.ADMINSTARTOR]), patientController.listPatients);
 router.get("/:id", patientController.readPatient);
 router.post("/", patientController.createPatient);
 router.delete("/:id", patientController.deletePatient);

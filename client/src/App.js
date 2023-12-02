@@ -24,82 +24,82 @@ import ForgotPassword from "./pages/authentication/ForgotPassword";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
-  axios.defaults.withCredentials = true;
+    axios.defaults.withCredentials = true;
 
-  const router = createBrowserRouter([
-    {
-      path: "/signin",
-      element: <SignIn />,
-    },
-    {
-      path: "/",
-      element: <SignIn />,
-    },
-    {
-      path: "/register/patient",
-      element: <PatientRegister />,
-    },
-    {
-      path: "/register/pharmacist",
-      element: <PharmacistRegister />,
-    },
-    {
-      path: "/admin/admins",
-      element: <AdminManageAdmins />,
-    },
-    {
-      path: "/admin/pharmacists",
-      element: <AdminManagePharmacists />,
-    },
-    {
-      path: "/admin/patients",
-      element: <AdminManagePatients />,
-    },
-    {
-      path: "/admin/pharmacist-requests",
-      element: <AdminManagePharmacistRequests />,
-    },
-    {
-      path: "/admin/medicines",
-      element: <AdminManageMedicines />,
-    },
-    {
-      path: "/pharmacist/medicines",
-      element: <PharmacistManageMedicines />,
-    },
-    {
-      path: "/pharmacist/medicines/:id",
-      element: <PharmacistEditMedicine />,
-    },
-    {
-      path: "/patient/medicines",
-      element: <PatientManageMedicines />,
-    },
-    { path: "/patient/cart", element: <PatientManageCart /> },
-    { path: "/patient/orders", element: <PatientManageOrders /> },
-    { path: "/patient/checkout", element: <PatientCheckout /> },
+    const router = createBrowserRouter([
+        {
+            path: "/signin",
+            element: <SignIn />
+        },
+        {
+            path: "/",
+            element: <SignIn />
+        },
+        {
+            path: "/register/patient",
+            element: <PatientRegister />
+        },
+        {
+            path: "/register/pharmacist",
+            element: <PharmacistRegister />
+        },
+        {
+            path: "/admin/admins",
+            element: <AdminManageAdmins />
+        },
+        {
+            path: "/admin/pharmacists",
+            element: <AdminManagePharmacists />
+        },
+        {
+            path: "/admin/patients",
+            element: <AdminManagePatients />
+        },
+        {
+            path: "/admin/pharmacist-requests",
+            element: <AdminManagePharmacistRequests />
+        },
+        {
+            path: "/admin/medicines",
+            element: <AdminManageMedicines />
+        },
+        {
+            path: "/pharmacist/medicines",
+            element: <PharmacistManageMedicines />
+        },
+        {
+            path: "/pharmacist/medicines/:id",
+            element: <PharmacistEditMedicine />
+        },
+        {
+            path: "/patient/medicines",
+            element: <PatientManageMedicines />
+        },
+        { path: "/patient/cart", element: <PatientManageCart /> },
+        { path: "/patient/orders", element: <PatientManageOrders /> },
+        { path: "/patient/checkout", element: <PatientCheckout /> },
 
-    {
-      path: "/auth/changepassword",
-      element: <ChangePassword />,
-    },
-    {
-      path: "/auth/resetpassword",
-      element: <ResetPassword />,
-    },
-    {
-      path: "/auth/forgotpassword",
-      element: <ForgotPassword />,
-    },
+        {
+            path: "/auth/changepassword",
+            element: <ChangePassword />
+        },
+        {
+            path: "/auth/resetpassword",
+            element: <ResetPassword />
+        },
+        {
+            path: "/auth/forgotpassword",
+            element: <ForgotPassword />
+        },
 
-    { path: "*", element: <NotFoundPage /> },
-  ]);
+        { path: "*", element: <NotFoundPage /> }
+    ]);
 
-  return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
-  );
+    return (
+        <div className="App">
+            <RouterProvider router={router} />
+        </div>
+    );
 }
 
 export default App;

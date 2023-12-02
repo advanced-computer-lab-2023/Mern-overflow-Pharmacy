@@ -8,6 +8,6 @@ const PharmacistManageMedicines = () => {
             <EditMedicine />
         </>
     );
-}
+};
 
 export default PharmacistManageMedicines;

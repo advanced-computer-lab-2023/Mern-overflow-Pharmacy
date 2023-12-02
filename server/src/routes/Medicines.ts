@@ -5,7 +5,6 @@ import medicineController from "../controllers/medicineController.js";
 const router = express.Router();
 router.use(bodyParser.json());
 
-
 //GET
 router.get("/viewAll", medicineController.listAllMedicines);
 router.get("/view", medicineController.listMedicines);
