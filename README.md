@@ -8,14 +8,21 @@ El7a2ny is a robust software solution designed to enhance and automate interacti
 
 ## Badges
 
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23EFD81D.svg?style=for-the-badge&logo=javascript&logoColor=black)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![React.js](https://img.shields.io/badge/react-%235ED3F3.svg?style=for-the-badge&logo=react&logoColor=black)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+![Stripe](https://img.shields.io/badge/stripe-%235469D4.svg?style=for-the-badge&logo=stripe&logoColor=white)
+![JEST](https://img.shields.io/badge/jest-%23C21325.svg?style=for-the-badge&logo=jest&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%231D63ED.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Postman](https://img.shields.io/badge/postman-%23F76935.svg?style=for-the-badge&logo=postman&logoColor=white)
+![NPM](https://img.shields.io/badge/npm-%23C53635.svg?style=for-the-badge&logo=npm&logoColor=white)
 
 ## Table of Contents
 
@@ -257,8 +264,10 @@ To run this project, you will need to add the following environment variables to
 
 `EMAILPASSWORD`
 
-## API Reference
+## Reference
 
+-   [JWT docs](https://jwt.io/introduction)
+-   [Stripe docs](https://stripe.com/docs)
 -   [Node.js docs](https://nodejs.org/en/docs/)
 -   [Express.js docs](https://expressjs.com/en/4x/api.html)
 -   [React.js docs](https://legacy.reactjs.org/docs/getting-started.html)
