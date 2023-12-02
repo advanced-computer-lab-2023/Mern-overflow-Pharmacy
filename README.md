@@ -206,7 +206,7 @@ You will then need to run the following command each time before your next commi
 -   View alternatives to a medicine that is out of stock based on main active ingredient
 </details>
 
-## Code Examples
+#-# Code Examples
 
 ## Installation 📥
 
@@ -229,6 +229,8 @@ Install dependencies
 > cd client && npm i && cd -
 ```
 
+## How to Use?
+
 Start the server
 
 ```bash
@@ -243,7 +245,7 @@ Start the client side
 
 ### Environment Variables 📃
 
-To run this project, you will need to add the following environment variables to your .env file
+To run this project, you will need to add the following environment variables to your `server/.env` file
 
 `MONGO_URI`
 
@@ -257,13 +259,29 @@ To run this project, you will need to add the following environment variables to
 
 ## API Reference
 
-## Tests 🧪
+-   [Node.js docs](https://nodejs.org/en/docs/)
+-   [Express.js docs](https://expressjs.com/en/4x/api.html)
+-   [React.js docs](https://legacy.reactjs.org/docs/getting-started.html)
+-   [MongoDB docs](https://www.mongodb.com/docs/)
+-   [Mongoose docs](https://mongoosejs.com/docs/)
 
-## How to Use?
+## Tests 🧪
 
 ## Contribute 🤝
 
+Contributions are always welcome!
+
+See `contributing.md` for ways to get started.
+
+Please adhere to this project's `code of conduct`.
+
 ## Credits
+
+-   [SimpliLearn Blog about MERN](https://www.simplilearn.com/tutorials/mongodb-tutorial/what-is-mern-stack-introduction-and-examples)
+-   [MERN Stack | GeeksforGeeks](https://www.geeksforgeeks.org/mern-stack/)
+-   [MongoDB guide to MERN](https://www.mongodb.com/languages/mern-stack-tutorial)
+-   [NetNinja MERN playlist](https://www.youtube.com/watch?v=98BzS5Oz5E4&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE)
+-   [MERN stack tutorial | freeCodecAmp](https://www.youtube.com/watch?v=-42K44A1oMA)
 
 ## Authors 🧑‍💻️
 
