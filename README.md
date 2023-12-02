@@ -38,7 +38,7 @@ El7a2ny is a robust software solution designed to enhance and automate interacti
 
 The project is currently in development.
 
--   Need to add screenshots to the README
+-   Need to add screenshots, code examples, and tests to the README
 
 ## Code Style 📜
 
@@ -206,7 +206,7 @@ You will then need to run the following command each time before your next commi
 -   View alternatives to a medicine that is out of stock based on main active ingredient
 </details>
 
-#-# Code Examples
+## Code Examples
 
 ## Installation 📥
 
