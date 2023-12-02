@@ -42,65 +42,114 @@ The project is currently in development.
 
 ## Code Style 📜
 
+The code style used is `eslint` and [`prettier`](https://prettier.io/docs/en/). The code style is enforced using `pre-commit` hooks
+
+To use the code style we follow, run these commands
+
+Install pre-commit package by running
+
+```bash
+> pip install pre-commit
+```
+
+Once installed, run the following for a one-time setup
+
+```bash
+> pre-commit install
+```
+
+You will then need to run the following command each time before your next commit attempt
+
+```javascript
+> npx prettier . --write
+```
+
 ## Demo & Screenshots 📸
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 ## Tech Stack 🧰🔧
 
-**Client:** React, Redux, MUI, JavaScript
+**Client:** React, Redux, Material-UI, JavaScript
 
-**Server:** Node, Express, MongoDB, TypeScript, JWT, Stripe API
+**Server:** Node, Express, MongoDB, Mongoose, TypeScript, JWT, Stripe API, Postman, Jest
 
-**General:** Docker, Git & GitHub
+**General:** Docker, Git & GitHub, VSCode
 
 ## Features ✨
 
 <details>
-<summary> As a Logged in System User I can </summary>
-
--   View all information about my account
--   Change my password
--   Sign out
-</details>
-<br>
-
-<details>
-<summary> As an Admin I can </summary>
-
--   View all information about all users on the system
--   Accept or reject doctor proposals
--   Accept or reject pharmacist proposals
-</details>
-<br>
-
-<details>
-<summary> As a Doctor I can </summary>
-
--   </details>
-    <br>
-
-<details>
-<summary> As a Pharmacist I can </summary>
-
--   </details>
-    <br>
-
-<details>
-<summary> As a Patient I can </summary>
-
--   </details>
-    <br>
-
-<details>
-<summary> As a Guest I can </summary>
+<summary> Guests can </summary>
 
 -   Sign in to my account
 -   Sign up as a patient
--   Apply as a pharmacist
--   Apply as a doctor
--   Ask to reset my password
+-   Request to sign up as a pharmacist
+-   Request to sign up as a doctor
+-   Reset forgotten password through OTP sent to email
 </details>
+
+<details>
+<summary> Logged in System Users can </summary>
+
+-   Change my password
+-   Sign out
+-   View a list of all available medicines (photo, price, description)
+-   Search for medicine based on name
+-   Filter medicines based on medicinal use
+</details>
+
+<details>
+<summary> Admins can </summary>
+
+-   Add another admin with a set username and password
+-   Remove doctor/pharmacist/patient/admin from the system
+-   View all information uploaded by doctors/pharmacists who applied to join the platform
+-   Accept or reject doctor and pharmacist proposals
+-   Add/Update/Delete health packages with different price ranges
+-   View a total sales report based on a chosen month
+-   View information about any user on the system
+</details>
+
+<details>
+<summary> Doctors can </summary>
+
+-   Update their information (email, hourly rate, affiliation)
+-   View and accept employment contract
+-   Add their available time slots for appointments
+-   Filter appointments by date/status
+-   View information and health records of patients registered with them
+-   View all new and old prescriptions and their statuses
+-   View a list with all their patients
+-   Search for a patient using their name
+-   Filter patients based on upcoming appointments
+-   Receive notifications of their appointments on the system and by mail
+-   View a list of all their upcoming / past appointments
+-   Filter appointments by date or status
+-   Reschedule an appointment for a patient
+-   Cancel an appointment
+-   Receive notifications about cancelled or rescheduled appointments on the system and by mail
+-   Schedule a follow-up for a patient
+-   Add / Delete medicine to / from the prescription from the pharmacy platform
+-   Add / Update dosage for each medicine added to the prescription
+-   Download selected prescription (PDF)
+-   Add new health records for a patient
+-   Start / End a video call with a patient
+-   Chat with a patient
+-   Add a patient's prescription
+-   Update a patient's prescription before it is submitted to the pharmacy
+-   Accept or revoke a follow-up session request from a patient
+-   View the amount in their wallet
+</details>
+
+<details>
+<summary> Pharmacists can </summary>
+
+-   </details>
+
+<details>
+<summary> Patients can </summary>
+
+-   </details>
 
 ## Code Examples
 
