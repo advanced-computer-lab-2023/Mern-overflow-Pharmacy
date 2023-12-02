@@ -24,13 +24,13 @@ El7a2ny is a robust software solution designed to enhance and automate interacti
 -   [Demo \& Screenshots](#demo--screenshots-)
 -   [Tech Stack](#tech-stack-)
 -   [Features](#features-)
--   [Code Examples](#code-examples-)
+-   [Code Examples](#code-examples)
 -   [Installation](#installation-)
--   [API Reference](#api-reference-)
+-   [API Reference](#api-reference)
 -   [Tests](#tests-)
--   [How to Use?](#how-to-use-)
--   [Contribute](#color-reference-)
--   [Credits](#color-reference-)
+-   [How to Use?](#how-to-use)
+-   [Contribute](#contribute-)
+-   [Credits](#credits)
 -   [Authors](#authors-️)
 -   [License](#license-️)
 
@@ -155,7 +155,7 @@ To run this project, you will need to add the following environment variables to
 
 ## Tests 🧪
 
-## How to Use? ℹ️
+## How to Use?
 
 ## Contribute 🤝
 
