@@ -81,7 +81,7 @@ You will then need to run the following command each time before your next commi
 <details>
 <summary> Guests can </summary>
 
--   Sign in to my account
+-   Sign in to their account
 -   Sign up as a patient
 -   Request to sign up as a pharmacist
 -   Request to sign up as a doctor
@@ -91,7 +91,7 @@ You will then need to run the following command each time before your next commi
 <details>
 <summary> Logged in System Users can </summary>
 
--   Change my password
+-   Change their password
 -   Sign out
 -   View a list of all available medicines (photo, price, description)
 -   Search for medicine based on name
