@@ -91,12 +91,12 @@ const addAddress = async (req: Request, res: Response) => {
     const patientId = req.params.patientId;
     const newAddress = req.body.newAddress;
     try {
-        const p = await patient.findOne({ _id: patientId });
-        if (!p) {
+        const existingPatient = await patient.findOne({ _id: patientId });
+        if (!existingPatient) {
             return res.status(404).json({ message: "Patient not found" });
         }
-        p.address.push(newAddress);
-        await p.save();
+        existingPatient.address.push(newAddress);
+        await existingPatient.save();
         res.json({ message: "Address added successfully" });
     } catch (error) {
         console.error(error);

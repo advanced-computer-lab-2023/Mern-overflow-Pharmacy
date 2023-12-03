@@ -48,7 +48,7 @@ The project is currently in development.
 -   Need to add screenshots, code examples, and tests to the README
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Code Style 📜 
+## Code Style 📜
 
 The code style used is `eslint` and [`prettier`](https://prettier.io/docs/en/). The code style is enforced using `pre-commit` hooks
 
@@ -71,15 +71,16 @@ You will then need to run the following command each time before your next commi
 ```javascript
 > npx prettier . --write
 ```
+
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Demo & Screenshots 📸 
+## Demo & Screenshots 📸
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Tech Stack 🧰🔧 
+## Tech Stack 🧰🔧
 
 **Client:** React, Redux, Material-UI, JavaScript
 
@@ -89,7 +90,7 @@ You will then need to run the following command each time before your next commi
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Features ✨ 
+## Features ✨
 
 <details>
 <summary> Guests can </summary>
@@ -223,9 +224,116 @@ You will then need to run the following command each time before your next commi
 
 ## Code Examples 👉
 
+<details>
+<summary> Add Address to a Patient </summary>
+
+```javascript
+const addAddress = async (req: Request, res: Response) => {
+    const patientId = req.params.patientId;
+    const newAddress = req.body.newAddress;
+    try {
+        const existingPatient = await patient.findOne({ _id: patientId });
+        if (!existingPatient) {
+            return res.status(404).json({ message: "Patient not found" });
+        }
+        existingPatient.address.push(newAddress);
+        await existingPatient.save();
+        res.json({ message: "Address added successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+```
+
+</details>
+
+<details>
+<summary> Archive / Unarchive a Medicine </summary>
+
+```javascript
+const archiveMedicine = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    try {
+        const existingMedicine = await medicine.findById(id);
+        if (!existingMedicine) {
+            return res.status(404).send({ message: "Medicine not found" });
+        }
+        existingMedicine.isArchived = !existingMedicine.isArchived;
+        const updatedMed = await existingMedicine.save();
+        res.status(200).send(updatedMed);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+};
+```
+
+</details>
+
+<details>
+<summary> List Adminstrators </summary>
+
+```javascript
+const listAdminstrators = async (req: Request, res: Response) => {
+    const adminstrators = adminstrator
+        .find({})
+        .then((admns) => res.status(200).json(admns))
+        .catch((err) => {
+            res.status(400).json(err);
+        });
+};
+```
+
+</details>
+
+<details>
+<summary>Not Found Page Component</summary>
+
+```javascript
+import NotFoundImg from "./assets/photos/not-found.png";
+
+<Container>
+    <div>
+        <h1>404 - Page Not Found</h1>
+        <p>Sorry, the page you're looking for does not exist.</p>
+        <img src={NotFoundImg} />
+    </div>
+    <Button variant="contained" component={Link} to="/patient/medicines">
+        {" "}
+        Return to Homepage{" "}
+    </Button>
+</Container>;
+```
+
+</details>
+
+<details>
+<summary>AppBar Component</summary>
+
+```javascript
+<AppBar position="static">
+    <Toolbar>
+        <IconButton>
+            <MenuIcon />
+        </IconButton>
+        <Typography>{props.title}</Typography>
+        {props.cart && (
+            <IconButton component={Link} to="/patient/cart">
+                <ShoppingCartIcon />
+            </IconButton>
+        )}
+        <IconButton component={Link} onClick={handleLogout}>
+            <LogoutIcon />
+        </IconButton>
+    </Toolbar>
+</AppBar>
+```
+
+</details>
+
  <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Installation 📥 
+## Installation 📥
 
 Clone the project
 
@@ -245,6 +353,7 @@ Install dependencies
 > cd server && npm i && cd -
 > cd client && npm i && cd -
 ```
+
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 ## How to Use ❓
@@ -262,6 +371,7 @@ Start the client side
 ```
 
 ### Environment Variables 📃
+
 To run this project, you will need to add the following environment variables to your `server/.env` file
 
 `MONGO_URI`
@@ -287,11 +397,11 @@ To run this project, you will need to add the following environment variables to
 -   [Mongoose docs](https://mongoosejs.com/docs/)
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Tests 🧪 
+## Tests 🧪
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Contribute 🤝 
+## Contribute 🤝
 
 Contributions are always welcome!
 
@@ -322,12 +432,11 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 
  <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Authors 🧑‍💻️ 
+## Authors 🧑‍💻️
 
-| [Abdelrahman Saleh](https://github.com/19AbdelrahmanSalah19) | [Ahmed Wael](https://github.com/ahmedwael216) | [John Fayez](https://www.github.com/john-roufaeil) | [Logine](https://github.com/logine20) |  [Mohamed Mohey](https://github.com/mmi333) |
-|---|---|---|---|---|
-| [Ahmed Yasser](https://github.com/ahmedyasser07) | [Alaa Aref](https://github.com/AlaM-01) | [Ibrahim Soltan](https://github.com/Ibrahim-Soltan) |  [Omar Wael](https://github.com/o-wael) |  Mohamed Elsheka |
-
+| [Abdelrahman Saleh](https://github.com/19AbdelrahmanSalah19) | [Ahmed Wael](https://github.com/ahmedwael216) | [John Fayez](https://www.github.com/john-roufaeil)  | [Logine](https://github.com/logine20)  | [Mohamed Mohey](https://github.com/mmi333) |
+| ------------------------------------------------------------ | --------------------------------------------- | --------------------------------------------------- | -------------------------------------- | ------------------------------------------ |
+| [Ahmed Yasser](https://github.com/ahmedyasser07)             | [Alaa Aref](https://github.com/AlaM-01)       | [Ibrahim Soltan](https://github.com/Ibrahim-Soltan) | [Omar Wael](https://github.com/o-wael) | Mohamed Elsheka                            |
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
