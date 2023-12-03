@@ -6,15 +6,17 @@ export interface IPrescription {
     medicine:  Types.ObjectId[];
     date: Date;
     filled: boolean;
+    dailyDosage: number;
 }
 
 // 2. Create a Schema corresponding to the document interface.
 const PrescriptionSchema = new Schema<IPrescription>({
     patient: { type: Schema.Types.ObjectId, ref: "Patient", required: true },
     doctor: { type: Schema.Types.ObjectId, ref: "Doctor", required: true },
-    medicine: [{ type: Schema.Types.ObjectId, required: false }],
+    medicine: [{ type: Schema.Types.ObjectId, ref: "Medicine", required: false }],
     date: { type: Date, required: true },
     filled: { type: Boolean, required: true },
+    dailyDosage: { type: Number, required: true },
 });
 
 // 3. Create a Model.
