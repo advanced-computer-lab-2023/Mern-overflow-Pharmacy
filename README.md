@@ -41,14 +41,13 @@ El7a2ny is a robust software solution designed to enhance and automate interacti
 -   [Authors 🧑‍💻️](#authors-️)
 -   [License ⚖️](#license-️)
 
-## Build Status 🔨 <p align="right"> <a href="#table-of-contents">&#11014;</a></p>
-
+## Build Status 🔨 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 The project is currently in development.
 
 -   Need to add screenshots, code examples, and tests to the README
 
-## Code Style 📜
+## Code Style 📜 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 The code style used is `eslint` and [`prettier`](https://prettier.io/docs/en/). The code style is enforced using `pre-commit` hooks
 
@@ -72,11 +71,11 @@ You will then need to run the following command each time before your next commi
 > npx prettier . --write
 ```
 
-## Demo & Screenshots 📸
+## Demo & Screenshots 📸 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
-## Tech Stack 🧰🔧
+## Tech Stack 🧰🔧 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 **Client:** React, Redux, Material-UI, JavaScript
 
@@ -84,7 +83,7 @@ You will then need to run the following command each time before your next commi
 
 **General:** Docker, Git & GitHub, VSCode
 
-## Features ✨
+## Features ✨ <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 <details>
 <summary> Guests can </summary>
@@ -214,9 +213,9 @@ You will then need to run the following command each time before your next commi
 -   View alternatives to a medicine that is out of stock based on main active ingredient
 </details>
 
-## Code Examples 👉
+## Code Examples 👉 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Installation 📥
+## Installation 📥 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 Clone the project
 
@@ -237,7 +236,7 @@ Install dependencies
 > cd client && npm i && cd -
 ```
 
-## How to Use ❓
+## How to Use ❓ <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 Start the server
 
@@ -251,7 +250,7 @@ Start the client side
 > cd client && npm start
 ```
 
-### Environment Variables 📃
+### Environment Variables 📃<p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 To run this project, you will need to add the following environment variables to your `server/.env` file
 
@@ -265,7 +264,7 @@ To run this project, you will need to add the following environment variables to
 
 `EMAILPASSWORD`
 
-## Reference 📖
+## Reference 📖 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 -   [JWT docs](https://jwt.io/introduction)
 -   [Stripe docs](https://stripe.com/docs)
@@ -275,9 +274,9 @@ To run this project, you will need to add the following environment variables to
 -   [MongoDB docs](https://www.mongodb.com/docs/)
 -   [Mongoose docs](https://mongoosejs.com/docs/)
 
-## Tests 🧪
+## Tests 🧪 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Contribute 🤝
+## Contribute 🤝 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 Contributions are always welcome!
 
@@ -296,7 +295,7 @@ Contributions are always welcome!
 
 This project follows the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/). Please read the full text so that you can understand what actions will and will not be tolerated.
 
-## Credits 🙏
+## Credits 🙏 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 -   [SimpliLearn Blog about MERN](https://www.simplilearn.com/tutorials/mongodb-tutorial/what-is-mern-stack-introduction-and-examples)
 -   [MERN Stack | GeeksforGeeks](https://www.geeksforgeeks.org/mern-stack/)
@@ -304,7 +303,7 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 -   [NetNinja MERN playlist](https://www.youtube.com/watch?v=98BzS5Oz5E4&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE)
 -   [MERN stack tutorial | freeCodecAmp](https://www.youtube.com/watch?v=-42K44A1oMA)
 
-## Authors 🧑‍💻️
+## Authors 🧑‍💻️ <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 -   [John Fayez](https://www.github.com/john-roufaeil)
 -   [Ahmed Wael](https://github.com/ahmedwael216)
