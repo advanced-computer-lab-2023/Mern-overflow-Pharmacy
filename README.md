@@ -76,7 +76,30 @@ You will then need to run the following command each time before your next commi
 
 ## Demo & Screenshots 📸
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+<details>
+<summary>Authentication</summary>
+
+| ![Sign in Page](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/79045f97-1651-4a3d-81d0-70beb62bfe28) | ![Patient Registration](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f68625a2-1893-41e2-bf83-107cee344989) |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Sign In Page                                                                                                                               | Patient Registration                                                                                                                               |
+
+</details>
+
+<details>
+<summary>Viewing Medicines</summary>
+
+| ![Admin view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/cbc6a728-cd17-4e83-940f-1958f0de99d7) | ![Patient view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/97dd1ae2-d3c6-4286-96c2-836be565bd60) |
+| -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Admin view Medicines                                                                                                                               | Patient view Medicines                                                                                                                               |
+
+</details>
+
+<details>
+<summary>Cart</summary>
+
+| ![Empty Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/7398ee73-216d-4a3e-93f4-a3e26bcc03a2) | ![Items in Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f52178e3-4dc9-4b58-8903-a45fdea8c8ca) |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Empty Cart                                                                                                                               | Items in Cart                                                                                                                               |
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
