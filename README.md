@@ -100,6 +100,7 @@ You will then need to run the following command each time before your next commi
 | ![Empty Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/7398ee73-216d-4a3e-93f4-a3e26bcc03a2) | ![Items in Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f52178e3-4dc9-4b58-8903-a45fdea8c8ca) |
 |---|---|
 | Empty Cart|Items in Cart|
+</details>
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
