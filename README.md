@@ -26,20 +26,20 @@ El7a2ny is a robust software solution designed to enhance and automate interacti
 
 ## Table of Contents
 
--   [Build Status](#build-status-)
--   [Code Style](#code-style-)
--   [Demo \& Screenshots](#demo--screenshots-)
--   [Tech Stack](#tech-stack-)
--   [Features](#features-)
--   [Code Examples](#code-examples)
--   [Installation](#installation-)
--   [How to Use?](#how-to-use)
--   [Reference](#reference)
--   [Tests](#tests-)
--   [Contribute](#contribute-)
--   [Credits](#credits)
--   [Authors](#authors-️)
--   [License](#license-️)
+-   [Build Status 🔨](#build-status-)
+-   [Code Style 📜](#code-style-)
+-   [Demo \& Screenshots 📸](#demo--screenshots-)
+-   [Tech Stack 🧰🔧](#tech-stack-)
+-   [Features ✨](#features-)
+-   [Code Examples 👉](#code-examples-)
+-   [Installation 📥](#installation-)
+-   [How to Use ❓](#how-to-use-)
+-   [Reference 📖](#reference-)
+-   [Tests 🧪](#tests-)
+-   [Contribute 🤝](#contribute-)
+-   [Credits 🙏](#credits-)
+-   [Authors 🧑‍💻️](#authors-️)
+-   [License ⚖️](#license-️)
 
 ## Build Status 🔨
 
@@ -213,7 +213,7 @@ You will then need to run the following command each time before your next commi
 -   View alternatives to a medicine that is out of stock based on main active ingredient
 </details>
 
-## Code Examples
+## Code Examples 👉
 
 ## Installation 📥
 
@@ -236,7 +236,7 @@ Install dependencies
 > cd client && npm i && cd -
 ```
 
-## How to Use?
+## How to Use ❓
 
 Start the server
 
@@ -264,7 +264,7 @@ To run this project, you will need to add the following environment variables to
 
 `EMAILPASSWORD`
 
-## Reference
+## Reference 📖
 
 -   [JWT docs](https://jwt.io/introduction)
 -   [Stripe docs](https://stripe.com/docs)
@@ -295,7 +295,7 @@ Contributions are always welcome!
 
 This project follows the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/). Please read the full text so that you can understand what actions will and will not be tolerated.
 
-## Credits
+## Credits 🙏
 
 -   [SimpliLearn Blog about MERN](https://www.simplilearn.com/tutorials/mongodb-tutorial/what-is-mern-stack-introduction-and-examples)
 -   [MERN Stack | GeeksforGeeks](https://www.geeksforgeeks.org/mern-stack/)
