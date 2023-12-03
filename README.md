@@ -41,7 +41,8 @@ El7a2ny is a robust software solution designed to enhance and automate interacti
 -   [Authors 🧑‍💻️](#authors-️)
 -   [License ⚖️](#license-️)
 
-## Build Status 🔨
+## Build Status 🔨 <p align="right"> <a href="#table-of-contents">&#11014;</a></p>
+
 
 The project is currently in development.
 
