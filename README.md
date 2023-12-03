@@ -102,6 +102,14 @@ You will then need to run the following command each time before your next commi
 | Empty Cart|Items in Cart|
 </details>
 
+<details>
+    <summary></summary>
+
+    |![Order Summary](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/21fd7b42-6995-4d2a-a512-56773e69c8f2)|![Submitted Order Details](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/0deac0c8-6fd8-4731-a245-1cfe5c7968e6)|
+    |---|---|
+    |Order Summary|Submitted Order Details|
+</details>
+
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 ## Tech Stack 🧰🔧
