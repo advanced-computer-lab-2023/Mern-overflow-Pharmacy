@@ -9,6 +9,8 @@ import panadol from '../../assets/photos/panadol.jpg';
 import { styled } from '@mui/material/styles';
 import { capitalize } from '../../utils'
 import { useUser } from "../../userContest";
+// import DialogActions from '@mui/material/DialogActions';
+// import Button from '@mui/material/Button';
 
 export default function PatientViewMedicines(props) {
     const { userId } = useUser();
@@ -21,6 +23,9 @@ export default function PatientViewMedicines(props) {
     const [counts, setCounts] = useState([]);
     const [successOpen, setSuccessOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const [similarMedicinesDialogOpen, setSimilarMedicinesDialogOpen] = useState(false); // Correct state updater name
+    const [similarMedicines, setSimilarMedicines] = useState([]);
+
 
     const Img = styled('img')({
         margin: 'auto',
@@ -47,6 +52,19 @@ export default function PatientViewMedicines(props) {
             })
     };
 
+    const showSimilarMedicines = (activeIngredients) => {
+        // Implement the logic to filter and display medicines with the same active ingredient
+        const similarMedicines = data.filter((med) =>
+          med.details.activeIngredients.some((ingredient) =>
+            activeIngredients.includes(ingredient)
+          ) && med.stock !== 0 // Add this condition to check if stock is not equal to 0
+        );
+      
+        // Update state to open the dialog and store the list of similar medicines
+        setSimilarMedicinesDialogOpen(true);
+        setSimilarMedicines(similarMedicines);
+      };
+
     const handleAddMedicine = (medName, medPrice, medQuantity, e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -71,6 +89,24 @@ export default function PatientViewMedicines(props) {
     useEffect(() => {
         fetchTableData();
     }, []);
+
+    // useEffect(() => {
+    //     // The logic to fetch and set similar medicines based on active ingredients
+    //     // You may need to make an API call or filter the data from the component state
+    //     // For example, assuming data is the array of all medicines:
+    //     const activeIngredient = row.details.activeIngredients;
+    //     const filteredMedicines = data.filter((med) =>
+    //       med.details.activeIngredients.includes(activeIngredient)
+    //     );
+    //     setSimilarMedicines((prevMedicines) => {
+    //       // Using a functional update to ensure the latest value of activeIngredient
+    //       if (prevMedicines !== filteredMedicines) {
+    //         return filteredMedicines;
+    //       }
+    //       return prevMedicines;
+    //     });
+    //   }, [row.details.activeIngredients, data]);
+      
 
     const handleFilter = (e) => {
         e.preventDefault();
@@ -193,7 +229,7 @@ export default function PatientViewMedicines(props) {
                                                             <Typography sx={{ my: "10px", fontFamily: "monospace" }}>
                                                                 EGP {row.price}
                                                             </Typography>
-                                                            {row.overTheCounter ? (
+                                                            {(row.overTheCounter && !(row.stock==0)) &&(
                                                                 <div>
                                                                     <ButtonGroup
                                                                         disableElevation
@@ -234,7 +270,16 @@ export default function PatientViewMedicines(props) {
                                                                     </IconButton>
 
                                                                 </div>
-                                                            ) : (<Typography>Prescription Needed </Typography>)}
+                                                            ) }
+                                                             {!row.overTheCounter &&(<Typography>Prescription Needed </Typography>)}
+                                                             {(row.stock === 0) && (
+                                                                <div>
+                                                                    <Typography>Out of Stock</Typography>
+                                                                    <Button onClick={() => showSimilarMedicines(row.details.activeIngredients)}>
+                                                                    Show Alternatives
+                                                                    </Button>
+                                                                </div>
+                                                                )}
                                                         </Container>
                                                     </Container>
                                                 </AccordionSummary>
@@ -272,6 +317,25 @@ export default function PatientViewMedicines(props) {
                         <CircularProgress sx={{ color: "white" }} />
                     </div>
                 )}
+                {/* Dialog to display similar medicines */}
+                    <Dialog
+                        open={similarMedicinesDialogOpen}
+                        onClose={() => setSimilarMedicinesDialogOpen(false)}
+                    >
+                        <DialogTitle>Similar Medicines</DialogTitle>
+                        <DialogContent>
+                        <ul>
+                            {similarMedicines.map((med) => (
+                            <li key={med.id}>{med.name}</li>
+                            ))}
+                        </ul>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={() => setSimilarMedicinesDialogOpen(false)}>
+                            Close
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
             </Container >
         </>
     );
