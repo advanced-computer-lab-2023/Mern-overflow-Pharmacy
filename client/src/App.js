@@ -16,7 +16,8 @@ import PatientManageMedicines from "./pages/patient/PatientManageMedicines";
 import PatientManageCart from "./pages/patient/PatientManageCart";
 import PatientManageOrders from "./pages/patient/PatientManageOrders";
 import PatientCheckout from "./pages/patient/PatientCheckout";
-import PatientProfile from "./pages/patient/PatientInfo";
+import PatientProfile from "./pages/patient/PatientProfile";
+import PharmacistProfile from "./pages/pharmacist/PharmacistProfile";
 import NotFoundPage from "./NotFoundPage";
 import ChangePassword from "./pages/authentication/ChangePassword";
 import ResetPassword from "./pages/authentication/ResetPassword";
@@ -92,7 +93,10 @@ function App() {
             path: "/patient/profile",
             element: <PatientProfile />
         },
-
+        {
+            path: "/pharmacist/profile",
+            element: <PharmacistProfile />
+        },
         {
             path: "/auth/changepassword",
             element: <ChangePassword />

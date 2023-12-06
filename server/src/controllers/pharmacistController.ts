@@ -12,6 +12,7 @@ const createPharmacist = async (req: Request, res: Response) => {
             Pharmacist.find({ email: dataToServer.email }).then((emailRes) => {
                 if (emailRes.length !== 0) res.status(404).send("You are already registered, please sign in.");
                 else {
+                    dataToServer.wallet = 0;
                     const files = req.files as Express.Multer.File[];
                     console.log("Files:", files);
                     console.log("additional Field: " + data);

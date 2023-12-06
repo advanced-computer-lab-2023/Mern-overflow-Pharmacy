@@ -11,6 +11,7 @@ interface IPharmacist {
     education: string;
     files: document[];
     status: string;
+    wallet?: number;
 }
 
 interface document {
@@ -32,7 +33,8 @@ const pharmacistShema = new Schema<IPharmacist>({
             path: { type: String, required: true, trim: true }
         }
     ],
-    status: { type: String, required: true, lowercase: true, enum: ["pending", "accepted", "rejected"] }
+    status: { type: String, required: true, lowercase: true, enum: ["pending", "accepted", "rejected"] },
+    wallet: { type: Number, required: false }
 });
 
 pharmacistShema.pre("save", function (next) {
