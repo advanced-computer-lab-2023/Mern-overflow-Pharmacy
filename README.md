@@ -165,10 +165,9 @@ You will then need to run the following command each time before your next commi
 <summary> Admins can </summary>
 
 -   Add another admin with a set username and password
--   Remove doctor/pharmacist/patient/admin from the system
--   View all information uploaded by doctors/pharmacists who applied to join the platform
--   Accept or reject doctor and pharmacist proposals
--   Add/Update/Delete health packages with different price ranges
+-   Remove pharmacist/patient/admin from the system
+-   View all information uploaded by pharmacists who applied to join the platform
+-   Accept or reject pharmacist proposals
 -   View a total sales report based on a chosen month
 -   View information about any user on the system
 </details>
