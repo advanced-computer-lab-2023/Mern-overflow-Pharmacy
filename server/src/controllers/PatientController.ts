@@ -57,6 +57,19 @@ const readPatient = async (req: Request, res: Response) => {
         });
 };
 
+const viewPatientInfo = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const pat = patient
+        .find({ _id: id })
+        .select({})
+        .then((pat) => {
+            res.status(200).send(pat);
+        })
+        .catch((err) => {
+            res.status(404).send(err);
+        });
+};
+
 const deletePatient = async (req: Request, res: Response) => {
     //remove a patient from the system
     const id = req.params.id;
@@ -108,6 +121,7 @@ export default {
     createPatient,
     listPatients,
     readPatient,
+    viewPatientInfo,
     deletePatient,
     viewAddresses,
     addAddress

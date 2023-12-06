@@ -40,13 +40,6 @@ export default function ButtonAppBar(props) {
                 onClick={toggleDrawer(anchor, false)}
                 onKeyDown={toggleDrawer(anchor, false)}
             >
-                {/* <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", my: 4 }}>
-                    <Box sx={{ display: "inline-flex", alignItems: "center" }}>
-                        <Typography sx={{ fontWeight: "bold", verticalAlign: "text-bottom", fontSize: "20px" }}>
-                            {props.user} Dashboard
-                        </Typography>
-                    </Box>
-                </Box> */}
                 <Box sx={{ my: "30px" }}></Box>
                 <Divider>
                     <Chip
@@ -55,7 +48,6 @@ export default function ButtonAppBar(props) {
                     />
                 </Divider>
                 <Box sx={{ my: "20px" }}></Box>
-                {/* <Typography > {props.user} Dashboard</Typography> */}
                 {props.children}
             </Box>
 

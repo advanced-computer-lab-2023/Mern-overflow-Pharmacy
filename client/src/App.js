@@ -16,6 +16,7 @@ import PatientManageMedicines from "./pages/patient/PatientManageMedicines";
 import PatientManageCart from "./pages/patient/PatientManageCart";
 import PatientManageOrders from "./pages/patient/PatientManageOrders";
 import PatientCheckout from "./pages/patient/PatientCheckout";
+import PatientProfile from "./pages/patient/PatientInfo";
 import NotFoundPage from "./NotFoundPage";
 import ChangePassword from "./pages/authentication/ChangePassword";
 import ResetPassword from "./pages/authentication/ResetPassword";
@@ -75,9 +76,22 @@ function App() {
             path: "/patient/medicines",
             element: <PatientManageMedicines />
         },
-        { path: "/patient/cart", element: <PatientManageCart /> },
-        { path: "/patient/orders", element: <PatientManageOrders /> },
-        { path: "/patient/checkout", element: <PatientCheckout /> },
+        {
+            path: "/patient/cart",
+            element: <PatientManageCart />
+        },
+        {
+            path: "/patient/orders",
+            element: <PatientManageOrders />
+        },
+        {
+            path: "/patient/checkout",
+            element: <PatientCheckout />
+        },
+        {
+            path: "/patient/profile",
+            element: <PatientProfile />
+        },
 
         {
             path: "/auth/changepassword",
