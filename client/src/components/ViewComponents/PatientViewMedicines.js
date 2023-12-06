@@ -41,7 +41,7 @@ import panadol from "../../assets/photos/panadol.jpg";
 import { styled } from "@mui/material/styles";
 import { capitalize } from "../../utils";
 import { useUser } from "../../userContest";
-import React, { useState, useEffect, /* other imports */ } from 'react';
+import React, { useEffect, useState, createContext, useContext } from "react";
 
 
 export default function PatientViewMedicines(props) {
