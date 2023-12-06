@@ -17,7 +17,7 @@ import {
     ListItemText,
     Divider
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
+import GroupsIcon from "@mui/icons-material/Groups";
 import Avatar from "@mui/material/Avatar";
 import MedicationIcon from "@mui/icons-material/Medication";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
@@ -29,7 +29,7 @@ const AdminDashboard = (props) => {
         <ButtonAppBar user="Admin" actionButton="Log out" title={props.title}>
             <Box sx={{ display: "inline-flex", alignItems: "center", mt: 2, ml: 2 }}>
                 <Avatar sx={{ m: 0, bgcolor: "white", color: "black", width: 30, height: 30, padding: 0 }}>
-                    <PersonIcon sx={{ width: 30, height: 30 }} />
+                    <GroupsIcon sx={{ width: 30, height: 30 }} />
                 </Avatar>
                 <Typography variant="body1" sx={{ fontWeight: "normal", verticalAlign: "text-bottom", ml: 1 }}>
                     {" "}

@@ -38,7 +38,6 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import panadol from "../../assets/photos/panadol.jpg";
 import { styled } from "@mui/material/styles";
 import { capitalize } from "../../utils";
 import { useUser } from "../../userContest";

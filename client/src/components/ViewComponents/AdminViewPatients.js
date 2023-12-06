@@ -46,7 +46,7 @@ const columns = [
     },
     {
         key: "dateOfBirth",
-        label: "Birth Date"
+        label: "Birthdate"
     },
     {
         key: "gender",
@@ -172,7 +172,7 @@ export default function AdminViewPatients(props) {
                                         Username
                                     </TableCell>
                                     <TableCell key="dateOfBirth" sx={{ fontWeight: "bold" }}>
-                                        Birth Date
+                                        Birthdate
                                     </TableCell>
                                     <TableCell key="gender" sx={{ fontWeight: "bold" }}>
                                         Gender
@@ -209,7 +209,9 @@ export default function AdminViewPatients(props) {
                                                 <TableCell>{row.name}</TableCell>
                                                 <TableCell>{row.email}</TableCell>
                                                 <TableCell>{row.username}</TableCell>
-                                                <TableCell>{row.dateOfBirth.slice(0, 10)}</TableCell>
+                                                <TableCell>
+                                                    {row.dateOfBirth.slice(0, 10).replaceAll("-", "/")}
+                                                </TableCell>
                                                 <TableCell>{row.gender}</TableCell>
                                                 <TableCell sx={{ borderRight: "1px solid #ccc" }}>
                                                     {row.mobileNumber}

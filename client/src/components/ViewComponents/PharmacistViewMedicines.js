@@ -42,7 +42,6 @@ import UploadIcon from "@mui/icons-material/Upload";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import panadol from "../../assets/photos/panadol.jpg";
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";

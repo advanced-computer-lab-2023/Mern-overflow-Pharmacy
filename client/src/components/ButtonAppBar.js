@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+    Chip,
     Typography,
     Zoom,
     Toolbar,
@@ -27,24 +28,42 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useUser } from "../userContest";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/photos/logo.png";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function ButtonAppBar(props) {
     const list = (anchor) => (
-        <Box
-            sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", my: 4 }}>
-                <Box sx={{ display: "inline-flex", alignItems: "center" }}>
-                    <Typography sx={{ fontWeight: "bold", verticalAlign: "text-bottom", fontSize: "20px" }}>
-                        {props.user} Dashboard
-                    </Typography>
-                </Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", flexDirection: "column", height: "100%" }}>
+            <Box
+                sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+                role="presentation"
+                onClick={toggleDrawer(anchor, false)}
+                onKeyDown={toggleDrawer(anchor, false)}
+            >
+                {/* <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", my: 4 }}>
+                    <Box sx={{ display: "inline-flex", alignItems: "center" }}>
+                        <Typography sx={{ fontWeight: "bold", verticalAlign: "text-bottom", fontSize: "20px" }}>
+                            {props.user} Dashboard
+                        </Typography>
+                    </Box>
+                </Box> */}
+                <Box sx={{ my: "30px" }}></Box>
+                <Divider>
+                    <Chip
+                        sx={{ mx: "10px", color: "#333", backgroundColor: "#293241", color: "white", fontSize: "15px" }}
+                        label={`${props.user} Dashboard`}
+                    />
+                </Divider>
+                <Box sx={{ my: "20px" }}></Box>
+                {/* <Typography > {props.user} Dashboard</Typography> */}
+                {props.children}
             </Box>
-            <Divider />
-            {props.children}
+
+            <Box>
+                <Typography sx={{ fontFamily: "rubik", fontSize: "14px", margin: "10px", color: "#293241" }}>
+                    © 2023 El7a2ny Solutions
+                </Typography>
+            </Box>
         </Box>
     );
 
@@ -113,6 +132,20 @@ export default function ButtonAppBar(props) {
             </Zoom>
             <div>
                 <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        <img src={logo} alt="Logo" style={{ width: "50px", height: "auto", margin: "10px" }} />
+                        <IconButton
+                            variant="contained"
+                            sx={{ height: "50px", width: "50px", margin: "10px" }}
+                            onClick={toggleDrawer("left", false)}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
+                    <Typography sx={{ mx: "10px", fontFamily: "cursive", fontWeight: "bold", color: "#1564C0" }}>
+                        {" "}
+                        El7a2ny Pharmacy
+                    </Typography>
                     {list("left")}
                 </Drawer>
             </div>

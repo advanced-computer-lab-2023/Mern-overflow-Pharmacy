@@ -33,7 +33,6 @@ import {
     Radio
 } from "@mui/material";
 import axios from "axios";
-import panadol from "../../assets/photos/panadol.jpg";
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
