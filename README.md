@@ -90,6 +90,23 @@ You will then need to run the following command each time before your next commi
 </details>
 
 <details>
+<summary>Admin Controls</summary>
+
+| ![View Registered Patients](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/310f0579-6ce2-450a-b765-8f348c07be35) |
+|:---:|
+| <p style="text-align:center">View Registered Patients</p>|
+
+| ![Add Admin](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/ff48a122-ca16-4e1e-81a6-9f3d68fa8179) |
+|:---:|
+| <p style="text-align:center">Add Admin</p>|
+
+| ![View Pharamcist Requests](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/1a296030-2517-40f7-9740-a1c6b1016d76) |
+|:---:|
+| <p style="text-align:center">View Pharamcist Requests</p>|
+
+</details>
+
+<details>
 <summary>Viewing Medicines</summary>
 
 | ![Admin view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/cbc6a728-cd17-4e83-940f-1958f0de99d7) |
