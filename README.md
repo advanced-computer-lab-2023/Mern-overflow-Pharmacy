@@ -2,9 +2,9 @@
     <img width="100" src="https://i.imgur.com/M5HToBU.png" alt="logo">
 </p>
 
-# El7a2ny App
+# El7a2ny Pharmacy App
 
-El7a2ny is a robust software solution designed to enhance and automate interactions within the healthcare ecosystem, catering to clinics, doctors, pharmacists, and patients. Our platform seamlessly connects patients with healthcare providers, offering a comprehensive suite of features to streamline the entire healthcare process. We offer a holistic approach to healthcare management, addressing a spectrum of needs that includes discovering the right healthcare professional, seamlessly coordinating appointments, facilitating both on-premise and online consultations, managing prescriptions, receiving timely reminders for follow-ups, securely accessing comprehensive medical histories, and effortlessly ordering prescribed medications. Our platform is designed to streamline and enhance every facet of the healthcare journey, ensuring a seamless and patient-centric experience from finding the right doctor to managing ongoing care.
+El7a2ny Pharmacy is a platform that facilitates a streamlined healthcare experience, catering to the distinct needs of pharmacists and patients. Pharmacists efficiently manage medicine-related activities, monitoring sales, updating medicine details, and receiving real-time notifications about stock levels. They can engage in direct communication with patients, view detailed sales reports, and effectively handle their wallets. On the patient side, the interface is user-friendly, allowing for easy management of wallets, cart items, and orders. Patients can effortlessly check out using multiple payment methods, add new delivery addresses, and receive alternative suggestions for out-of-stock medicines based on active ingredients. This platform prioritizes efficiency, transparency, and personalized healthcare interactions for pharmacists and patients alike.
 
 ## Badges
 
@@ -79,35 +79,53 @@ You will then need to run the following command each time before your next commi
 <details>
 <summary>Authentication</summary>
 
-| ![Sign in Page](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/79045f97-1651-4a3d-81d0-70beb62bfe28) | ![Patient Registration](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f68625a2-1893-41e2-bf83-107cee344989) |
-|---|---|
-| Sign In Page| Patient Registration|
+| ![Sign in Page](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/79045f97-1651-4a3d-81d0-70beb62bfe28) |
+|:---:|
+| <p style="text-align:center">Sign In Page</p>|
+
+| ![Patient Registration](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f68625a2-1893-41e2-bf83-107cee344989) |
+|:---:|
+| <p style="text-align:center">Patient Registration</p>|
 
 </details>
 
 <details>
 <summary>Viewing Medicines</summary>
 
-| ![Admin view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/cbc6a728-cd17-4e83-940f-1958f0de99d7) | ![Patient view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/97dd1ae2-d3c6-4286-96c2-836be565bd60) |
-|---|---|
-| Admin view Medicines| Patient view Medicines|
+| ![Admin view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/cbc6a728-cd17-4e83-940f-1958f0de99d7) |
+|:---:|
+| <p style="text-align:center">Admin view Medicines</p>|
+
+| ![Patient view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/97dd1ae2-d3c6-4286-96c2-836be565bd60) |
+|:---:|
+| <p style="text-align:center">Patient view Medicines</p>|
 
 </details>
 
 <details>
 <summary>Cart</summary>
 
-| ![Empty Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/7398ee73-216d-4a3e-93f4-a3e26bcc03a2) | ![Items in Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f52178e3-4dc9-4b58-8903-a45fdea8c8ca) |
-|---|---|
-| Empty Cart|Items in Cart|
+| ![Empty Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/7398ee73-216d-4a3e-93f4-a3e26bcc03a2) |
+|:---:|
+| <p style="text-align:center">Empty Cart</p>|
+
+| ![Items in Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f52178e3-4dc9-4b58-8903-a45fdea8c8ca) |
+|:---:|
+| <p style="text-align:center">Items in Cart</p>|
+
 </details>
 
 <details>
 <summary>Order Details</summary>
 
-|![Order Summary](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/21fd7b42-6995-4d2a-a512-56773e69c8f2)|![Submitted Order Details](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/0deac0c8-6fd8-4731-a245-1cfe5c7968e6)|
-|---|---|
-|Order Summary|Submitted Order Details|
+| ![Order Summary](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/21fd7b42-6995-4d2a-a512-56773e69c8f2) |
+|:---:|
+| <p style="text-align:center"> Order Summary</p>|
+
+| ![Submitted Order Details](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/0deac0c8-6fd8-4731-a245-1cfe5c7968e6) |
+|:---:|
+| <p style="text-align:center">Submitted Order Details</p>|
+
 </details>
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
@@ -130,7 +148,6 @@ You will then need to run the following command each time before your next commi
 -   Sign in to their account
 -   Sign up as a patient
 -   Request to sign up as a pharmacist
--   Request to sign up as a doctor
 -   Reset forgotten password through OTP sent to email
 </details>
 
@@ -157,46 +174,15 @@ You will then need to run the following command each time before your next commi
 </details>
 
 <details>
-<summary> Doctors can </summary>
-
--   Update their information (email, hourly rate, affiliation)
--   View and accept employment contract
--   Add their available time slots for appointments
--   Filter appointments by date/status
--   View information and health records of patients registered with them
--   View all new and old prescriptions and their statuses
--   View a list with all their patients
--   Search for a patient using their name
--   Filter patients based on upcoming appointments
--   Receive notifications of their appointments on the system and by mail
--   View a list of all their upcoming / past appointments
--   Filter appointments by date or status
--   Reschedule an appointment for a patient
--   Cancel an appointment
--   Receive notifications about cancelled or rescheduled appointments on the system and by mail
--   Schedule a follow-up for a patient
--   Add / Delete medicine to / from the prescription from the pharmacy platform
--   Add / Update dosage for each medicine added to the prescription
--   Download selected prescription (PDF)
--   Add new health records for a patient
--   Start / End a video call with a patient
--   Chat with a patient
--   Add a patient's prescription
--   Update a patient's prescription before it is submitted to the pharmacy
--   Accept or revoke a follow-up session request from a patient
--   View the amount in their wallet
-</details>
-
-<details>
 <summary> Pharmacists can </summary>
 
 -   View the available quantity and sales of each medicine
--   Add a medicine with its details, price and available quantity
+-   Add a medicine with its details, price, and available quantity
 -   Upload medicine image
 -   Edit medicine details and price
 -   Archive / unarchive a medicine
 -   View a total sales report based on a chosen month
--   Filter sales report based on a medicine / date
+-   Filter sales report based on a medicine/date
 -   Chat with a patient
 -   View the amount in my wallet
 -   Receive a notification once a medicine is out of stock on the system and via email
@@ -205,47 +191,13 @@ You will then need to run the following command each time before your next commi
 <details>
 <summary> Patients can </summary>
 
--   Upload / remove documents (PDF,JPEG,JPG,PNG) for their medical history
--   View uploaded health records
--   Add family members to the system
--   Link another existing patient's account as a family member
--   View registered family members
--   Choose to pay for their appointments using wallet or credit card
--   Enter credit card details and pay for an appointment using Stripe
--   Filter appointments by date / status
--   View all new and old prescriptions and their statuses
--   View health package options and details
--   Subscribe to a health package for themselves and their family members
--   Pay for the chosen health package using wallet or credit card
--   View subscribed health package for themselves and their family members
--   View the status of their health care package subscription
--   Cancel a subscription of a health package
--   View a list of all doctors along with their speciality, session price (based on subscribed health package if any)
--   Search for a doctor by name and/or speciality
--   Filter a doctor by speciality and/or availability on a certain date and at a specific time
--   View details about a specific selected doctor
--   Select an appointment date and time for themselves or for a family member
--   Receive a notification of their appointment on the system and by mail
--   View a list of their upcoming / past appointments
--   Filter appointments by date or status
--   Reschedule an appointment for themselves or for a family member
--   Cancel an appointment for themselves or for a family member
--   Receive a notification about cancelled or rescheduled appointments on the system and by mail
--   View a list of all their perscriptions
--   Filter prescriptions based on date or doctor or fulfillment status
--   View the details of a selected prescription
--   Pay directly for the prescription items by wallet or credit card
--   Download a prescription (PDF)
--   Start / End a video call with a doctor
--   Chat with a doctor or pharmacist
--   Request a follow-up to a previous appointment for themselves or a family member
--   Receive a refund in their wallet when a doctor cancels an appointment
+-   Chat with a pharmacist
 -   View the amount in their wallet
--   Add an over the counter medicine or a prescription medicine included in their prescriptions in their cart
+-   Add an over-the-counter medicine or a prescription medicine included in their prescriptions in their cart
 -   View their cart items
 -   Remove an item from their cart
 -   Update the amount of an item in their cart
--   Checkout their orders with address and payment method (wallet/COD/credit card)
+-   Check out their orders with address and payment method (wallet/COD/credit card)
 -   Add new delivery addresses
 -   View details and status of all their orders
 -   Cancel a pending order
@@ -370,13 +322,13 @@ import NotFoundImg from "./assets/photos/not-found.png";
 Clone the project
 
 ```bash
-> git clone https://github.com/advanced-computer-lab-2023/Mern-overflow-Clinic
+> git clone https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy
 ```
 
 Go to the project directory
 
 ```bash
-> cd Mern-overflow-Clinic
+> cd Mern-overflow-Pharmacy
 ```
 
 Install dependencies
@@ -390,7 +342,7 @@ Install dependencies
 
 ## How to Use ❓
 
-Start the server
+Start the servers
 
 ```bash
 > cd server && npm run dev
