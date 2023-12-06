@@ -105,7 +105,7 @@ export default function SignIn() {
                             left: "20%"
                         }}
                     >
-                        El7a2ni Pharmacy
+                        <El7a2ny></El7a2ny> Pharmacy
                     </Typography>
                     <img
                         src={logo}

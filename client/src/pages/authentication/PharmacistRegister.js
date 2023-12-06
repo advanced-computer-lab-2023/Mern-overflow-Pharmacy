@@ -161,7 +161,7 @@ export default function PharmacistRegister() {
                     }}
                 >
                     <Typography variant="h4" sx={{ color: "white", position: "fixed", top: "15%", left: "20%" }}>
-                        El7a2ni Pharmacy
+                        El7a2ny Pharmacy
                     </Typography>
                     <img
                         src={logo}
