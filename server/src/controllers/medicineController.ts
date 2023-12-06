@@ -17,8 +17,7 @@ const listMedicines = async (req: Request, res: Response) => {
       (results) => {
         var medResults: any[] = [];
         for (const med of results) {
-          if (med.availableQuantity !== 0)
-            medResults.push({ "_id": med._id, "name": med.name, "medicinalUse": med.medicinalUse, "image": med.image, "price": med.price, "details": med.details, "overTheCounter":med.overTheCounter, "isArchived":med.isArchived });
+          medResults.push({ "_id": med._id, "name": med.name, "medicinalUse": med.medicinalUse, "image": med.image, "price": med.price, "details": med.details, "overTheCounter":med.overTheCounter, "isArchived":med.isArchived,"stock":med.availableQuantity});
         }
         res.status(200).send(medResults);
       })
