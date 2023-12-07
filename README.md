@@ -79,13 +79,17 @@ You will then need to run the following command each time before your next commi
 <details>
 <summary>Authentication</summary>
 
-| ![Sign in Page](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/79045f97-1651-4a3d-81d0-70beb62bfe28) |
+| ![Sign in Page](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/ec63621d-4c1c-4569-8cb1-4f2139caf211) |
 | :----------------------------------------------------------------------------------------------------------------------------------------: |
 |                                               <p style="text-align:center">Sign In Page</p>                                                |
 
-| ![Patient Registration](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f68625a2-1893-41e2-bf83-107cee344989) |
+| ![Patient Registration](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/b9062c53-6345-4e67-af7a-5b866c2ce1dc) |
 | :------------------------------------------------------------------------------------------------------------------------------------------------: |
-|                                               <p style="text-align:center">Patient Registration</p>                                                |
+|                                               <p style="text-align:center">Pharmacist Registration</p>                                                |
+
+| ![Patient Profile](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/6abc3044-78b5-4e47-8e19-b174d9b79bb6) |
+| :-------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Patient Profile</p>                                                |
 
 </details>
 
@@ -98,7 +102,7 @@ You will then need to run the following command each time before your next commi
 
 | ![Add Admin](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/ff48a122-ca16-4e1e-81a6-9f3d68fa8179) |
 | :-------------------------------------------------------------------------------------------------------------------------------------: |
-|                                               <p style="text-align:center">Add Admin</p>                                                |
+|                                               <p style="text-align:center">Manage System Admins</p>                                                |
 
 | ![View Pharamcist Requests](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/1a296030-2517-40f7-9740-a1c6b1016d76) |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------: |
