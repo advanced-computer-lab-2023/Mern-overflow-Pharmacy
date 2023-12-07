@@ -80,12 +80,12 @@ You will then need to run the following command each time before your next commi
 <summary>Authentication</summary>
 
 | ![Sign in Page](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/79045f97-1651-4a3d-81d0-70beb62bfe28) |
-|:---:|
-| <p style="text-align:center">Sign In Page</p>|
+| :----------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Sign In Page</p>                                                |
 
 | ![Patient Registration](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f68625a2-1893-41e2-bf83-107cee344989) |
-|:---:|
-| <p style="text-align:center">Patient Registration</p>|
+| :------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Patient Registration</p>                                                |
 
 </details>
 
@@ -93,16 +93,16 @@ You will then need to run the following command each time before your next commi
 <summary>Admin Controls</summary>
 
 | ![View Registered Patients](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/310f0579-6ce2-450a-b765-8f348c07be35) |
-|:---:|
-| <p style="text-align:center">View Registered Patients</p>|
+| :----------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">View Registered Patients</p>                                                |
 
 | ![Add Admin](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/ff48a122-ca16-4e1e-81a6-9f3d68fa8179) |
-|:---:|
-| <p style="text-align:center">Add Admin</p>|
+| :-------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Add Admin</p>                                                |
 
 | ![View Pharamcist Requests](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/1a296030-2517-40f7-9740-a1c6b1016d76) |
-|:---:|
-| <p style="text-align:center">View Pharamcist Requests</p>|
+| :----------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">View Pharamcist Requests</p>                                                |
 
 </details>
 
@@ -110,12 +110,12 @@ You will then need to run the following command each time before your next commi
 <summary>Viewing Medicines</summary>
 
 | ![Admin view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/cbc6a728-cd17-4e83-940f-1958f0de99d7) |
-|:---:|
-| <p style="text-align:center">Admin view Medicines</p>|
+| :------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Admin view Medicines</p>                                                |
 
 | ![Patient view Medicines](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/97dd1ae2-d3c6-4286-96c2-836be565bd60) |
-|:---:|
-| <p style="text-align:center">Patient view Medicines</p>|
+| :--------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Patient view Medicines</p>                                                |
 
 </details>
 
@@ -123,12 +123,12 @@ You will then need to run the following command each time before your next commi
 <summary>Cart</summary>
 
 | ![Empty Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/7398ee73-216d-4a3e-93f4-a3e26bcc03a2) |
-|:---:|
-| <p style="text-align:center">Empty Cart</p>|
+| :--------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Empty Cart</p>                                                |
 
 | ![Items in Cart](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/f52178e3-4dc9-4b58-8903-a45fdea8c8ca) |
-|:---:|
-| <p style="text-align:center">Items in Cart</p>|
+| :-----------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Items in Cart</p>                                                |
 
 </details>
 
@@ -136,12 +136,12 @@ You will then need to run the following command each time before your next commi
 <summary>Order Details</summary>
 
 | ![Order Summary](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/21fd7b42-6995-4d2a-a512-56773e69c8f2) |
-|:---:|
-| <p style="text-align:center"> Order Summary</p>|
+| :-----------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center"> Order Summary</p>                                               |
 
 | ![Submitted Order Details](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/0deac0c8-6fd8-4731-a245-1cfe5c7968e6) |
-|:---:|
-| <p style="text-align:center">Submitted Order Details</p>|
+| :---------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                               <p style="text-align:center">Submitted Order Details</p>                                                |
 
 </details>
 
@@ -358,7 +358,33 @@ Install dependencies
 
 ## How to Use ❓
 
-Start the servers
+<details open>
+<summary>Using Docker</summary>
+
+First, you need to build the container. You need to do this the first time only.
+
+```bash
+> make build
+```
+
+Start the back-end
+
+```bash
+> make up
+```
+
+Start the client side
+
+```bash
+> make f-up
+```
+
+</details>
+
+<details>
+<summary>Manually</summary>
+
+Start the back-end server
 
 ```bash
 > cd server && npm run dev
@@ -370,9 +396,11 @@ Start the client side
 > cd client && npm start
 ```
 
+</details>
+
 ### Environment Variables 📃
 
-To run this project, you will need to add the following environment variables to your `server/.env` file
+To run this project, you will need to add the following environment variables to your `server/.env` file. You can find an environment variables file example in `server/.env.example`
 
 `MONGO_URI`
 
@@ -434,9 +462,9 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 
 ## Authors 🧑‍💻️
 
-| [Abdelrahman Saleh](https://github.com/19AbdelrahmanSalah19) | [Ahmed Wael](https://github.com/ahmedwael216) | [John Fayez](https://www.github.com/john-roufaeil)  | [Logine Mohamed](https://github.com/logine20)  | [Mohamed Mohey](https://github.com/mmi333) |
-| ------------------------------------------------------------ | --------------------------------------------- | --------------------------------------------------- | -------------------------------------- | ------------------------------------------ |
-| [Ahmed Yasser](https://github.com/ahmedyasser07)             | [Alaa Aref](https://github.com/AlaM-01)       | [Ibrahim Soltan](https://github.com/Ibrahim-Soltan) | [Omar Wael](https://github.com/o-wael) | [Mohamed Elsheka](https://github.com/MOHAMEDELSHEKHA)                            |
+| [Abdelrahman Saleh](https://github.com/19AbdelrahmanSalah19) | [Ahmed Wael](https://github.com/ahmedwael216) | [John Fayez](https://www.github.com/john-roufaeil)  | [Logine Mohamed](https://github.com/logine20) | [Mohamed Mohey](https://github.com/mmi333)            |
+| ------------------------------------------------------------ | --------------------------------------------- | --------------------------------------------------- | --------------------------------------------- | ----------------------------------------------------- |
+| [Ahmed Yasser](https://github.com/ahmedyasser07)             | [Alaa Aref](https://github.com/AlaM-01)       | [Ibrahim Soltan](https://github.com/Ibrahim-Soltan) | [Omar Wael](https://github.com/o-wael)        | [Mohamed Elsheka](https://github.com/MOHAMEDELSHEKHA) |
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
