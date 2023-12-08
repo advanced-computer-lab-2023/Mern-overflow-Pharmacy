@@ -1,17 +1,18 @@
-import ButtonAppBar from "../../components/ButtonAppBar";
-import * as React from "react";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import MedicationIcon from "@mui/icons-material/Medication";
+import PasswordIcon from "@mui/icons-material/Password";
 import {
+  Divider,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Divider,
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import MedicationIcon from "@mui/icons-material/Medication";
+import * as React from "react";
 import { Link } from "react-router-dom";
-import PasswordIcon from "@mui/icons-material/Password";
+import ButtonAppBar from "../../components/ButtonAppBar";
 
 const PharmacistDashboard = (props) => {
   return (
@@ -36,6 +37,30 @@ const PharmacistDashboard = (props) => {
             <ListItemText primary="Medicines" />
           </ListItemButton>
         </ListItem>
+        <Divider />
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/pharmacist/salesreport">
+              <ListItemIcon>
+                <Avatar
+                  sx={{
+                    m: 0,
+                    bgcolor: "white",
+                    color: "black",
+                    width: 30,
+                    height: 30,
+                    padding: 0,
+                  }}
+                >
+                  <AttachMoneyIcon sx={{ width: 30, height: 30 }} />
+                </Avatar>
+              </ListItemIcon>
+              <ListItemText primary="View Sales Report" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider />
+
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/auth/changepassword">
             <ListItemIcon>
@@ -61,4 +86,3 @@ const PharmacistDashboard = (props) => {
   );
 };
 export default PharmacistDashboard;
-
