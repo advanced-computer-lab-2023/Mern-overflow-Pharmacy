@@ -34,7 +34,7 @@ El7a2ny Pharmacy is a platform that facilitates a streamlined healthcare experie
 -   [Code Examples 👉](#code-examples-)
 -   [Installation 📥](#installation-)
 -   [How to Use ❓](#how-to-use-)
--   [Reference 📖](#reference-)
+-   [API Reference 📖](#reference-)
 -   [Tests 🧪](#tests-)
 -   [Contribute 🤝](#contribute-)
 -   [Credits 🙏](#credits-)
