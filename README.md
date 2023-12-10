@@ -418,15 +418,106 @@ To run this project, you will need to add the following environment variables to
 
  <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
-## Reference 📖
+## API Reference 📖
 
--   [JWT docs](https://jwt.io/introduction)
--   [Stripe docs](https://stripe.com/docs)
--   [Node.js docs](https://nodejs.org/en/docs/)
--   [Express.js docs](https://expressjs.com/en/4x/api.html)
--   [React.js docs](https://legacy.reactjs.org/docs/getting-started.html)
--   [MongoDB docs](https://www.mongodb.com/docs/)
--   [Mongoose docs](https://mongoosejs.com/docs/)
+<details>
+    <summary>Authentication routes</summary>
+
+|method|route|returns|
+|--|--|--|
+|POST|```/auth/login/```|Log in|
+|POST|```/auth/logout/```|Log out|
+|POST|```/auth/reset/```|Reset Password|
+|POST|```/auth/resetwithtoken/```|Reset Password with Token|
+|POST|```/auth/change/```|Change Password|
+</details>
+
+<details>
+    <summary>Admin routes</summary>
+
+|method|route|returns|
+|--|--|--|
+|GET|```/adminstrators/```|View all admins|
+|POST|```/adminstrators/```|Create an admin|
+|DELETE|```/adminstrators/:id/```|Delete an admin|
+</details>
+
+<details>
+    <summary> Patient routes</summary>
+
+|method|route|returns|
+|--|--|--|
+|GET|```/patients/```|View all patients|
+|GET|```/patients/:id/```|View details of a patient|
+|GET|```/patients/address/:id/```|View addresses of a patient|
+|POST|```/patients/```|Create a patient|
+|PUT|```/patients/address/:id/```|Add an adderss to a patient|
+|DELETE|```/patients/:id/```|Delete a patient|
+</details>
+
+<details>
+    <summary> Pharmacist routes</summary>
+
+|method|route|returns|
+|--|--|--|
+|GET|```/pharmacists/```|View all accepted pharmacists|
+|GET|```/pharmacists/listAll/```|View all pending pharmacist requests|
+|GET|```/pharmacists/viewAll/```|View all pharmacist requests|
+|GET|```/pharmacists/:id/```|View details of a pharmacist|
+|POST|```/pharmacists/```|Create a pharmacist request|
+|POST|```/pharmacists/acceptPharmacist/```|Accept a pharmacist request|
+|POST|```/pharmacists/rejectPharmacist/```|Reject a pharmacist request|
+|PUT|```/pharmacists/:id/```|Update pharmacist request to accepted|
+|DELETE|```/pharmacists/:id/```|Delete a pharmacist|
+</details>
+
+<details>
+    <summary> Medicine routes</summary>
+
+|method|route|returns|
+|--|--|--|
+|GET|```/medicines/```|View the sales and quantity of medicines|
+|GET|```/medicines/view/```|View all available medicines only|
+|GET|```/medicines/viewAll/```|View all details about all medicines|
+|GET|```/medicines/search/```|View medicines by selected name query|
+|GET|```/medicines/filter/```|View medicines by selected medicinal use|
+|POST|```/medicines/```|Create a medicine|
+|PUT|```/medicines/:id/```|Update medicine details|
+|PUT|```/medicines/:id/archive/```|Archive / Unarchive a medicine|
+</details>
+
+<details>
+    <summary> Cart routes</summary>
+
+|method|route|returns|
+|--|--|--|
+|GET|```/cart/:id/```|View cart items|
+|POST|```/cart/:id/add/```|Add a medicine to cart|
+|POST|```/cart/:id/changeAmount/```|Change a medicine's quantity in cart|
+|PUT|```/cart/:id/empty/```|Empty cart|
+|DELETE|```/cart/:id/:medName/```|Remove a medicine by name from cart|
+</details>
+
+<details>
+    <summary> Order routes</summary>
+
+|method|route|returns|
+|--|--|--|
+|GET|```/orders/:id/```|View orders by patient id|
+|GET|```/orders/salesreport/```|View sales report|
+|POST|```/orders/:id/add/```|Add an order|
+|PUT|```/orders/:id/```|Cancel pending order|
+</details>
+
+<details>
+    <summary> Payment routes</summary>
+
+|method|route|returns|
+|--|--|--|
+|POST|```/walletPayment/shoppingCart/```|Pay for an order using wallet|
+|POST|```/create-checkout-session/shoppingCart/```|Pay for an order using credit card|
+</details>
+
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 ## Tests 🧪
@@ -456,6 +547,13 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 
 ## Credits 🙏
 
+-   [JWT docs](https://jwt.io/introduction)
+-   [Stripe docs](https://stripe.com/docs)
+-   [Node.js docs](https://nodejs.org/en/docs/)
+-   [Express.js docs](https://expressjs.com/en/4x/api.html)
+-   [React.js docs](https://legacy.reactjs.org/docs/getting-started.html)
+-   [MongoDB docs](https://www.mongodb.com/docs/)
+-   [Mongoose docs](https://mongoosejs.com/docs/)
 -   [SimpliLearn Blog about MERN](https://www.simplilearn.com/tutorials/mongodb-tutorial/what-is-mern-stack-introduction-and-examples)
 -   [MERN Stack | GeeksforGeeks](https://www.geeksforgeeks.org/mern-stack/)
 -   [MongoDB guide to MERN](https://www.mongodb.com/languages/mern-stack-tutorial)
@@ -474,7 +572,7 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 
 ## License ⚖️
 
-This project is under [MIT](https://choosealicense.com/licenses/mit/)
+This project is under [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/)
 license
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
