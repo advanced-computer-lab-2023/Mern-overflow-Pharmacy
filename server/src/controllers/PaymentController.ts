@@ -3,6 +3,7 @@ import carts from "../models/Cart.js";
 import Cart from "../models/Cart.js";
 import Stripe from "stripe";
 import Patient from "../models/Patient.js";
+import User from "../models/User.js";
 import orders from "../models/Order.js";
 import { HydratedDocument } from "mongoose";
 import medicine, { Imedicine } from "../models/medicine.js";
@@ -55,11 +56,13 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
         if (med2.availableQuantity === 0) {
           const subject = "Medicince Out of Stock";
           let html = `Hello pharmacist, <br /> The medicine ${med2.name} is out of stock. <br /> Try to order new stock ASAP. <br /> With Love, <br /> El7a2ni Pharmacy xoxo.`;
-          sendMailService.sendMail(
-            "ahmedwael216@protonmail.com",
-            subject,
-            html,
-          );
+          await User.find({ __t: "pharmacist" })
+            .select("email")
+            .then((res) => {
+              res.map((p) => {
+                sendMailService.sendMail(p.email, subject, html);
+              });
+            });
         }
         await med2.save();
       }
