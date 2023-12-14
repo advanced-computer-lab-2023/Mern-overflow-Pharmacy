@@ -572,7 +572,8 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 
 ## License ⚖️
 
-This project is under [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/)
-license
+- This software product is open source under the [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/) License.
+
+- The Stripe is licensed under the Apache License 2.0 
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
