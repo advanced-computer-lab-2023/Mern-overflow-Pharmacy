@@ -8,6 +8,7 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
+import SmsIcon from '@mui/icons-material/Sms';
 import Avatar from "@mui/material/Avatar";
 import MedicationIcon from "@mui/icons-material/Medication";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -105,6 +106,27 @@ const PatientDashboard = (props) => {
         </ListItem>
       </List>
       <Divider />
+      <List>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/chat">
+                <ListItemIcon>
+                  <Avatar
+                    sx={{
+                      m: 0,
+                      bgcolor: "white",
+                      color: "black",
+                      width: 30,
+                      height: 30,
+                      padding: 0,
+                    }}
+                  >
+                    <SmsIcon sx={{ width: 30, height: 30 }} />
+                  </Avatar>
+                </ListItemIcon>
+                <ListItemText primary="Chat Pharmacists" />
+              </ListItemButton>
+            </ListItem>
+          </List>
     </ButtonAppBar>
   );
 };

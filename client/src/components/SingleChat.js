@@ -17,7 +17,7 @@ import { PhoneIcon } from "@chakra-ui/icons";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = "http://localhost:8000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+const ENDPOINT = "http://localhost:8001"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -56,7 +56,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:8000/api/message/${selectedChat._id}`,
+        `http://localhost:8001/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -89,7 +89,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:8000/api/message",
+          "http://localhost:8001/api/message",
           {
             content: newMessage,
             chatId: selectedChat,
@@ -118,7 +118,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const handleVideoCall =  async()=>{
     console.log(selectedChat.users);
-    const link = await axios.get(`http://localhost:8000/call/${selectedChat.users[0].email}/${selectedChat.users[1].email}`);
+    const link = await axios.get(`http://localhost:8001/call/${selectedChat.users[0].email}/${selectedChat.users[1].email}`);
     
     console.log("LINKKKKK:"+JSON.stringify(link));
     window.open(link.data.link,"_blank")
@@ -207,7 +207,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   {getSender(user, selectedChat.users)}
                   
                   <div>
-                  <Tooltip label={"Videocall Doctor"} placement="bottom-start" hasArrow>
+                  <Tooltip label={"Videocall Pharmacist"} placement="bottom-start" hasArrow>
                 <IconButton d={{ base: "flex"}} marginRight="4" cursor="pointer" icon={<PhoneIcon />} 
                 onClick={()=>{
                   handleVideoCall()}}  />

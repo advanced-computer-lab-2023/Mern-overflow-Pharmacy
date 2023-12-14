@@ -7,7 +7,7 @@ import { ChatState } from "../Context/ChatProvider";
 import { ChakraProvider } from "@chakra-ui/react";
 import { useUser } from "../userContest";
 import PatientDashboard from "./patient/PatientDashboard";
-import DoctorDashboard from "./doctor/DoctorDashboard";
+import PharmacistDashboard from "./pharmacist/PharmacistDashboard";
 import { useToast } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
 
@@ -23,7 +23,7 @@ const Chatpage = () => {
 
   return (
     <>
-  {userRole==="Patient"?<PatientDashboard title="Chat/VideoCall Doctors" />:<DoctorDashboard title="Chat/VideoCall Patients" />}
+  {userRole==="Patient"?<PatientDashboard title="Chat with Pharmacists" />:<PharmacistDashboard title="Chat with Patients/Doctors" />}
 
     <ChakraProvider>
     <div style={{ width: "100%" }}>

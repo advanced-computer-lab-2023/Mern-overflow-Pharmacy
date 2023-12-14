@@ -15,4 +15,7 @@ router.delete("/:id", patientController.deletePatient);
 router.get("/address/:patientId", patientController.viewAddresses);
 router.put("/address/:patientId", patientController.addAddress);
 
+router.get("/chatWithPharmacists/:id/:search",isAuthenticated,isAuthorized([UserType.PATIENT]),patientController.chatWithPharmacists);
+router.get("/getAllMyPharmacists/:id",isAuthenticated,isAuthorized([UserType.PATIENT]),patientController.getAllMyPharmacists);
+
 export default router;

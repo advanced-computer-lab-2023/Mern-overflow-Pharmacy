@@ -22,6 +22,7 @@ import AdminViewSalesReports from "./pages/admin/AdminViewSalesReport";
 import PharmacistViewSalesReports from "./pages/pharmacist/PharmacistViewSalesReport";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Chatpage from "./pages/Chatpage"
 
 function App() {
   axios.defaults.withCredentials = true;
@@ -99,7 +100,10 @@ function App() {
       path: "/auth/forgotpassword",
       element: <ForgotPassword />,
     },
-
+    {
+      path:"/chat",
+      element: <Chatpage/>
+    },
 
     { path: "*", element: <NotFoundPage /> },
   ]);

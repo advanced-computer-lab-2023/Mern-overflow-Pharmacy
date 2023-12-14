@@ -29,7 +29,7 @@ const MyChats = (props) => {
     try {
 
       console.log("Before loading chats");
-      const { data } = await axios.get(`http://localhost:8000/api/chat/${userId}`, );
+      const { data } = await axios.get(`http://localhost:8001/api/chat/${userId}`, );
       console.log("After loading chats");
       setChats(data);
     } catch (error) {
@@ -69,15 +69,15 @@ const MyChats = (props) => {
         bg="white"
         width="full"
     >
-            <Tooltip label={`Search ${userRole === "Patient"?"Doctor":"Patient"} to chat`} hasArrow placement="bottom-end">
+            <Tooltip label={`Search ${userRole === "Patient"?"Pharmacist":"Patient"} to chat`} hasArrow placement="bottom-end">
           <Button  variant="ghost" onClick={async()=>{
-            const { data } = await axios.get((userRole === "Patient"?`http://localhost:8000/patients/getAllMyDoctors/${userId}`:`http://localhost:8000/doctors/getAllMyPatients/${userId}`));
+            const { data } = await axios.get((userRole === "Patient"?`http://localhost:8001/patients/getAllMyPharmacists/${userId}`:`http://localhost:8001/doctors/getAllMyPatients/${userId}`));
 
             props.setSearchResult(data);
             props.onOpen();
             }}>
             <Text display={{ base: "none", md: "flex" }} px={4}>
-              {userRole=== "Patient"?"Search Doctor":"Search Patient"}
+              {userRole=== "Patient"?"Search Pharmacist":"Search Patient"}
             </Text>
           </Button>
         </Tooltip>

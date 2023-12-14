@@ -23,6 +23,12 @@ import walletPaymentRouter from "./routes/WalletPayment.js";
 import multer from 'multer';
 import path from 'path';
 import Medicine from './models/medicine.js';
+import userRoutes from "./routes/User.js";
+//const chatRoutes = require("./routes/chatRoutes");
+import chatRoutes from "./routes/chatRoutes.js";
+
+import messageRoutes from "./routes/messageRoutes.js";
+
 
 mongoose.set("strictQuery", false);
 
@@ -37,9 +43,11 @@ const corsOptions = {
   exposedHeaders: ["set-cookie"],
 };
 
+app.use(cors(corsOptions));
+
 const port: number = config.server.port || 8001;
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+
 app.use(cookieParser());
 app.use("/images", express.static('./images'))
 app.use("/uploads", express.static('./src/uploads'));
@@ -47,7 +55,6 @@ app.use("/uploads", express.static('./src/uploads'));
 
 const mongoUrl: string = process.env.MONGO_URI!;
 
-app.use(bodyParser.json());
 
 //ROUTES
 app.use("/auth", authRouter);
@@ -60,9 +67,18 @@ app.use("/orders", orderRouter);
 app.use("/create-checkout-session", paymentRouter);
 app.use("/walletPayment", walletPaymentRouter);
 
+// chat use apis
+app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
+
 app.get("/", (req, res) => {
   res.send("hello");
 });
+
+app.use(cors({ origin: 'http://localhost:3001' }));
+
+let server;
 
 //code for image upload 
 
@@ -110,10 +126,59 @@ mongoose
   .then(() => {
     console.log("MongoDB is now connected!");
     // Starting server
-    app.listen(port, () => {
-      console.log(`Listening to requests on http://localhost:${port}`);
-    });
+   
   })
   .catch((err) => console.log(err));
+  server = app.listen(port, () => {
+    console.log(`Listening to requests on http://localhost:${port}`);
+  });
+
+import { Server } from "socket.io";
+import axios from "axios";
+
+console.log(server);
+
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:3001",
+    // credentials: true,
+  },
+});
+
+
+io.on("connection", (socket:any) =>
+ {
+  console.log("Connected to socket.io");
+  socket.on("setup", (userData:any) => {
+    socket.join(userData);
+    socket.emit("connected");
+  });
+
+  socket.on("join chat", (room:any) => {
+    socket.join(room);
+    console.log("User Joined Room: " + room);
+  });
+  socket.on("typing", (room:any) => socket.in(room).emit("typing"));
+  socket.on("stop typing", (room:any) => socket.in(room).emit("stop typing"));
+
+  socket.on("new message", (newMessageRecieved:any) => {
+    console.log("HALLOO "+newMessageRecieved);
+    var chat = newMessageRecieved.chat;
+
+    if (!chat.users) return console.log("chat.users not defined");
+
+    chat.users.forEach((user:any) => {
+      if (user._id == newMessageRecieved.sender._id) return;
+
+      socket.in(user._id).emit("message recieved", newMessageRecieved);
+    });
+  });
+// we added parameter userData (to be reviewed)
+  socket.off("setup", (userData:any) => {
+    console.log("USER DISCONNECTED");
+    socket.leave(userData);
+  });
+});
 
 export default app;

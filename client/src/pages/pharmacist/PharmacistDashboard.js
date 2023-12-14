@@ -13,6 +13,7 @@ import Avatar from "@mui/material/Avatar";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import ButtonAppBar from "../../components/ButtonAppBar";
+import SmsIcon from '@mui/icons-material/Sms';
 
 const PharmacistDashboard = (props) => {
   return (
@@ -82,6 +83,28 @@ const PharmacistDashboard = (props) => {
         </ListItem>
       </List>
       <Divider />
+      <List>
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/chat">
+                <ListItemIcon>
+                  <Avatar
+                    sx={{
+                      m: 0,
+                      bgcolor: "white",
+                      color: "black",
+                      width: 30,
+                      height: 30,
+                      padding: 0,
+                    }}
+                  >
+                    <SmsIcon sx={{ width: 30, height: 30 }} />
+                  </Avatar>
+                </ListItemIcon>
+                <ListItemText primary="Chat/VideoCall Patients" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
     </ButtonAppBar>
   );
 };

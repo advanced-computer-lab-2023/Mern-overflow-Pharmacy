@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import patient from "../models/Patient.js";
 import cart from "../models/Cart.js"
+import pharmacist from "../models/pharmacist.js";
 
 
 // register patient 
@@ -107,6 +108,40 @@ const addAddress = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 }
+const chatWithPharmacists = async (req: Request, res: Response) => {
+
+    const pId = req.params.id;
+    const search = req.params.search;
+
+    if (!search) res.status(400).send("No search text.");
+    else if(search!==undefined && search!==null && typeof search == "string") {
+
+        const all: any[] = await pharmacist.find({});
+        const pharmacists: any[] = [];
+        
+        for (const pharmacist of all) {
+
+
+
+        if((pharmacist?.name)?.includes(search)) pharmacists.push(pharmacist);
+
+        }
+        console.log(pharmacists);
+        res.status(200).send(pharmacists);
+    }
+
+  };
+
+
+  const getAllMyPharmacists = async (req: Request, res: Response) => {
+
+    const all: any[] = await pharmacist.find({});
+
+    console.log(all);
+    res.status(200).send(all);
+
+  };
+
 
 export default {
     createPatient,
@@ -115,4 +150,6 @@ export default {
     deletePatient,
     viewAddresses,
     addAddress,
+    chatWithPharmacists,
+    getAllMyPharmacists
 };
