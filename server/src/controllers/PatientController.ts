@@ -100,7 +100,7 @@ const addAddress = async (req: Request, res: Response) => {
         if (!p) {
             return res.status(404).json({ message: 'Patient not found' });
         }
-        p.address.push(newAddress);
+        p.address?.push(newAddress);
         await p.save();
         res.json({ message: 'Address added successfully' });
     } catch (error) {
