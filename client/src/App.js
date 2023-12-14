@@ -1,25 +1,25 @@
-import "./App.css";
-import * as ReactDOM from "react-dom/client";
-import ButtonAppBar from "./components/ButtonAppBar";
 import axios from "axios";
-import PatientRegister from "./pages/authentication/PatientRegister";
-import PharmacistRegister from "./pages/authentication/PharmacistRegister";
-import SignIn from "./pages/authentication/SignIn";
+import "./App.css";
+import NotFoundPage from "./NotFoundPage";
 import AdminManageAdmins from "./pages/admin/AdminManageAdmins";
-import AdminManagePharmacists from "./pages/admin/AdminManagePharmacists";
+import AdminManageMedicines from "./pages/admin/AdminManageMedicines";
 import AdminManagePatients from "./pages/admin/AdminManagePatients";
 import AdminManagePharmacistRequests from "./pages/admin/AdminManagePharmacistRequests";
-import AdminManageMedicines from "./pages/admin/AdminManageMedicines";
-import PharmacistManageMedicines from "./pages/pharmacist/PharmacistManageMedicines";
-import PharmacistEditMedicine from "./pages/pharmacist/PharmacistEditMedicine";
-import PatientManageMedicines from "./pages/patient/PatientManageMedicines";
-import PatientManageCart from "./pages/patient/PatientManageCart";
-import PatientManageOrders from "./pages/patient/PatientManageOrders";
-import PatientCheckout from "./pages/patient/PatientCheckout";
-import NotFoundPage from "./NotFoundPage";
+import AdminManagePharmacists from "./pages/admin/AdminManagePharmacists";
 import ChangePassword from "./pages/authentication/ChangePassword";
-import ResetPassword from "./pages/authentication/ResetPassword";
 import ForgotPassword from "./pages/authentication/ForgotPassword";
+import PatientRegister from "./pages/authentication/PatientRegister";
+import PharmacistRegister from "./pages/authentication/PharmacistRegister";
+import ResetPassword from "./pages/authentication/ResetPassword";
+import SignIn from "./pages/authentication/SignIn";
+import PatientCheckout from "./pages/patient/PatientCheckout";
+import PatientManageCart from "./pages/patient/PatientManageCart";
+import PatientManageMedicines from "./pages/patient/PatientManageMedicines";
+import PatientManageOrders from "./pages/patient/PatientManageOrders";
+import PharmacistEditMedicine from "./pages/pharmacist/PharmacistEditMedicine";
+import PharmacistManageMedicines from "./pages/pharmacist/PharmacistManageMedicines";
+import AdminViewSalesReports from "./pages/admin/AdminViewSalesReport";
+import PharmacistViewSalesReports from "./pages/pharmacist/PharmacistViewSalesReport";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -62,6 +62,14 @@ function App() {
     {
       path: "/admin/medicines",
       element: <AdminManageMedicines />,
+    },
+    {
+      path: "/admin/salesreport",
+      element: <AdminViewSalesReports />,
+    },
+    {
+      path: "/pharmacist/salesreport",
+      element: <PharmacistViewSalesReports />,
     },
     {
       path: "/pharmacist/medicines",

@@ -8,8 +8,8 @@ WORKDIR /app
 COPY . .
 
 # Expose the ports for both backend and frontend
-EXPOSE 8000
-EXPOSE 3000
+EXPOSE 8001
+EXPOSE 3001
 
 # Install server and client dependencies
 WORKDIR /app/server

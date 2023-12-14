@@ -29,7 +29,7 @@ const EditMedicine = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/medicines/viewAll`);
+                const response = await axios.get(`http://localhost:8001/medicines/viewAll`);
                 const medicine = response.data.find(item => item._id === id);
                 setName(medicine.name);
                 setMedicinalUse(medicine.medicinalUse);
@@ -51,7 +51,7 @@ const EditMedicine = () => {
         setLoadingEdit(true);
         const details = { activeIngredients: activeIngredients.split(',').map(item => item.trim()), description: description }
         const dataToServer = { name, medicinalUse, details, price, availableQuantity, sales };
-        axios.put(`http://localhost:8000/medicines/${id}`, dataToServer)
+        axios.put(`http://localhost:8001/medicines/${id}`, dataToServer)
             .then((response) => {
                 setSuccessMessage('Medicine updated succesfully');
                 setSuccessOpen(true);

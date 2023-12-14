@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "start": "ts-node src/index.ts",
+    "start": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
     "build": "tsc",
-    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node --esm\" src/index.ts"
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"node --no-warnings=ExperimentalWarning --loader ts-node/esm\" src/index.ts"
   },
   "keywords": [],
   "author": "",

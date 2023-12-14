@@ -48,7 +48,7 @@ export default function SignIn() {
     delete data.Password;
     console.log("Data to server" + JSON.stringify(data));
     axios
-      .post("http://localhost:8000/auth/login", data)
+      .post("http://localhost:8001/auth/login", data)
       .then((response) => {
         console.log(response);
         const type = response.data.type;

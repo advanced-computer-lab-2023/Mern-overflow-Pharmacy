@@ -67,12 +67,12 @@ const changePassword = async (req: Request, res: Response) => {
 };
 
 const requestPasswordReset = async (req: Request, res: Response) => {
-  const email :string = req.body.email.toLowerCase();
-  console.log("email", email)
+  const email: string = req.body.email.toLowerCase();
+  console.log("email", email);
 
   try {
     const user: HydratedDocument<IUser> | null = await User.findOne({ email });
-    console.log("user", user)
+    console.log("user", user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -82,7 +82,7 @@ const requestPasswordReset = async (req: Request, res: Response) => {
     });
 
     const subject = "Password Reset Token";
-    const html = `<p>Click the following link to reset your password: <a href="http://localhost:3000/auth/resetpassword?token=${token}">Reset Password</a></p>`;
+    const html = `<p>Click the following link to reset your password: <a href="http://localhost:3001/auth/resetpassword?token=${token}">Reset Password</a></p>`;
 
     sendMailService.sendMail(email, subject, html);
     res.status(200).json({ message: "Password reset token sent successfully" });

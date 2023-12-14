@@ -73,7 +73,7 @@ export default function ButtonAppBar(props) {
 
 	const handleLogout = () => {
 		axios
-			.post("http://localhost:8000/auth/logout")
+			.post("http://localhost:8001/auth/logout")
 			.then((response) => {
 				console.log(response);
 				setUserId("");

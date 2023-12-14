@@ -32,12 +32,12 @@ const MongoURI: string =
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "http://127.0.0.1"],
+  origin: ["http://localhost:3001", "http://127.0.0.1"],
   credentials: true,
   exposedHeaders: ["set-cookie"],
 };
 
-const port: number = config.server.port || 8000;
+const port: number = config.server.port || 8001;
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());

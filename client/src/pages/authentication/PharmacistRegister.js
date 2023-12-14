@@ -87,7 +87,7 @@ export default function PharmacistRegister() {
     formData.append("datatoserver", JSON.stringify(dataToServer));
 
     axios
-      .post("http://localhost:8000/pharmacists", formData)
+      .post("http://localhost:8001/pharmacists", formData)
       .then((response) => {
         setSuccessMessage("Your request has been succesfully sent.");
         setSuccessOpen(true);

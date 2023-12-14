@@ -45,7 +45,7 @@ export default function AdminViewRequests(props) {
 
   const fetchTableData = () => {
     axios
-      .get(`http://localhost:8000/pharmacists/listAll`, {})
+      .get(`http://localhost:8001/pharmacists/listAll`, {})
       .then((res) => {
         setData(res.data);
         let tempAll = [];
@@ -73,7 +73,7 @@ export default function AdminViewRequests(props) {
 
   const handleAccept = (id) => {
     axios
-      .post(`http://localhost:8000/pharmacists/acceptPharmacist`, { id: id })
+      .post(`http://localhost:8001/pharmacists/acceptPharmacist`, { id: id })
       .then((response) => {
         console.log("POST request successful", response);
         fetchTableData();
@@ -85,7 +85,7 @@ export default function AdminViewRequests(props) {
 
   const handleReject = (id) => {
     axios
-      .post(`http://localhost:8000/pharmacists/rejectPharmacist`, { id: id })
+      .post(`http://localhost:8001/pharmacists/rejectPharmacist`, { id: id })
       .then((response) => {
         console.log("POST request successful", response);
         fetchTableData();
@@ -212,7 +212,7 @@ export default function AdminViewRequests(props) {
                                   {file.filename}
                                   <a
                                     href={
-                                      `http://localhost:8000/uploads/` +
+                                      `http://localhost:8001/uploads/` +
                                       file.filename
                                     }
                                     target="_blank"

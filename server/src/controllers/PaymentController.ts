@@ -3,11 +3,14 @@ import carts from "../models/Cart.js";
 import Cart from "../models/Cart.js";
 import Stripe from "stripe";
 import Patient from "../models/Patient.js";
+import User from "../models/User.js";
 import orders from "../models/Order.js";
 import { HydratedDocument } from "mongoose";
 import medicine, { Imedicine } from "../models/medicine.js";
+import pharmacist from "../models/pharmacist.js";
+import sendMailService from "../services/emails/sendMailService.js";
 const stripe = new Stripe(
-  "sk_test_51O9bKeHqEqnZHrbzSpBS6JOvMryqZfvDolGqcPDOb19E9gXdSe3rKy5UbUgCOmqLVFyHxn1U0Fp7G3IFujKuYhn500g0lhxoDO"
+  "sk_test_51O9bKeHqEqnZHrbzSpBS6JOvMryqZfvDolGqcPDOb19E9gXdSe3rKy5UbUgCOmqLVFyHxn1U0Fp7G3IFujKuYhn500g0lhxoDO",
 );
 
 const payCCShoppingCart = async (req: Request, res: Response) => {
@@ -25,87 +28,83 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
             product_data: {
               name: item.medName,
             },
-            unit_amount: item.medPrice*100,
+            unit_amount: item.medPrice * 100,
           },
           quantity: item.medQuantity,
         };
       }),
-      success_url: `http://localhost:3000/patient/orders`,
-      cancel_url: `http://localhost:3000/patient/checkout`,
+      success_url: `http://localhost:3001/patient/orders`,
+      cancel_url: `http://localhost:3001/patient/checkout`,
     });
 
-
-
-
-
-
-
-
-    const { medicines, total, address} = req.body;
+    const { medicines, total, address } = req.body;
     const paymentMethod = "Credit Card";
-    
+
     const patientId = req.body.pId;
     console.log("HII");
     console.log(medicines, total, address, paymentMethod, patientId);
     try {
-        for (const med of medicines) {
-            const med2: HydratedDocument<Imedicine> | null = await medicine.findOne({ "name": med.medName });
-            if (!med2) {
-                return ;
-            }
-            med2.availableQuantity -= med.medQuantity; //TODO names
-            await med2.save();
+      for (const med of medicines) {
+        const med2: HydratedDocument<Imedicine> | null = await medicine.findOne(
+          { name: med.medName },
+        );
+        if (!med2) {
+          return;
         }
-        const order = new orders({
-            patient: patientId,
-            status: 'pending',
-            date: new Date(),
-            total: total,
-            address: address,
-            paymentMethod: paymentMethod,
-            medicines: medicines
-        });
+        med2.availableQuantity -= med.medQuantity; //TODO names
 
-        await order.save();
+        if (med2.availableQuantity === 0) {
+          const subject = "Medicince Out of Stock";
+          let html = `Hello pharmacist, <br /> The medicine ${med2.name} is out of stock. <br /> Try to order new stock ASAP. <br /> With Love, <br /> El7a2ni Pharmacy xoxo.`;
+          await User.find({ __t: "pharmacist" })
+            .select("email")
+            .then((res) => {
+              res.map((p) => {
+                sendMailService.sendMail(p.email, subject, html);
+              });
+            });
+        }
+        await med2.save();
+      }
+      const order = new orders({
+        patient: patientId,
+        status: "pending",
+        date: new Date(),
+        total: total,
+        address: address,
+        paymentMethod: paymentMethod,
+        medicines: medicines,
+      });
+
+      await order.save();
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-
 
     try {
-        const cart = await carts.findOne({ patient: patientId });
-        if (!cart) {
-            return;
-        }
-        cart.medicines = [];
-        await cart.save();
+      const cart = await carts.findOne({ patient: patientId });
+      if (!cart) {
+        return;
+      }
+      cart.medicines = [];
+      await cart.save();
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-    
 
-
-
-
-
-
-
-
-    ///post(`http://localhost:8000/orders/${req.body.pId}/add`, { medicines:req.body.meds, total:req.body.total, address:req.body.address, paymentMethod:"Credit Card" })
-    //put(`http://localhost:8000/cart/${req.body.pId}/empty`)
+    ///post(`http://localhost:8001/orders/${req.body.pId}/add`, { medicines:req.body.meds, total:req.body.total, address:req.body.address, paymentMethod:"Credit Card" })
+    //put(`http://localhost:8001/cart/${req.body.pId}/empty`)
     res.json({ url: session.url });
-  } 
-  catch (e) {
+  } catch (e) {
     console.log(e);
     res.status(500).json(e);
-    
   }
 };
 
 const payWalletShoppingCart = async (req: Request, res: Response) => {
   // assuming id of logged in user  comes from req.body but should come from login session
   const userId = req.body.id;
-  console.log("user id "+userId);
+  console.log("user id " + userId);
   const userCart = Cart.find({ patient: userId }).then(async (result) => {
     var totalAmount = 0;
     for (const med of result[0].medicines) {
@@ -118,7 +117,7 @@ const payWalletShoppingCart = async (req: Request, res: Response) => {
     // assuming patient id is took from logged in session
     const pat = await Patient.findById(userId);
     const walletValue = pat?.wallet;
-    console.log(walletValue+" "+totalAmount);
+    console.log(walletValue + " " + totalAmount);
     if (totalAmount != undefined && walletValue != undefined) {
       if (walletValue < totalAmount) {
         res
@@ -127,7 +126,7 @@ const payWalletShoppingCart = async (req: Request, res: Response) => {
             "Payment cannot be completed because credit not in wallet : Amount to be paid  " +
               totalAmount +
               " current wallet balance " +
-              walletValue
+              walletValue,
           );
       } else {
         const update = {
@@ -146,7 +145,7 @@ const payWalletShoppingCart = async (req: Request, res: Response) => {
         const updateWallet = await Patient.findOneAndUpdate(
           filter,
           update,
-          options
+          options,
         );
 
         const newWallet =
