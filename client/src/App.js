@@ -100,6 +100,7 @@ function App() {
       element: <ForgotPassword />,
     },
 
+
     { path: "*", element: <NotFoundPage /> },
   ]);
 
