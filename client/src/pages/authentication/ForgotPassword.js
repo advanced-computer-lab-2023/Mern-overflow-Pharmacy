@@ -32,7 +32,7 @@ export default function ForgotPassword() {
     const email = new FormData(event.currentTarget).get("email");
 
     axios
-      .post("http://localhost:8000/auth/reset", { email })
+      .post("http://localhost:8001/auth/reset", { email })
       .then(() => setResetRequestStatus("SUCCESS"))
       .catch(() => setResetRequestStatus("UNSENT"));
   };

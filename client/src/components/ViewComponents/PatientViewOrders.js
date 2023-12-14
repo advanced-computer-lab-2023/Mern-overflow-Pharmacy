@@ -26,7 +26,7 @@ export default function PatientViewCart(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
-        axios.get(`http://localhost:8000/orders/${userId}`).then((res) => {
+        axios.get(`http://localhost:8001/orders/${userId}`).then((res) => {
             const reversedData = res.data.reverse();
             setData(reversedData);
             setTimeout(() => setLoading(false), 500);
@@ -49,7 +49,7 @@ export default function PatientViewCart(props) {
 
     const handleCancel = (orderId) => {
         setLoadingChange(true);
-        axios.put(`http://localhost:8000/orders/${orderId}`)
+        axios.put(`http://localhost:8001/orders/${orderId}`)
             .then((response) => {
                 setSuccessMessage(`Order ${orderId.toUpperCase()} has been cancelled.`);
                 setLoadingChange(false);

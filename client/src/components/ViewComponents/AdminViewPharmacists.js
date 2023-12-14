@@ -49,7 +49,7 @@ export default function AdminViewPharmacists(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
-        axios.get(`http://localhost:8000/pharmacists`).then((res) => {
+        axios.get(`http://localhost:8001/pharmacists`).then((res) => {
             setData(res.data);
             setTimeout(() => setLoading(false), 500);
         });
@@ -57,7 +57,7 @@ export default function AdminViewPharmacists(props) {
 
     const handleDelete = (id) => {
         setLoadingDel(true);
-        axios.delete(`http://localhost:8000/pharmacists/${id}`)
+        axios.delete(`http://localhost:8001/pharmacists/${id}`)
             .then((response) => {
                 fetchTableData();
                 setSuccessMessage('Pharmacist deleted succesfully');

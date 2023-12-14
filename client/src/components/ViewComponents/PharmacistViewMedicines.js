@@ -70,7 +70,7 @@ export default function PharmacistViewMedicines(props) {
   });
 
   const fetchTableData = () => {
-    axios.get(`http://localhost:8000/medicines/viewAll`, {}).then((res) => {
+    axios.get(`http://localhost:8001/medicines/viewAll`, {}).then((res) => {
       setData(res.data);
       props.setDataIsUpdated(true);
       let temp = ["All"];
@@ -97,7 +97,7 @@ export default function PharmacistViewMedicines(props) {
       fetchTableData();
     } else {
       axios
-        .post(`http://localhost:8000/medicines/filter`, {
+        .post(`http://localhost:8001/medicines/filter`, {
           medicinalUse: medUse,
         })
         .then((res) => {
@@ -113,7 +113,7 @@ export default function PharmacistViewMedicines(props) {
   const handleClickArchive = (id, isArchived) => {
     setLoadingEdit(true);
     axios
-      .put(`http://localhost:8000/medicines/${id}/archive`)
+      .put(`http://localhost:8001/medicines/${id}/archive`)
       .then((response) => {
         isArchived == true
           ? setSuccessMessage("Medicine has been unarchived succesfully")
@@ -260,7 +260,7 @@ export default function PharmacistViewMedicines(props) {
                             <ButtonBase sx={{ width: 128, height: "100%" }}>
                               <Img
                                 alt={row.name}
-                                src={`http://localhost:8000/images/${row.image}`}
+                                src={`http://localhost:8001/images/${row.image}`}
                               />
                             </ButtonBase>
                             <Container

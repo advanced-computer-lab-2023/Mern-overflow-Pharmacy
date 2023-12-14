@@ -54,13 +54,13 @@ export default function PatientRegister() {
 
       console.log("Data to server" + JSON.stringify(dataToServer));
       axios
-        .post("http://localhost:8000/patients", dataToServer)
+        .post("http://localhost:8001/patients", dataToServer)
         .then((response) => {
           console.log("POST request successful", response);
           const userId = response.data._id;
           setUserId(userId);
           setUserRole("Patient");
-          axios.post("http://localhost:8000/auth/login", {
+          axios.post("http://localhost:8001/auth/login", {
             username: dataToServer.username,
             passwordHash: dataToServer.passwordHash,
           })

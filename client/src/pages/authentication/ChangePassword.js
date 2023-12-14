@@ -48,7 +48,7 @@ export default function ChangePassword() {
     }
 
     axios
-      .post("http://localhost:8000/auth/change", {
+      .post("http://localhost:8001/auth/change", {
         oldPasswordHash: sha256(oldPassword),
         newPasswordHash: sha256(newPassword),
       })
@@ -56,7 +56,7 @@ export default function ChangePassword() {
         alert("Password changed successfully!");
 
         axios
-          .post("http://localhost:8000/auth/logout")
+          .post("http://localhost:8001/auth/logout")
           .then(() => {
             navigate("/signin");
           })
