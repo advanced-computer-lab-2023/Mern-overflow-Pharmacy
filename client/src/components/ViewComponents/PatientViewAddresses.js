@@ -17,7 +17,7 @@ export default function PatientViewAddresses(props) {
     const [triedSubmit, setTriedSubmit] = useState(false);
 
     const fetchAddresses = () => {
-        axios.get(`http://localhost:8000/patients/address/${userId}`).then((res) => {
+        axios.get(`http://localhost:8001/patients/address/${userId}`).then((res) => {
             setData(res.data);
             setTimeout(() => setLoading(false), 500);
         });
@@ -36,7 +36,7 @@ export default function PatientViewAddresses(props) {
     const handleSubmit = () => {
         if (newAddress.length >= 20 && !(data.addresses.some(existingAddress => existingAddress === newAddress))) {
             setLoadingChange(true);
-            axios.put(`http://localhost:8000/patients/address/${userId}`, { newAddress: newAddress })
+            axios.put(`http://localhost:8001/patients/address/${userId}`, { newAddress: newAddress })
                 .then((response) => {
                     fetchAddresses();
                     setLoadingChange(false);

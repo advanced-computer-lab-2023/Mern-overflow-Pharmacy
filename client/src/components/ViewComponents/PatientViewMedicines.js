@@ -68,7 +68,7 @@ export default function PatientViewMedicines(props) {
   });
 
   const fetchTableData = () => {
-    axios.get(`http://localhost:8000/medicines/view`, {}).then((res) => {
+    axios.get(`http://localhost:8001/medicines/view`, {}).then((res) => {
       setData(res.data);
       let temp = ["All"];
       res.data.map((key) => {
@@ -106,7 +106,7 @@ export default function PatientViewMedicines(props) {
     };
     setLoadingChange(true);
     axios
-      .post(`http://localhost:8000/cart/${userId}/add`, requestData)
+      .post(`http://localhost:8001/cart/${userId}/add`, requestData)
       .then((response) => {
         setLoadingChange(false);
         setSuccessOpen(true);
@@ -132,7 +132,7 @@ export default function PatientViewMedicines(props) {
       fetchTableData();
     } else {
       axios
-        .post(`http://localhost:8000/medicines/filter`, {
+        .post(`http://localhost:8001/medicines/filter`, {
           medicinalUse: medUse,
         })
         .then((res) => {
@@ -282,7 +282,7 @@ export default function PatientViewMedicines(props) {
                             <ButtonBase sx={{ width: 128, height: "100%" }}>
                               <Img
                                 alt={row.name}
-                                src={`http://localhost:8000/images/${row.image}`}
+                                src={`http://localhost:8001/images/${row.image}`}
                               />
                             </ButtonBase>
                             <Container

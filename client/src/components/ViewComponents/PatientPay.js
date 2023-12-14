@@ -39,7 +39,7 @@ export default function PatientPay(props) {
         setWallet(false);
         console.log("before fetch");
         {
-            fetch("http://localhost:8000/create-checkout-session/shoppingCart", {
+            fetch("http://localhost:8001/create-checkout-session/shoppingCart", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export default function PatientPay(props) {
         setCredit(false);
         setWallet(true);
 
-        axios.post('http://localhost:8000/walletPayment/shoppingCart', {id:userId}, {
+        axios.post('http://localhost:8001/walletPayment/shoppingCart', {id:userId}, {
   headers: {
     'Content-Type': 'application/json', // Set the content type based on your API requirements
     // Add other headers as needed
@@ -99,7 +99,7 @@ export default function PatientPay(props) {
     //     setCredit(false);
     //     setWallet(true);
 
-    //     axios.post(`http://localhost:8000/walletPayment/shoppingCart`,{id:userId} )
+    //     axios.post(`http://localhost:8001/walletPayment/shoppingCart`,{id:userId} )
     //     .then(res => {
     //         console.log(res)
     //         // props.setSuccessMessage(JSON.stringify(res));

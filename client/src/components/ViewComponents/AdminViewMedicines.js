@@ -24,7 +24,7 @@ export default function AdminViewMedicines() {
 
     const fetchTableData = () => {
         axios
-            .get(`http://localhost:8000/medicines/view`, {})
+            .get(`http://localhost:8001/medicines/view`, {})
             .then((res) => {
                 setData(res.data);
                 let temp = ["All"];
@@ -51,7 +51,7 @@ export default function AdminViewMedicines() {
             fetchTableData();
         } else {
             axios
-                .post(`http://localhost:8000/medicines/filter`, {
+                .post(`http://localhost:8001/medicines/filter`, {
                     medicinalUse: medUse,
                 })
                 .then((res) => {
@@ -128,7 +128,7 @@ export default function AdminViewMedicines() {
                                         <Accordion elevation="3">
                                             <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ py: "20px" }} >
                                                 <ButtonBase sx={{ width: 128, height: '100%' }}>
-                                                    <Img alt={row.name} src={`http://localhost:8000/images/${row.image}`} />
+                                                    <Img alt={row.name} src={`http://localhost:8001/images/${row.image}`} />
                                                 </ButtonBase>
                                                 <Container sx={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
                                                     <Typography fontWeight="bold" gutterBottom variant="subtitle1" component="div">

@@ -33,7 +33,7 @@ export default function ResetPassword() {
 
     const newPassword = new FormData(event.currentTarget).get("newPassword");
     axios
-      .post("http://localhost:8000/auth/resetwithtoken", {
+      .post("http://localhost:8001/auth/resetwithtoken", {
         newPassword: sha256(newPassword),
         token: searchParams.get("token") || "",
       })

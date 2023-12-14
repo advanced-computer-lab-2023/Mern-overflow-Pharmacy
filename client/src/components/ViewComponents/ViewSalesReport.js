@@ -65,7 +65,7 @@ export default function ViewSalesReport() {
       selectedDate,
     );
     axios
-      .get(`http://localhost:8000/orders/salesreport`, {
+      .get(`http://localhost:8001/orders/salesreport`, {
         params: { date: selectedDate, filter: filter },
       })
       .then((res) => {

@@ -53,7 +53,7 @@ export default function AdminViewPatients(props) {
   const [successMessage, setSuccessMessage] = useState('');
 
   const fetchTableData = () => {
-    axios.get(`http://localhost:8000/patients`).then((res) => {
+    axios.get(`http://localhost:8001/patients`).then((res) => {
       setData(res.data);
       setTimeout(() => setLoading(false), 500);
     });
@@ -61,7 +61,7 @@ export default function AdminViewPatients(props) {
 
   const handleDelete = (id) => {
     setLoadingDel(true);
-    axios.delete(`http://localhost:8000/patients/${id}`)
+    axios.delete(`http://localhost:8001/patients/${id}`)
       .then((response) => {
         fetchTableData();
         setSuccessMessage('Patient deleted succesfully');

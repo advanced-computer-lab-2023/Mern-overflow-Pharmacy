@@ -18,7 +18,7 @@ export default function PatientViewCartSummary(props) {
 
 
     const fetchTableData = () => {
-        axios.get(`http://localhost:8000/cart/${userId}`).then((res) => {
+        axios.get(`http://localhost:8001/cart/${userId}`).then((res) => {
             setData(res.data)
             props.setMeds(res.data.medicines);
             setTimeout(() => setLoading(false), 500);
@@ -47,9 +47,9 @@ export default function PatientViewCartSummary(props) {
         const address = props.address;
         const paymentMethod = props.paymentMethod;
 
-        axios.post(`http://localhost:8000/orders/${userId}/add`, { medicines, total:props.total, address, paymentMethod })
+        axios.post(`http://localhost:8001/orders/${userId}/add`, { medicines, total:props.total, address, paymentMethod })
             .then(response => {
-                axios.put(`http://localhost:8000/cart/${userId}/empty`).then((response) => {
+                axios.put(`http://localhost:8001/cart/${userId}/empty`).then((response) => {
                     setLoadingChange(false);
                     props.setSuccessMessage("Order received");
                     props.setSuccessOpen(true);

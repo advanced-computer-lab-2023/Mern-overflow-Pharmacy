@@ -17,7 +17,7 @@ export default function AdminViewAdmins(props) {
     const [successMessage, setSuccessMessage] = useState('');
 
     const fetchTableData = () => {
-        axios.get(`http://localhost:8000/adminstrators`).then((res) => {
+        axios.get(`http://localhost:8001/adminstrators`).then((res) => {
             setData(res.data);
             setTimeout(() => setLoading(false), 500);
             props.setDataIsUpdated(true);
@@ -26,7 +26,7 @@ export default function AdminViewAdmins(props) {
 
     const handleDelete = (id) => {
         setLoadingDel(true);
-        axios.delete(`http://localhost:8000/adminstrators/${id}`)
+        axios.delete(`http://localhost:8001/adminstrators/${id}`)
             .then((response) => {
                 fetchTableData();
                 setSuccessMessage('Admin deleted succesfully');

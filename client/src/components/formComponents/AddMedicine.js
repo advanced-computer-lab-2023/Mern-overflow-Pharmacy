@@ -35,7 +35,7 @@ const AddMedicine = (props) => {
         dataToServer["details"] = { description: data["description"], activeIngredients: data["activeIngredients"].split(',').map(item => item.trim()) }
         delete dataToServer.description
         delete dataToServer.activeIngredients
-        axios.post('http://localhost:8000/medicines', dataToServer)
+        axios.post('http://localhost:8001/medicines', dataToServer)
             .then((response) => {
                 setSuccessMessage('Medicine added succesfully');
                 setSuccessOpen(true);
@@ -83,7 +83,7 @@ const AddMedicine = (props) => {
     const handleImageUpload = (e) =>{
         const formData= new FormData()
         formData.append('file', file)
-        axios.post('http://localhost:8000/upload', formData)
+        axios.post('http://localhost:8001/upload', formData)
         .then(res => console.log(res))
         .catch(err=> console.log(err))
     }

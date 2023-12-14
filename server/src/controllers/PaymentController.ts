@@ -33,8 +33,8 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
           quantity: item.medQuantity,
         };
       }),
-      success_url: `http://localhost:3000/patient/orders`,
-      cancel_url: `http://localhost:3000/patient/checkout`,
+      success_url: `http://localhost:3001/patient/orders`,
+      cancel_url: `http://localhost:3001/patient/checkout`,
     });
 
     const { medicines, total, address } = req.body;
@@ -92,8 +92,8 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
       console.error(error);
     }
 
-    ///post(`http://localhost:8000/orders/${req.body.pId}/add`, { medicines:req.body.meds, total:req.body.total, address:req.body.address, paymentMethod:"Credit Card" })
-    //put(`http://localhost:8000/cart/${req.body.pId}/empty`)
+    ///post(`http://localhost:8001/orders/${req.body.pId}/add`, { medicines:req.body.meds, total:req.body.total, address:req.body.address, paymentMethod:"Credit Card" })
+    //put(`http://localhost:8001/cart/${req.body.pId}/empty`)
     res.json({ url: session.url });
   } catch (e) {
     console.log(e);
