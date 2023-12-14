@@ -202,6 +202,23 @@ export default function PatientRegister() {
                   />
                 </Grid>
 
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="nationalId"
+                    label="National ID"
+                    type="number"
+                    {...register("nationalId", {
+                      required: true,
+                      minLength: 8,
+                      maxLength: 16,
+                    })}
+                    error={!!errors["nationalId"]}
+                    helperText={errors["nationalId"]?.message}
+                    onBlur={handleChange}
+                  />
+                </Grid>
+
                 <Grid item xs={12} sm={12} md={12}>
                   <TextField
                     fullWidth

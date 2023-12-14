@@ -10,6 +10,8 @@ import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 import { useUser } from "../userContest";
 import { Tooltip } from "@chakra-ui/tooltip";
+import CircularJSON from "circular-json";
+
 
 const MyChats = (props) => {
   
@@ -71,7 +73,11 @@ const MyChats = (props) => {
     >
             <Tooltip label={`Search ${userRole === "Patient"?"Pharmacist":"Patient"} to chat`} hasArrow placement="bottom-end">
           <Button  variant="ghost" onClick={async()=>{
-            const { data } = await axios.get((userRole === "Patient"?`http://localhost:8001/patients/getAllMyPharmacists/${userId}`:`http://localhost:8001/doctors/getAllMyPatients/${userId}`));
+            let { data } =  await axios.get((userRole === "Patient"?`http://localhost:8001/patients/getAllMyPharmacists/${userId}`:`http://localhost:8001/pharmacists/getAllMyContacts/${userId}`));
+
+            console.log("Doctors form the other be: ");
+            console.log(data);
+            if(userRole==="Pharmacist") data = data.data;
 
             props.setSearchResult(data);
             props.onOpen();

@@ -87,8 +87,8 @@ function SideDrawer(props) {
     try {
       setLoading(true);
       console.log("userRole "+userRole)
-      console.log((userRole === "Patient"?`http://localhost:8001/patients/chatWithPharmacists/${userId}/${search}`:`http://localhost:8001/Pharmacists/chatWithPateints/${userId}/${search}`));
-      const { data } = await axios.get((userRole === "Patient"?`http://localhost:8001/patients/chatWithPharmacists/${userId}/${search}`:`http://localhost:8001/Pharmacists/chatWithPatients/${userId}/${search}`)
+      console.log((userRole === "Patient"?`http://localhost:8001/patients/chatWithPharmacists/${userId}/${search}`:`http://localhost:8001/Pharmacists/chatWithContacts/${userId}/${search}`));
+      const { data } = await axios.get((userRole === "Patient"?`http://localhost:8001/patients/chatWithPharmacists/${userId}/${search}`:`http://localhost:8001/Pharmacists/chatWithContacts/${userId}/${search}`)
         );
       console.log("DATA:   "+JSON.stringify(data));
       setLoading(false);
