@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Typography, Zoom, Toolbar, Box, AppBar, IconButton, Button, Drawer, List, ListItem, ListItemButton, ListItemIcon, InboxIcon, MailIcon, ListItemText, Divider, Fab } from '@mui/material';
+import { Typography, Menu, MenuItem,	 Zoom, Toolbar, Box, AppBar, IconButton, Button, Drawer, List, ListItem, ListItemButton, ListItemIcon, InboxIcon, MailIcon, ListItemText, Divider, Fab } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -9,8 +9,52 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useUser } from "../userContest";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import io from 'socket.io-client';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 
 export default function ButtonAppBar(props) {
+	const { userId, setUserId, userRole, setUserRole } = useUser();
+	const [notifications, setNotifications] = useState([]);
+	const [newNotifications, setNewNotifications] = useState(false);
+
+	useEffect(() => {
+		let socket = io('http://localhost:8000');
+
+		fetchNotifications();
+		socket.emit('setupNotifications', userId);
+		socket.on('newNotification', (newNotification) => {
+			console.log("newNotification:", newNotification);
+			setNotifications((prevNotifications) => [newNotification, ...prevNotifications]);
+			//fetchNotifications();
+			setNewNotifications(true);
+		});
+		return () => {
+			socket.disconnect();
+		};
+	}, []);
+
+	const fetchNotifications = async () => {
+		try {
+			const response = await axios.get('http://localhost:8000/notifications/${userId}');
+			const data = await response.data;
+			setNotifications(data);
+		} catch (error) {
+			console.error('Error fetching notifications:', error);
+		}
+	};
+
+	console.log("notifications:", notifications);
+	const [anchorEl, setAnchorEl] = useState(null);
+
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+		setNewNotifications(false);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 	const list = (anchor) => (
 		<Box
 			sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -37,7 +81,6 @@ export default function ButtonAppBar(props) {
 
 	const navigate = useNavigate();
 
-	const { userId, setUserId } = useUser();
 
 	const toggleDrawer = (anchor, open) => (event) => {
 		if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -116,6 +159,26 @@ export default function ButtonAppBar(props) {
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'left' }}>
 							{props.title}
 						</Typography>
+						<div>
+							<IconButton onClick={handleClick} color="inherit">
+								{newNotifications ? (
+									<NotificationImportantIcon style={{ color: 'red' }} />
+								) : (
+									<NotificationsIcon />
+								)}
+							</IconButton>
+							<Menu
+								anchorEl={anchorEl}
+								open={Boolean(anchorEl)}
+								onClose={handleClose}
+							>
+								{notifications.map((notification, index) => (
+									<MenuItem key={index} onClick={handleClose}>
+										{notification.content}
+									</MenuItem>
+								))}
+							</Menu>
+						</div>
 						{
 							props.cart && <IconButton
 								size="large"
