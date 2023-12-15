@@ -17,7 +17,7 @@ RUN npm install
 
 # Install client dependencies and build the frontend
 WORKDIR /app/client
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Start
 WORKDIR /app/server
