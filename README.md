@@ -40,12 +40,15 @@ El7a2ny Pharmacy is a platform that facilitates a streamlined healthcare experie
 -   [Credits 🙏](#credits-)
 -   [Authors 🧑‍💻️](#authors-️)
 -   [License ⚖️](#license-️)
+-   [Feedback ⭐](#feedback-)
 
 ## Build Status 🔨
 
-The project is currently in development.
+- The project is currently in development.
+- The project needs to be deployed through a cloud service.
+- The project needs more thorough testing.
+- Need to add screenshots, code examples, and tests to the README
 
--   Need to add screenshots, code examples, and tests to the README
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 ## Code Style 📜
@@ -577,3 +580,7 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 - Stripe is licensed under the Apache License 2.0 
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
+
+## Feedback ⭐
+
+We would love to hear from you. If you have any feedback, please reach out to us at john.f.roufaeil@gmail.com
