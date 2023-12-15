@@ -1,42 +1,69 @@
-import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import {
+    IconButton,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    CircularProgress,
+    Input,
+    Snackbar,
+    Alert,
+    InputLabel,
+    TextField,
+    Grid,
+    Select,
+    MenuItem,
+    Button,
+    Box,
+    Container,
+    FormControl,
+    Typography,
+    Divider,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Radio
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 
 const columns = [
     {
         key: "name",
-        label: "Name",
+        label: "Name"
     },
     {
         key: "email",
-        label: "Email",
+        label: "Email"
     },
     {
         key: "username",
-        label: "Username",
+        label: "Username"
     },
     {
         key: "dateOfBirth",
-        label: "Birth Date",
+        label: "Birth Date"
     },
     {
         key: "hourlyRate",
-        label: "Hourly Rate",
+        label: "Hourly Rate"
     },
     {
         key: "affiliation",
-        label: "Affiliation",
+        label: "Affiliation"
     },
     {
         key: "education",
-        label: "Education",
+        label: "Education"
     },
     {
         key: "action",
-        label: "Action",
-    },
+        label: "Action"
+    }
 ];
 
 export default function AdminViewPharmacists(props) {
@@ -46,7 +73,7 @@ export default function AdminViewPharmacists(props) {
     const [loadingDel, setLoadingDel] = useState(false);
     const [Query, setQuery] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState("");
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8001/pharmacists`).then((res) => {
@@ -60,23 +87,23 @@ export default function AdminViewPharmacists(props) {
         axios.delete(`http://localhost:8001/pharmacists/${id}`)
             .then((response) => {
                 fetchTableData();
-                setSuccessMessage('Pharmacist deleted succesfully');
+                setSuccessMessage("Pharmacist deleted succesfully");
                 setSuccessOpen(true);
                 setLoadingDel(false);
             })
             .catch((error) => {
-                console.error('Error making DELETE request', error);
-                alert('Error deleting the pharmacist: ' + error.message);
+                console.error("Error making DELETE request", error);
+                alert("Error deleting the pharmacist: " + error.message);
                 setLoadingDel(false);
             });
-    }
+    };
 
     useEffect(() => {
         fetchTableData();
     }, []);
 
     const handleSuccessClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         setSuccessOpen(false);
@@ -89,9 +116,9 @@ export default function AdminViewPharmacists(props) {
                     {successMessage}
                 </Alert>
             </Snackbar>
-            <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
+            <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }}>
                 {loading ? (
-                    <CircularProgress sx={{ mt: '30px' }} />
+                    <CircularProgress sx={{ mt: "30px" }} />
                 ) : (
                     <Container>
                         <Container
@@ -99,7 +126,7 @@ export default function AdminViewPharmacists(props) {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between",
-                                my: 5,
+                                my: 5
                             }}
                         >
                             <Container sx={{ width: "48%" }}>
@@ -115,27 +142,35 @@ export default function AdminViewPharmacists(props) {
                             <TableHead>
                                 <TableRow>
                                     {columns.map((column) => (
-                                        <TableCell key={column.key} sx={{ fontWeight: "bold" }}>{column.label}</TableCell>
+                                        <TableCell key={column.key} sx={{ fontWeight: "bold" }}>
+                                            {column.label}
+                                        </TableCell>
                                     ))}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data.map((row) => row.name.toLowerCase().includes(Query.toLowerCase()) && (
-                                    <TableRow key={row.username}>
-                                        <TableCell>{row.name}</TableCell>
-                                        <TableCell>{row.email}</TableCell>
-                                        <TableCell>{row.username}</TableCell>
-                                        <TableCell>{row.dateOfBirth.slice(0, 10)}</TableCell>
-                                        <TableCell>EGP {row.hourlyRate}</TableCell>
-                                        <TableCell>{row.affiliation}</TableCell>
-                                        <TableCell>{row.education}</TableCell>
-                                        <TableCell>
-                                        <IconButton onClick={() => handleDelete(row._id)} sx={{ '&:hover': {color: theme.palette.error.main} }}>
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                {data.map(
+                                    (row) =>
+                                        row.name.toLowerCase().includes(Query.toLowerCase()) && (
+                                            <TableRow key={row.username}>
+                                                <TableCell>{row.name}</TableCell>
+                                                <TableCell>{row.email}</TableCell>
+                                                <TableCell>{row.username}</TableCell>
+                                                <TableCell>{row.dateOfBirth.slice(0, 10)}</TableCell>
+                                                <TableCell>EGP {row.hourlyRate}</TableCell>
+                                                <TableCell>{row.affiliation}</TableCell>
+                                                <TableCell>{row.education}</TableCell>
+                                                <TableCell>
+                                                    <IconButton
+                                                        onClick={() => handleDelete(row._id)}
+                                                        sx={{ "&:hover": { color: theme.palette.error.main } }}
+                                                    >
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                )}
                             </TableBody>
                         </Table>
                     </Container>
@@ -153,7 +188,7 @@ export default function AdminViewPharmacists(props) {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        zIndex: 9999,
+                        zIndex: 9999
                     }}
                     onClick={(e) => e.stopPropagation()}
                 >

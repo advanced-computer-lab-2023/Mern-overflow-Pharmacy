@@ -1,16 +1,35 @@
-import { Grid, Select, MenuItem, CircularProgress, Box, Typography, Snackbar, Alert, FormControl, Button, Container, Paper, TextField } from "@mui/material";
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import { useForm } from "react-hook-form"
-import { useParams } from 'react-router-dom';
+import {
+    Grid,
+    Select,
+    MenuItem,
+    CircularProgress,
+    Box,
+    Typography,
+    Snackbar,
+    Alert,
+    FormControl,
+    Button,
+    Container,
+    Paper,
+    TextField
+} from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const EditMedicine = () => {
     let { id } = useParams();
-    const { register, handleSubmit, setError, formState: { errors } } = useForm();
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors }
+    } = useForm();
     const [loading, setLoading] = useState(true);
     const [name, setName] = useState("");
     const [medicinalUse, setMedicinalUse] = useState("");
@@ -21,9 +40,9 @@ const EditMedicine = () => {
     const [sales, setSales] = useState("");
     const [overTheCounter, setOverTheCounter] = useState("");
     const [errorOpen, setErrorOpen] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");
     const [successOpen, setSuccessOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState("");
     const [loadingEdit, setLoadingEdit] = useState(false);
 
     useEffect(() => {
@@ -34,11 +53,11 @@ const EditMedicine = () => {
                 setName(medicine.name);
                 setMedicinalUse(medicine.medicinalUse);
                 setDescription(medicine.details.description);
-                setActiveIngredients(JSON.stringify(medicine.details.activeIngredients).replace(/[\[\]"\\"']/g, ''));
+                setActiveIngredients(JSON.stringify(medicine.details.activeIngredients).replace(/[\[\]"\\"']/g, ""));
                 setPrice(medicine.price);
                 setAvailableQuantity(medicine.availableQuantity);
                 setSales(medicine.sales);
-                setOverTheCounter(medicine.overTheCounter)
+                setOverTheCounter(medicine.overTheCounter);
                 setLoading(false);
             } catch (error) {
                 console.error(error);
@@ -47,35 +66,38 @@ const EditMedicine = () => {
         fetchData();
     }, []);
 
-    const onSubmit = data => {
+    const onSubmit = (data) => {
         setLoadingEdit(true);
-        const details = { activeIngredients: activeIngredients.split(',').map(item => item.trim()), description: description }
+        const details = {
+            activeIngredients: activeIngredients.split(",").map((item) => item.trim()),
+            description: description
+        };
         const dataToServer = { name, medicinalUse, details, price, availableQuantity, sales };
         axios.put(`http://localhost:8001/medicines/${id}`, dataToServer)
             .then((response) => {
-                setSuccessMessage('Medicine updated succesfully');
+                setSuccessMessage("Medicine updated succesfully");
                 setSuccessOpen(true);
                 setErrorOpen(false);
                 setLoadingEdit(false);
             })
             .catch((error) => {
-                console.error('Error making PUT request', error);
-                setErrorMessage(error.response.data.message || 'Unknown error');
+                console.error("Error making PUT request", error);
+                setErrorMessage(error.response.data.message || "Unknown error");
                 setErrorOpen(true);
                 setSuccessOpen(false);
                 setLoadingEdit(false);
             });
-    }
+    };
 
     const handleErrorClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         setErrorOpen(false);
     };
 
     const handleSuccessClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         setSuccessOpen(false);
@@ -94,20 +116,15 @@ const EditMedicine = () => {
                 </Alert>
             </Snackbar>
             {loading ? (
-                <CircularProgress sx={{ mt: '30px' }} />
+                <CircularProgress sx={{ mt: "30px" }} />
             ) : (
-                <Paper elevation={3} sx={{ p: '20px', my: '40px' }}>
-                    <Typography variant="h6" sx={{ mb: 4 }}> Update Medicine </Typography>
+                <Paper elevation={3} sx={{ p: "20px", my: "40px" }}>
+                    <Typography variant="h6" sx={{ mb: 4 }}>
+                        {" "}
+                        Update Medicine{" "}
+                    </Typography>
                     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                        <TextField
-                            sx={{ mb: 3 }}
-                            value={name}
-                            type="text"
-                            label="Name"
-                            fullWidth
-                            disabled
-                            autoFocus
-                        />
+                        <TextField sx={{ mb: 3 }} value={name} type="text" label="Name" fullWidth disabled autoFocus />
                         <TextField
                             sx={{ mb: 3 }}
                             value={medicinalUse}
@@ -119,7 +136,9 @@ const EditMedicine = () => {
                         <TextField
                             sx={{ mb: 3 }}
                             value={description}
-                            onChange={(e) => { setDescription(e.target.value) }}
+                            onChange={(e) => {
+                                setDescription(e.target.value);
+                            }}
                             type="text"
                             label="Description"
                             required
@@ -128,13 +147,15 @@ const EditMedicine = () => {
                         <TextField
                             sx={{ mb: 3 }}
                             value={activeIngredients}
-                            onChange={(e) => { setActiveIngredients(e.target.value) }}
+                            onChange={(e) => {
+                                setActiveIngredients(e.target.value);
+                            }}
                             type="text"
                             label="Active Ingredients (Separate by commas)"
                             required
                             fullWidth
                         />
-                        <FormControl fullWidth >
+                        <FormControl fullWidth>
                             <InputLabel htmlFor="price">Price</InputLabel>
                             <OutlinedInput
                                 sx={{ mb: 3 }}
@@ -146,7 +167,9 @@ const EditMedicine = () => {
                                 startAdornment={<InputAdornment position="start">EGP</InputAdornment>}
                                 label="Price"
                                 value={price}
-                                onChange={(e) => { setPrice(e.target.value) }}
+                                onChange={(e) => {
+                                    setPrice(e.target.value);
+                                }}
                             />
                         </FormControl>
                         <TextField
@@ -176,14 +199,21 @@ const EditMedicine = () => {
                             fullWidth
                             disabled
                             value={overTheCounter}
-                            onChange={(e) => { setSales(e.target.value) }}
+                            onChange={(e) => {
+                                setSales(e.target.value);
+                            }}
                         />
-                        <Button type="submit" variant="contained" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}>
+                        <Button type="submit" variant="contained" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: "bold" }}>
                             Update Medicine
                         </Button>
-                        <Button type="button" variant="outlined" fullWidth sx={{ mb: 3, p: 1.8, fontWeight: 'bold' }}
+                        <Button
+                            type="button"
+                            variant="outlined"
+                            fullWidth
+                            sx={{ mb: 3, p: 1.8, fontWeight: "bold" }}
                             component={Link}
-                            to="/pharmacist/medicines">
+                            to="/pharmacist/medicines"
+                        >
                             Return
                         </Button>
                     </Box>
@@ -201,7 +231,7 @@ const EditMedicine = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        zIndex: 9999,
+                        zIndex: 9999
                     }}
                     onClick={(e) => e.stopPropagation()}
                 >
@@ -210,6 +240,6 @@ const EditMedicine = () => {
             )}
         </Container>
     );
-}
+};
 
 export default EditMedicine;

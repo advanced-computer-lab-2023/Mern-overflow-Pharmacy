@@ -1,5 +1,5 @@
 import PatientDashboard from "./PatientDashboard";
-import PatientViewCart from "../../components/ViewComponents/PatientViewCart"
+import PatientViewCart from "../../components/ViewComponents/PatientViewCart";
 
 const PatientManageCart = () => {
     return (
@@ -8,6 +8,6 @@ const PatientManageCart = () => {
             <PatientViewCart />
         </>
     );
-}
+};
 
 export default PatientManageCart;

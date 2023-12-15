@@ -8,10 +8,8 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-
-router.get("/",isAuthenticated,isAuthorized([UserType.ADMINSTARTOR]),adminstratorController.ListAllAdmins);
-router.post("/", isAuthorized([UserType.ADMINSTARTOR]),adminstratorController.createAdminstrator);
-router.delete("/:id",isAuthorized([UserType.ADMINSTARTOR]), adminstratorController.deleteAdmin);
-
+router.get("/", isAuthenticated, isAuthorized([UserType.ADMINSTARTOR]), adminstratorController.ListAllAdmins);
+router.post("/", isAuthorized([UserType.ADMINSTARTOR]), adminstratorController.createAdminstrator);
+router.delete("/:id", isAuthorized([UserType.ADMINSTARTOR]), adminstratorController.deleteAdmin);
 
 export default router;

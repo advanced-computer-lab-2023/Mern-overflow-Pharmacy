@@ -1,47 +1,46 @@
+import React, { useEffect, useState, createContext, useContext } from "react";
 import {
-  InputAdornment,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Snackbar,
-  Alert,
-  ButtonGroup,
-  CircularProgress,
-  Grid,
-  ButtonBase,
-  Container,
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  Typography,
-  Button,
-  Paper,
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Input,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
+    InputAdornment,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Snackbar,
+    Alert,
+    ButtonGroup,
+    CircularProgress,
+    Grid,
+    ButtonBase,
+    Container,
+    Card,
+    CardHeader,
+    CardMedia,
+    CardContent,
+    Typography,
+    Button,
+    Paper,
+    FormControl,
+    Select,
+    InputLabel,
+    MenuItem,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Input,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import panadol from "../../assets/photos/panadol.jpg";
 import { styled } from "@mui/material/styles";
 import { capitalize } from "../../utils";
 import { useUser } from "../../userContest";
-import React, { useEffect, useState, createContext, useContext } from "react";
 
 
 export default function PatientViewMedicines(props) {
