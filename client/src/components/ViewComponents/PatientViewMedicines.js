@@ -82,18 +82,37 @@ export default function PatientViewMedicines(props) {
     });
   };
 
+  // const showSimilarMedicines = (activeIngredients) => {
+  //   // Implement the logic to filter and display medicines with the same active ingredient
+  //   const similarMedicines = data.filter((med) =>
+  //     med.details.activeIngredients.some((ingredient) =>
+  //       activeIngredients.includes(ingredient)
+  //     ) && med.stock !== 0 // Add this condition to check if stock is not equal to 0
+  //   );
+  
+  //   // Update state to open the dialog and store the list of similar medicines
+  //   setSimilarMedicinesDialogOpen(true);
+  //   setSimilarMedicines(similarMedicines);
+  // };
+
   const showSimilarMedicines = (activeIngredients) => {
-    // Implement the logic to filter and display medicines with the same active ingredient
+    if (activeIngredients.length === 0) {
+      console.error("No active ingredients provided.");
+      return;
+    }
+  
+    const firstActiveIngredient = activeIngredients[0];
+  
     const similarMedicines = data.filter((med) =>
-      med.details.activeIngredients.some((ingredient) =>
-        activeIngredients.includes(ingredient)
-      ) && med.stock !== 0 // Add this condition to check if stock is not equal to 0
+      med.details.activeIngredients.includes(firstActiveIngredient) &&
+      med.stock !== 0
     );
   
     // Update state to open the dialog and store the list of similar medicines
     setSimilarMedicinesDialogOpen(true);
     setSimilarMedicines(similarMedicines);
   };
+  
 
   const handleAddMedicine = (medName, medPrice, medQuantity, e) => {
     e.preventDefault();
