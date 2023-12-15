@@ -44,10 +44,10 @@ El7a2ny Pharmacy is a platform that facilitates a streamlined healthcare experie
 
 ## Build Status 🔨
 
-- The project is currently in development.
-- The project needs to be deployed through a cloud service.
-- The project needs more thorough testing.
-- Need to add screenshots, code examples, and tests to the README
+-   The project is currently in development.
+-   The project needs to be deployed through a cloud service.
+-   The project needs more thorough testing.
+-   Need to add screenshots, code examples, and tests to the README
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
@@ -88,7 +88,7 @@ You will then need to run the following command each time before your next commi
 
 | ![Patient Registration](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/b9062c53-6345-4e67-af7a-5b866c2ce1dc) |
 | :------------------------------------------------------------------------------------------------------------------------------------------------: |
-|                                               <p style="text-align:center">Pharmacist Registration</p>                                                |
+|                                              <p style="text-align:center">Pharmacist Registration</p>                                              |
 
 | ![Patient Profile](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/6abc3044-78b5-4e47-8e19-b174d9b79bb6) |
 | :-------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -105,7 +105,7 @@ You will then need to run the following command each time before your next commi
 
 | ![Add Admin](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/ff48a122-ca16-4e1e-81a6-9f3d68fa8179) |
 | :-------------------------------------------------------------------------------------------------------------------------------------: |
-|                                               <p style="text-align:center">Manage System Admins</p>                                                |
+|                                          <p style="text-align:center">Manage System Admins</p>                                          |
 
 | ![View Pharamcist Requests](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/1a296030-2517-40f7-9740-a1c6b1016d76) |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -426,104 +426,171 @@ To run this project, you will need to add the following environment variables to
 <details>
     <summary>Authentication routes</summary>
 
-|method|route|returns|
-|--|--|--|
-|POST|```/auth/login/```|Log in|
-|POST|```/auth/logout/```|Log out|
-|POST|```/auth/reset/```|Reset Password|
-|POST|```/auth/resetwithtoken/```|Reset Password with Token|
-|POST|```/auth/change/```|Change Password|
+| method | route                   | returns                   |
+| ------ | ----------------------- | ------------------------- |
+| POST   | `/auth/login/`          | Log in                    |
+| POST   | `/auth/logout/`         | Log out                   |
+| POST   | `/auth/reset/`          | Reset Password            |
+| POST   | `/auth/resetwithtoken/` | Reset Password with Token |
+| POST   | `/auth/change/`         | Change Password           |
+
 </details>
 
 <details>
     <summary>Admin routes</summary>
 
-|method|route|returns|
-|--|--|--|
-|GET|```/adminstrators/```|View all admins|
-|POST|```/adminstrators/```|Create an admin|
-|DELETE|```/adminstrators/:id/```|Delete an admin|
+| method | route                 | returns         |
+| ------ | --------------------- | --------------- |
+| GET    | `/adminstrators/`     | View all admins |
+| POST   | `/adminstrators/`     | Create an admin |
+| DELETE | `/adminstrators/:id/` | Delete an admin |
+
 </details>
 
 <details>
     <summary> Patient routes</summary>
 
-|method|route|returns|
-|--|--|--|
-|GET|```/patients/```|View all patients|
-|GET|```/patients/:id/```|View details of a patient|
-|GET|```/patients/address/:id/```|View addresses of a patient|
-|POST|```/patients/```|Create a patient|
-|PUT|```/patients/address/:id/```|Add an adderss to a patient|
-|DELETE|```/patients/:id/```|Delete a patient|
+| method | route                    | returns                     |
+| ------ | ------------------------ | --------------------------- |
+| GET    | `/patients/`             | View all patients           |
+| GET    | `/patients/:id/`         | View details of a patient   |
+| GET    | `/patients/address/:id/` | View addresses of a patient |
+| POST   | `/patients/`             | Create a patient            |
+| PUT    | `/patients/address/:id/` | Add an adderss to a patient |
+| DELETE | `/patients/:id/`         | Delete a patient            |
+
 </details>
 
 <details>
     <summary> Pharmacist routes</summary>
 
-|method|route|returns|
-|--|--|--|
-|GET|```/pharmacists/```|View all accepted pharmacists|
-|GET|```/pharmacists/listAll/```|View all pending pharmacist requests|
-|GET|```/pharmacists/viewAll/```|View all pharmacist requests|
-|GET|```/pharmacists/:id/```|View details of a pharmacist|
-|POST|```/pharmacists/```|Create a pharmacist request|
-|POST|```/pharmacists/acceptPharmacist/```|Accept a pharmacist request|
-|POST|```/pharmacists/rejectPharmacist/```|Reject a pharmacist request|
-|PUT|```/pharmacists/:id/```|Update pharmacist request to accepted|
-|DELETE|```/pharmacists/:id/```|Delete a pharmacist|
+| method | route                            | returns                               |
+| ------ | -------------------------------- | ------------------------------------- |
+| GET    | `/pharmacists/`                  | View all accepted pharmacists         |
+| GET    | `/pharmacists/listAll/`          | View all pending pharmacist requests  |
+| GET    | `/pharmacists/viewAll/`          | View all pharmacist requests          |
+| GET    | `/pharmacists/:id/`              | View details of a pharmacist          |
+| POST   | `/pharmacists/`                  | Create a pharmacist request           |
+| POST   | `/pharmacists/acceptPharmacist/` | Accept a pharmacist request           |
+| POST   | `/pharmacists/rejectPharmacist/` | Reject a pharmacist request           |
+| PUT    | `/pharmacists/:id/`              | Update pharmacist request to accepted |
+| DELETE | `/pharmacists/:id/`              | Delete a pharmacist                   |
+
 </details>
 
 <details>
     <summary> Medicine routes</summary>
 
-|method|route|returns|
-|--|--|--|
-|GET|```/medicines/```|View the sales and quantity of medicines|
-|GET|```/medicines/view/```|View all available medicines only|
-|GET|```/medicines/viewAll/```|View all details about all medicines|
-|GET|```/medicines/search/```|View medicines by selected name query|
-|GET|```/medicines/filter/```|View medicines by selected medicinal use|
-|POST|```/medicines/```|Create a medicine|
-|PUT|```/medicines/:id/```|Update medicine details|
-|PUT|```/medicines/:id/archive/```|Archive / Unarchive a medicine|
+| method | route                     | returns                                  |
+| ------ | ------------------------- | ---------------------------------------- |
+| GET    | `/medicines/`             | View the sales and quantity of medicines |
+| GET    | `/medicines/view/`        | View all available medicines only        |
+| GET    | `/medicines/viewAll/`     | View all details about all medicines     |
+| GET    | `/medicines/search/`      | View medicines by selected name query    |
+| GET    | `/medicines/filter/`      | View medicines by selected medicinal use |
+| POST   | `/medicines/`             | Create a medicine                        |
+| PUT    | `/medicines/:id/`         | Update medicine details                  |
+| PUT    | `/medicines/:id/archive/` | Archive / Unarchive a medicine           |
+
 </details>
 
 <details>
     <summary> Cart routes</summary>
 
-|method|route|returns|
-|--|--|--|
-|GET|```/cart/:id/```|View cart items|
-|POST|```/cart/:id/add/```|Add a medicine to cart|
-|POST|```/cart/:id/changeAmount/```|Change a medicine's quantity in cart|
-|PUT|```/cart/:id/empty/```|Empty cart|
-|DELETE|```/cart/:id/:medName/```|Remove a medicine by name from cart|
+| method | route                     | returns                              |
+| ------ | ------------------------- | ------------------------------------ |
+| GET    | `/cart/:id/`              | View cart items                      |
+| POST   | `/cart/:id/add/`          | Add a medicine to cart               |
+| POST   | `/cart/:id/changeAmount/` | Change a medicine's quantity in cart |
+| PUT    | `/cart/:id/empty/`        | Empty cart                           |
+| DELETE | `/cart/:id/:medName/`     | Remove a medicine by name from cart  |
+
 </details>
 
 <details>
     <summary> Order routes</summary>
 
-|method|route|returns|
-|--|--|--|
-|GET|```/orders/:id/```|View orders by patient id|
-|GET|```/orders/salesreport/```|View sales report|
-|POST|```/orders/:id/add/```|Add an order|
-|PUT|```/orders/:id/```|Cancel pending order|
+| method | route                  | returns                   |
+| ------ | ---------------------- | ------------------------- |
+| GET    | `/orders/:id/`         | View orders by patient id |
+| GET    | `/orders/salesreport/` | View sales report         |
+| POST   | `/orders/:id/add/`     | Add an order              |
+| PUT    | `/orders/:id/`         | Cancel pending order      |
+
 </details>
 
 <details>
     <summary> Payment routes</summary>
 
-|method|route|returns|
-|--|--|--|
-|POST|```/walletPayment/shoppingCart/```|Pay for an order using wallet|
-|POST|```/create-checkout-session/shoppingCart/```|Pay for an order using credit card|
+| method | route                                    | returns                            |
+| ------ | ---------------------------------------- | ---------------------------------- |
+| POST   | `/walletPayment/shoppingCart/`           | Pay for an order using wallet      |
+| POST   | `/create-checkout-session/shoppingCart/` | Pay for an order using credit card |
+
 </details>
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 ## Tests 🧪
+
+Testing is divided into frontend and backend tests.
+
+### Frontend Tests
+
+Frontend testing is done via the `React Testing Library` which has tests in the form `componentName.test.js`.
+
+It works by providing a `render` method to display the component to be tested, and a `screen` method to get the component outputs rendered on the screen.
+It also provides an `expect` method that's used to verify that the outputs rendered by the component are indeed the expected outputs.
+
+The following snippet illustrates the use of `React Testing Library` to write a test for `App.js` called `App.test.js`.
+
+```javascript
+import { render, screen } from "@testing-library/react";
+import App from "./App";
+
+test("renders learn react link", () => {
+    render(<App />);
+    const linkElement = screen.getByText(/learn react/i);
+    expect(linkElement).toBeInTheDocument();
+});
+```
+
+### Backend Tests
+
+Backend testing is done using `jest`. To run the tests, run the following command
+
+```bash
+> cd server && npm run test
+```
+
+Furthermore, backend tests are divided into model and controller tests.
+
+Controller tests verify that each controller is working correctly by providing example inputs and outputs and expecting the correct outputs, including edge cases.
+
+Model tests make sure the respective entity models are correct by creating new entities. They also make sure the Models raise the appropriate errors when required (i.e when an email is invalid)
+
+An example of model tests is the following snippet, which checks that the User model is working correctly:
+
+```javascript
+test("should save a new user", async () => {
+    await mongoose.connect(mongoUrl);
+    const newUser = new User({
+        username: "testuser",
+        name: "Test User",
+        email: "tesst@gmail.com",
+        passwordHash: "123456",
+        dateOfBirth: new Date("1999-01-01"),
+        gender: "male",
+        mobileNumber: "01000000000",
+        emergencyContact: {
+            name: "father",
+            mobileNumber: "01000000001"
+        }
+    });
+    const savedUser = await newUser.save();
+    expect(savedUser.username).toBe("testuser");
+});
+```
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
@@ -575,9 +642,9 @@ This project follows the [Contributor Covenant Code of Conduct](https://www.cont
 
 ## License ⚖️
 
-- This software product is open source under the [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/) License.
+-   This software product is open source under the [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/) License.
 
-- Stripe is licensed under the Apache License 2.0 
+-   Stripe is licensed under the Apache License 2.0
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
