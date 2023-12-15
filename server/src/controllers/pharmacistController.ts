@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import Pharmacist from "../models/pharmacist.js";
 import multer from "multer";
-
+import axios from "axios";
+import CircularJSON from 'circular-json';
 const createPharmacist = async (req: Request, res: Response) => {
   //submit a request to register as a pharmacist 
   const data = req.body.datatoserver;
@@ -138,6 +139,38 @@ const deletePharmacist = async (req: Request, res: Response) => {
     });
 };
 
+const chatWithContacts = async (req: Request, res: Response) => {
+  
+  const search = req.params.search;
+
+  
+  if (!search) res.status(400).send("No search text.");
+
+  else if(search!==undefined && search!==null && typeof search == "string") {
+      const all:any [] = await axios.get("http://localhost:8000/doctors");
+      const docs: any[] = [];
+      for (const doc of all) {
+
+      if((doc?.name)?.includes(search)) docs.push(doc);
+      }
+      console.log(docs);
+      res.status(200).send(docs);
+  }
+
+};
+
+
+const getAllMyContacts = async (req: Request, res: Response) => {
+  
+
+      const all:any [] = await axios.get("http://localhost:8000/doctors");
+
+      console.log(all);
+      res.status(200).send(CircularJSON.stringify(all));
+
+};
+
+
 
 
 export default {
@@ -147,5 +180,7 @@ export default {
   deletePharmacist,
   listPharmacistRequests,
   readPharmacist,
-  listAllPharmacists
+  listAllPharmacists,
+  chatWithContacts,
+  getAllMyContacts
 };

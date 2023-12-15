@@ -15,8 +15,10 @@ import { UserType } from "../enums/UserTypes.js";
 
 const router = express.Router();
 
-router.route("/").post(isAuthenticated,isAuthorized([UserType.PHARMACIST,UserType.PATIENT]),chatControllers.accessChat);
-router.route("/:userId").get( isAuthenticated,isAuthorized([UserType.PHARMACIST,UserType.PATIENT]),chatControllers.fetchChats);
+
+// TODO: Add authorization [patient, pharamacist]
+router.route("/").post(isAuthenticated,chatControllers.accessChat);
+router.route("/:userId").get( isAuthenticated,chatControllers.fetchChats);
 router.route("/group").post( chatControllers.createGroupChat);
 router.route("/rename").put(chatControllers.renameGroup);
 router.route("/groupremove").put( chatControllers.removeFromGroup);

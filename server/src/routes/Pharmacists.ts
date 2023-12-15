@@ -5,6 +5,7 @@ import patientController from "../controllers/PatientController.js";
 import adminstratorController from "../controllers/AdminstratorController.js";
 import multer from "multer";
 
+
 import isAuthenticated from "../middlewares/permissions/isAuthenticated.js";
 import isAuthorized from "../middlewares/permissions/isAuthorized.js";
 import { UserType } from "../enums/UserTypes.js";
@@ -28,6 +29,9 @@ router.get("/",isAuthenticated,isAuthorized([UserType.ADMINSTARTOR]),pharmacistC
 router.get("/listAll",isAuthenticated,isAuthorized([UserType.ADMINSTARTOR]), pharmacistController.listPharmacistRequests);
 router.get("/viewAll",isAuthenticated,isAuthorized([UserType.ADMINSTARTOR]), pharmacistController.listAllPharmacists);
 router.get("/:id", pharmacistController.readPharmacist);
+router.get("/chatWithContacts/:id/:search",isAuthenticated,pharmacistController.chatWithContacts);
+router.get("/getAllMyContacts/:id",isAuthenticated,pharmacistController.getAllMyContacts);
+
 
 //POST
 router.post("/", upload.array('files',10) , pharmacistController.createPharmacist);
