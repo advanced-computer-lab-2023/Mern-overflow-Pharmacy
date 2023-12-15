@@ -178,28 +178,13 @@ export default function SignIn() {
                                 fullWidth
                                 type="submit"
                                 variant="text"
-                                sx={{ mt: 3, mb: 2, p: 2, fontWeight: "bold" }}
+                                sx={{ mt: 1, mb: 1, p: 2, fontWeight: "bold" }}
                                 component={Link}
                                 to="/auth/forgotpassword"
                             >
                                 Forgot Password
                             </Button>
                         </Box>
-
-                        <Typography
-                            sx={{
-                                align: "center",
-                                width: "100%",
-                                mt: 5,
-                                mb: 2,
-                                fontWeight: "bold",
-                                color: "#555"
-                            }}
-                            variant="h6"
-                        >
-                            {" "}
-                            OR{" "}
-                        </Typography>
                         <Button
                             fullWidth
                             type="submit"
