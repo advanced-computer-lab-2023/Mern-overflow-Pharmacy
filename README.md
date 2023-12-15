@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="100" src="https://i.imgur.com/M5HToBU.png" alt="logo">
+    <img width="100" src="https://i.imgur.com/Bhtt23d.png" alt="logo">
 </p>
 
 # El7a2ny Pharmacy App
