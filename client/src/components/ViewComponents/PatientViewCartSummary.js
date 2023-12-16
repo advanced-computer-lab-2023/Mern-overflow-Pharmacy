@@ -1,10 +1,37 @@
-import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import {
+    IconButton,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    CircularProgress,
+    Input,
+    Snackbar,
+    Alert,
+    InputLabel,
+    TextField,
+    Grid,
+    Select,
+    MenuItem,
+    Button,
+    Box,
+    Container,
+    FormControl,
+    Typography,
+    Divider,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Radio
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { Link, useNavigate } from 'react-router-dom';
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { capitalize } from '../../utils'
+import { capitalize } from "../../utils";
 import { useUser } from "../../userContest";
 
 export default function PatientViewCartSummary(props) {
@@ -14,8 +41,6 @@ export default function PatientViewCartSummary(props) {
 
     const [loading, setLoading] = useState(true);
     const [loadingChange, setLoadingChange] = useState(false);
-    
-
 
     const fetchTableData = () => {
         axios.get(`http://localhost:8001/cart/${userId}`).then((res) => {
@@ -31,7 +56,7 @@ export default function PatientViewCartSummary(props) {
 
     useEffect(() => {
         let total = 0;
-        props.meds.forEach(med => {
+        props.meds.forEach((med) => {
             total += med.medPrice * med.medQuantity;
         });
         props.setTotal(total);
@@ -39,7 +64,7 @@ export default function PatientViewCartSummary(props) {
 
     const handleReturnToCart = () => {
         navigate("/patient/cart");
-    }
+    };
 
     const handleCheckout = () => {
         setLoadingChange(true);
@@ -54,11 +79,11 @@ export default function PatientViewCartSummary(props) {
                     props.setSuccessMessage("Order received");
                     props.setSuccessOpen(true);
                     fetchTableData();
-                    navigate('/patient/orders');
+                    navigate("/patient/orders");
                 });
             })
-            .catch(error => {
-                console.error('Error creating order:', error);
+            .catch((error) => {
+                console.error("Error creating order:", error);
                 setLoadingChange(false);
                 if (!props.address) {
                     props.setErrorMessage("Please choose a delivery address.");
@@ -69,17 +94,17 @@ export default function PatientViewCartSummary(props) {
                 }
                 props.setErrorOpen(true);
             });
-    }
+    };
 
     const handleSuccessClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         props.setSuccessOpen(false);
     };
 
     const handleErrorClose = (event, reason) => {
-        if (reason === 'clickaway') {
+        if (reason === "clickaway") {
             return;
         }
         props.setErrorOpen(false);
@@ -97,42 +122,85 @@ export default function PatientViewCartSummary(props) {
                     {props.errorMessage}
                 </Alert>
             </Snackbar>
-            <Paper elevation={3} sx={{ p: '20px', my: '40px', paddingBottom: 5 }}>
+            <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }}>
                 {loading ? (
-                    <CircularProgress sx={{ mt: '30px' }} />
+                    <CircularProgress sx={{ mt: "30px" }} />
                 ) : (
                     <Container>
-                        <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily: "monospace" }}>Your Order Summary</Typography>
+                        <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily: "monospace" }}>
+                            Your Order Summary
+                        </Typography>
                         <Divider />
                         <Table>
-                            <TableHead>
-                            </TableHead>
+                            <TableHead></TableHead>
                             <TableBody>
-                                {props.meds.map((med) =>
+                                {props.meds.map((med) => (
                                     <TableRow>
-                                        <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>{med.medQuantity}x {capitalize(med.medName)}</TableCell>
-                                        <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>EGP {med.medPrice * med.medQuantity}</TableCell>
+                                        <TableCell sx={{ width: "50%", textAlign: "center", fontFamily: "monospace" }}>
+                                            {med.medQuantity}x {capitalize(med.medName)}
+                                        </TableCell>
+                                        <TableCell sx={{ width: "50%", textAlign: "center", fontFamily: "monospace" }}>
+                                            EGP {med.medPrice * med.medQuantity}
+                                        </TableCell>
                                     </TableRow>
-                                )}
+                                ))}
                                 <TableRow>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>Total Amount</TableCell>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>EGP {props.total}</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: "center", fontFamily: "monospace" }}>
+                                        Total Amount
+                                    </TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: "center", fontFamily: "monospace" }}>
+                                        EGP {props.total}
+                                    </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", borderTop: '2px solid #ccc' }}>Delivery Address</TableCell>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace", borderTop: '2px solid #ccc' }}>{props.address ? props.address : "——"}</TableCell>
+                                    <TableCell
+                                        sx={{
+                                            width: "50%",
+                                            textAlign: "center",
+                                            fontFamily: "monospace",
+                                            borderTop: "2px solid #ccc"
+                                        }}
+                                    >
+                                        Delivery Address
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{
+                                            width: "50%",
+                                            textAlign: "center",
+                                            fontFamily: "monospace",
+                                            borderTop: "2px solid #ccc"
+                                        }}
+                                    >
+                                        {props.address ? props.address : "——"}
+                                    </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>Payment Method</TableCell>
-                                    <TableCell sx={{ width: "50%", textAlign: 'center', fontFamily: "monospace" }}>{props.paymentMethod ? props.paymentMethod : "——"}</TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: "center", fontFamily: "monospace" }}>
+                                        Payment Method
+                                    </TableCell>
+                                    <TableCell sx={{ width: "50%", textAlign: "center", fontFamily: "monospace" }}>
+                                        {props.paymentMethod ? props.paymentMethod : "——"}
+                                    </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
-                        <Container sx={{ display: "flex", justifyContent: "space-around", alignItems: "center", pt: "50px", width: "80%" }}>
-                            <Button variant="outlined"
-                                onClick={() => handleReturnToCart()}
-                                sx={{}}> <NavigateBeforeIcon sx={{ mr: "15px" }} /> Return to Cart </Button>
-                            <Button variant="contained" onClick={() => handleCheckout()}> Confirm Order <NavigateNextIcon sx={{ ml: "15px" }} /> </Button>
+                        <Container
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-around",
+                                alignItems: "center",
+                                pt: "50px",
+                                width: "80%"
+                            }}
+                        >
+                            <Button variant="outlined" onClick={() => handleReturnToCart()} sx={{}}>
+                                {" "}
+                                <NavigateBeforeIcon sx={{ mr: "15px" }} /> Return to Cart{" "}
+                            </Button>
+                            <Button variant="contained" onClick={() => handleCheckout()}>
+                                {" "}
+                                Confirm Order <NavigateNextIcon sx={{ ml: "15px" }} />{" "}
+                            </Button>
                         </Container>
                     </Container>
                 )}
@@ -149,7 +217,7 @@ export default function PatientViewCartSummary(props) {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        zIndex: 9999,
+                        zIndex: 9999
                     }}
                     onClick={(e) => e.stopPropagation()}
                 >

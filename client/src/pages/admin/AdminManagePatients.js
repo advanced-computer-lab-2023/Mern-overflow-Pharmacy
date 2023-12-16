@@ -8,6 +8,6 @@ const AdminManagePatients = () => {
             <AdminViewPatients />
         </>
     );
-}
+};
 
 export default AdminManagePatients;

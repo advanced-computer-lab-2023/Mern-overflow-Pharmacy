@@ -8,6 +8,6 @@ const PatientManageMedicines = () => {
             <PatientViewMedicines />
         </>
     );
-}
+};
 
 export default PatientManageMedicines;

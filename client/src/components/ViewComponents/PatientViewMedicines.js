@@ -1,47 +1,46 @@
+import React, { useEffect, useState, createContext, useContext } from "react";
 import {
-  InputAdornment,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Snackbar,
-  Alert,
-  ButtonGroup,
-  CircularProgress,
-  Grid,
-  ButtonBase,
-  Container,
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  Typography,
-  Button,
-  Paper,
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Input,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
+    InputAdornment,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Snackbar,
+    Alert,
+    ButtonGroup,
+    CircularProgress,
+    Grid,
+    ButtonBase,
+    Container,
+    Card,
+    CardHeader,
+    CardMedia,
+    CardContent,
+    Typography,
+    Button,
+    Paper,
+    FormControl,
+    Select,
+    InputLabel,
+    MenuItem,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Input,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import panadol from "../../assets/photos/panadol.jpg";
 import { styled } from "@mui/material/styles";
 import { capitalize } from "../../utils";
 import { useUser } from "../../userContest";
-import React, { useEffect, useState, createContext, useContext } from "react";
 
 
 export default function PatientViewMedicines(props) {
@@ -83,18 +82,37 @@ export default function PatientViewMedicines(props) {
     });
   };
 
+  // const showSimilarMedicines = (activeIngredients) => {
+  //   // Implement the logic to filter and display medicines with the same active ingredient
+  //   const similarMedicines = data.filter((med) =>
+  //     med.details.activeIngredients.some((ingredient) =>
+  //       activeIngredients.includes(ingredient)
+  //     ) && med.stock !== 0 // Add this condition to check if stock is not equal to 0
+  //   );
+  
+  //   // Update state to open the dialog and store the list of similar medicines
+  //   setSimilarMedicinesDialogOpen(true);
+  //   setSimilarMedicines(similarMedicines);
+  // };
+
   const showSimilarMedicines = (activeIngredients) => {
-    // Implement the logic to filter and display medicines with the same active ingredient
+    if (activeIngredients.length === 0) {
+      console.error("No active ingredients provided.");
+      return;
+    }
+  
+    const firstActiveIngredient = activeIngredients[0];
+  
     const similarMedicines = data.filter((med) =>
-      med.details.activeIngredients.some((ingredient) =>
-        activeIngredients.includes(ingredient)
-      ) && med.stock !== 0 // Add this condition to check if stock is not equal to 0
+      med.details.activeIngredients.includes(firstActiveIngredient) &&
+      med.stock !== 0
     );
   
     // Update state to open the dialog and store the list of similar medicines
     setSimilarMedicinesDialogOpen(true);
     setSimilarMedicines(similarMedicines);
   };
+  
 
   const handleAddMedicine = (medName, medPrice, medQuantity, e) => {
     e.preventDefault();

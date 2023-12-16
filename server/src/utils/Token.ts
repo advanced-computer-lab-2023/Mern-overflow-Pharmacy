@@ -5,47 +5,47 @@ import config from "../config/config.js";
 import { UserType, UserTypesNames } from "../enums/UserTypes.js";
 
 export interface TokenPayload {
-  userId: string;
-  userRole: UserType;
+    userId: string;
+    userRole: UserType;
 }
 
 const generateToken = async (user: HydratedDocument<IUser>) => {
-  const secretKey = config.jwt.secret;
+    const secretKey = config.jwt.secret;
 
-  const expiresIn = "7d";
+    const expiresIn = "7d";
 
-  const token = jwt.sign(
-    {
-      userId: user._id,
-      userRole: UserTypesNames.get(user.__t),
-    },
-    secretKey,
-    { expiresIn },
-  );
+    const token = jwt.sign(
+        {
+            userId: user._id,
+            userRole: UserTypesNames.get(user.__t)
+        },
+        secretKey,
+        { expiresIn }
+    );
 
-  return token;
+    return token;
 };
 
 export const verifyToken = (token: string): boolean => {
-  const secretKey = config.jwt.secret;
-  try {
-    const decoded = jwt.verify(token, secretKey) as TokenPayload;
-    return true;
-  } catch (e) {
-    return false;
-  }
+    const secretKey = config.jwt.secret;
+    try {
+        const decoded = jwt.verify(token, secretKey) as TokenPayload;
+        return true;
+    } catch (e) {
+        return false;
+    }
 };
 
 export const decodeToken = (token: string): TokenPayload | null => {
-  try {
-    return jwt.decode(token) as TokenPayload;
-  } catch (e) {
-    return null;
-  }
+    try {
+        return jwt.decode(token) as TokenPayload;
+    } catch (e) {
+        return null;
+    }
 };
 
 export default {
-  generateToken,
-  verifyToken,
-  decodeToken,
+    generateToken,
+    verifyToken,
+    decodeToken
 };

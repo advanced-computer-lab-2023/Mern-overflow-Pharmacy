@@ -9,10 +9,10 @@ const PharmacistManageMedicines = () => {
     return (
         <>
             <PharmacistDashboard title="Manage Available Medicines" />
-            <AddMedicine setDataIsUpdated= {setDataIsUpdated} />
-            <PharmacistViewMedicines  dataIsUpdated= {dataIsUpdated} setDataIsUpdated={setDataIsUpdated} />
+            <AddMedicine setDataIsUpdated={setDataIsUpdated} />
+            <PharmacistViewMedicines dataIsUpdated={dataIsUpdated} setDataIsUpdated={setDataIsUpdated} />
         </>
     );
-}
+};
 
 export default PharmacistManageMedicines;

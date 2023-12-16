@@ -1,8 +1,4 @@
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import HowToRegIcon from "@mui/icons-material/HowToReg";
-import MedicationIcon from "@mui/icons-material/Medication";
-import PasswordIcon from "@mui/icons-material/Password";
-import PersonIcon from "@mui/icons-material/Person";
+import * as React from "react";
 import {
   Box,
   Divider,
@@ -12,44 +8,37 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  Toolbar,
+  AppBar,
+  IconButton,
+  Button,
+  Drawer,
+  InboxIcon,
+  MailIcon
 } from "@mui/material";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import MedicationIcon from "@mui/icons-material/Medication";
+import PasswordIcon from "@mui/icons-material/Password";
+import PersonIcon from "@mui/icons-material/Person";
+import GroupsIcon from "@mui/icons-material/Groups";
 import Avatar from "@mui/material/Avatar";
-import * as React from "react";
 import { Link } from "react-router-dom";
 import ButtonAppBar from "../../components/ButtonAppBar";
 
 const AdminDashboard = (props) => {
   return (
     <ButtonAppBar user="Admin" actionButton="Log out" title={props.title}>
-      <Box sx={{ display: "inline-flex", alignItems: "center", mt: 2, ml: 2 }}>
-        <Avatar
-          sx={{
-            m: 0,
-            bgcolor: "white",
-            color: "black",
-            width: 30,
-            height: 30,
-            padding: 0,
-          }}
-        >
-          <PersonIcon sx={{ width: 30, height: 30 }} />
+      <Box sx={{ display: 'inline-flex', alignItems: 'center', mt: 2, ml: 2 }}>
+        <Avatar sx={{ m: 0, bgcolor: 'white', color: 'black', width: 30, height: 30, padding: 0 }}>
+          <GroupsIcon sx={{ width: 30, height: 30 }} />
         </Avatar>
-        <Typography
-          variant="body1"
-          sx={{ fontWeight: "normal", verticalAlign: "text-bottom", ml: 1 }}
-        >
-          {" "}
-          System Users
-        </Typography>
+        <Typography variant="body1" sx={{ fontWeight: "normal", verticalAlign: "text-bottom", ml: 1 }}> System Users</Typography>
       </Box>
       <List>
-        {[
-          { name: "Admins", route: "/admin/admins" },
-          { name: "Pharmacists", route: "/admin/pharmacists" },
-          { name: "Patients", route: "/admin/patients" },
-        ].map((text, index) => (
+        {[{ name: 'Admins', route: '/admin/admins' }, { name: 'Pharmacists', route: '/admin/pharmacists' }, { name: 'Patients', route: '/admin/patients' }].map((text, index) => (
           <ListItem key={text.name} disablePadding>
-            <ListItemButton component={Link} to={text.route}>
+            <ListItemButton component={Link} to={text.route} >
               <ListItemIcon>
                 {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
               </ListItemIcon>
@@ -61,18 +50,9 @@ const AdminDashboard = (props) => {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton component={Link} to="/admin/medicines">
+          <ListItemButton component={Link} to='/admin/medicines'>
             <ListItemIcon>
-              <Avatar
-                sx={{
-                  m: 0,
-                  bgcolor: "white",
-                  color: "black",
-                  width: 30,
-                  height: 30,
-                  padding: 0,
-                }}
-              >
+              <Avatar sx={{ m: 0, bgcolor: 'white', color: 'black', width: 30, height: 30, padding: 0 }}>
                 <MedicationIcon sx={{ width: 25, height: 25 }} />
               </Avatar>
             </ListItemIcon>
@@ -83,18 +63,9 @@ const AdminDashboard = (props) => {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton component={Link} to="/admin/pharmacist-requests">
+          <ListItemButton component={Link} to='/admin/pharmacist-requests'>
             <ListItemIcon>
-              <Avatar
-                sx={{
-                  m: 0,
-                  bgcolor: "white",
-                  color: "black",
-                  width: 30,
-                  height: 30,
-                  padding: 0,
-                }}
-              >
+              <Avatar sx={{ m: 0, bgcolor: 'white', color: 'black', width: 30, height: 30, padding: 0 }}>
                 <HowToRegIcon sx={{ width: 25, height: 25 }} />
               </Avatar>
             </ListItemIcon>
@@ -149,6 +120,7 @@ const AdminDashboard = (props) => {
       <Divider />
     </ButtonAppBar>
   );
-};
+}
 export default AdminDashboard;
+
 

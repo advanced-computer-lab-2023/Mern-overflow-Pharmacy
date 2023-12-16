@@ -36,7 +36,7 @@ logs:
 # Rebuild Docker containers stop, build, and start
 rebuild:
 	cd server &&npm install 
-	cd client &&npm install
+	cd client &&npm install --legacy-peer-deps
 	docker compose down
 	docker compose build
 	docker compose up

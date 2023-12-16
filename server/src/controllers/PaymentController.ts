@@ -135,10 +135,10 @@ const payWalletShoppingCart = async (req: Request, res: Response) => {
             walletValue && totalAmount ? walletValue - totalAmount : undefined,
         };
 
-        // Set options for the update
-        const options = {
-          new: true, // Return the updated document after the update
-        };
+                // Set options for the update
+                const options = {
+                    new: true // Return the updated document after the update
+                };
 
         // Use findOneAndUpdate to find and update the document
         const filter = { _id: userId };
@@ -161,6 +161,6 @@ const payWalletShoppingCart = async (req: Request, res: Response) => {
   });
 };
 export default {
-  payCCShoppingCart,
-  payWalletShoppingCart,
+    payCCShoppingCart,
+    payWalletShoppingCart
 };

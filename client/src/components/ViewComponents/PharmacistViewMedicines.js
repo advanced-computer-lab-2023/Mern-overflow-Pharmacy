@@ -1,36 +1,36 @@
 import React, { useEffect, useState } from "react";
 import {
-  Snackbar,
-  Alert,
-  InputAdornment,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  CircularProgress,
-  Grid,
-  ButtonBase,
-  Container,
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  Typography,
-  Button,
-  Paper,
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Input,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
+    Snackbar,
+    Alert,
+    InputAdornment,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    CircularProgress,
+    Grid,
+    ButtonBase,
+    Container,
+    Card,
+    CardHeader,
+    CardMedia,
+    CardContent,
+    Typography,
+    Button,
+    Paper,
+    FormControl,
+    Select,
+    InputLabel,
+    MenuItem,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Input,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -42,7 +42,6 @@ import UploadIcon from "@mui/icons-material/Upload";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import panadol from "../../assets/photos/panadol.jpg";
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
@@ -62,12 +61,12 @@ export default function PharmacistViewMedicines(props) {
   const [successOpen, setSuccessOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const Img = styled("img")({
-    margin: "auto",
-    display: "block",
-    maxWidth: "100%",
-    maxHeight: "100%",
-  });
+    const Img = styled("img")({
+        margin: "auto",
+        display: "block",
+        maxWidth: "100%",
+        maxHeight: "100%"
+    });
 
   const fetchTableData = () => {
     axios.get(`http://localhost:8001/medicines/viewAll`, {}).then((res) => {
@@ -93,18 +92,18 @@ export default function PharmacistViewMedicines(props) {
     e.preventDefault();
     let medUse = e.target.value;
 
-    if (medUse === "" || medUse === "All") {
-      fetchTableData();
-    } else {
-      axios
-        .post(`http://localhost:8001/medicines/filter`, {
-          medicinalUse: medUse,
-        })
-        .then((res) => {
-          setData(res.data);
-        });
-    }
-  };
+        if (medUse === "" || medUse === "All") {
+            fetchTableData();
+        } else {
+            axios
+                .post(`http://localhost:8001/medicines/filter`, {
+                    medicinalUse: medUse
+                })
+                .then((res) => {
+                    setData(res.data);
+                });
+        }
+    };
 
   const handleClickEdit = (id) => {
     navigate(`/pharmacist/medicines/${id}`);
@@ -132,19 +131,19 @@ export default function PharmacistViewMedicines(props) {
       });
   };
 
-  const handleErrorClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setErrorOpen(false);
-  };
+    const handleErrorClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setErrorOpen(false);
+    };
 
-  const handleSuccessClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSuccessOpen(false);
-  };
+    const handleSuccessClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setSuccessOpen(false);
+    };
 
   return (
     <>

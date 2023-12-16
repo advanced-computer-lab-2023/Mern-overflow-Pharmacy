@@ -11,5 +11,6 @@ router.post("/logout", isAuthenticated, authController.logout);
 router.post("/reset", authController.requestPasswordReset);
 router.post("/resetwithtoken", authController.resetPasswordWithToken);
 router.post("/change", isAuthenticated, authController.changePassword);
+router.post("/redirect", authController.redirect);
 
 export default router;

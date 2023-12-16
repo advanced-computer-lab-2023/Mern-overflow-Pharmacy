@@ -1,12 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { IconButton, InputAdornment, Accordion, AccordionDetails, AccordionSummary, ButtonBase, Paper, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress, Input, Snackbar, Alert, InputLabel, TextField, Grid, Select, MenuItem, Button, Box, Container, FormControl, Typography, Divider, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import {
+    IconButton,
+    InputAdornment,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    ButtonBase,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    CircularProgress,
+    Input,
+    Snackbar,
+    Alert,
+    InputLabel,
+    TextField,
+    Grid,
+    Select,
+    MenuItem,
+    Button,
+    Box,
+    Container,
+    FormControl,
+    Typography,
+    Divider,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Radio
+} from "@mui/material";
 import axios from "axios";
-import panadol from '../../assets/photos/panadol.jpg';
-import SearchIcon from '@mui/icons-material/Search';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { styled } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
-import { capitalize } from '../../utils'
+import SearchIcon from "@mui/icons-material/Search";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { styled } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
+import { capitalize } from "../../utils";
 
 export default function AdminViewMedicines() {
     const theme = useTheme();
@@ -15,11 +46,11 @@ export default function AdminViewMedicines() {
     const [Query, setQuery] = useState("");
     const [uniqueMedicinalUses, setUniqueMedicinalUses] = useState(["All"]);
 
-    const Img = styled('img')({
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
+    const Img = styled("img")({
+        margin: "auto",
+        display: "block",
+        maxWidth: "100%",
+        maxHeight: "100%"
     });
 
     const fetchTableData = () => {
@@ -61,12 +92,10 @@ export default function AdminViewMedicines() {
     };
 
     return (
-
-
         <Container maxWidth="xl">
-            <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }} >
+            <Paper elevation={3} sx={{ p: "20px", my: "40px", paddingBottom: 5 }}>
                 {loading ? (
-                    <CircularProgress sx={{ mt: '30px' }} />
+                    <CircularProgress sx={{ mt: "30px" }} />
                 ) : (
                     <>
                         <Container>
@@ -75,7 +104,7 @@ export default function AdminViewMedicines() {
                                     display: "flex",
                                     alignItems: "center",
                                     justifyContent: "space-between",
-                                    my: 5,
+                                    my: 5
                                 }}
                             >
                                 <Container sx={{ width: "48%" }}>
@@ -96,7 +125,7 @@ export default function AdminViewMedicines() {
                                         <InputLabel id="filter-by-medicinalUse">Medicinal Use</InputLabel>
                                         <Select
                                             onChange={(e) => handleFilter(e)}
-                                            sx={{ textAlign: 'left' }}
+                                            sx={{ textAlign: "left" }}
                                             labelId="filter-by-medicinalUse"
                                             id="filter-by-medicinalUse-select"
                                             label="medicinalUse"
@@ -104,14 +133,26 @@ export default function AdminViewMedicines() {
                                             fullWidth
                                         >
                                             {uniqueMedicinalUses.map((value) => (
-                                                <MenuItem key={value} value={value}>{value}</MenuItem>
+                                                <MenuItem key={value} value={value}>
+                                                    {value}
+                                                </MenuItem>
                                             ))}
                                         </Select>
                                     </FormControl>
                                 </Container>
                             </Container>
-                        </Container >
-                        <Container sx={{ p: "20px", my: "40px", paddingBottom: 5, maxWidth: 350, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                        </Container>
+                        <Container
+                            sx={{
+                                p: "20px",
+                                my: "40px",
+                                paddingBottom: 5,
+                                maxWidth: 350,
+                                display: "flex",
+                                flexWrap: "wrap",
+                                justifyContent: "space-between"
+                            }}
+                        >
                             {data.map((row, index) => {
                                 const count = 0;
                                 return row.name.toLowerCase().includes(Query.toLowerCase()) && (
@@ -165,7 +206,7 @@ export default function AdminViewMedicines() {
                         </Container>
                     </>
                 )}
-            </Paper >
-        </Container >
+            </Paper>
+        </Container>
     );
 }

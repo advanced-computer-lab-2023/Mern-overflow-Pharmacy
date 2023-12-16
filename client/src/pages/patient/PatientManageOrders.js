@@ -8,6 +8,6 @@ const PatientManageOrders = () => {
             <PatientViewOrders />
         </>
     );
-}
+};
 
 export default PatientManageOrders;

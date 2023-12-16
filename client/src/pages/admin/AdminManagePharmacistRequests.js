@@ -8,6 +8,6 @@ const AdminManagePharmacistRequests = () => {
             <AdminViewRequests />
         </>
     );
-}
+};
 
 export default AdminManagePharmacistRequests;

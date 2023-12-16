@@ -9,10 +9,10 @@ const AdminManageAdmins = () => {
     return (
         <>
             <AdminDashboard title="Manage System Admins" />
-            <AddAdmin setDataIsUpdated= {setDataIsUpdated} />
-            <AdminViewAdmins dataIsUpdated= {dataIsUpdated} setDataIsUpdated={setDataIsUpdated} />
+            <AddAdmin setDataIsUpdated={setDataIsUpdated} />
+            <AdminViewAdmins dataIsUpdated={dataIsUpdated} setDataIsUpdated={setDataIsUpdated} />
         </>
     );
-}
+};
 
 export default AdminManageAdmins;

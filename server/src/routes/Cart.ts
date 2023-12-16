@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-router.get("/:patientId",CartController.viewCart);
+router.get("/:patientId", CartController.viewCart);
 router.post("/:patientId/add", CartController.addMedicineToCart);
 router.delete("/:patientId/:medName", CartController.removeMedicineFromCart);
 router.post("/:patientId/changeAmount", CartController.changeAmountofMedicineInCart);
