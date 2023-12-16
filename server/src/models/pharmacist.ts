@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import User from "./User.js";
+import User from "./User.ts";
 
 interface IPharmacist {
     // username:string;
