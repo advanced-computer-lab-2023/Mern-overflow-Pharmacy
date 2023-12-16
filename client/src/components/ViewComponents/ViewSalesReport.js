@@ -158,7 +158,6 @@ export default function ViewSalesReport() {
                         views={["year", "month"]}
                         label="Select Date to filter by"
                         onMonthChange={handleFilterByDate}
-                        defaultValue={dayjs(Date.now())}
                       ></DatePicker>
                     ) : (
                       <DatePicker
