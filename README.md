@@ -533,64 +533,212 @@ To run this project, you will need to add the following environment variables to
 
 ## Tests 🧪
 
-Testing is divided into frontend and backend tests.
-
-### Frontend Tests
-
-Frontend testing is done via the `React Testing Library` which has tests in the form `componentName.test.js`.
-
-It works by providing a `render` method to display the component to be tested, and a `screen` method to get the component outputs rendered on the screen.
-It also provides an `expect` method that's used to verify that the outputs rendered by the component are indeed the expected outputs.
-
-The following snippet illustrates the use of `React Testing Library` to write a test for `App.js` called `App.test.js`.
-
-```javascript
-import { render, screen } from "@testing-library/react";
-import App from "./App";
-
-test("renders learn react link", () => {
-    render(<App />);
-    const linkElement = screen.getByText(/learn react/i);
-    expect(linkElement).toBeInTheDocument();
-});
-```
-
-### Backend Tests
-
 Backend testing is done using `jest`. To run the tests, run the following command
 
 ```bash
 > cd server && npm run test
 ```
 
-Furthermore, backend tests are divided into model and controller tests.
-
-Controller tests verify that each controller is working correctly by providing example inputs and outputs and expecting the correct outputs, including edge cases.
-
 Model tests make sure the respective entity models are correct by creating new entities. They also make sure the Models raise the appropriate errors when required (i.e when an email is invalid)
 
-An example of model tests is the following snippet, which checks that the User model is working correctly:
+A few examples of model tests in the following snippets:
+
+<details>
+<summary>Check if Admin email valid</summary>
 
 ```javascript
-test("should save a new user", async () => {
-    await mongoose.connect(mongoUrl);
-    const newUser = new User({
-        username: "testuser",
-        name: "Test User",
-        email: "tesst@gmail.com",
-        passwordHash: "123456",
-        dateOfBirth: new Date("1999-01-01"),
-        gender: "male",
-        mobileNumber: "01000000000",
-        emergencyContact: {
-            name: "father",
-            mobileNumber: "01000000001"
-        }
+test('should throw an error if email is invalid', async () => {
+        const admin = new Adminstrator({
+            username: 'testuser',
+            passwordHash: 'password',
+            email: 'invalidemail',
+        });
+        await expect(admin.save()).rejects.toThrow('invalid email');
     });
-    const savedUser = await newUser.save();
-    expect(savedUser.username).toBe("testuser");
-});
 ```
+</details>
+
+<details>
+<summary>Check if Cart has a patient</summary>
+
+```javascript
+test('should throw an error if patient is missing', async () => {
+        const cartWithoutPatient = {
+            medicines: [
+                { medName: 'Medicine1', medPrice: 10, medQuantity: 2 },
+                { medName: 'Medicine2', medPrice: 15, medQuantity: 3 },
+            ],
+        };
+
+        const cart = new Cart(cartWithoutPatient);
+        await expect(cart.save()).rejects.toThrow('Cart validation failed: patient: Path `patient` is required.');
+    });
+```
+</details>
+
+<details>
+<summary>Check if a Chat has a name</summary>
+
+```javascript
+test('should throw an error if chatName is missing', async () => {
+        const chatWithoutChatName = {
+            isGroupChat: false,
+            users: [new Types.ObjectId(), new Types.ObjectId()],
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
+
+        const chat = new ChatModel(chatWithoutChatName);
+        await expect(chat.save()).rejects.toThrow('Chat validation failed: chatName: Path `chatName` is required.');
+    });
+```
+</details>
+
+<details>
+<summary>Check if a Medicine has a name</summary>
+
+```javascript
+test('should throw an error if name is missing', async () => {
+    const medicineWithoutName = {
+      medicinalUse: 'Pain Relief',
+      details: { description: 'Test description', activeIngredients: ['Ingredient1', 'Ingredient2'] },
+      price: 20,
+      availableQuantity: 100,
+      sales: 50,
+      image: 'test_image.jpg',
+      overTheCounter: true,
+      isArchived: false,
+    };
+
+    const medicine = new Medicine(medicineWithoutName);
+    await expect(medicine.save()).rejects.toThrow('Medicine validation failed: name: Path `name` is required.');
+  });
+```
+</details>
+
+<details>
+<summary>Check if a Message has a sender</summary>
+
+```javascript
+test('should throw an error if sender is missing', async () => {
+        const messageWithoutSender = {
+            content: 'Test message content',
+            chat: new Types.ObjectId(),
+            readBy: [new Types.ObjectId()],
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
+
+        const message = new MessageModel(messageWithoutSender);
+        await expect(message.save()).rejects.toThrow('Message validation failed: sender: Path `sender` is required.');
+    });
+```
+</details>
+
+<details>
+<summary>Check if an Order has a patient</summary>
+
+```javascript
+test('should throw an error if patient is missing', async () => {
+        const orderWithoutPatient = {
+            status: 'pending',
+            date: new Date(),
+            total: 100,
+            address: 'Test address',
+            paymentMethod: 'cash on delivery',
+            medicines: [{ medName: 'Medicine1', medPrice: 10, medQuantity: 2 }],
+        };
+
+        const order = new Order(orderWithoutPatient);
+        await expect(order.save()).rejects.toThrow('Order validation failed: patient: Path `patient` is required.');
+    });
+```
+</details>
+
+<details>
+<summary>Check if a Package has a name</summary>
+
+```javascript
+test('should throw an error if name is missing', async () => {
+        const packageWithoutName = {
+            price: 50,
+            discountOnDoctorSessions: 10,
+            discountOnMedicine: 5,
+            discountForFamily: 15,
+        };
+
+        const packageItem = new Package(packageWithoutName);
+        await expect(packageItem.save()).rejects.toThrow('Package validation failed: name: Path `name` is required.');
+    });
+```
+</details>
+
+<details>
+<summary>Check if a Patient has a name</summary>
+
+```javascript
+test('should throw an error if name is missing', async () => {
+        const patientWithoutName = {
+            email: "email@gmail.com",
+            passwordHash: "password",
+            username: "username",
+            nationalId: '123456789',
+            dateOfBirth: new Date(),
+            gender: 'male',
+            mobileNumber: '+12345678',
+            emergencyContact: {
+                name: 'EmergencyContact',
+                mobileNumber: '+12345678',
+                relation: 'parent',
+            },
+        };
+
+        const patient = new Patient(patientWithoutName);
+        await expect(patient.save()).rejects.toThrow('Patient validation failed: name: Path `name` is required.');
+    });
+```
+</details>
+
+<details>
+<summary>Check if a Pharmacist has a date of birth</summary>
+
+```javascript
+test('should throw an error if dateOfBirth is missing', async () => {
+        const pharmacistWithoutDateOfBirth = {
+            email: "email@gmail.com",
+            passwordHash: "password",
+            username: "username",
+            name: 'John Doe',
+            hourlyRate: 50,
+            affiliation: 'Pharmacy ABC',
+            education: 'Pharmacist Degree',
+            files: [{ filename: 'file1.txt', path: '/path/to/file1.txt' }],
+            status: 'pending',
+        };
+
+        const pharmacist = new Pharmacist(pharmacistWithoutDateOfBirth);
+        await expect(pharmacist.save()).rejects.toThrow('pharmacist validation failed: dateOfBirth: Path `dateOfBirth` is required.');
+    });
+```
+</details>
+
+<details>
+<summary>Check if a Prescription has a doctor reference</summary>
+
+```javascript
+test('should throw an error if doctor is missing', async () => {
+        const prescriptionWithoutDoctor = {
+            patient: new Types.ObjectId(),
+            medicine: [{ medId: new Types.ObjectId(), dailyDosage: 1 }],
+            date: new Date(),
+            filled: false,
+        };
+
+        const prescription = new Prescription(prescriptionWithoutDoctor);
+        await expect(prescription.save()).rejects.toThrow('Prescription validation failed: doctor: Path `doctor` is required.');
+    });
+```
+</details>
 
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 

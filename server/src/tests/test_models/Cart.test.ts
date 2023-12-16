@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import Cart from '../../models/Cart';
 
 describe('cart model', () => {
-    it('should throw an error if patient is missing', async () => {
+    test('should throw an error if patient is missing', async () => {
         const cartWithoutPatient = {
             medicines: [
                 { medName: 'Medicine1', medPrice: 10, medQuantity: 2 },
@@ -14,7 +14,7 @@ describe('cart model', () => {
         await expect(cart.save()).rejects.toThrow('Cart validation failed: patient: Path `patient` is required.');
     });
 
-    it('should throw an error if medPrice is missing in medicines', async () => {
+    test('should throw an error if medPrice is missing in medicines', async () => {
         const cartWithMissingMedPrice = {
             patient: new mongoose.Types.ObjectId(),
             medicines: [
@@ -25,7 +25,7 @@ describe('cart model', () => {
         await expect(cart.save()).rejects.toThrow('Cart validation failed: medicines.0.medPrice: Path `medPrice` is required.');
     });
 
-    it('should throw an error if medQuantity is missing in medicines', async () => {
+    test('should throw an error if medQuantity is missing in medicines', async () => {
         const cartWithMissingMedQuantity = {
             patient: new mongoose.Types.ObjectId(),
             medicines: [
@@ -36,7 +36,7 @@ describe('cart model', () => {
         await expect(cart.save()).rejects.toThrow('Cart validation failed: medicines.0.medQuantity: Path `medQuantity` is required.');
     });
 
-    it('should throw an error if medQuantity is missing in medicines', async () => {
+    test('should throw an error if medQuantity is missing in medicines', async () => {
         const cartWithMissingMedQuantity = {
           patient: new mongoose.Types.ObjectId(),
           medicines: [
@@ -48,7 +48,7 @@ describe('cart model', () => {
         await expect(cart.save()).rejects.toThrow('Cart validation failed: medicines.0.medQuantity: Path `medQuantity` is required.');
       });
 
-      it('should throw an error if patient is missing', async () => {
+      test('should throw an error if patient is missing', async () => {
         const cartWithMissingPatient = {
           medicines: [
             { medName: 'Medicine1', medPrice: 10, medQuantity: 2 },

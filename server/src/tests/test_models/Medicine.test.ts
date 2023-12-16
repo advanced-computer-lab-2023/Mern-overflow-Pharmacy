@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import Medicine from '../../models/Medicine.ts';
 
 describe('medicine model', () => {
-  it('should throw an error if name is missing', async () => {
+  test('should throw an error if name is missing', async () => {
     const medicineWithoutName = {
       medicinalUse: 'Pain Relief',
       details: { description: 'Test description', activeIngredients: ['Ingredient1', 'Ingredient2'] },
@@ -18,7 +18,7 @@ describe('medicine model', () => {
     await expect(medicine.save()).rejects.toThrow('Medicine validation failed: name: Path `name` is required.');
   });
 
-  it('should throw an error for invalid price value (non-number)', async () => {
+  test('should throw an error for invalid price value (non-number)', async () => {
     const medicineWithInvalidPrice = {
       name: 'Test Medicine',
       medicinalUse: 'Pain Relief',
@@ -35,7 +35,7 @@ describe('medicine model', () => {
     await expect(medicine.save()).rejects.toThrow('Medicine validation failed: price: Cast to Number failed for value "invalidPrice" (type string) at path "price"');
   });
 
-  it('should throw an error if overTheCounter is missing', async () => {
+  test('should throw an error if overTheCounter is missing', async () => {
     const medicineWithoutOTC = {
       name: 'Test Medicine',
       medicinalUse: 'Pain Relief',
@@ -51,7 +51,7 @@ describe('medicine model', () => {
     await expect(medicine.save()).rejects.toThrow('Medicine validation failed: overTheCounter: Path `overTheCounter` is required.');
   });
 
-  it('should throw an error for invalid isArchived value', async () => {
+  test('should throw an error for invalid isArchived value', async () => {
     const medicineWithInvalidArchived = {
       name: 'Test Medicine',
       medicinalUse: 'Pain Relief',
@@ -68,7 +68,7 @@ describe('medicine model', () => {
     await expect(medicine.save()).rejects.toThrow('Medicine validation failed: isArchived: Cast to Boolean failed for value "invalidValue" (type string) at path "isArchived" because of "CastError"');
   });
 
-  it('should throw an error if medicinalUse is missing', async () => {
+  test('should throw an error if medicinalUse is missing', async () => {
     const medicineWithoutMedicinalUse = {
       name: 'Test Medicine',
       details: { description: 'Test description', activeIngredients: ['Ingredient1', 'Ingredient2'] },

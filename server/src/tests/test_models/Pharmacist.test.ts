@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import Pharmacist from '../../models/pharmacist.ts';
 
 describe('pharmacist model', () => {
-    it('should throw an error if name is missing', async () => {
+    test('should throw an error if name is missing', async () => {
         const pharmacistWithoutName = {
             email: "email@gmail.com",
             passwordHash: "password",
@@ -19,7 +19,7 @@ describe('pharmacist model', () => {
         await expect(pharmacist.save()).rejects.toThrow('pharmacist validation failed: name: Path `name` is required.');
     });
 
-    it('should throw an error if dateOfBirth is missing', async () => {
+    test('should throw an error if dateOfBirth is missing', async () => {
         const pharmacistWithoutDateOfBirth = {
             email: "email@gmail.com",
             passwordHash: "password",
@@ -36,7 +36,7 @@ describe('pharmacist model', () => {
         await expect(pharmacist.save()).rejects.toThrow('pharmacist validation failed: dateOfBirth: Path `dateOfBirth` is required.');
     });
 
-    it('should throw an error if hourlyRate is missing', async () => {
+    test('should throw an error if hourlyRate is missing', async () => {
         const pharmacistWithoutHourlyRate = {
             email: "email@gmail.com",
             passwordHash: "password",
@@ -53,7 +53,7 @@ describe('pharmacist model', () => {
         await expect(pharmacist.save()).rejects.toThrow('pharmacist validation failed: hourlyRate: Path `hourlyRate` is required.');
     });
 
-    it('should throw an error if affiliation is missing', async () => {
+    test('should throw an error if affiliation is missing', async () => {
         const pharmacistWithoutAffiliation = {
             email: "email@gmail.com",
             passwordHash: "password",
@@ -70,7 +70,7 @@ describe('pharmacist model', () => {
         await expect(pharmacist.save()).rejects.toThrow('pharmacist validation failed: affiliation: Path `affiliation` is required.');
     });
 
-    it('should throw an error if education is missing', async () => {
+    test('should throw an error if education is missing', async () => {
         const pharmacistWithoutEducation = {
             email: "email@gmail.com",
             passwordHash: "password",

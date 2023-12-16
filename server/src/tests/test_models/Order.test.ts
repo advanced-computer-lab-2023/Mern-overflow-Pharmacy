@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import Order from '../../models/Order.ts';
 
 describe('order model', () => {
-    it('should throw an error if patient is missing', async () => {
+    test('should throw an error if patient is missing', async () => {
         const orderWithoutPatient = {
             status: 'pending',
             date: new Date(),
@@ -16,7 +16,7 @@ describe('order model', () => {
         await expect(order.save()).rejects.toThrow('Order validation failed: patient: Path `patient` is required.');
     });
 
-    it('should throw an error if status is missing', async () => {
+    test('should throw an error if status is missing', async () => {
         const orderWithoutStatus = {
             patient: new Types.ObjectId(),
             date: new Date(),
@@ -30,7 +30,7 @@ describe('order model', () => {
         await expect(order.save()).rejects.toThrow('Order validation failed: status: Path `status` is required.');
     });
 
-    it('should throw an error if date is missing', async () => {
+    test('should throw an error if date is missing', async () => {
         const orderWithoutDate = {
             patient: new Types.ObjectId(),
             status: 'pending',
@@ -44,7 +44,7 @@ describe('order model', () => {
         await expect(order.save()).rejects.toThrow('Order validation failed: date: Path `date` is required.');
     });
 
-    it('should throw an error if total is missing', async () => {
+    test('should throw an error if total is missing', async () => {
         const orderWithoutTotal = {
             patient: new Types.ObjectId(),
             status: 'pending',
@@ -58,7 +58,7 @@ describe('order model', () => {
         await expect(order.save()).rejects.toThrow('Order validation failed: total: Path `total` is required.');
     });
 
-    it('should throw an error if paymentMethod is missing', async () => {
+    test('should throw an error if paymentMethod is missing', async () => {
         const orderWithoutPaymentMethod = {
             patient: new Types.ObjectId(),
             status: 'pending',

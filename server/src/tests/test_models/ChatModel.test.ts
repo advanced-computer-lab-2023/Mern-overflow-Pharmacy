@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import ChatModel from '../../models/chatModel.ts';
 
 describe('chat model', () => {
-    it('should throw an error if chatName is missing', async () => {
+    test('should throw an error if chatName is missing', async () => {
         const chatWithoutChatName = {
             isGroupChat: false,
             users: [new Types.ObjectId(), new Types.ObjectId()],
@@ -14,7 +14,7 @@ describe('chat model', () => {
         await expect(chat.save()).rejects.toThrow('Chat validation failed: chatName: Path `chatName` is required.');
     });
 
-    it('should throw an error if chatName is missing', async () => {
+    test('should throw an error if chatName is missing', async () => {
         const chatWithoutChatName = {
             isGroupChat: false,
             users: [new Types.ObjectId(), new Types.ObjectId()],
@@ -26,7 +26,7 @@ describe('chat model', () => {
         await expect(chat.save()).rejects.toThrow('Chat validation failed: chatName: Path `chatName` is required.');
     });
 
-    it('should throw an error for invalid createdAt value', async () => {
+    test('should throw an error for invalid createdAt value', async () => {
         const chatWithInvalidCreatedAt = {
             chatName: 'Test Chat',
             isGroupChat: false,
@@ -39,7 +39,7 @@ describe('chat model', () => {
         await expect(chat.save()).rejects.toThrow('Chat validation failed: createdAt: Cast to date failed for value "invalidDate" (type string) at path "createdAt"');
     });
 
-    it('should throw an error for invalid updatedAt value', async () => {
+    test('should throw an error for invalid updatedAt value', async () => {
         const chatWithInvalidUpdatedAt = {
             chatName: 'Test Chat',
             isGroupChat: false,
@@ -52,7 +52,7 @@ describe('chat model', () => {
         await expect(chat.save()).rejects.toThrow('Chat validation failed: updatedAt: Cast to date failed for value "invalidDate" (type string) at path "updatedAt"');
     });
 
-    it('should throw an error if users array is invalid', async () => {
+    test('should throw an error if users array is invalid', async () => {
         const chatWithEmptyUsersArray = {
             chatName: 'Test Chat',
             isGroupChat: false,

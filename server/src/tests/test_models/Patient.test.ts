@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import Patient from '../../models/Patient.ts';
 
 describe('patient model', () => {
-    it('should throw an error if name is missing', async () => {
+    test('should throw an error if name is missing', async () => {
         const patientWithoutName = {
             email: "email@gmail.com",
             passwordHash: "password",
@@ -22,7 +22,7 @@ describe('patient model', () => {
         await expect(patient.save()).rejects.toThrow('Patient validation failed: name: Path `name` is required.');
     });
 
-    it('should throw an error if nationalId is missing', async () => {
+    test('should throw an error if nationalId is missing', async () => {
         const patientWithoutNationalId = {
             email: "email@gmail.com",
             passwordHash: "password",
@@ -42,7 +42,7 @@ describe('patient model', () => {
         await expect(patient.save()).rejects.toThrow('Patient validation failed: nationalId: Path `nationalId` is required.');
     });
 
-    it('should throw an error if dateOfBirth is missing', async () => {
+    test('should throw an error if dateOfBirth is missing', async () => {
         const patientWithoutDateOfBirth = {
             email: "email@gmail.com",
             passwordHash: "password",
@@ -62,7 +62,7 @@ describe('patient model', () => {
         await expect(patient.save()).rejects.toThrow('Patient validation failed: dateOfBirth: Path `dateOfBirth` is required.');
     });
 
-    it('should throw an error if gender is missing', async () => {
+    test('should throw an error if gender is missing', async () => {
         const patientWithoutGender = {
             email: "email@gmail.com",
             passwordHash: "password",
@@ -82,7 +82,7 @@ describe('patient model', () => {
         await expect(patient.save()).rejects.toThrow('Patient validation failed: gender: Path `gender` is required.');
     });
 
-    it('should throw an error if mobileNumber is missing', async () => {
+    test('should throw an error if mobileNumber is missing', async () => {
         const patientWithoutMobileNumber = {
             email: "email@gmail.com",
             passwordHash: "password",

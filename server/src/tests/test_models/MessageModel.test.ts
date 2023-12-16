@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import MessageModel from '../../models/MessageModel.ts';
 
 describe('message model', () => {
-    it('should throw an error if sender is missing', async () => {
+    test('should throw an error if sender is missing', async () => {
         const messageWithoutSender = {
             content: 'Test message content',
             chat: new Types.ObjectId(),
@@ -15,7 +15,7 @@ describe('message model', () => {
         await expect(message.save()).rejects.toThrow('Message validation failed: sender: Path `sender` is required.');
     });
 
-    it('should throw an error if content is missing', async () => {
+    test('should throw an error if content is missing', async () => {
         const messageWithoutContent = {
             sender: new Types.ObjectId(),
             chat: new Types.ObjectId(),
@@ -28,7 +28,7 @@ describe('message model', () => {
         await expect(message.save()).rejects.toThrow('Message validation failed: content: Path `content` is required.');
     });
 
-    it('should throw an error if chat is missing', async () => {
+    test('should throw an error if chat is missing', async () => {
         const messageWithoutChat = {
             sender: new Types.ObjectId(),
             content: 'Test message content',
@@ -41,7 +41,7 @@ describe('message model', () => {
         await expect(message.save()).rejects.toThrow('Message validation failed: chat: Path `chat` is required.');
     });
 
-    it('should throw an error for invalid readBy value (non-array)', async () => {
+    test('should throw an error for invalid readBy value (non-array)', async () => {
         const messageWithInvalidReadBy = {
             sender: new Types.ObjectId(),
             content: 'Test message content',
@@ -55,7 +55,7 @@ describe('message model', () => {
         await expect(message.save()).rejects.toThrow('Message validation failed: readBy.0: Cast to [ObjectId] failed for value \"[ \'InvalidReadBy\' ]\" (type string) at path \"readBy.0\" because of \"CastError\"');
     });
 
-    it('should throw an error for invalid createdAt value', async () => {
+    test('should throw an error for invalid createdAt value', async () => {
         const messageWithInvalidCreatedAt = {
             sender: new Types.ObjectId(),
             content: 'Test message content',
