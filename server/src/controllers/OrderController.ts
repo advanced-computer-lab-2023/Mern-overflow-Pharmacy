@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import orders from "../models/Order.js";
 import medicine, { Imedicine } from "../models/medicine.js";
 import { HydratedDocument } from "mongoose";
+import Patient from "../models/Patient.js";
+import Order from "../models/Order.js";
 
 const viewOrders = async (req: Request, res: Response) => {
   const patientId = req.params.patientId;
@@ -159,6 +161,9 @@ const cancelOrder = async (req: Request, res: Response) => {
       med2.availableQuantity += med.medQuantity.valueOf(); //TODO names
       await med2.save();
     }
+    const order = (await Order.findById(orderId));
+    if(order?.paymentMethod!=="cash on delivery") await Patient.findByIdAndUpdate(order?.patient,   { $inc: { wallet: order?.total } },{ new: true });
+
     res.json({ message: "Order cancelled successfully", updatedOrder });
   } catch (error) {
     console.error(error);
