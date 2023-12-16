@@ -9,6 +9,7 @@ import { HydratedDocument } from "mongoose";
 import medicine, { Imedicine } from "../models/medicine.js";
 import pharmacist from "../models/pharmacist.js";
 import sendMailService from "../services/emails/sendMailService.js";
+import axios from 'axios';
 const stripe = new Stripe(
   "sk_test_51O9bKeHqEqnZHrbzSpBS6JOvMryqZfvDolGqcPDOb19E9gXdSe3rKy5UbUgCOmqLVFyHxn1U0Fp7G3IFujKuYhn500g0lhxoDO",
 );
@@ -60,7 +61,9 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
             .select("email")
             .then((res) => {
               res.map((p) => {
+				console.log("p",p);
                 sendMailService.sendMail(p.email, subject, html);
+				axios.post("http://localhost:8000/notifications/",{"receiver":p._id,"content":"The medicine ${med2.name} is out of stock.","link":"/pharmacist/medicines"});
               });
             });
         }
@@ -102,7 +105,6 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
 };
 
 const payWalletShoppingCart = async (req: Request, res: Response) => {
-  // assuming id of logged in user  comes from req.body but should come from login session
   const userId = req.body.id;
   console.log("user id " + userId);
   const userCart = Cart.find({ patient: userId }).then(async (result) => {
