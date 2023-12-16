@@ -206,15 +206,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 
                   {getSender(user, selectedChat.users)}
                   
-                  <div>
-                  <Tooltip label={"Videocall Pharmacist"} placement="bottom-start" hasArrow>
-                <IconButton d={{ base: "flex"}} marginRight="4" cursor="pointer" icon={<PhoneIcon />} 
-                onClick={()=>{
-                  handleVideoCall()}}  />
-              </Tooltip>
-                  </div>
-
-                  
                 </>
               ) : (
                 <>
