@@ -22,7 +22,7 @@ import PharmacistProfile from "./pages/pharmacist/PharmacistProfile";
 import PharmacistManageMedicines from "./pages/pharmacist/PharmacistManageMedicines";
 import AdminViewSalesReports from "./pages/admin/AdminViewSalesReport";
 import PharmacistViewSalesReports from "./pages/pharmacist/PharmacistViewSalesReport";
-
+import Redirect from "./pages/authentication/redirect";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Chatpage from "./pages/Chatpage"
 
@@ -109,6 +109,10 @@ function App() {
         {
             path: "/auth/changepassword",
             element: <ChangePassword />
+        },
+		{
+            path: "/auth/redirect/:token",
+            element: <Redirect />
         },
         {
             path: "/auth/resetpassword",

@@ -21,7 +21,7 @@ const login = async (req: Request, res: Response) => {
         } else {
             const token = await TokenUtils.generateToken(user);
             res.cookie("authorization", token, {
-                httpOnly: true, // Make the cookie accessible only via HTTP (not JavaScript)
+                httpOnly: true,
                 secure: false
             });
             const type = user.__t;
@@ -115,10 +115,37 @@ const resetPasswordWithToken = async (req: Request, res: Response) => {
     }
 };
 
+const redirect = async (req: Request, res: Response) => {
+	const token = req.body.authorization;
+	try {
+		console.log("token", token);
+        const decodedToken: any = jwt.verify(token, config.jwt.secret);
+		console.log("decodedToken", decodedToken);
+        if (!decodedToken) {
+            return res.status(401).json({ message: "Invalid or expired token" });
+        }
+
+        const user = await User.findById(decodedToken?.userId);
+		console.log("hereeee", user);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+		res.cookie("authorization", token, {
+			httpOnly: true, // Make the cookie accessible only via HTTP (not JavaScript)
+			secure: false
+		});
+        return res.status(200).json({"type": user.__t, "userId": user._id});
+    } catch (error) {
+        console.error(error);
+        return res.status(401).json({ message: "Invalid or expired token" });
+    }
+}
+
 export default {
     login,
     logout,
     changePassword,
     requestPasswordReset,
-    resetPasswordWithToken
+    resetPasswordWithToken,
+	redirect,
 };
