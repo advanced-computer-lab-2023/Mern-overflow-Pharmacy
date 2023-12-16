@@ -740,6 +740,9 @@ test('should throw an error if doctor is missing', async () => {
 ```
 </details>
 
+![image](https://github.com/advanced-computer-lab-2023/Mern-overflow-Pharmacy/assets/97978852/def101b8-82fa-4abd-ab0f-ad5f0529359b)
+
+
 <p align="right" title="Return to Table of Contents"> <a href="#table-of-contents">&#11014;</a></p>
 
 ## Contribute 🤝
