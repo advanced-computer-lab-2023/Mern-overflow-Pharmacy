@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { HydratedDocument } from "mongoose";
 // import Patient, { IPatient } from '../models/Patient.js'; // Import your Patient model
 import User, { IUser } from "../models/User.js";
+import pharmacist from "../models/pharmacist.js";
 import TokenUtils from "../utils/Token.js";
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
@@ -19,6 +20,12 @@ const login = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         } else {
+			if(user.__t === "pharmacist"){
+				const pharm = await pharmacist.findById(user._id).exec();
+				if (pharm?.status !== "accepted") {
+				  return res.status(401).json({ message: "Unauthorized - Pharmacist Still Not Accepted" });
+				}
+			}
             const token = await TokenUtils.generateToken(user);
             res.cookie("authorization", token, {
                 httpOnly: true,
