@@ -73,7 +73,14 @@ export default function ButtonAppBar(props) {
 		setNewNotifications(false);
 	};
 
-	const handleClose = () => {
+	const handleClose = (link) => {
+		console.log("navigating to link:", link);
+		if (link.includes("chat")){
+			if(!window.location.href.includes("chat"))window.location.href = link;
+		}
+		else{
+			navigate(link);
+		}
 		setAnchorEl(null);
 	};
     const list = (anchor) => (
@@ -213,7 +220,7 @@ export default function ButtonAppBar(props) {
 								onClose={handleClose}
 							>
 								{notifications.map((notification, index) => (
-									<MenuItem key={index} onClick={handleClose}>
+									<MenuItem key={index} onClick={() => handleClose(notification.link)}>
 										{notification.content}
 									</MenuItem>
 								))}
