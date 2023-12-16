@@ -1,5 +1,5 @@
 import mongoose, { Schema, model, connect, Types } from "mongoose";
-import User from "./User.ts";
+import User from "./User.js";
 
 interface emergencyContact {
   name: string;
