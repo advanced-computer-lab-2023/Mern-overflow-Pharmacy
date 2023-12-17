@@ -127,7 +127,6 @@ const AddAdmin = (props) => {
                             fullWidth
                         />
                         <TextField
-                            fullWidth
                             id="email"
                             label="Email"
                             type="email"
@@ -135,6 +134,8 @@ const AddAdmin = (props) => {
                             error={!!errors["email"]}
                             helperText={errors["email"]?.message}
                             onBlur={handleChange}
+                            sx={{ mr: "2%" }}
+                            fullWidth
                         />
                         <TextField
                             id="password"
