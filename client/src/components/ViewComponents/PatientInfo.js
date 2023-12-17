@@ -100,7 +100,7 @@ export default function PatientInfo(props) {
                             <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily: "monospace" }}>
                                 Hello, {capitalize(data[0].name)}
                             </Typography>
-                            <Table sx={{ width: "50%", ml: "50px" }}>
+                            <Table sx={{ width: "70%", ml: "15%" }}>
                                 <TableBody>
                                     <TableRow sx={{ border: "none" }}>
                                         <TableCell sx={{ width: "50%", textAlign: "right", border: "none" }}>
@@ -196,7 +196,7 @@ export default function PatientInfo(props) {
                         </Divider>
 
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                            <Table sx={{ width: "50%", ml: "50px" }}>
+                            <Table sx={{ width: "70%", ml: "15%" }}>
                                 <TableBody>
                                     <TableRow sx={{ border: "none" }}>
                                         <TableCell sx={{ width: "50%", textAlign: "right", border: "none" }}>
