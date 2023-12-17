@@ -134,7 +134,8 @@ const chatWithContacts = async (req: Request, res: Response) => {
   if (!search) res.status(400).send("No search text.");
 
   else if(search!==undefined && search!==null && typeof search == "string") {
-      const all:any [] = await axios.get("http://localhost:8000/doctors");
+      const all:any [] = (await axios.get("http://localhost:8000/doctors")).data;
+      console.log("Response doctors: "+all);
       const docs: any[] = [];
       for (const doc of all) {
 
