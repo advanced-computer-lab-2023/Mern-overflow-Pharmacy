@@ -20,15 +20,16 @@ import orderRouter from "./routes/Order.js";
 import cookieParser from "cookie-parser";
 import paymentRouter from "./routes/Payment.js";
 import walletPaymentRouter from "./routes/WalletPayment.js";
-import multer from 'multer';
-import path from 'path';
-import Medicine from './models/medicine.js';
+import cashOnDeliveryRouter from "./routes/cashOnDelivery.js";
+
+import multer from "multer";
+import path from "path";
+import Medicine from "./models/medicine.js";
 import userRoutes from "./routes/User.js";
 //const chatRoutes = require("./routes/chatRoutes");
 import chatRoutes from "./routes/chatRoutes.js";
 
 import messageRoutes from "./routes/messageRoutes.js";
-
 
 mongoose.set("strictQuery", false);
 
@@ -37,9 +38,9 @@ const MongoURI: string = "mongodb+srv://dbuser:987654321@acl.n4q8ykx.mongodb.net
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:3001", "http://127.0.0.1"],
-  credentials: true,
-  exposedHeaders: ["set-cookie"],
+    origin: ["http://localhost:3001", "http://127.0.0.1"],
+    credentials: true,
+    exposedHeaders: ["set-cookie"]
 };
 
 app.use(cors(corsOptions));
@@ -53,7 +54,6 @@ app.use("/uploads", express.static("./src/uploads"));
 
 const mongoUrl: string = process.env.MONGO_URI!;
 
-
 //ROUTES
 app.use("/auth", authRouter);
 app.use("/adminstrators", adminRouter);
@@ -64,6 +64,7 @@ app.use("/cart", cartRouter);
 app.use("/orders", orderRouter);
 app.use("/create-checkout-session", paymentRouter);
 app.use("/walletPayment", walletPaymentRouter);
+app.use("/cashOnDelivery", cashOnDeliveryRouter);
 
 // chat use apis
 app.use("/api/user", userRoutes);
@@ -74,7 +75,7 @@ app.get("/", (req, res) => {
     res.send("hello");
 });
 
-app.use(cors({ origin: 'http://localhost:3001' }));
+app.use(cors({ origin: "http://localhost:3001" }));
 
 let server;
 
@@ -117,16 +118,15 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 mongoose
-  .connect(MongoURI)
-  .then(() => {
-    console.log("MongoDB is now connected!");
-    // Starting server
-   
-  })
-  .catch((err) => console.log(err));
-  server = app.listen(port, () => {
+    .connect(MongoURI)
+    .then(() => {
+        console.log("MongoDB is now connected!");
+        // Starting server
+    })
+    .catch((err) => console.log(err));
+server = app.listen(port, () => {
     console.log(`Listening to requests on http://localhost:${port}`);
-  });
+});
 
 import { Server } from "socket.io";
 import axios from "axios";
@@ -134,46 +134,44 @@ import axios from "axios";
 console.log(server);
 
 const io = new Server(server, {
-  pingTimeout: 60000,
-  cors: {
-    origin: "http://localhost:3001",
-    // credentials: true,
-  },
+    pingTimeout: 60000,
+    cors: {
+        origin: "http://localhost:3001"
+        // credentials: true,
+    }
 });
 
-
-io.on("connection", (socket:any) =>
- {
-  console.log("Connected to socket.io");
-  socket.on("setup", (userData:any) => {
-    socket.join(userData);
-    socket.emit("connected");
-  });
-
-  socket.on("join chat", (room:any) => {
-    socket.join(room);
-    console.log("User Joined Room: " + room);
-  });
-  socket.on("typing", (room:any) => socket.in(room).emit("typing"));
-  socket.on("stop typing", (room:any) => socket.in(room).emit("stop typing"));
-
-  socket.on("new message", (newMessageRecieved:any) => {
-    console.log("HALLOO "+newMessageRecieved);
-    var chat = newMessageRecieved.chat;
-
-    if (!chat.users) return console.log("chat.users not defined");
-
-    chat.users.forEach((user:any) => {
-      if (user._id == newMessageRecieved.sender._id) return;
-
-      socket.in(user._id).emit("message recieved", newMessageRecieved);
+io.on("connection", (socket: any) => {
+    console.log("Connected to socket.io");
+    socket.on("setup", (userData: any) => {
+        socket.join(userData);
+        socket.emit("connected");
     });
-  });
-// we added parameter userData (to be reviewed)
-  socket.off("setup", (userData:any) => {
-    console.log("USER DISCONNECTED");
-    socket.leave(userData);
-  });
+
+    socket.on("join chat", (room: any) => {
+        socket.join(room);
+        console.log("User Joined Room: " + room);
+    });
+    socket.on("typing", (room: any) => socket.in(room).emit("typing"));
+    socket.on("stop typing", (room: any) => socket.in(room).emit("stop typing"));
+
+    socket.on("new message", (newMessageRecieved: any) => {
+        console.log("HALLOO " + newMessageRecieved);
+        var chat = newMessageRecieved.chat;
+
+        if (!chat.users) return console.log("chat.users not defined");
+
+        chat.users.forEach((user: any) => {
+            if (user._id == newMessageRecieved.sender._id) return;
+
+            socket.in(user._id).emit("message recieved", newMessageRecieved);
+        });
+    });
+    // we added parameter userData (to be reviewed)
+    socket.off("setup", (userData: any) => {
+        console.log("USER DISCONNECTED");
+        socket.leave(userData);
+    });
 });
 
 export default app;

@@ -57,6 +57,31 @@ export default function PatientPay(props) {
         setCash(true);
         setCredit(false);
         setWallet(false);
+        {
+            fetch("http://localhost:8001/create-checkout-session/shoppingCart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    pId: userId,
+                    medicines: props.meds,
+                    total: props.total,
+                    address: props.address
+                })
+            })
+                .then(async (res) => {
+                    console.log("after fetch");
+                    console.log(res);
+                    if (res.ok) return res.json();
+                    const json = await res.json();
+                    console.log(json);
+                    return await Promise.reject(json);
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
+        }
     };
 
     const handleCredit = (event) => {
@@ -80,10 +105,10 @@ export default function PatientPay(props) {
             })
                 .then(async (res) => {
                     console.log("after fetch");
-					console.log(res);
+                    console.log(res);
                     if (res.ok) return res.json();
                     const json = await res.json();
-					console.log(json);
+                    console.log(json);
                     return await Promise.reject(json);
                 })
                 .then(({ url }) => {
@@ -101,31 +126,40 @@ export default function PatientPay(props) {
         setCredit(false);
         setWallet(true);
 
-        axios.post('http://localhost:8001/walletPayment/shoppingCart', {id:userId}, {
-  headers: {
-    'Content-Type': 'application/json', // Set the content type based on your API requirements
-    // Add other headers as needed
-  },
-})
-  .then(response => {
-    console.log(response.data);
-    props.setSuccessMessage(JSON.stringify(response.data.message));
-    props.setSuccessOpen(true);
-	console.log("empty", response.data.empty);	
-	const empty = response.data.empty;
-	if(empty.length>0){
-		console.log("sending notifications");
-		for( let i = 0; i<empty.length; i++){
-			console.log("sending notification to", empty[i].receiver);
-			axios.post('http://localhost:8000/notifications',{"receiver": empty[i].receiver,"content":empty[i].content,"link":empty[i].link});
-		}
-	}
-  })
-  .catch(error => {
-    console.error('Error:', error.response ? error.response.data : error.message);
-    props.setErrorMessage(JSON.stringify(error.response ? error.response.data : error.message));
-    props.setErrorOpen(true);
-  });
+        axios
+            .post(
+                "http://localhost:8001/walletPayment/shoppingCart",
+                { id: userId },
+                {
+                    headers: {
+                        "Content-Type": "application/json" // Set the content type based on your API requirements
+                        // Add other headers as needed
+                    }
+                }
+            )
+            .then((response) => {
+                console.log(response.data);
+                props.setSuccessMessage(JSON.stringify(response.data.message));
+                props.setSuccessOpen(true);
+                console.log("empty", response.data.empty);
+                const empty = response.data.empty;
+                if (empty.length > 0) {
+                    console.log("sending notifications");
+                    for (let i = 0; i < empty.length; i++) {
+                        console.log("sending notification to", empty[i].receiver);
+                        axios.post("http://localhost:8000/notifications", {
+                            receiver: empty[i].receiver,
+                            content: empty[i].content,
+                            link: empty[i].link
+                        });
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error.response ? error.response.data : error.message);
+                props.setErrorMessage(JSON.stringify(error.response ? error.response.data : error.message));
+                props.setErrorOpen(true);
+            });
     };
 
     // const handleWallet = (event) => {
