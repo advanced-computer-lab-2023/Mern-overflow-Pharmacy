@@ -134,7 +134,7 @@ export default function PatientViewMedicines(props) {
         console.error("Error making POST request", error);
         setErrorOpen(true);
 
-        setErrorMessage("Error adding medicine to cart: " + error.message);
+        setErrorMessage("Error adding medicine to cart: " + error.response.data);
       });
   };
 
