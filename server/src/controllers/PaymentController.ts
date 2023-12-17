@@ -69,7 +69,7 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
                 medicines: medicines
             });
 
-            await order.save();
+             await order.save();
         } catch (error) {
             console.error(error);
         }

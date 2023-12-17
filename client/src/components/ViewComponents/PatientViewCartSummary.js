@@ -66,24 +66,27 @@ export default function PatientViewCartSummary(props) {
         navigate("/patient/cart");
     };
 
-    const handleCheckout = () => {
+    const handleCheckout = async() => {
         setLoadingChange(true);
         const medicines = props.meds;
         const address = props.address;
 		console.log("address",address);
         const paymentMethod = props.paymentMethod;
+        
+        if(paymentMethod=="Wallet"){
+            await axios.post(`http://localhost:8001/orders/${userId}/add`, { medicines, total:props.total, address, paymentMethod })
+        }
+        try{
+            axios.put(`http://localhost:8001/cart/${userId}/empty`).then((response) => {
+                setLoadingChange(false);
+                props.setSuccessMessage("Order received");
+                props.setSuccessOpen(true);
+                fetchTableData();
+                navigate("/patient/orders");
+            });
+        }
 
-        axios.post(`http://localhost:8001/orders/${userId}/add`, { medicines, total:props.total, address, paymentMethod })
-            .then(response => {
-                axios.put(`http://localhost:8001/cart/${userId}/empty`).then((response) => {
-                    setLoadingChange(false);
-                    props.setSuccessMessage("Order received");
-                    props.setSuccessOpen(true);
-                    fetchTableData();
-                    navigate("/patient/orders");
-                });
-            })
-            .catch((error) => {
+            catch(error){
                 console.error("Error creating order:", error);
                 setLoadingChange(false);
                 if (!props.address) {
@@ -94,7 +97,9 @@ export default function PatientViewCartSummary(props) {
                     props.setErrorMessage("Unexpected Error in checking out.");
                 }
                 props.setErrorOpen(true);
-            });
+            };
+        
+
     };
 
     const handleSuccessClose = (event, reason) => {
