@@ -98,7 +98,7 @@ export default function PatientInfo(props) {
                                 <AccountCircleIcon sx={{ width: 100, height: 100, textAlign: "center" }} />
                             </Avatar>
                             <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily: "monospace" }}>
-                                {capitalize(data[0].name)}
+                                Hello, {capitalize(data[0].name)}
                             </Typography>
                             <Table sx={{ width: "50%", ml: "50px" }}>
                                 <TableBody>
