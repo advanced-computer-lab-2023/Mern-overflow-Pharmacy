@@ -50,8 +50,10 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
 							res.map((p) => {
 								console.log("p", p);
 								sendMailService.sendMail(p.email, subject, html);
-								empty.push({ "receiver": p._id, "content": "The medicine ${med2.name} is out of stock.", "link": "/pharmacist/medicines" });
+								// empty.push({ "receiver": p._id, "content": "The medicine ${med2.name} is out of stock.", "link": "/pharmacist/medicines" });
+								axios.post("http://localhost:8000/notifications",{ "receiver": p._id, "content": `The medicine ${med2.name} is out of stock.`, "link": "/pharmacist/medicines" });
 							});
+							
 						});
 				}
 				await med2.save();
