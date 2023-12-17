@@ -109,8 +109,17 @@ export default function PatientPay(props) {
 })
   .then(response => {
     console.log(response.data);
-    props.setSuccessMessage(JSON.stringify(response.data));
+    props.setSuccessMessage(JSON.stringify(response.data.message));
     props.setSuccessOpen(true);
+	console.log("empty", response.data.empty);	
+	const empty = response.data.empty;
+	if(empty.length>0){
+		console.log("sending notifications");
+		for( let i = 0; i<empty.length; i++){
+			console.log("sending notification to", empty[i].receiver);
+			axios.post('http://localhost:8000/notifications',{"receiver": empty[i].receiver,"content":empty[i].content,"link":empty[i].link});
+		}
+	}
   })
   .catch(error => {
     console.error('Error:', error.response ? error.response.data : error.message);

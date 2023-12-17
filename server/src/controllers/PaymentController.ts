@@ -16,7 +16,7 @@ const stripe = new Stripe(
 
 const payCCShoppingCart = async (req: Request, res: Response) => {
 	try {
-		const empty:{ receiver: string; content: string; link: string }[] =[];
+		const empty: { receiver: string; content: string; link: string }[] = [];
 		console.log("entered payCCShoppingCart")
 		console.log(req.body.pId);
 		const cartId = (await Cart.find({ patient: req.body.pId }))[0]._id;
@@ -26,7 +26,7 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
 		const paymentMethod = "Credit Card";
 
 		const patientId = req.body.pId;
-		console.log("HII");
+		//console.log("HII");
 		console.log(medicines, total, address, paymentMethod, patientId);
 		if (medicines.length === 0 || total === 0) {
 			return
@@ -50,7 +50,7 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
 							res.map((p) => {
 								console.log("p", p);
 								sendMailService.sendMail(p.email, subject, html);
-									empty.push({ "receiver": p._id, "content": "The medicine ${med2.name} is out of stock.", "link": "/pharmacist/medicines" });
+								empty.push({ "receiver": p._id, "content": "The medicine ${med2.name} is out of stock.", "link": "/pharmacist/medicines" });
 							});
 						});
 				}
@@ -102,7 +102,7 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
 			success_url: `http://localhost:3001/patient/orders`,
 			cancel_url: `http://localhost:3001/patient/checkout`,
 		})
-		res.json({ url: session.url ,"empty":empty});
+		res.json({ url: session.url, "empty": empty });
 
 	} catch (e) {
 		console.log(e);
@@ -111,6 +111,7 @@ const payCCShoppingCart = async (req: Request, res: Response) => {
 };
 
 const payWalletShoppingCart = async (req: Request, res: Response) => {
+	const empty: { receiver: string; content: string; link: string }[] = [];
 	const userId = req.body.id;
 	console.log("user id " + userId);
 	const userCart = Cart.find({ patient: userId }).then(async (result) => {
@@ -158,9 +159,49 @@ const payWalletShoppingCart = async (req: Request, res: Response) => {
 
 				const newWallet =
 					walletValue && totalAmount ? walletValue - totalAmount : undefined;
+				const cart: any = result[0];
+				//console.log("cart", cart);
+				const meds: any[] = cart.medicines;
+				//console.log("medicines", meds);
+				for (const med of meds) {
+					const med2: HydratedDocument<Imedicine> | null = await medicine.findOne(
+						{ name: med.medName },
+					);
+					if (!med2) {
+						return;
+					}
+					console.log("med2", med2)
+					med2.availableQuantity -= med.medQuantity; //TODO names
+
+					if (med2.availableQuantity === 0) {
+						const subject = "Medicince Out of Stock";
+						let html = `Hello pharmacist, <br /> The medicine ${med2.name} is out of stock. <br /> Try to order new stock ASAP. <br /> With Love, <br /> El7a2ni Pharmacy xoxo.`;
+						await User.find({ __t: "pharmacist" })
+							.select("email")
+							.then((res) => {
+								res.map((p) => {
+									console.log("p", p);
+									sendMailService.sendMail(p.email, subject, html);
+									empty.push({ "receiver": p._id, "content": `The medicine ${med2.name} is out of stock.`, "link": "/pharmacist/medicines" });
+								});
+							});
+					}
+					await med2.save();
+				}
+				//const order = new orders({
+				//	patient: patientId,
+				//	status: "pending",
+				//	date: new Date(),
+				//	total: total,
+				//	address: address,
+				//	paymentMethod: paymentMethod,
+				//	medicines: medicines,
+				//});
+
+				//await order.save();
 				res
 					.status(200)
-					.json("Payment successful , new wallet value :" + newWallet);
+					.json({"message":"Payment successful , new wallet value :" + newWallet,"empty":empty});
 			}
 		} else {
 			if (!totalAmount) res.status(404).send("totalAmount is undefined");
