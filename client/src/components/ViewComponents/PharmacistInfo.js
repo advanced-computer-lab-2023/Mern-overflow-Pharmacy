@@ -101,7 +101,7 @@ export default function PharmacistInfo(props) {
                                 <AccountCircleIcon sx={{ width: 100, height: 100, textAlign: "center" }} />
                             </Avatar>
                             <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily: "monospace" }}>
-                                {capitalize(data.name)}
+                                Hello, {capitalize(data.name)}
                             </Typography>
                             <Table sx={{ width: "50%", ml: "50px" }}>
                                 <TableBody>
