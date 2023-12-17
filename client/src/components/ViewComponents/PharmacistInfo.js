@@ -103,7 +103,7 @@ export default function PharmacistInfo(props) {
                             <Typography sx={{ fontWeight: "bold", my: "20px", fontFamily: "monospace" }}>
                                 Hello, {capitalize(data.name)}
                             </Typography>
-                            <Table sx={{ width: "50%", ml: "50px" }}>
+                            <Table sx={{ width: "70%", ml: "15%" }}>
                                 <TableBody>
                                     <TableRow sx={{ border: "none" }}>
                                         <TableCell sx={{ width: "50%", textAlign: "right", border: "none" }}>
