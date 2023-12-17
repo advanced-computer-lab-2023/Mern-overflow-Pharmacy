@@ -80,8 +80,10 @@ export default function PatientPay(props) {
             })
                 .then(async (res) => {
                     console.log("after fetch");
+					console.log(res);
                     if (res.ok) return res.json();
                     const json = await res.json();
+					console.log(json);
                     return await Promise.reject(json);
                 })
                 .then(({ url }) => {

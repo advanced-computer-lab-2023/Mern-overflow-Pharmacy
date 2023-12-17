@@ -70,6 +70,7 @@ export default function PatientViewCartSummary(props) {
         setLoadingChange(true);
         const medicines = props.meds;
         const address = props.address;
+		console.log("address",address);
         const paymentMethod = props.paymentMethod;
 
         axios.post(`http://localhost:8001/orders/${userId}/add`, { medicines, total:props.total, address, paymentMethod })
