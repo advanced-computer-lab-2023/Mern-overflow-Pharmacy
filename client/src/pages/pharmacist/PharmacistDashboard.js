@@ -116,7 +116,7 @@ const PharmacistDashboard = (props) => {
                 <SmsIcon sx={{ width: 30, height: 30 }} />
               </Avatar>
             </ListItemIcon>
-            <ListItemText primary="Chat/VideoCall Patients" />
+            <ListItemText primary="Chat Patients/Doctors" />
           </ListItemButton>
         </ListItem>
         <Divider />
