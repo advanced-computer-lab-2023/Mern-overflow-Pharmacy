@@ -17,7 +17,8 @@ import {
 	MailIcon,
 	ListItemText,
 	Divider,
-	Fab
+	Fab,
+	Grid
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
@@ -33,6 +34,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 import logo from "../assets/photos/logo.png";
 import CloseIcon from "@mui/icons-material/Close";
+import { Facebook, Twitter, Instagram, LinkedIn } from '@mui/icons-material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function ButtonAppBar(props) {
 	const { userId, setUserId, userRole, setUserRole } = useUser();
@@ -207,6 +211,23 @@ export default function ButtonAppBar(props) {
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: "left" }}>
 							{props.title}
 						</Typography>
+						<Grid sx={{ marginRight: '43em' }} >
+							<a href="https://www.facebook.com/el7a2nycaree" target="_blank" rel="noopener noreferrer">
+								<IconButton color="white" aria-label="Facebook">
+								<Facebook />
+								</IconButton>
+							</a>
+							<a href="https://twitter.com/el7a2nycaree" target="_blank" rel="noopener noreferrer">
+								<IconButton color="white" aria-label="Twitter">
+								<Twitter />
+								</IconButton>
+							</a>
+							<a href="https://www.instagram.com/el7a2nycaree" target="_blank" rel="noopener noreferrer">
+								<IconButton color="white" aria-label="Instagram">
+								<Instagram />
+								</IconButton>
+							</a>
+						</Grid>
 						<div>
 							<IconButton onClick={handleClick} color="inherit">
 								{newNotifications ? (
@@ -240,6 +261,21 @@ export default function ButtonAppBar(props) {
 								<ShoppingCartIcon />
 							</IconButton>
 						)}
+						{
+							userRole && (userRole === "Patient" || userRole === "Pharmacist") && (
+								<IconButton
+								size="large"
+								edge="end"
+								color="inherit"
+								aria-label="menu"
+								sx={{ mr: 0 }}
+								component={Link}
+								to={`/${userRole.toLowerCase()}/profile`}
+								>
+								<AccountCircleIcon />
+								</IconButton>
+							)
+						}
 						<IconButton
 							size="large"
 							edge="end"
